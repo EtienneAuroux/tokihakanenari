@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/custom_card.dart';
+import 'package:tokihakanenari/income_counter.dart';
+import 'package:tokihakanenari/saving_accounts.dart';
 
 void main() {
-  runApp(const MyApp());
+  runApp(const TokiHaKaneNari());
 }
 
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
+class TokiHaKaneNari extends StatelessWidget {
+  const TokiHaKaneNari({super.key});
 
   final String appTitle = '時は金なり';
 
@@ -36,12 +39,18 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      alignment: Alignment.center,
-      child: Card(
-        elevation: 2,
-        child: Text(widget.appTitle),
-      ),
+    MediaQueryData queryData = MediaQuery.of(context);
+    Size deviceSize = queryData.size;
+    Orientation deviceOrientation = queryData.orientation;
+
+    return Column(
+      children: [
+        CustomCard(deviceSize: deviceSize, deviceOrientation: deviceOrientation, cardContent: IncomeCounter()),
+        Transform(
+          transform: Matrix4.rotationX(2),
+          child: CustomCard(deviceSize: deviceSize, deviceOrientation: deviceOrientation, cardContent: SavingAccounts()),
+        ),
+      ],
     );
   }
 }
