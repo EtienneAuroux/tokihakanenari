@@ -1,7 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/custom_card.dart';
-import 'package:tokihakanenari/income_counter.dart';
-import 'package:tokihakanenari/saving_accounts.dart';
+import 'package:tokihakanenari/carousel.dart';
 
 void main() {
   runApp(const TokiHaKaneNari());
@@ -39,18 +37,6 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData = MediaQuery.of(context);
-    Size deviceSize = queryData.size;
-    Orientation deviceOrientation = queryData.orientation;
-
-    return Column(
-      children: [
-        CustomCard(deviceSize: deviceSize, deviceOrientation: deviceOrientation, cardContent: IncomeCounter()),
-        Transform(
-          transform: Matrix4.rotationX(2),
-          child: CustomCard(deviceSize: deviceSize, deviceOrientation: deviceOrientation, cardContent: SavingAccounts()),
-        ),
-      ],
-    );
+    return Carousel();
   }
 }
