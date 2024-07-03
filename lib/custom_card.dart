@@ -14,7 +14,7 @@ class CustomCard extends StatefulWidget {
 class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateMixin {
   Size cardSize(Size deviceSize, Orientation deviceOrientation) {
     if (deviceOrientation == Orientation.landscape) {
-      return Size(deviceSize.width * 0.5, deviceSize.height * 0.7);
+      return Size(deviceSize.width * 0.6, deviceSize.height * 0.8);
     } else {
       return Size(deviceSize.width * 0.8, deviceSize.height * 0.6);
     }

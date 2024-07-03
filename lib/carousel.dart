@@ -20,7 +20,7 @@ class Carousel extends StatefulWidget {
 class _CarouselState extends State<Carousel> {
   List<CustomCard> customCards = [
     const CustomCard(
-      cardContent: AddIncome(),
+      cardContent: PassiveIncome(),
     ),
     const CustomCard(
       cardContent: SavingAccounts(),
@@ -40,9 +40,9 @@ class _CarouselState extends State<Carousel> {
     return completer.future;
   }
 
-  Alignment setAlignment(PageController pageController, int cardIndex) {
-    if (pageController.position.haveDimensions && pageController.page! <= cardIndex) {
-      return Alignment.topRight;
+  Alignment setAlignment(PageController controller, int index, Orientation orientation) {
+    if (controller.position.haveDimensions && controller.page! <= index) {
+      return orientation == Orientation.landscape ? Alignment.bottomLeft : Alignment.topRight;
     } else {
       return Alignment.bottomRight;
     }
@@ -51,7 +51,7 @@ class _CarouselState extends State<Carousel> {
   @override
   Widget build(BuildContext context) {
     Orientation screenOrientation = MediaQuery.of(context).orientation;
-    final double viewportFraction = screenOrientation == Orientation.landscape ? 0.5 : 0.5;
+    final double viewportFraction = screenOrientation == Orientation.landscape ? 0.6 : 0.5;
     final pageController = PageController(viewportFraction: viewportFraction, initialPage: 1);
 
     return FutureBuilder(
@@ -74,8 +74,8 @@ class _CarouselState extends State<Carousel> {
                     final ratioY = pageController.offset / maxHeight / viewportFraction - index;
                     return Transform.rotate(
                       angle: screenOrientation == Orientation.landscape ? pi * -0.05 * ratioX : pi * 0.08 * ratioY,
-                      alignment: setAlignment(pageController, index),
-                      origin: Offset(-maxHeight / 3, 0),
+                      alignment: setAlignment(pageController, index, screenOrientation),
+                      origin: screenOrientation == Orientation.landscape ? Offset(0, -maxWidth / 2) : Offset(-maxHeight / 3, 0),
                       child: Transform.scale(
                         scale: 0.8,
                         child: card,
