@@ -10,6 +10,11 @@ class AddIncome extends StatefulWidget {
 class _AddIncomeState extends State<AddIncome> {
   @override
   Widget build(BuildContext context) {
-    return Container();
+    return Center(
+      child: Icon(
+        Icons.add_rounded,
+        size: 100,
+      ),
+    );
   }
 }

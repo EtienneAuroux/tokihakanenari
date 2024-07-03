@@ -10,14 +10,8 @@ class PassiveIncome extends StatefulWidget {
 class _PassiveIncomeState extends State<PassiveIncome> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder(
-      color: Colors.green,
-      child: Center(
-        child: const Text(
-          'test\ntest',
-          style: TextStyle(fontSize: 40),
-        ),
-      ),
+    return Center(
+      child: Text('passive'),
     );
   }
 }

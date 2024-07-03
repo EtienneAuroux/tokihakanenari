@@ -10,8 +10,8 @@ class SavingAccounts extends StatefulWidget {
 class _SavingAccountsState extends State<SavingAccounts> {
   @override
   Widget build(BuildContext context) {
-    return const Placeholder(
-      color: Colors.red,
+    return Center(
+      child: Text('saving'),
     );
   }
 }

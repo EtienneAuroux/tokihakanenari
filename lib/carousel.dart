@@ -20,13 +20,16 @@ class Carousel extends StatefulWidget {
 class _CarouselState extends State<Carousel> {
   List<CustomCard> customCards = [
     const CustomCard(
+      cardType: CardType.addIncome,
+      cardContent: AddIncome(),
+    ),
+    const CustomCard(
+      cardType: CardType.passiveIncome,
       cardContent: PassiveIncome(),
     ),
     const CustomCard(
-      cardContent: SavingAccounts(),
-    ),
-    const CustomCard(
-      cardContent: PassiveIncome(),
+      cardType: CardType.addIncome,
+      cardContent: AddIncome(),
     )
   ];
 
