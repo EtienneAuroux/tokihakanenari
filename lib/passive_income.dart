@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class IncomeCounter extends StatefulWidget {
-  const IncomeCounter({super.key});
+class PassiveIncome extends StatefulWidget {
+  const PassiveIncome({super.key});
 
   @override
-  State<IncomeCounter> createState() => _IncomeCounterState();
+  State<PassiveIncome> createState() => _PassiveIncomeState();
 }
 
-class _IncomeCounterState extends State<IncomeCounter> {
+class _PassiveIncomeState extends State<PassiveIncome> {
   @override
   Widget build(BuildContext context) {
     return const Placeholder(
