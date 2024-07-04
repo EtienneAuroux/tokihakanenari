@@ -4,6 +4,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tokihakanenari/add_income.dart';
+import 'package:tokihakanenari/card_decoration.dart';
 import 'package:tokihakanenari/custom_card.dart';
 import 'package:tokihakanenari/passive_income.dart';
 import 'package:tokihakanenari/saving_accounts.dart';

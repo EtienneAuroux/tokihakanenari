@@ -1,6 +1,7 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/card_decoration.dart';
 
 class CustomCard extends StatefulWidget {
   final CardType cardType;
@@ -18,6 +19,8 @@ var test = const RoundedRectangleBorder(
 );
 
 class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateMixin {
+  late CardDecoration cardDecoration;
+
   Size cardSize(Size deviceSize, Orientation deviceOrientation) {
     if (deviceOrientation == Orientation.landscape) {
       return Size(deviceSize.width * 0.6, deviceSize.height * 0.8);
@@ -26,31 +29,11 @@ class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateM
     }
   }
 
-  BoxDecoration cardDecoration(CardType cardType) {
-    const double cardCornerRadius = 20;
-    const int addIncomeCardAlpha = 127;
+  @override
+  void initState() {
+    super.initState();
 
-    switch (cardType) {
-      case CardType.addIncome:
-        return BoxDecoration(
-          color: Colors.grey.withAlpha(addIncomeCardAlpha),
-          borderRadius: const BorderRadius.all(Radius.circular(cardCornerRadius)),
-          border: Border.all(
-            color: Colors.black.withAlpha(addIncomeCardAlpha),
-            width: 10,
-          ),
-        );
-      case CardType.passiveIncome:
-        return const BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.all(Radius.circular(cardCornerRadius)),
-        );
-      case CardType.savingAccounts:
-        return const BoxDecoration(
-          color: Colors.green,
-          borderRadius: BorderRadius.all(Radius.circular(cardCornerRadius)),
-        );
-    }
+    cardDecoration = CardDecoration(widget.cardType);
   }
 
   @override
@@ -61,14 +44,19 @@ class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateM
 
     return Container(
       alignment: Alignment.center,
-      child: Container(
-        decoration: cardDecoration(widget.cardType),
-        width: cardSize(deviceSize, deviceOrientation).width,
-        height: cardSize(deviceSize, deviceOrientation).height,
-        child: widget.cardContent,
+      child: Material(
+        color: Colors.transparent,
+        child: Container(
+          decoration: cardDecoration.test,
+          width: cardSize(deviceSize, deviceOrientation).width,
+          height: cardSize(deviceSize, deviceOrientation).height,
+          child: InkWell(
+            splashColor: Colors.green,
+            onTap: () {},
+            child: widget.cardContent,
+          ),
+        ),
       ),
     );
   }
 }
-
-enum CardType { passiveIncome, savingAccounts, addIncome }
