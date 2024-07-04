@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/carousel.dart';
+import 'package:tokihakanenari/moving_background.dart';
 
 void main() {
   runApp(const TokiHaKaneNari());
@@ -13,6 +13,7 @@ class TokiHaKaneNari extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: appTitle,
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
@@ -37,9 +38,14 @@ class MainPage extends StatefulWidget {
 class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
-    return Container(
-      color: Colors.amber,
-      child: Carousel(),
-    );
+    return MovingBackground(cycle: const Duration(seconds: 20), colors: <Color>[
+      Colors.white,
+      Colors.grey,
+      Colors.white,
+      Colors.grey,
+      Colors.white,
+      Colors.grey,
+      Colors.white,
+    ]);
   }
 }
