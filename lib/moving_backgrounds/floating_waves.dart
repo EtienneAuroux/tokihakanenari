@@ -13,75 +13,99 @@ class FloatingWaves extends StatefulWidget {
 
 class _FloatingWaves extends State<FloatingWaves> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
-  late Animation<Alignment> portraitAnimation;
-  late Animation<Alignment> landscapeAnimation;
+  late Animation<Alignment> topAnimation;
+  late Animation<Alignment> bottomAnimation;
 
   @override
   void initState() {
     super.initState();
 
-    animationController = AnimationController(vsync: this, duration: const Duration(seconds: 4));
+    animationController = AnimationController(vsync: this, duration: const Duration(seconds: 12));
 
-    portraitAnimation = TweenSequence<Alignment>([
+    topAnimation = TweenSequence<Alignment>([
       TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-          begin: Alignment.topLeft,
-          end: Alignment.topRight,
-        ),
+        tween: Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
         weight: 1,
       ),
       TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-          begin: Alignment.topRight,
-          end: Alignment.centerRight,
-        ),
+        tween: Tween<Alignment>(begin: Alignment.topRight, end: Alignment.centerLeft),
         weight: 1,
       ),
       TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-          begin: Alignment.centerRight,
-          end: Alignment.centerLeft,
-        ),
+        tween: Tween<Alignment>(begin: Alignment.centerLeft, end: Alignment.center),
         weight: 1,
       ),
       TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-          begin: Alignment.centerLeft,
-          end: Alignment.topLeft,
-        ),
+        tween: Tween<Alignment>(begin: Alignment.center, end: Alignment.centerRight),
         weight: 1,
-      )
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.centerRight, end: Alignment.topLeft),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topRight),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.topRight, end: Alignment.topRight),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.topRight, end: Alignment.topCenter),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.topCenter, end: Alignment.topLeft),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.topLeft, end: Alignment.topLeft),
+        weight: 1,
+      ),
     ]).animate(animationController);
 
-    landscapeAnimation = TweenSequence<Alignment>([
+    bottomAnimation = TweenSequence<Alignment>([
       TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-          begin: Alignment.bottomRight,
-          end: Alignment.bottomLeft,
-        ),
+        tween: Tween<Alignment>(begin: Alignment.bottomRight, end: Alignment.bottomRight),
         weight: 1,
       ),
       TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-          begin: Alignment.bottomLeft,
-          end: Alignment.center,
-        ),
+        tween: Tween<Alignment>(begin: Alignment.bottomRight, end: Alignment.bottomRight),
         weight: 1,
       ),
       TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-          begin: Alignment.center,
-          end: Alignment.topRight,
-        ),
+        tween: Tween<Alignment>(begin: Alignment.bottomRight, end: Alignment.bottomCenter),
         weight: 1,
       ),
       TweenSequenceItem<Alignment>(
-        tween: Tween<Alignment>(
-          begin: Alignment.topRight,
-          end: Alignment.bottomRight,
-        ),
+        tween: Tween<Alignment>(begin: Alignment.bottomCenter, end: Alignment.bottomLeft),
         weight: 1,
-      )
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.bottomLeft, end: Alignment.bottomLeft),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.bottomLeft, end: Alignment.bottomLeft),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.bottomLeft, end: Alignment.centerLeft),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.centerLeft, end: Alignment.center),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.center, end: Alignment.centerRight),
+        weight: 1,
+      ),
+      TweenSequenceItem<Alignment>(
+        tween: Tween<Alignment>(begin: Alignment.centerRight, end: Alignment.bottomRight),
+        weight: 1,
+      ),
     ]).animate(animationController);
 
     animationController.repeat();
@@ -96,8 +120,8 @@ class _FloatingWaves extends State<FloatingWaves> with SingleTickerProviderState
             decoration: BoxDecoration(
               gradient: LinearGradient(
                 colors: widget.colors,
-                begin: portraitAnimation.value,
-                end: Alignment.bottomRight,
+                begin: topAnimation.value,
+                end: bottomAnimation.value,
               ),
             ),
             child: widget.child,

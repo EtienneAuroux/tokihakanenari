@@ -39,8 +39,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final List<Color> colors = [
-    const Color(0xffF99E43),
-    const Color(0xFFDA2323),
+    Color.fromRGBO(249, 158, 67, 1),
+    Color.fromRGBO(218, 35, 35, 1),
   ];
 
   @override
