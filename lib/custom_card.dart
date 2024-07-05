@@ -13,11 +13,6 @@ class CustomCard extends StatefulWidget {
   State<CustomCard> createState() => _CustomCardState();
 }
 
-var test = const RoundedRectangleBorder(
-  borderRadius: BorderRadius.all(Radius.circular(20)),
-  side: BorderSide(color: Colors.grey, width: 5),
-);
-
 class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateMixin {
   late CardDecoration cardDecoration;
 
@@ -52,7 +47,7 @@ class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateM
           height: cardSize(deviceSize, deviceOrientation).height,
           child: InkWell(
             splashColor: Colors.green,
-            onTap: () {},
+            onLongPress: () {},
             child: widget.cardContent,
           ),
         ),

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/carousel.dart';
-import 'package:tokihakanenari/moving_backgrounds/sliding_colors.dart';
+import 'package:tokihakanenari/color_palette.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 
 void main() {
@@ -39,8 +39,8 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   final List<Color> colors = [
-    Color.fromRGBO(249, 158, 67, 1),
-    Color.fromRGBO(218, 35, 35, 1),
+    ColorPalette.ocre,
+    ColorPalette.autumnOrange,
   ];
 
   @override
