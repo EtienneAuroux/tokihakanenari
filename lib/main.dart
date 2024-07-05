@@ -3,6 +3,8 @@ import 'package:tokihakanenari/carousel.dart';
 import 'package:tokihakanenari/color_palette.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 
+import 'dart:developer' as developer;
+
 void main() {
   runApp(const TokiHaKaneNari());
 }
@@ -45,6 +47,13 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
-    return FloatingWaves(colors: colors, child: Carousel());
+    return FloatingWaves(
+      colors: colors,
+      child: Carousel(
+        callback: (cardType) {
+          developer.log('user wants ${cardType.name}');
+        },
+      ),
+    );
   }
 }

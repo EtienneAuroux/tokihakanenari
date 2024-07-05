@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/color_palette.dart';
 
 class CardDecoration {
   final CardType cardType;
-  late BoxDecoration test;
+  late BoxDecoration boxDecoration;
+  late Color splashColor;
 
   CardDecoration(this.cardType) {
     initializeDecoration(cardType);
@@ -14,7 +16,7 @@ class CardDecoration {
 
     switch (cardType) {
       case CardType.addIncome:
-        test = BoxDecoration(
+        boxDecoration = BoxDecoration(
           color: Colors.grey.withAlpha(addIncomeCardAlpha),
           borderRadius: const BorderRadius.all(Radius.circular(cardCornerRadius)),
           border: Border.all(
@@ -22,16 +24,20 @@ class CardDecoration {
             width: 10,
           ),
         );
+        splashColor = ColorPalette.azurSnow.withAlpha(70);
       case CardType.passiveIncome:
-        test = const BoxDecoration(
-          color: Colors.blue,
-          borderRadius: BorderRadius.all(Radius.circular(cardCornerRadius)),
+        boxDecoration = BoxDecoration(
+          color: Colors.blue.withAlpha(addIncomeCardAlpha),
+          borderRadius: const BorderRadius.all(Radius.circular(cardCornerRadius)),
+          border: Border.all(color: Colors.black.withAlpha(addIncomeCardAlpha), width: 1),
         );
+        splashColor = Colors.blue;
       case CardType.savingAccounts:
-        test = const BoxDecoration(
+        boxDecoration = const BoxDecoration(
           color: Colors.green,
           borderRadius: BorderRadius.all(Radius.circular(cardCornerRadius)),
         );
+        splashColor = Colors.blue;
     }
   }
 }

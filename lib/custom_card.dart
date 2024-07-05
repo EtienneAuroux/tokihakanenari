@@ -6,8 +6,14 @@ import 'package:tokihakanenari/card_decoration.dart';
 class CustomCard extends StatefulWidget {
   final CardType cardType;
   final Widget cardContent;
+  final Function(bool) callback;
 
-  const CustomCard({super.key, required this.cardType, required this.cardContent});
+  const CustomCard({
+    super.key,
+    required this.cardType,
+    required this.cardContent,
+    required this.callback,
+  });
 
   @override
   State<CustomCard> createState() => _CustomCardState();
@@ -42,12 +48,18 @@ class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateM
       child: Material(
         color: Colors.transparent,
         child: Container(
-          decoration: cardDecoration.test,
+          decoration: cardDecoration.boxDecoration,
           width: cardSize(deviceSize, deviceOrientation).width,
           height: cardSize(deviceSize, deviceOrientation).height,
           child: InkWell(
-            splashColor: Colors.green,
-            onLongPress: () {},
+            splashColor: cardDecoration.splashColor,
+            onLongPress: () {
+              developer.log('longpress');
+            },
+            onTap: () {
+              developer.log('tap');
+              widget.callback(true);
+            },
             child: widget.cardContent,
           ),
         ),

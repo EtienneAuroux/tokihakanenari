@@ -12,27 +12,18 @@ import 'package:tokihakanenari/saving_accounts.dart';
 import 'dart:developer' as developer;
 
 class Carousel extends StatefulWidget {
-  const Carousel({super.key});
+  final Function(CardType cardType) callback;
+
+  const Carousel({super.key, required this.callback});
 
   @override
   State<Carousel> createState() => _CarouselState();
 }
 
 class _CarouselState extends State<Carousel> {
-  List<CustomCard> customCards = [
-    const CustomCard(
-      cardType: CardType.addIncome,
-      cardContent: AddIncome(),
-    ),
-    const CustomCard(
-      cardType: CardType.passiveIncome,
-      cardContent: PassiveIncome(),
-    ),
-    const CustomCard(
-      cardType: CardType.addIncome,
-      cardContent: AddIncome(),
-    )
-  ];
+  CardType? clickedCard;
+
+  late List<CustomCard> customCards;
 
   Future<bool> ensureInitialization() {
     Completer<bool> completer = Completer<bool>();
@@ -50,6 +41,43 @@ class _CarouselState extends State<Carousel> {
     } else {
       return Alignment.bottomRight;
     }
+  }
+
+  void handleUserSingleTap(CardType cardType) {
+    setState(() {
+      clickedCard = cardType;
+    });
+    widget.callback(cardType);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    customCards = [
+      CustomCard(
+        cardType: CardType.addIncome,
+        cardContent: AddIncome(),
+        callback: (bool tap) {
+          // handleUserSingleTap(CardType.addIncome);
+          widget.callback(CardType.addIncome);
+        },
+      ),
+      CustomCard(
+        cardType: CardType.passiveIncome,
+        cardContent: PassiveIncome(),
+        callback: (bool tap) {
+          developer.log('callback');
+        },
+      ),
+      CustomCard(
+        cardType: CardType.addIncome,
+        cardContent: AddIncome(),
+        callback: (bool tap) {
+          developer.log('callback');
+        },
+      )
+    ];
   }
 
   @override
