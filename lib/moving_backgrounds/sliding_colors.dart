@@ -1,27 +1,29 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/carousel.dart';
 
-class MovingBackground extends StatefulWidget {
-  final Duration cycle;
+class SlidingColors extends StatefulWidget {
+  /// At least four colors are recommended.
   final List<Color> colors;
+  final Widget child;
 
-  const MovingBackground({
-    required this.cycle,
+  const SlidingColors({
+    super.key,
     required this.colors,
+    required this.child,
   });
 
   @override
-  State<MovingBackground> createState() => _MovingBackground();
+  State<SlidingColors> createState() => _SlidingColors();
 }
 
-class _MovingBackground extends State<MovingBackground> with SingleTickerProviderStateMixin {
+class _SlidingColors extends State<SlidingColors> with SingleTickerProviderStateMixin {
   late AnimationController controller;
 
   @override
   void initState() {
     super.initState();
     controller = AnimationController(
-      duration: widget.cycle,
+      duration: const Duration(seconds: 4),
       vsync: this,
     )
       ..forward()

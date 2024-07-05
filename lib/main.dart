@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/moving_background.dart';
+import 'package:tokihakanenari/carousel.dart';
+import 'package:tokihakanenari/moving_backgrounds/sliding_colors.dart';
+import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 
 void main() {
   runApp(const TokiHaKaneNari());
@@ -36,16 +38,13 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  final List<Color> colors = [
+    const Color(0xffF99E43),
+    const Color(0xFFDA2323),
+  ];
+
   @override
   Widget build(BuildContext context) {
-    return MovingBackground(cycle: const Duration(seconds: 20), colors: <Color>[
-      Colors.white,
-      Colors.grey,
-      Colors.white,
-      Colors.grey,
-      Colors.white,
-      Colors.grey,
-      Colors.white,
-    ]);
+    return FloatingWaves(colors: colors, child: Carousel());
   }
 }
