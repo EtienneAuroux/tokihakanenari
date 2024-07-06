@@ -1,12 +1,12 @@
 import 'dart:async';
 import 'dart:math';
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tokihakanenari/card_decoration.dart';
-import 'package:tokihakanenari/custom_card.dart';
-
-import 'dart:developer' as developer;
+import 'package:tokihakanenari/card_generators/custom_card.dart';
+import 'package:tokihakanenari/card_generators/small_card.dart';
+import 'package:tokihakanenari/my_enums.dart';
 
 class Carousel extends StatefulWidget {
   final Function(CardType cardType) onRequestToEnlargeCard;
@@ -18,7 +18,7 @@ class Carousel extends StatefulWidget {
 }
 
 class _CarouselState extends State<Carousel> {
-  late List<CustomCard> customCards;
+  late List<SmallCard> smallCards;
 
   Future<bool> ensureInitialization() {
     Completer<bool> completer = Completer<bool>();
@@ -42,28 +42,28 @@ class _CarouselState extends State<Carousel> {
   void initState() {
     super.initState();
 
-    customCards = [
-      CustomCard(
+    smallCards = [
+      SmallCard(
         cardType: CardType.addIncome,
-        cardStatus: CardStatus.small,
-        onChangeCardStatus: (CardStatus newCardStatus) {
+        onTapSmallCard: () {
           widget.onRequestToEnlargeCard(CardType.addIncome);
         },
+        onLongPressSmallCard: () {},
       ),
-      CustomCard(
+      SmallCard(
         cardType: CardType.passiveIncome,
-        cardStatus: CardStatus.small,
-        onChangeCardStatus: (CardStatus newCardStatus) {
+        onTapSmallCard: () {
           widget.onRequestToEnlargeCard(CardType.passiveIncome);
         },
+        onLongPressSmallCard: () {},
       ),
-      CustomCard(
+      SmallCard(
         cardType: CardType.addIncome,
-        cardStatus: CardStatus.small,
-        onChangeCardStatus: (CardStatus newCardStatus) {
+        onTapSmallCard: () {
           widget.onRequestToEnlargeCard(CardType.addIncome);
         },
-      )
+        onLongPressSmallCard: () {},
+      ),
     ];
   }
 
@@ -83,9 +83,9 @@ class _CarouselState extends State<Carousel> {
               scrollDirection: screenOrientation == Orientation.landscape ? Axis.horizontal : Axis.vertical,
               allowImplicitScrolling: true,
               controller: pageController,
-              itemCount: customCards.length,
+              itemCount: smallCards.length,
               itemBuilder: ((context, index) {
-                final card = customCards[index];
+                final card = smallCards[index];
                 return AnimatedBuilder(
                   animation: pageController,
                   builder: ((context, widget) {

@@ -1,28 +1,27 @@
-import 'dart:developer' as developer;
-
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/add_income.dart';
-import 'package:tokihakanenari/card_decoration.dart';
-import 'package:tokihakanenari/passive_income.dart';
-import 'package:tokihakanenari/saving_accounts.dart';
+import 'package:tokihakanenari/card_types/add_card.dart';
+import 'package:tokihakanenari/visual_tools/card_decoration.dart';
+import 'package:tokihakanenari/card_types/passive_income.dart';
+import 'package:tokihakanenari/card_types/saving_accounts.dart';
+import 'package:tokihakanenari/my_enums.dart';
 
-class CustomCard extends StatefulWidget {
+class SmallCard extends StatefulWidget {
   final CardType cardType;
-  final CardStatus cardStatus;
-  final Function(CardStatus) onChangeCardStatus;
+  final Function() onTapSmallCard;
+  final Function() onLongPressSmallCard;
 
-  const CustomCard({
+  const SmallCard({
     super.key,
     required this.cardType,
-    required this.cardStatus,
-    required this.onChangeCardStatus,
+    required this.onTapSmallCard,
+    required this.onLongPressSmallCard,
   });
 
   @override
-  State<CustomCard> createState() => _CustomCardState();
+  State<SmallCard> createState() => _SmallCardState();
 }
 
-class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateMixin {
+class _SmallCardState extends State<SmallCard> {
   late CardDecoration cardDecoration;
 
   Size cardSize(Size deviceSize, Orientation deviceOrientation) {
@@ -33,16 +32,20 @@ class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateM
     }
   }
 
-  Widget generateCard(CardType cardType) {
+  Widget generateSmallCard(CardType cardType) {
     switch (cardType) {
       case CardType.passiveIncome:
-        return const PassiveIncome();
+        return const PassiveIncome(
+          cardStatus: CardStatus.small,
+        );
       case CardType.addIncome:
-        return AddIncome(
-          cardStatus: widget.cardStatus,
+        return const AddCard(
+          cardStatus: CardStatus.small,
         );
       case CardType.savingAccounts:
-        return const SavingAccounts();
+        return const SavingAccounts(
+          cardStatus: CardStatus.small,
+        );
     }
   }
 
@@ -70,21 +73,15 @@ class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateM
           child: InkWell(
             splashColor: cardDecoration.splashColor,
             onLongPress: () {
-              developer.log('longpress');
+              widget.onLongPressSmallCard();
             },
             onTap: () {
-              if (widget.cardStatus == CardStatus.small) {
-                widget.onChangeCardStatus(CardStatus.big);
-              } else if (widget.cardStatus == CardStatus.big) {
-                widget.onChangeCardStatus(CardStatus.small);
-              }
+              widget.onTapSmallCard();
             },
-            child: generateCard(widget.cardType),
+            child: generateSmallCard(widget.cardType),
           ),
         ),
       ),
     );
   }
 }
-
-enum CardStatus { small, big }

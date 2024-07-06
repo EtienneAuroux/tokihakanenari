@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/my_enums.dart';
 
 class SavingAccounts extends StatefulWidget {
-  const SavingAccounts({super.key});
+  final CardStatus cardStatus;
+
+  const SavingAccounts({
+    super.key,
+    required this.cardStatus,
+  });
 
   @override
   State<SavingAccounts> createState() => _SavingAccountsState();
@@ -10,8 +16,8 @@ class SavingAccounts extends StatefulWidget {
 class _SavingAccountsState extends State<SavingAccounts> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('saving'),
+    return const Center(
+      child: Text('Saving accounts'),
     );
   }
 }

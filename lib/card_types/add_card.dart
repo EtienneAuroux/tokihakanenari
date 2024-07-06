@@ -1,21 +1,25 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/custom_card.dart';
+import 'package:tokihakanenari/my_enums.dart';
 
-class AddIncome extends StatefulWidget {
+class AddCard extends StatefulWidget {
   final CardStatus cardStatus;
 
-  const AddIncome({
+  const AddCard({
     super.key,
     required this.cardStatus,
   });
 
   @override
-  State<AddIncome> createState() => _AddIncomeState();
+  State<AddCard> createState() => _AddCardState();
 }
 
-class _AddIncomeState extends State<AddIncome> {
+class _AddCardState extends State<AddCard> {
   Widget setCardContent(CardStatus cardStatus) {
     switch (cardStatus) {
+      case CardStatus.mini:
+        return const Center(
+          child: Text('mini'),
+        );
       case CardStatus.small:
         return const Center(
           child: Icon(

@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/my_enums.dart';
 
 class PassiveIncome extends StatefulWidget {
-  const PassiveIncome({super.key});
+  final CardStatus cardStatus;
+
+  const PassiveIncome({
+    super.key,
+    required this.cardStatus,
+  });
 
   @override
   State<PassiveIncome> createState() => _PassiveIncomeState();
@@ -10,8 +16,8 @@ class PassiveIncome extends StatefulWidget {
 class _PassiveIncomeState extends State<PassiveIncome> {
   @override
   Widget build(BuildContext context) {
-    return Center(
-      child: Text('passive'),
+    return const Center(
+      child: Text('Passive income'),
     );
   }
 }

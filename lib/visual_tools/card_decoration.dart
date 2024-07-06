@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/color_palette.dart';
+import 'package:tokihakanenari/visual_tools/color_palette.dart';
+import 'package:tokihakanenari/my_enums.dart';
 
 class CardDecoration {
   final CardType cardType;
@@ -41,5 +42,3 @@ class CardDecoration {
     }
   }
 }
-
-enum CardType { passiveIncome, savingAccounts, addIncome }
