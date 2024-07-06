@@ -4,12 +4,11 @@ import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tokihakanenari/card_generators/custom_card.dart';
 import 'package:tokihakanenari/card_generators/small_card.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 class Carousel extends StatefulWidget {
-  final Function(CardType cardType) onRequestToEnlargeCard;
+  final void Function(CardType cardType) onRequestToEnlargeCard;
 
   const Carousel({super.key, required this.onRequestToEnlargeCard});
 

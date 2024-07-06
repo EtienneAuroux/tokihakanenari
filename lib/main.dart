@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/card_generators/big_card.dart';
 import 'package:tokihakanenari/carousel.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
-import 'package:tokihakanenari/card_generators/custom_card.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
@@ -25,17 +25,13 @@ class TokiHaKaneNari extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
         useMaterial3: true,
       ),
-      home: MainPage(
-        appTitle: appTitle,
-      ),
+      home: const MainPage(),
     );
   }
 }
 
 class MainPage extends StatefulWidget {
-  final String appTitle;
-
-  const MainPage({super.key, required this.appTitle});
+  const MainPage({super.key});
 
   @override
   State<MainPage> createState() => _MainPageState();
@@ -50,25 +46,11 @@ class _MainPageState extends State<MainPage> {
   bool carouselView = true;
   CardType cardToEnlarge = CardType.passiveIncome;
 
-  Widget largeCard(CardType cardType) {
-    return CustomCard(
-      cardType: cardType,
-      cardStatus: CardStatus.big,
-      onChangeCardStatus: (CardStatus cardStatus) {
-        if (cardStatus == CardStatus.small) {
-          setState(() {
-            carouselView = true;
-          });
-        }
-      },
-    );
-  }
-
   @override
   Widget build(BuildContext context) {
     return FloatingWaves(
       colors: colors,
-      child: carouselView
+      child: carouselView // Should this be a stack? With visibility control?
           ? Carousel(
               onRequestToEnlargeCard: (cardType) {
                 setState(() {
@@ -77,7 +59,14 @@ class _MainPageState extends State<MainPage> {
                 });
               },
             )
-          : largeCard(cardToEnlarge),
+          : BigCard(
+              cardType: cardToEnlarge,
+              onPanBigCardCorner: () {
+                setState(() {
+                  carouselView = true;
+                });
+              },
+            ),
     );
   }
 }

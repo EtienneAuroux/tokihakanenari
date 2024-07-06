@@ -7,8 +7,8 @@ import 'package:tokihakanenari/my_enums.dart';
 
 class SmallCard extends StatefulWidget {
   final CardType cardType;
-  final Function() onTapSmallCard;
-  final Function() onLongPressSmallCard;
+  final void Function() onTapSmallCard;
+  final void Function() onLongPressSmallCard;
 
   const SmallCard({
     super.key,
