@@ -3,26 +3,21 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:tokihakanenari/add_income.dart';
 import 'package:tokihakanenari/card_decoration.dart';
 import 'package:tokihakanenari/custom_card.dart';
-import 'package:tokihakanenari/passive_income.dart';
-import 'package:tokihakanenari/saving_accounts.dart';
 
 import 'dart:developer' as developer;
 
 class Carousel extends StatefulWidget {
-  final Function(CardType cardType) callback;
+  final Function(CardType cardType) onRequestToEnlargeCard;
 
-  const Carousel({super.key, required this.callback});
+  const Carousel({super.key, required this.onRequestToEnlargeCard});
 
   @override
   State<Carousel> createState() => _CarouselState();
 }
 
 class _CarouselState extends State<Carousel> {
-  CardType? clickedCard;
-
   late List<CustomCard> customCards;
 
   Future<bool> ensureInitialization() {
@@ -43,13 +38,6 @@ class _CarouselState extends State<Carousel> {
     }
   }
 
-  void handleUserSingleTap(CardType cardType) {
-    setState(() {
-      clickedCard = cardType;
-    });
-    widget.callback(cardType);
-  }
-
   @override
   void initState() {
     super.initState();
@@ -57,24 +45,23 @@ class _CarouselState extends State<Carousel> {
     customCards = [
       CustomCard(
         cardType: CardType.addIncome,
-        cardContent: AddIncome(),
-        callback: (bool tap) {
-          // handleUserSingleTap(CardType.addIncome);
-          widget.callback(CardType.addIncome);
+        cardStatus: CardStatus.small,
+        onChangeCardStatus: (CardStatus newCardStatus) {
+          widget.onRequestToEnlargeCard(CardType.addIncome);
         },
       ),
       CustomCard(
         cardType: CardType.passiveIncome,
-        cardContent: PassiveIncome(),
-        callback: (bool tap) {
-          developer.log('callback');
+        cardStatus: CardStatus.small,
+        onChangeCardStatus: (CardStatus newCardStatus) {
+          widget.onRequestToEnlargeCard(CardType.passiveIncome);
         },
       ),
       CustomCard(
         cardType: CardType.addIncome,
-        cardContent: AddIncome(),
-        callback: (bool tap) {
-          developer.log('callback');
+        cardStatus: CardStatus.small,
+        onChangeCardStatus: (CardStatus newCardStatus) {
+          widget.onRequestToEnlargeCard(CardType.addIncome);
         },
       )
     ];

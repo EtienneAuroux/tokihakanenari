@@ -1,18 +1,21 @@
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/add_income.dart';
 import 'package:tokihakanenari/card_decoration.dart';
+import 'package:tokihakanenari/passive_income.dart';
+import 'package:tokihakanenari/saving_accounts.dart';
 
 class CustomCard extends StatefulWidget {
   final CardType cardType;
-  final Widget cardContent;
-  final Function(bool) callback;
+  final CardStatus cardStatus;
+  final Function(CardStatus) onChangeCardStatus;
 
   const CustomCard({
     super.key,
     required this.cardType,
-    required this.cardContent,
-    required this.callback,
+    required this.cardStatus,
+    required this.onChangeCardStatus,
   });
 
   @override
@@ -27,6 +30,19 @@ class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateM
       return Size(deviceSize.width * 0.6, deviceSize.height * 0.8);
     } else {
       return Size(deviceSize.width * 0.8, deviceSize.height * 0.6);
+    }
+  }
+
+  Widget generateCard(CardType cardType) {
+    switch (cardType) {
+      case CardType.passiveIncome:
+        return const PassiveIncome();
+      case CardType.addIncome:
+        return AddIncome(
+          cardStatus: widget.cardStatus,
+        );
+      case CardType.savingAccounts:
+        return const SavingAccounts();
     }
   }
 
@@ -57,13 +73,18 @@ class _CustomCardState extends State<CustomCard> with SingleTickerProviderStateM
               developer.log('longpress');
             },
             onTap: () {
-              developer.log('tap');
-              widget.callback(true);
+              if (widget.cardStatus == CardStatus.small) {
+                widget.onChangeCardStatus(CardStatus.big);
+              } else if (widget.cardStatus == CardStatus.big) {
+                widget.onChangeCardStatus(CardStatus.small);
+              }
             },
-            child: widget.cardContent,
+            child: generateCard(widget.cardType),
           ),
         ),
       ),
     );
   }
 }
+
+enum CardStatus { small, big }

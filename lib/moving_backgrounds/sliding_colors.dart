@@ -60,7 +60,9 @@ class _SlidingColors extends State<SlidingColors> with SingleTickerProviderState
               colors: widget.colors,
             ),
           ),
-          child: Carousel(),
+          child: Carousel(
+            onRequestToEnlargeCard: (cardType) {},
+          ),
         );
       },
     );

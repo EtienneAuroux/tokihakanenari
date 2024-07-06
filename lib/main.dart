@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/card_decoration.dart';
 import 'package:tokihakanenari/carousel.dart';
 import 'package:tokihakanenari/color_palette.dart';
+import 'package:tokihakanenari/custom_card.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 
 import 'dart:developer' as developer;
@@ -45,15 +47,37 @@ class _MainPageState extends State<MainPage> {
     ColorPalette.autumnOrange,
   ];
 
+  bool carouselView = true;
+  CardType cardToEnlarge = CardType.passiveIncome;
+
+  Widget largeCard(CardType cardType) {
+    return CustomCard(
+      cardType: cardType,
+      cardStatus: CardStatus.big,
+      onChangeCardStatus: (CardStatus cardStatus) {
+        if (cardStatus == CardStatus.small) {
+          setState(() {
+            carouselView = true;
+          });
+        }
+      },
+    );
+  }
+
   @override
   Widget build(BuildContext context) {
     return FloatingWaves(
       colors: colors,
-      child: Carousel(
-        callback: (cardType) {
-          developer.log('user wants ${cardType.name}');
-        },
-      ),
+      child: carouselView
+          ? Carousel(
+              onRequestToEnlargeCard: (cardType) {
+                setState(() {
+                  cardToEnlarge = cardType;
+                  carouselView = false;
+                });
+              },
+            )
+          : largeCard(cardToEnlarge),
     );
   }
 }
