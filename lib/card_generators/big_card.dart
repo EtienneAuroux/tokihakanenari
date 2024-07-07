@@ -25,7 +25,7 @@ class BigCard extends StatefulWidget {
 }
 
 class _BigCardState extends State<BigCard> {
-  double panDistance = 0;
+  double flippedDistance = 0;
 
   Widget generateBigCard(CardType cardType) {
     switch (cardType) {
@@ -53,34 +53,34 @@ class _BigCardState extends State<BigCard> {
       onPanUpdate: (details) {
         if (details.localPosition.dx < bigCardSize.width / 2 && details.localPosition.dy > bigCardSize.height / 2) {
           setState(() {
-            panDistance += details.delta.distance;
+            flippedDistance += details.delta.distance;
           });
-          if (panDistance > panLimit) {
+          if (flippedDistance > panLimit) {
             widget.onPanBigCardCorner();
           }
         }
       },
       onPanEnd: (details) {
+        // Here flipped distance should go back to 0 slowly.
         setState(() {
-          panDistance = 0;
+          flippedDistance = 0;
         });
       },
       child: Stack(
         alignment: Alignment.center,
         children: [
-          ClipPath(
-            clipper: LargeCardContour(
-              flippedCornerLength: 100 + panDistance,
-            ),
-            child: Container(
-              decoration: CardDecoration.getDecoration(widget.cardType),
-              child: generateBigCard(widget.cardType),
-            ),
-          ),
+          // ClipPath(
+          //   clipper: LargeCardContour(
+          //     flippedCornerLength: 100 + flippedDistance,
+          //   ),
+          //   child: Container(
+          //     decoration: CardDecoration.getDecoration(widget.cardType),
+          //     child: generateBigCard(widget.cardType),
+          //   ),
+          // ),
           ClipPath(
             clipper: FlippedCornerContour(
-              flippedCornerLength: 100 + panDistance,
-              cornerRadius: 30,
+              flippedDistance: flippedDistance,
             ),
             child: Container(
               decoration: CardDecoration.getCornerDecoration(widget.cardType),
