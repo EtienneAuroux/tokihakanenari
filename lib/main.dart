@@ -48,6 +48,8 @@ class _MainPageState extends State<MainPage> {
 
   @override
   Widget build(BuildContext context) {
+    Size screenSize = MediaQuery.of(context).size;
+
     return FloatingWaves(
       colors: colors,
       child: carouselView // Should this be a stack? With visibility control?
@@ -59,13 +61,17 @@ class _MainPageState extends State<MainPage> {
                 });
               },
             )
-          : BigCard(
-              cardType: cardToEnlarge,
-              onPanBigCardCorner: () {
-                setState(() {
-                  carouselView = true;
-                });
-              },
+          : Container(
+              width: screenSize.width * 0.9,
+              height: screenSize.height * 0.9,
+              child: BigCard(
+                cardType: cardToEnlarge,
+                onPanBigCardCorner: () {
+                  setState(() {
+                    carouselView = true;
+                  });
+                },
+              ),
             ),
     );
   }

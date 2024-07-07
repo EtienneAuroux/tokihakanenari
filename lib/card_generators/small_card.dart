@@ -22,8 +22,6 @@ class SmallCard extends StatefulWidget {
 }
 
 class _SmallCardState extends State<SmallCard> {
-  late CardDecoration cardDecoration;
-
   Size cardSize(Size deviceSize, Orientation deviceOrientation) {
     if (deviceOrientation == Orientation.landscape) {
       return Size(deviceSize.width * 0.6, deviceSize.height * 0.8);
@@ -50,13 +48,6 @@ class _SmallCardState extends State<SmallCard> {
   }
 
   @override
-  void initState() {
-    super.initState();
-
-    cardDecoration = CardDecoration(widget.cardType);
-  }
-
-  @override
   Widget build(BuildContext context) {
     MediaQueryData queryData = MediaQuery.of(context);
     Size deviceSize = queryData.size;
@@ -67,11 +58,11 @@ class _SmallCardState extends State<SmallCard> {
       child: Material(
         color: Colors.transparent,
         child: Container(
-          decoration: cardDecoration.boxDecoration,
+          decoration: CardDecoration.getDecoration(widget.cardType),
           width: cardSize(deviceSize, deviceOrientation).width,
           height: cardSize(deviceSize, deviceOrientation).height,
           child: InkWell(
-            splashColor: cardDecoration.splashColor,
+            splashColor: CardDecoration.getSplashColor(widget.cardType),
             onLongPress: () {
               widget.onLongPressSmallCard();
             },

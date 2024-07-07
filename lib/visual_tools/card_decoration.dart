@@ -3,21 +3,13 @@ import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 class CardDecoration {
-  final CardType cardType;
-  late BoxDecoration boxDecoration;
-  late Color splashColor;
-
-  CardDecoration(this.cardType) {
-    initializeDecoration(cardType);
-  }
-
-  void initializeDecoration(CardType cardType) {
+  static BoxDecoration getDecoration(CardType cardType) {
     const double cardCornerRadius = 20;
     const int addIncomeCardAlpha = 127;
 
     switch (cardType) {
       case CardType.addIncome:
-        boxDecoration = BoxDecoration(
+        return BoxDecoration(
           color: Colors.grey.withAlpha(addIncomeCardAlpha),
           borderRadius: const BorderRadius.all(Radius.circular(cardCornerRadius)),
           border: Border.all(
@@ -25,20 +17,28 @@ class CardDecoration {
             width: 10,
           ),
         );
-        splashColor = ColorPalette.azurSnow.withAlpha(70);
       case CardType.passiveIncome:
-        boxDecoration = BoxDecoration(
+        return BoxDecoration(
           color: Colors.blue.withAlpha(addIncomeCardAlpha),
           borderRadius: const BorderRadius.all(Radius.circular(cardCornerRadius)),
           border: Border.all(color: Colors.black.withAlpha(addIncomeCardAlpha), width: 1),
         );
-        splashColor = Colors.blue;
       case CardType.savingAccounts:
-        boxDecoration = const BoxDecoration(
+        return const BoxDecoration(
           color: Colors.green,
           borderRadius: BorderRadius.all(Radius.circular(cardCornerRadius)),
         );
-        splashColor = Colors.blue;
+    }
+  }
+
+  static Color getSplashColor(CardType cardType) {
+    switch (cardType) {
+      case CardType.addIncome:
+        return ColorPalette.azurSnow.withAlpha(70);
+      case CardType.passiveIncome:
+        return Colors.blue;
+      case CardType.savingAccounts:
+        return Colors.blue;
     }
   }
 }
