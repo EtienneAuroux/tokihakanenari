@@ -61,17 +61,13 @@ class _MainPageState extends State<MainPage> {
                 });
               },
             )
-          : Container(
-              width: screenSize.width * 0.9,
-              height: screenSize.height * 0.9,
-              child: BigCard(
-                cardType: cardToEnlarge,
-                onPanBigCardCorner: () {
-                  setState(() {
-                    carouselView = true;
-                  });
-                },
-              ),
+          : BigCard(
+              cardType: cardToEnlarge,
+              onPanBigCardCorner: () {
+                setState(() {
+                  carouselView = true;
+                });
+              },
             ),
     );
   }

@@ -46,7 +46,7 @@ class _BigCardState extends State<BigCard> {
 
   @override
   Widget build(BuildContext context) {
-    Size bigCardSize = MediaQuery.of(context).size * 0.9;
+    Size bigCardSize = MediaQuery.of(context).size;
     double panLimit = sqrt(pow(bigCardSize.width / 6, 2) + pow(bigCardSize.height / 6, 2));
 
     return GestureDetector(
@@ -61,7 +61,9 @@ class _BigCardState extends State<BigCard> {
         }
       },
       onPanEnd: (details) {
-        panDistance = 0;
+        setState(() {
+          panDistance = 0;
+        });
       },
       child: Stack(
         alignment: Alignment.center,
@@ -69,12 +71,9 @@ class _BigCardState extends State<BigCard> {
           ClipPath(
             clipper: LargeCardContour(
               flippedCornerLength: 100 + panDistance,
-              cornerRadius: 30,
             ),
             child: Container(
               decoration: CardDecoration.getDecoration(widget.cardType),
-              width: bigCardSize.width,
-              height: bigCardSize.height,
               child: generateBigCard(widget.cardType),
             ),
           ),
@@ -84,9 +83,7 @@ class _BigCardState extends State<BigCard> {
               cornerRadius: 30,
             ),
             child: Container(
-              width: bigCardSize.width,
-              height: bigCardSize.height,
-              color: Colors.green,
+              decoration: CardDecoration.getCornerDecoration(widget.cardType),
             ),
           )
         ],

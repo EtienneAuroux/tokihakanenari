@@ -3,6 +3,35 @@ import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 class CardDecoration {
+  static BoxDecoration getCornerDecoration(CardType cardType) {
+    switch (cardType) {
+      case CardType.addIncome:
+        return const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black, Colors.green],
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+          ),
+        );
+      case CardType.passiveIncome:
+        return const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black, Colors.green],
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+          ),
+        );
+      case CardType.savingAccounts:
+        return const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [Colors.black, Colors.green],
+            begin: Alignment.bottomLeft,
+            end: Alignment.topRight,
+          ),
+        );
+    }
+  }
+
   static BoxDecoration getDecoration(CardType cardType) {
     const double cardCornerRadius = 20;
     const int addIncomeCardAlpha = 127;
