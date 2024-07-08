@@ -111,7 +111,7 @@ class _BigCardState extends State<BigCard> {
               flippedDistance: flippedDistance,
             ),
             child: Container(
-              decoration: CardDecoration.getDecoration(widget.cardType),
+              decoration: CardDecoration.getBigDecoration(widget.cardType),
               child: generateBigCard(widget.cardType),
             ),
           ),
@@ -120,7 +120,7 @@ class _BigCardState extends State<BigCard> {
               flippedDistance: flippedDistance,
             ),
             child: Container(
-              decoration: CardDecoration.getCornerDecoration(widget.cardType),
+              decoration: CardDecoration.getBigCornerDecoration(widget.cardType),
             ),
           )
         ],

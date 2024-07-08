@@ -3,7 +3,7 @@ import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 class CardDecoration {
-  static BoxDecoration getCornerDecoration(CardType cardType) {
+  static BoxDecoration getBigCornerDecoration(CardType cardType) {
     switch (cardType) {
       case CardType.addIncome:
         return const BoxDecoration(
@@ -16,7 +16,7 @@ class CardDecoration {
       case CardType.passiveIncome:
         return const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.black, Colors.green],
+            colors: [Colors.brown, Colors.grey],
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
           ),
@@ -32,25 +32,61 @@ class CardDecoration {
     }
   }
 
-  static BoxDecoration getDecoration(CardType cardType) {
+  static BoxDecoration getBigDecoration(CardType cardType) {
+    switch (cardType) {
+      case CardType.addIncome:
+        return const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [ColorPalette.mirrorGrey, ColorPalette.mirrorYellow],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topRight,
+          ),
+        );
+      case CardType.passiveIncome:
+        return const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              ColorPalette.oceanBlue,
+              ColorPalette.shallowOcean,
+            ],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topRight,
+          ),
+        );
+      case CardType.savingAccounts:
+        return BoxDecoration();
+    }
+  }
+
+  static BoxDecoration getSmallDecoration(CardType cardType) {
     const double cardCornerRadius = 20;
-    const int addIncomeCardAlpha = 127;
+    const int smallCardAlpha = 127;
 
     switch (cardType) {
       case CardType.addIncome:
         return BoxDecoration(
-          color: Colors.grey.withAlpha(addIncomeCardAlpha),
+          gradient: LinearGradient(
+            colors: [ColorPalette.mirrorGrey.withAlpha(smallCardAlpha), ColorPalette.mirrorYellow.withAlpha(smallCardAlpha)],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topRight,
+          ),
           borderRadius: const BorderRadius.all(Radius.circular(cardCornerRadius)),
           border: Border.all(
-            color: Colors.black.withAlpha(addIncomeCardAlpha),
+            color: Colors.black.withAlpha(smallCardAlpha),
             width: 10,
           ),
         );
       case CardType.passiveIncome:
         return BoxDecoration(
-          color: Colors.blue,
+          gradient: LinearGradient(
+            colors: [
+              ColorPalette.oceanBlue.withAlpha(smallCardAlpha),
+              ColorPalette.shallowOcean.withAlpha(smallCardAlpha),
+            ],
+            begin: Alignment.bottomCenter,
+            end: Alignment.topRight,
+          ),
           borderRadius: const BorderRadius.all(Radius.circular(cardCornerRadius)),
-          border: Border.all(color: Colors.black.withAlpha(addIncomeCardAlpha), width: 1),
         );
       case CardType.savingAccounts:
         return const BoxDecoration(

@@ -58,7 +58,7 @@ class _SmallCardState extends State<SmallCard> {
       child: Material(
         color: Colors.transparent,
         child: Container(
-          decoration: CardDecoration.getDecoration(widget.cardType),
+          decoration: CardDecoration.getSmallDecoration(widget.cardType),
           width: cardSize(deviceSize, deviceOrientation).width,
           height: cardSize(deviceSize, deviceOrientation).height,
           child: InkWell(

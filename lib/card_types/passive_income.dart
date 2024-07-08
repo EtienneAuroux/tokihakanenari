@@ -17,7 +17,10 @@ class _PassiveIncomeState extends State<PassiveIncome> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('Passive income'),
+      child: Text(
+        'Passive income',
+        style: TextStyle(fontSize: 20, color: Colors.black, decoration: TextDecoration.none),
+      ),
     );
   }
 }
