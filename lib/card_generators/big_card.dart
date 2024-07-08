@@ -56,7 +56,7 @@ class _BigCardState extends State<BigCard> {
             flippedDistance += details.delta.distance;
           });
           if (flippedDistance > panLimit) {
-            widget.onPanBigCardCorner();
+            // widget.onPanBigCardCorner();
           }
         }
       },
@@ -69,15 +69,15 @@ class _BigCardState extends State<BigCard> {
       child: Stack(
         alignment: Alignment.center,
         children: [
-          // ClipPath(
-          //   clipper: LargeCardContour(
-          //     flippedCornerLength: 100 + flippedDistance,
-          //   ),
-          //   child: Container(
-          //     decoration: CardDecoration.getDecoration(widget.cardType),
-          //     child: generateBigCard(widget.cardType),
-          //   ),
-          // ),
+          ClipPath(
+            clipper: LargeCardContour(
+              flippedDistance: flippedDistance,
+            ),
+            child: Container(
+              decoration: CardDecoration.getDecoration(widget.cardType),
+              child: generateBigCard(widget.cardType),
+            ),
+          ),
           ClipPath(
             clipper: FlippedCornerContour(
               flippedDistance: flippedDistance,
