@@ -48,7 +48,7 @@ class CardDecoration {
         );
       case CardType.passiveIncome:
         return BoxDecoration(
-          color: Colors.blue.withAlpha(addIncomeCardAlpha),
+          color: Colors.blue,
           borderRadius: const BorderRadius.all(Radius.circular(cardCornerRadius)),
           border: Border.all(color: Colors.black.withAlpha(addIncomeCardAlpha), width: 1),
         );

@@ -26,6 +26,7 @@ class BigCard extends StatefulWidget {
 
 class _BigCardState extends State<BigCard> {
   double flippedDistance = 0;
+  bool userTriggerForwardFlip = false;
 
   Widget generateBigCard(CardType cardType) {
     switch (cardType) {
@@ -44,6 +45,17 @@ class _BigCardState extends State<BigCard> {
     }
   }
 
+  void forwardPageFlipping(Size size) async {
+    while (flippedDistance < size.width * 3) {
+      setState(() {
+        flippedDistance += 4;
+      });
+      await Future.delayed(const Duration(milliseconds: 1));
+    }
+    widget.onPanBigCardCorner();
+    userTriggerForwardFlip = false;
+  }
+
   @override
   Widget build(BuildContext context) {
     Size bigCardSize = MediaQuery.of(context).size;
@@ -51,20 +63,23 @@ class _BigCardState extends State<BigCard> {
 
     return GestureDetector(
       onPanUpdate: (details) {
-        if (details.localPosition.dx < bigCardSize.width / 2 && details.localPosition.dy > bigCardSize.height / 2) {
+        if (details.localPosition.dx < 2 * bigCardSize.width / 3 && details.localPosition.dy > bigCardSize.height / 2) {
           setState(() {
             flippedDistance += details.delta.distance;
           });
-          if (flippedDistance > panLimit) {
-            // widget.onPanBigCardCorner();
+          if (flippedDistance > panLimit && !userTriggerForwardFlip) {
+            userTriggerForwardFlip = true;
+            forwardPageFlipping(bigCardSize);
           }
         }
       },
       onPanEnd: (details) {
-        // Here flipped distance should go back to 0 slowly.
-        setState(() {
-          flippedDistance = 0;
-        });
+        // Here flipped distance should go back to 0 slowly. But should only happen before animation.
+        if (flippedDistance <= panLimit) {
+          setState(() {
+            flippedDistance = 0;
+          });
+        }
       },
       child: Stack(
         alignment: Alignment.center,

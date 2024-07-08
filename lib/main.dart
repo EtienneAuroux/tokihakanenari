@@ -52,23 +52,27 @@ class _MainPageState extends State<MainPage> {
 
     return FloatingWaves(
       colors: colors,
-      child: carouselView // Should this be a stack? With visibility control?
-          ? Carousel(
-              onRequestToEnlargeCard: (cardType) {
-                setState(() {
-                  cardToEnlarge = cardType;
-                  carouselView = false;
-                });
-              },
-            )
-          : BigCard(
-              cardType: cardToEnlarge,
-              onPanBigCardCorner: () {
-                setState(() {
-                  carouselView = true;
-                });
-              },
-            ),
+      child: Stack(children: [
+        Carousel(
+          onRequestToEnlargeCard: (cardType) {
+            setState(() {
+              cardToEnlarge = cardType;
+              carouselView = false;
+            });
+          },
+        ),
+        Visibility(
+          visible: !carouselView,
+          child: BigCard(
+            cardType: cardToEnlarge,
+            onPanBigCardCorner: () {
+              setState(() {
+                carouselView = true;
+              });
+            },
+          ),
+        )
+      ]),
     );
   }
 }

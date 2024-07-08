@@ -30,12 +30,12 @@ class LargeCardContour extends CustomClipper<Path> {
 
     Point cornerControl = calculateCornerPoint(size, flippedDistance, flippedCornerLength);
 
-    Point topLeft = Point(0, cornerControl.y - flippedDistance * 1.5);
+    Point topLeft = Point(0, cornerControl.y - flippedDistance * 1.65);
     if (topLeft.y < 0) {
-      topLeft = Point(flippedDistance - (size.height - flippedCornerLength) / 2, 0);
+      topLeft = Point(flippedDistance - cornerControl.y / 1.65, 0);
     }
 
-    Point bottomRight = Point(cornerControl.x - flippedDistance * 0.4, size.height);
+    Point bottomRight = Point(cornerControl.x - flippedDistance * 0.25, size.height);
     if (bottomRight.x > size.width) {
       bottomRight = Point(size.width, size.height);
     }
@@ -45,7 +45,7 @@ class LargeCardContour extends CustomClipper<Path> {
     path.lineTo(bottomRight.x.toDouble(), bottomRight.y.toDouble());
     path.lineTo(size.width, size.height);
     path.lineTo(size.width, 0);
-    path.lineTo(0, 0);
+    path.lineTo(topLeft.x.toDouble(), 0);
 
     return path;
   }
@@ -82,12 +82,14 @@ class FlippedCornerContour extends CustomClipper<Path> {
 
     Point cornerControl = calculateCornerPoint(size, flippedDistance, flippedCornerLength);
 
-    Point topLeft = Point(0, cornerControl.y - flippedDistance * 1.5);
+    Point topLeft = Point(0, cornerControl.y - flippedDistance * 1.65);
+    Point top = topLeft;
     if (topLeft.y < 0) {
-      topLeft = Point(flippedDistance - (size.height - flippedCornerLength) / 2, 0);
+      topLeft = Point(flippedDistance - cornerControl.y / 1.65, 0);
+      top = Point(topLeft.x * 1.3, topLeft.y);
     }
 
-    Point bottomRight = Point(cornerControl.x - flippedDistance * 0.4, size.height);
+    Point bottomRight = Point(cornerControl.x - flippedDistance * 0.25, size.height);
     if (bottomRight.x > size.width) {
       bottomRight = Point(size.width, size.height);
     }
@@ -116,6 +118,7 @@ class FlippedCornerContour extends CustomClipper<Path> {
       cornerLeft.x.toDouble(),
       cornerLeft.y.toDouble(),
     );
+    path.lineTo(top.x.toDouble(), top.y.toDouble());
     path.lineTo(topLeft.x.toDouble(), topLeft.y.toDouble());
 
     return path;
