@@ -65,6 +65,7 @@ class _MainPageState extends State<MainPage> {
           visible: !carouselView,
           child: BigCard(
             cardType: cardToEnlarge,
+            screenSize: screenSize,
             onPanBigCardCorner: () {
               setState(() {
                 carouselView = true;

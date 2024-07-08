@@ -1,4 +1,5 @@
 import 'dart:math';
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_types/add_card.dart';
@@ -8,15 +9,15 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/large_card_clipper.dart';
 
-import 'dart:developer' as developer;
-
 class BigCard extends StatefulWidget {
   final CardType cardType;
+  final Size screenSize;
   final void Function() onPanBigCardCorner;
 
   const BigCard({
     super.key,
     required this.cardType,
+    required this.screenSize,
     required this.onPanBigCardCorner,
   });
 
@@ -56,25 +57,46 @@ class _BigCardState extends State<BigCard> {
     userTriggerForwardFlip = false;
   }
 
+  void backwardPageFlipping(Size size) async {
+    setState(() {
+      flippedDistance = size.width * 3;
+    });
+    while (flippedDistance > 0) {
+      setState(() {
+        if (flippedDistance - 4 < 0) {
+          flippedDistance = 0;
+        } else {
+          flippedDistance -= 4;
+        }
+      });
+      await Future.delayed(const Duration(milliseconds: 1));
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    backwardPageFlipping(widget.screenSize);
+  }
+
   @override
   Widget build(BuildContext context) {
-    Size bigCardSize = MediaQuery.of(context).size;
-    double panLimit = sqrt(pow(bigCardSize.width / 6, 2) + pow(bigCardSize.height / 6, 2));
+    double panLimit = sqrt(pow(widget.screenSize.width / 6, 2) + pow(widget.screenSize.height / 6, 2));
 
     return GestureDetector(
       onPanUpdate: (details) {
-        if (details.localPosition.dx < 2 * bigCardSize.width / 3 && details.localPosition.dy > bigCardSize.height / 2) {
+        if (details.localPosition.dx < 2 * widget.screenSize.width / 3 && details.localPosition.dy > widget.screenSize.height / 2) {
           setState(() {
             flippedDistance += details.delta.distance;
           });
           if (flippedDistance > panLimit && !userTriggerForwardFlip) {
             userTriggerForwardFlip = true;
-            forwardPageFlipping(bigCardSize);
+            forwardPageFlipping(widget.screenSize);
           }
         }
       },
       onPanEnd: (details) {
-        // Here flipped distance should go back to 0 slowly. But should only happen before animation.
         if (flippedDistance <= panLimit) {
           setState(() {
             flippedDistance = 0;
