@@ -27,7 +27,7 @@ class SmallCard extends StatefulWidget {
 class _SmallCardState extends State<SmallCard> {
   Widget generateSmallCard(CardType cardType) {
     switch (cardType) {
-      case CardType.addIncome:
+      case CardType.addCard:
         return const AddCard(
           cardStatus: CardStatus.small,
         );

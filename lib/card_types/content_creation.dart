@@ -17,7 +17,10 @@ class _ContentCreationState extends State<ContentCreation> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: Text('Content creation'),
+      child: Text(
+        'Content creation',
+        style: TextStyle(fontSize: 20, color: Colors.black, decoration: TextDecoration.none),
+      ),
     );
   }
 }

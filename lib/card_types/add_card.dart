@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/card_generators/mini_card.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 class AddCard extends StatefulWidget {
@@ -14,12 +15,17 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
+  List<MiniCard> remainingCards = [
+    MiniCard(cardType: CardType.savingAccounts),
+    MiniCard(cardType: CardType.privateFunds),
+    MiniCard(cardType: CardType.indexFunds),
+    MiniCard(cardType: CardType.contentCreation),
+  ];
+
   Widget setCardContent(CardStatus cardStatus) {
     switch (cardStatus) {
       case CardStatus.mini:
-        return const Center(
-          child: Text('mini'),
-        );
+        throw UnimplementedError('addCard should not be used as a mini card.');
       case CardStatus.small:
         return const Center(
           child: Icon(
@@ -28,11 +34,14 @@ class _AddCardState extends State<AddCard> {
           ),
         );
       case CardStatus.big:
-        return const Center(
-          child: Icon(
-            Icons.remove_rounded,
-            size: 100,
+        return GridView(
+          padding: const EdgeInsets.all(20),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
           ),
+          children: remainingCards,
         );
     }
   }

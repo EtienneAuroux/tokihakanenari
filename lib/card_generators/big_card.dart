@@ -35,7 +35,7 @@ class _BigCardState extends State<BigCard> {
 
   Widget generateBigCard(CardType cardType) {
     switch (cardType) {
-      case CardType.addIncome:
+      case CardType.addCard:
         return const AddCard(
           cardStatus: CardStatus.big,
         );

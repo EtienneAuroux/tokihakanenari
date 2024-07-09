@@ -43,9 +43,9 @@ class _CarouselState extends State<Carousel> {
 
     smallCards = [
       SmallCard(
-        cardType: CardType.addIncome,
+        cardType: CardType.addCard,
         onTapSmallCard: () {
-          widget.onRequestToEnlargeCard(CardType.addIncome);
+          widget.onRequestToEnlargeCard(CardType.addCard);
         },
         onLongPressSmallCard: () {},
       ),
@@ -57,9 +57,9 @@ class _CarouselState extends State<Carousel> {
         onLongPressSmallCard: () {},
       ),
       SmallCard(
-        cardType: CardType.addIncome,
+        cardType: CardType.addCard,
         onTapSmallCard: () {
-          widget.onRequestToEnlargeCard(CardType.addIncome);
+          widget.onRequestToEnlargeCard(CardType.addCard);
         },
         onLongPressSmallCard: () {},
       ),
