@@ -15,15 +15,26 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
-  List<MiniCard> remainingCards = [
+  List<Widget> remainingCards = [
     MiniCard(cardType: CardType.savingAccounts),
     MiniCard(cardType: CardType.privateFunds),
     MiniCard(cardType: CardType.indexFunds),
     MiniCard(cardType: CardType.contentCreation),
   ];
 
-  Widget setCardContent(CardStatus cardStatus) {
+  Widget getCardContent(CardStatus cardStatus) {
     switch (cardStatus) {
+      case CardStatus.big:
+        return GridView(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+            crossAxisCount: 2,
+            mainAxisSpacing: 10,
+            crossAxisSpacing: 10,
+            mainAxisExtent: 100,
+          ),
+          children: remainingCards,
+        );
       case CardStatus.mini:
         throw UnimplementedError('addCard should not be used as a mini card.');
       case CardStatus.small:
@@ -33,21 +44,11 @@ class _AddCardState extends State<AddCard> {
             size: 100,
           ),
         );
-      case CardStatus.big:
-        return GridView(
-          padding: const EdgeInsets.all(20),
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 2,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-          ),
-          children: remainingCards,
-        );
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return setCardContent(widget.cardStatus);
+    return getCardContent(widget.cardStatus);
   }
 }
