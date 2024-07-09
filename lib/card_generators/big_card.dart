@@ -27,7 +27,8 @@ class BigCard extends StatefulWidget {
 
 class _BigCardState extends State<BigCard> {
   double flippedDistance = 0;
-  bool userTriggerForwardFlip = false;
+  Duration? panStartTime;
+  bool forwardPageFlipping = false;
 
   Widget generateBigCard(CardType cardType) {
     switch (cardType) {
@@ -46,30 +47,30 @@ class _BigCardState extends State<BigCard> {
     }
   }
 
-  void forwardPageFlipping(Size size) async {
-    while (flippedDistance < size.width * 3) {
-      setState(() {
-        flippedDistance += 4;
-      });
-      await Future.delayed(const Duration(milliseconds: 1));
-    }
-    widget.onPanBigCardCorner();
-    userTriggerForwardFlip = false;
-  }
-
-  void backwardPageFlipping(Size size) async {
-    setState(() {
-      flippedDistance = size.width * 3;
-    });
-    while (flippedDistance > 0) {
-      setState(() {
-        if (flippedDistance - 4 < 0) {
-          flippedDistance = 0;
-        } else {
-          flippedDistance -= 4;
+  void pageFlipping(Size size, bool forward, double speed) async {
+    if (forward) {
+      while (flippedDistance < size.width * 3) {
+        setState(() {
+          flippedDistance += 4;
+        });
+        await Future.delayed(const Duration(milliseconds: 1));
+      }
+      widget.onPanBigCardCorner();
+      forwardPageFlipping = false;
+    } else {
+      const int ms = 200;
+      for (int time = 1; time <= ms; time++) {
+        setState(() {
+          flippedDistance = size.width * 3 - pow(speed * time, 1 / 2);
+          if (flippedDistance < 0) {
+            flippedDistance = 0;
+          }
+        });
+        if (flippedDistance == 0) {
+          return;
         }
-      });
-      await Future.delayed(const Duration(milliseconds: 1));
+        await Future.delayed(const Duration(milliseconds: 1));
+      }
     }
   }
 
@@ -77,7 +78,7 @@ class _BigCardState extends State<BigCard> {
   void initState() {
     super.initState();
 
-    backwardPageFlipping(widget.screenSize);
+    pageFlipping(widget.screenSize, forwardPageFlipping, pow(80, 2).toDouble());
   }
 
   @override
@@ -87,12 +88,14 @@ class _BigCardState extends State<BigCard> {
     return GestureDetector(
       onPanUpdate: (details) {
         if (details.localPosition.dx < 2 * widget.screenSize.width / 3 && details.localPosition.dy > widget.screenSize.height / 2) {
+          panStartTime ??= details.sourceTimeStamp;
           setState(() {
             flippedDistance += details.delta.distance;
           });
-          if (flippedDistance > panLimit && !userTriggerForwardFlip) {
-            userTriggerForwardFlip = true;
-            forwardPageFlipping(widget.screenSize);
+          if (flippedDistance > panLimit && !forwardPageFlipping) {
+            double userSpeed = panLimit / (details.sourceTimeStamp!.inMilliseconds - panStartTime!.inMilliseconds);
+            forwardPageFlipping = true;
+            pageFlipping(widget.screenSize, forwardPageFlipping, userSpeed);
           }
         }
       },
