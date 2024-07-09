@@ -22,14 +22,6 @@ class SmallCard extends StatefulWidget {
 }
 
 class _SmallCardState extends State<SmallCard> {
-  Size cardSize(Size deviceSize, Orientation deviceOrientation) {
-    if (deviceOrientation == Orientation.landscape) {
-      return Size(deviceSize.width * 0.6, deviceSize.height * 0.8);
-    } else {
-      return Size(deviceSize.width * 0.8, deviceSize.height * 0.6);
-    }
-  }
-
   Widget generateSmallCard(CardType cardType) {
     switch (cardType) {
       case CardType.passiveIncome:
@@ -49,9 +41,7 @@ class _SmallCardState extends State<SmallCard> {
 
   @override
   Widget build(BuildContext context) {
-    MediaQueryData queryData = MediaQuery.of(context);
-    Size deviceSize = queryData.size;
-    Orientation deviceOrientation = queryData.orientation;
+    Size deviceSize = MediaQuery.of(context).size;
 
     return Container(
       alignment: Alignment.center,
@@ -59,8 +49,8 @@ class _SmallCardState extends State<SmallCard> {
         color: Colors.transparent,
         child: Container(
           decoration: CardDecoration.getSmallDecoration(widget.cardType),
-          width: cardSize(deviceSize, deviceOrientation).width,
-          height: cardSize(deviceSize, deviceOrientation).height,
+          width: deviceSize.width * 0.8,
+          height: deviceSize.height * 0.6,
           child: InkWell(
             splashColor: CardDecoration.getSplashColor(widget.cardType),
             onLongPress: () {

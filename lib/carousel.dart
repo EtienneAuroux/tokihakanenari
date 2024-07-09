@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -29,9 +29,9 @@ class _CarouselState extends State<Carousel> {
     return completer.future;
   }
 
-  Alignment setAlignment(PageController controller, int index, Orientation orientation) {
+  Alignment setAlignment(PageController controller, int index) {
     if (controller.position.haveDimensions && controller.page! <= index) {
-      return orientation == Orientation.landscape ? Alignment.bottomLeft : Alignment.topRight;
+      return Alignment.topRight;
     } else {
       return Alignment.bottomRight;
     }
@@ -68,18 +68,16 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    Orientation screenOrientation = MediaQuery.of(context).orientation;
-    final double viewportFraction = screenOrientation == Orientation.landscape ? 0.6 : 0.5;
+    const double viewportFraction = 0.5;
     final pageController = PageController(viewportFraction: viewportFraction, initialPage: 1);
 
     return FutureBuilder(
         future: ensureInitialization(),
         builder: (BuildContext context, AsyncSnapshot<void> snap) {
           return LayoutBuilder(builder: (context, constraints) {
-            final maxWidth = constraints.maxWidth;
             final maxHeight = constraints.maxHeight;
             return PageView.builder(
-              scrollDirection: screenOrientation == Orientation.landscape ? Axis.horizontal : Axis.vertical,
+              scrollDirection: Axis.vertical,
               allowImplicitScrolling: true,
               controller: pageController,
               itemCount: smallCards.length,
@@ -88,12 +86,11 @@ class _CarouselState extends State<Carousel> {
                 return AnimatedBuilder(
                   animation: pageController,
                   builder: ((context, widget) {
-                    final ratioX = pageController.offset / maxWidth / viewportFraction - index;
                     final ratioY = pageController.offset / maxHeight / viewportFraction - index;
                     return Transform.rotate(
-                      angle: screenOrientation == Orientation.landscape ? pi * -0.05 * ratioX : pi * 0.08 * ratioY,
-                      alignment: setAlignment(pageController, index, screenOrientation),
-                      origin: screenOrientation == Orientation.landscape ? Offset(0, -maxWidth / 2) : Offset(-maxHeight / 3, 0),
+                      angle: pi * 0.08 * ratioY,
+                      alignment: setAlignment(pageController, index),
+                      origin: Offset(-maxHeight / 3, 0),
                       child: Transform.scale(
                         scale: 0.8,
                         child: card,

@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_types/add_card.dart';
@@ -49,19 +49,21 @@ class _BigCardState extends State<BigCard> {
 
   void pageFlipping(Size size, bool forward, double speed) async {
     if (forward) {
+      int time = 1;
       while (flippedDistance < size.width * 3) {
         setState(() {
-          flippedDistance += 4;
+          flippedDistance += sqrt(speed * time);
         });
+        time += 1;
         await Future.delayed(const Duration(milliseconds: 1));
       }
       widget.onPanBigCardCorner();
       forwardPageFlipping = false;
     } else {
-      const int ms = 200;
-      for (int time = 1; time <= ms; time++) {
+      const int animationTime = 200;
+      for (int time = 1; time <= animationTime; time++) {
         setState(() {
-          flippedDistance = size.width * 3 - pow(speed * time, 1 / 2);
+          flippedDistance = size.width * 3 - sqrt(speed * time);
           if (flippedDistance < 0) {
             flippedDistance = 0;
           }
@@ -78,7 +80,7 @@ class _BigCardState extends State<BigCard> {
   void initState() {
     super.initState();
 
-    pageFlipping(widget.screenSize, forwardPageFlipping, pow(80, 2).toDouble());
+    pageFlipping(widget.screenSize, forwardPageFlipping, 6400);
   }
 
   @override
@@ -89,13 +91,14 @@ class _BigCardState extends State<BigCard> {
       onPanUpdate: (details) {
         if (details.localPosition.dx < 2 * widget.screenSize.width / 3 && details.localPosition.dy > widget.screenSize.height / 2) {
           panStartTime ??= details.sourceTimeStamp;
-          setState(() {
-            flippedDistance += details.delta.distance;
-          });
           if (flippedDistance > panLimit && !forwardPageFlipping) {
             double userSpeed = panLimit / (details.sourceTimeStamp!.inMilliseconds - panStartTime!.inMilliseconds);
             forwardPageFlipping = true;
             pageFlipping(widget.screenSize, forwardPageFlipping, userSpeed);
+          } else {
+            setState(() {
+              flippedDistance += details.delta.distance;
+            });
           }
         }
       },

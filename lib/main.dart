@@ -5,7 +5,7 @@ import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 void main() {
   runApp(const TokiHaKaneNari());
