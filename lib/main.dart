@@ -38,11 +38,6 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  final List<Color> colors = [
-    ColorPalette.ocre,
-    ColorPalette.autumnOrange,
-  ];
-
   bool carouselView = true;
   CardType cardToEnlarge = CardType.passiveIncome;
 
@@ -51,7 +46,7 @@ class _MainPageState extends State<MainPage> {
     Size screenSize = MediaQuery.of(context).size;
 
     return FloatingWaves(
-      colors: colors,
+      colors: const [ColorPalette.mirrorYellow, ColorPalette.mirrorGrey],
       child: Stack(children: [
         Carousel(
           onRequestToEnlargeCard: (cardType) {

@@ -1,3 +1,3 @@
 enum CardStatus { mini, small, big }
 
-enum CardType { passiveIncome, savingAccounts, addIncome }
+enum CardType { addIncome, contentCreation, indexFunds, passiveIncome, privateFunds, savingAccounts }

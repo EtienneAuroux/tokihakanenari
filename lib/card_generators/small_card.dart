@@ -1,5 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_types/add_card.dart';
+import 'package:tokihakanenari/card_types/content_creation.dart';
+import 'package:tokihakanenari/card_types/index_funds.dart';
+import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/card_types/passive_income.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
@@ -24,12 +27,24 @@ class SmallCard extends StatefulWidget {
 class _SmallCardState extends State<SmallCard> {
   Widget generateSmallCard(CardType cardType) {
     switch (cardType) {
+      case CardType.addIncome:
+        return const AddCard(
+          cardStatus: CardStatus.small,
+        );
+      case CardType.contentCreation:
+        return const ContentCreation(
+          cardStatus: CardStatus.small,
+        );
+      case CardType.indexFunds:
+        return const IndexFunds(
+          cardStatus: CardStatus.small,
+        );
       case CardType.passiveIncome:
         return const PassiveIncome(
           cardStatus: CardStatus.small,
         );
-      case CardType.addIncome:
-        return const AddCard(
+      case CardType.privateFunds:
+        return const PrivateFunds(
           cardStatus: CardStatus.small,
         );
       case CardType.savingAccounts:
