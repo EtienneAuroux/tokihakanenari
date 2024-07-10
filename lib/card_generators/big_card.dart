@@ -2,6 +2,7 @@ import 'dart:math';
 import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:tokihakanenari/card_types/add_card.dart';
 import 'package:tokihakanenari/card_types/content_creation.dart';
 import 'package:tokihakanenari/card_types/index_funds.dart';
@@ -15,6 +16,7 @@ import 'package:tokihakanenari/visual_tools/big_card_clipper.dart';
 class BigCard extends StatefulWidget {
   final CardType cardType;
   final Size screenSize;
+  final CardTransition cardTransition; // This could be an enum if more than two kinds of transition.
   final void Function() onPanBigCardCorner;
   final void Function(CardType cardType) onRequestToAddCard;
 
@@ -22,6 +24,7 @@ class BigCard extends StatefulWidget {
     super.key,
     required this.cardType,
     required this.screenSize,
+    required this.cardTransition,
     required this.onPanBigCardCorner,
     required this.onRequestToAddCard,
   });
@@ -34,6 +37,8 @@ class _BigCardState extends State<BigCard> {
   double flippedDistance = 0;
   Duration? panStartTime;
   bool forwardPageFlipping = false;
+  bool cardIsChanging = false;
+  late BoxDecoration bigCardDecoration;
 
   Widget generateBigCard(CardType cardType) {
     switch (cardType) {
@@ -93,14 +98,30 @@ class _BigCardState extends State<BigCard> {
         }
         await Future.delayed(const Duration(milliseconds: 1));
       }
+      cardIsChanging = false;
     }
+  }
+
+  void cardFadeIn() async {
+    bigCardDecoration = CardDecoration.getBigDecoration(widget.cardType);
+    // for (int time = 0; time < 256; time++) {
+    //   setState(() {
+
+    //   });
+    //   await Future.delayed(const Duration(milliseconds: 1));
+    // }
   }
 
   @override
   void initState() {
     super.initState();
 
-    pageFlipping(widget.screenSize, forwardPageFlipping, 6400);
+    if (widget.cardTransition == CardTransition.pageFlip) {
+      bigCardDecoration = CardDecoration.getBigDecoration(widget.cardType);
+      pageFlipping(widget.screenSize, forwardPageFlipping, 6400);
+    } else if (widget.cardTransition == CardTransition.fadeIn) {
+      cardFadeIn();
+    }
   }
 
   @override
@@ -137,7 +158,7 @@ class _BigCardState extends State<BigCard> {
               flippedDistance: flippedDistance,
             ),
             child: Container(
-              decoration: CardDecoration.getBigDecoration(widget.cardType),
+              decoration: bigCardDecoration,
               child: generateBigCard(widget.cardType),
             ),
           ),

@@ -38,8 +38,10 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
-  bool carouselView = true;
-  CardType cardToEnlarge = CardType.passiveIncome;
+  MainView mainView = MainView.carousel;
+  CardTransition cardTransition = CardTransition.pageFlip;
+  CardType bigCard = CardType.passiveIncome;
+  CardType newBigCard = CardType.contentCreation;
 
   @override
   Widget build(BuildContext context) {
@@ -51,28 +53,49 @@ class _MainPageState extends State<MainPage> {
         Carousel(
           onRequestBigCard: (cardType) {
             setState(() {
-              cardToEnlarge = cardType;
-              carouselView = false;
+              bigCard = cardType;
+              mainView = MainView.primaryBigCard;
             });
           },
         ),
         Visibility(
-          visible: !carouselView,
+          visible: mainView == MainView.primaryBigCard,
           child: BigCard(
-            cardType: cardToEnlarge,
+            cardType: bigCard,
             screenSize: screenSize,
+            cardTransition: cardTransition,
             onPanBigCardCorner: () {
               setState(() {
-                carouselView = true;
+                mainView = MainView.carousel;
+                cardTransition = CardTransition.pageFlip;
               });
             },
             onRequestToAddCard: (cardType) {
               setState(() {
-                cardToEnlarge = cardType;
+                cardTransition = CardTransition.fadeIn;
+                newBigCard = cardType;
+                mainView = MainView.secondaryBigCard;
               });
             },
           ),
-        )
+        ),
+        Visibility(
+          visible: mainView == MainView.secondaryBigCard,
+          child: BigCard(
+            cardType: newBigCard,
+            screenSize: screenSize,
+            cardTransition: cardTransition,
+            onPanBigCardCorner: () {
+              setState(() {
+                mainView = MainView.carousel;
+                cardTransition = CardTransition.pageFlip;
+              });
+            },
+            onRequestToAddCard: (cardType) {
+              throw ErrorDescription('It should not be possible to request AddCard from MainView.secondary.');
+            },
+          ),
+        ),
       ]),
     );
   }
