@@ -61,7 +61,7 @@ class _SlidingColors extends State<SlidingColors> with SingleTickerProviderState
             ),
           ),
           child: Carousel(
-            onRequestToEnlargeCard: (cardType) {},
+            onRequestBigCard: (cardType) {},
           ),
         );
       },

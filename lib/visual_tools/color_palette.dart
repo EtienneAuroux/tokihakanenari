@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
 class ColorPalette {
-  // static const Color autumnOrange = Color.fromARGB(255, 175, 64, 12);
-  // static const Color autumnYellow = Color.fromARGB(255, 209, 169, 38);
   static const Color lusciousGreen = Color.fromARGB(255, 0, 146, 69);
   static const Color lusciousYellow = Color.fromARGB(255, 252, 238, 33);
   static const Color mirrorGrey = Color.fromARGB(255, 147, 165, 207);
@@ -15,4 +13,8 @@ class ColorPalette {
   static const Color pigletPink = Color.fromARGB(255, 238, 156, 167);
   static const Color sanguineOrange = Color.fromARGB(255, 251, 176, 59);
   static const Color sanguineRed = Color.fromARGB(255, 212, 20, 90);
+  static const Color silkBeige = Color.fromARGB(255, 226, 209, 195);
+  static const Color silkWhite = Color.fromARGB(255, 253, 252, 251);
+  static const Color spaceBlue = Color.fromARGB(255, 9, 32, 63);
+  static const Color spaceGrey = Color.fromARGB(255, 83, 120, 149);
 }

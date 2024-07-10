@@ -8,9 +8,9 @@ import 'package:tokihakanenari/card_generators/small_card.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 class Carousel extends StatefulWidget {
-  final void Function(CardType cardType) onRequestToEnlargeCard;
+  final void Function(CardType cardType) onRequestBigCard;
 
-  const Carousel({super.key, required this.onRequestToEnlargeCard});
+  const Carousel({super.key, required this.onRequestBigCard});
 
   @override
   State<Carousel> createState() => _CarouselState();
@@ -45,21 +45,21 @@ class _CarouselState extends State<Carousel> {
       SmallCard(
         cardType: CardType.addCard,
         onTapSmallCard: () {
-          widget.onRequestToEnlargeCard(CardType.addCard);
+          widget.onRequestBigCard(CardType.addCard);
         },
         onLongPressSmallCard: () {},
       ),
       SmallCard(
         cardType: CardType.passiveIncome,
         onTapSmallCard: () {
-          widget.onRequestToEnlargeCard(CardType.passiveIncome);
+          widget.onRequestBigCard(CardType.passiveIncome);
         },
         onLongPressSmallCard: () {},
       ),
       SmallCard(
         cardType: CardType.addCard,
         onTapSmallCard: () {
-          widget.onRequestToEnlargeCard(CardType.addCard);
+          widget.onRequestBigCard(CardType.addCard);
         },
         onLongPressSmallCard: () {},
       ),

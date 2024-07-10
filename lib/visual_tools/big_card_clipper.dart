@@ -3,10 +3,10 @@ import 'dart:math';
 
 import 'package:flutter/material.dart';
 
-class LargeCardContour extends CustomClipper<Path> {
+class BigCardContour extends CustomClipper<Path> {
   final double flippedDistance;
 
-  LargeCardContour({required this.flippedDistance});
+  BigCardContour({required this.flippedDistance});
 
   Point calculateCornerPoint(Size size, double cord, double cornerOffset) {
     // The radius of the circle on which the corner travels.

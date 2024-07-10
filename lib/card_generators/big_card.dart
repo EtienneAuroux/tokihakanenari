@@ -1,5 +1,5 @@
 import 'dart:math';
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_types/add_card.dart';
@@ -10,18 +10,20 @@ import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
-import 'package:tokihakanenari/visual_tools/large_card_clipper.dart';
+import 'package:tokihakanenari/visual_tools/big_card_clipper.dart';
 
 class BigCard extends StatefulWidget {
   final CardType cardType;
   final Size screenSize;
   final void Function() onPanBigCardCorner;
+  final void Function(CardType cardType) onRequestToAddCard;
 
   const BigCard({
     super.key,
     required this.cardType,
     required this.screenSize,
     required this.onPanBigCardCorner,
+    required this.onRequestToAddCard,
   });
 
   @override
@@ -36,8 +38,11 @@ class _BigCardState extends State<BigCard> {
   Widget generateBigCard(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
-        return const AddCard(
+        return AddCard(
           cardStatus: CardStatus.big,
+          onRequestToAddCard: (CardType cardType) {
+            widget.onRequestToAddCard(cardType);
+          },
         );
       case CardType.contentCreation:
         return const ContentCreation(
@@ -106,8 +111,8 @@ class _BigCardState extends State<BigCard> {
       onPanUpdate: (details) {
         if (details.localPosition.dx < 2 * widget.screenSize.width / 3 && details.localPosition.dy > widget.screenSize.height / 2) {
           panStartTime ??= details.sourceTimeStamp;
-          if (flippedDistance > panLimit && !forwardPageFlipping) {
-            double userSpeed = panLimit / (details.sourceTimeStamp!.inMilliseconds - panStartTime!.inMilliseconds);
+          if (flippedDistance >= panLimit && !forwardPageFlipping) {
+            double userSpeed = flippedDistance / (details.sourceTimeStamp!.inMilliseconds - panStartTime!.inMilliseconds);
             forwardPageFlipping = true;
             pageFlipping(widget.screenSize, forwardPageFlipping, userSpeed);
           } else {
@@ -128,7 +133,7 @@ class _BigCardState extends State<BigCard> {
         alignment: Alignment.center,
         children: [
           ClipPath(
-            clipper: LargeCardContour(
+            clipper: BigCardContour(
               flippedDistance: flippedDistance,
             ),
             child: Container(

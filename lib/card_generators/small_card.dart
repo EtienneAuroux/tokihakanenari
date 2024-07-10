@@ -28,8 +28,11 @@ class _SmallCardState extends State<SmallCard> {
   Widget generateSmallCard(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
-        return const AddCard(
+        return AddCard(
           cardStatus: CardStatus.small,
+          onRequestToAddCard: (_) {
+            throw ErrorDescription('It should not be possible to tap on a mini AddCard.');
+          },
         );
       case CardType.contentCreation:
         return const ContentCreation(
@@ -63,10 +66,12 @@ class _SmallCardState extends State<SmallCard> {
       child: Material(
         color: Colors.transparent,
         child: Container(
-          decoration: CardDecoration.getSmallDecoration(widget.cardType),
           width: deviceSize.width * 0.8,
           height: deviceSize.height * 0.6,
           child: InkWell(
+            customBorder: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(20),
+            ),
             splashColor: CardDecoration.getSplashColor(widget.cardType),
             onLongPress: () {
               widget.onLongPressSmallCard();
@@ -74,7 +79,10 @@ class _SmallCardState extends State<SmallCard> {
             onTap: () {
               widget.onTapSmallCard();
             },
-            child: generateSmallCard(widget.cardType),
+            child: Ink(
+              decoration: CardDecoration.getSmallDecoration(widget.cardType),
+              child: generateSmallCard(widget.cardType),
+            ),
           ),
         ),
       ),

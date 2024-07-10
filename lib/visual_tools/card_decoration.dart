@@ -8,7 +8,7 @@ class CardDecoration {
       case CardType.addCard:
         return const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.black, Colors.green],
+            colors: [ColorPalette.spaceBlue, ColorPalette.spaceGrey],
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
           ),
@@ -32,7 +32,7 @@ class CardDecoration {
       case CardType.passiveIncome:
         return const BoxDecoration(
           gradient: LinearGradient(
-            colors: [Colors.brown, Colors.grey],
+            colors: [ColorPalette.spaceBlue, ColorPalette.spaceGrey],
             begin: Alignment.bottomLeft,
             end: Alignment.topRight,
           ),
@@ -77,7 +77,11 @@ class CardDecoration {
   static List<Color> getGradientColors(CardType cardType, CardStatus cardStatus) {
     switch (cardType) {
       case CardType.addCard:
-        return [ColorPalette.mirrorGrey.withAlpha(getColorAlpha(cardStatus)), ColorPalette.mirrorYellow.withAlpha(getColorAlpha(cardStatus))];
+        if (cardStatus == CardStatus.big) {
+          return [ColorPalette.silkBeige, ColorPalette.silkWhite];
+        } else {
+          return [ColorPalette.mirrorGrey.withAlpha(getColorAlpha(cardStatus)), ColorPalette.mirrorYellow.withAlpha(getColorAlpha(cardStatus))];
+        }
       case CardType.contentCreation:
         return [ColorPalette.sanguineRed.withAlpha(getColorAlpha(cardStatus)), ColorPalette.sanguineOrange.withAlpha(getColorAlpha(cardStatus))];
       case CardType.indexFunds:
@@ -108,7 +112,7 @@ class CardDecoration {
           begin: Alignment.bottomCenter,
           end: Alignment.topRight,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(10)));
+        borderRadius: const BorderRadius.all(Radius.circular(20)));
   }
 
   static Color getSplashColor(CardType cardType) {
@@ -118,11 +122,11 @@ class CardDecoration {
       case CardType.contentCreation:
         return ColorPalette.sanguineOrange.withAlpha(127);
       case CardType.indexFunds:
-        return ColorPalette.lusciousYellow.withAlpha(127);
+        return ColorPalette.pigletPale.withAlpha(127);
       case CardType.passiveIncome:
         return ColorPalette.oceanOpal.withAlpha(127);
       case CardType.privateFunds:
-        return ColorPalette.pigletPale.withAlpha(127);
+        return ColorPalette.lusciousYellow.withAlpha(127);
       case CardType.savingAccounts:
         return ColorPalette.rockLightGrey.withAlpha(127);
     }

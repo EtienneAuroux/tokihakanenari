@@ -4,10 +4,12 @@ import 'package:tokihakanenari/my_enums.dart';
 
 class AddCard extends StatefulWidget {
   final CardStatus cardStatus;
+  final void Function(CardType) onRequestToAddCard;
 
   const AddCard({
     super.key,
     required this.cardStatus,
+    required this.onRequestToAddCard,
   });
 
   @override
@@ -15,12 +17,23 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
-  List<Widget> remainingCards = [
-    MiniCard(cardType: CardType.savingAccounts),
-    MiniCard(cardType: CardType.privateFunds),
-    MiniCard(cardType: CardType.indexFunds),
-    MiniCard(cardType: CardType.contentCreation),
-  ];
+  List<MiniCard> remainingCards = <MiniCard>[];
+
+  List<MiniCard> initializeRemainingCards() {
+    for (CardType cardType in CardType.values) {
+      if (cardType != CardType.addCard && cardType != CardType.passiveIncome) {
+        remainingCards.add(
+          MiniCard(
+            cardType: cardType,
+            onTapMiniCard: () {
+              widget.onRequestToAddCard(cardType);
+            },
+          ),
+        );
+      }
+    }
+    return remainingCards;
+  }
 
   Widget getCardContent(CardStatus cardStatus) {
     switch (cardStatus) {
@@ -44,6 +57,15 @@ class _AddCardState extends State<AddCard> {
             size: 100,
           ),
         );
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.cardStatus == CardStatus.big) {
+      initializeRemainingCards();
     }
   }
 

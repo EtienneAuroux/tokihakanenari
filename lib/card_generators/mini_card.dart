@@ -8,12 +8,16 @@ import 'package:tokihakanenari/card_types/saving_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 
+import 'dart:developer' as developer;
+
 class MiniCard extends StatefulWidget {
   final CardType cardType;
+  final void Function() onTapMiniCard;
 
   const MiniCard({
     super.key,
     required this.cardType,
+    required this.onTapMiniCard,
   });
 
   @override
@@ -24,8 +28,11 @@ class _MiniCardState extends State<MiniCard> {
   Widget generateMiniCard(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
-        return const AddCard(
+        return AddCard(
           cardStatus: CardStatus.mini,
+          onRequestToAddCard: (_) {
+            throw ErrorDescription('It should not be possible to tap on a mini AddCard.');
+          },
         );
       case CardType.contentCreation:
         return const ContentCreation(
@@ -52,9 +59,21 @@ class _MiniCardState extends State<MiniCard> {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: CardDecoration.getMiniDecoration(widget.cardType),
-      child: generateMiniCard(widget.cardType),
+    return Material(
+      color: Colors.transparent,
+      child: InkWell(
+        customBorder: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(10),
+        ),
+        splashColor: CardDecoration.getSplashColor(widget.cardType),
+        onTap: () {
+          widget.onTapMiniCard();
+        },
+        child: Ink(
+          decoration: CardDecoration.getMiniDecoration(widget.cardType),
+          child: generateMiniCard(widget.cardType),
+        ),
+      ),
     );
   }
 }

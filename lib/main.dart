@@ -49,7 +49,7 @@ class _MainPageState extends State<MainPage> {
       colors: const [ColorPalette.mirrorYellow, ColorPalette.mirrorGrey],
       child: Stack(children: [
         Carousel(
-          onRequestToEnlargeCard: (cardType) {
+          onRequestBigCard: (cardType) {
             setState(() {
               cardToEnlarge = cardType;
               carouselView = false;
@@ -64,6 +64,11 @@ class _MainPageState extends State<MainPage> {
             onPanBigCardCorner: () {
               setState(() {
                 carouselView = true;
+              });
+            },
+            onRequestToAddCard: (cardType) {
+              setState(() {
+                cardToEnlarge = cardType;
               });
             },
           ),
