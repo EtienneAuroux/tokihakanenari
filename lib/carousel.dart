@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -8,9 +8,14 @@ import 'package:tokihakanenari/card_generators/small_card.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 class Carousel extends StatefulWidget {
+  final CardStatus cardStatus;
   final void Function(CardType cardType) onRequestBigCard;
 
-  const Carousel({super.key, required this.onRequestBigCard});
+  const Carousel({
+    super.key,
+    required this.cardStatus,
+    required this.onRequestBigCard,
+  });
 
   @override
   State<Carousel> createState() => _CarouselState();
@@ -45,21 +50,27 @@ class _CarouselState extends State<Carousel> {
       SmallCard(
         cardType: CardType.addCard,
         onTapSmallCard: () {
-          widget.onRequestBigCard(CardType.addCard);
+          if (widget.cardStatus == CardStatus.inert) {
+            widget.onRequestBigCard(CardType.addCard);
+          }
         },
         onLongPressSmallCard: () {},
       ),
       SmallCard(
         cardType: CardType.passiveIncome,
         onTapSmallCard: () {
-          widget.onRequestBigCard(CardType.passiveIncome);
+          if (widget.cardStatus == CardStatus.inert) {
+            widget.onRequestBigCard(CardType.passiveIncome);
+          }
         },
         onLongPressSmallCard: () {},
       ),
       SmallCard(
         cardType: CardType.addCard,
         onTapSmallCard: () {
-          widget.onRequestBigCard(CardType.addCard);
+          if (widget.cardStatus == CardStatus.inert) {
+            widget.onRequestBigCard(CardType.addCard);
+          }
         },
         onLongPressSmallCard: () {},
       ),

@@ -38,7 +38,6 @@ class BigCard extends StatefulWidget {
 class _BigCardState extends State<BigCard> {
   double flippedDistance = 0;
   Duration? panStartTime;
-  late CardStatus cardStatus;
 
   Widget generateBigCard(CardType cardType) {
     switch (cardType) {
@@ -83,9 +82,6 @@ class _BigCardState extends State<BigCard> {
         time += 1;
         await Future.delayed(const Duration(milliseconds: 1));
       }
-      setState(() {
-        cardStatus = CardStatus.inert;
-      });
       widget.onBigCardRollDone();
     } else if (cardStatus == CardStatus.unroll) {
       const int animationTime = 200;
@@ -97,10 +93,6 @@ class _BigCardState extends State<BigCard> {
           }
         });
         if (flippedDistance == 0) {
-          setState(() {
-            cardStatus = CardStatus.inert;
-          });
-
           widget.onBigCardUnrollDone();
           return;
         }
@@ -117,11 +109,9 @@ class _BigCardState extends State<BigCard> {
   void initState() {
     super.initState();
 
-    cardStatus = widget.cardStatus;
-
-    if (cardStatus == CardStatus.unroll) {
-      pageFlipping(widget.screenSize, cardStatus, 6400);
-    } else if (cardStatus == CardStatus.fade) {
+    if (widget.cardStatus == CardStatus.unroll) {
+      pageFlipping(widget.screenSize, CardStatus.unroll, 6400);
+    } else if (widget.cardStatus == CardStatus.fade) {
       cardFadeIn();
     }
   }
@@ -133,10 +123,9 @@ class _BigCardState extends State<BigCard> {
       onPanUpdate: (details) {
         if (details.localPosition.dx < 2 * widget.screenSize.width / 3 && details.localPosition.dy > widget.screenSize.height / 2) {
           panStartTime ??= details.sourceTimeStamp;
-          if (flippedDistance >= panLimit && cardStatus != CardStatus.roll) {
+          if (flippedDistance >= panLimit && widget.cardStatus == CardStatus.inert) {
             double userSpeed = sqrt(1000 * details.delta.distance / (details.sourceTimeStamp!.inMilliseconds - panStartTime!.inMilliseconds));
-            cardStatus = CardStatus.roll;
-            pageFlipping(widget.screenSize, cardStatus, userSpeed);
+            pageFlipping(widget.screenSize, CardStatus.roll, userSpeed);
           } else {
             setState(() {
               flippedDistance += details.delta.distance;

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/carousel.dart';
+import 'package:tokihakanenari/my_enums.dart';
 
 class SlidingColors extends StatefulWidget {
   /// At least four colors are recommended.
@@ -61,6 +62,7 @@ class _SlidingColors extends State<SlidingColors> with SingleTickerProviderState
             ),
           ),
           child: Carousel(
+            cardStatus: CardStatus.inert,
             onRequestBigCard: (cardType) {},
           ),
         );

@@ -43,7 +43,14 @@ class _MainPageState extends State<MainPage> {
   MainView mainView = MainView.carousel;
   CardType bigCard = CardType.passiveIncome;
   CardType newBigCard = CardType.contentCreation;
-  CardStatus cardStatus = CardStatus.inert;
+  late CardStatus cardStatus;
+
+  @override
+  void initState() {
+    super.initState();
+
+    cardStatus = CardStatus.inert;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -53,12 +60,15 @@ class _MainPageState extends State<MainPage> {
       colors: const [ColorPalette.mirrorYellow, ColorPalette.mirrorGrey],
       child: Stack(children: [
         Carousel(
+          cardStatus: cardStatus,
           onRequestBigCard: (cardType) {
-            setState(() {
-              bigCard = cardType;
-              cardStatus = CardStatus.unroll;
-              mainView = MainView.primaryBigCard;
-            });
+            if (mainView == MainView.carousel) {
+              setState(() {
+                bigCard = cardType;
+                cardStatus = CardStatus.unroll;
+                mainView = MainView.primaryBigCard;
+              });
+            }
           },
         ),
         Visibility(
@@ -69,11 +79,11 @@ class _MainPageState extends State<MainPage> {
             cardStatus: cardStatus,
             onBigCardRollDone: () {
               setState(() {
+                cardStatus = CardStatus.inert;
                 mainView = MainView.carousel;
               });
             },
             onBigCardUnrollDone: () {
-              developer.log('unroll done');
               setState(() {
                 cardStatus = CardStatus.inert;
               });
