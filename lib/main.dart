@@ -72,7 +72,7 @@ class _MainPageState extends State<MainPage> {
           },
         ),
         Visibility(
-          visible: mainView == MainView.primaryBigCard,
+          visible: mainView == MainView.primaryBigCard || cardStatus == CardStatus.drop,
           child: BigCard(
             cardType: bigCard,
             screenSize: screenSize,
@@ -91,8 +91,12 @@ class _MainPageState extends State<MainPage> {
             onRequestToAddCard: (cardType) {
               setState(() {
                 newBigCard = cardType;
+                cardStatus = CardStatus.drop;
                 mainView = MainView.secondaryBigCard;
               });
+            },
+            onDoneFading: () {
+              throw ErrorDescription('It should not be possible to fade from MainView.primaryBigCard.');
             },
           ),
         ),
@@ -114,6 +118,11 @@ class _MainPageState extends State<MainPage> {
             },
             onRequestToAddCard: (cardType) {
               throw ErrorDescription('It should not be possible to request AddCard from MainView.secondaryBigCard.');
+            },
+            onDoneFading: () {
+              setState(() {
+                cardStatus = CardStatus.inert;
+              });
             },
           ),
         ),

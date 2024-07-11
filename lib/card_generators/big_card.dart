@@ -20,6 +20,7 @@ class BigCard extends StatefulWidget {
   final void Function() onBigCardRollDone;
   final void Function() onBigCardUnrollDone;
   final void Function(CardType cardType) onRequestToAddCard;
+  final void Function() onDoneFading;
 
   const BigCard({
     super.key,
@@ -29,6 +30,7 @@ class BigCard extends StatefulWidget {
     required this.onBigCardRollDone,
     required this.onBigCardUnrollDone,
     required this.onRequestToAddCard,
+    required this.onDoneFading,
   });
 
   @override
@@ -38,6 +40,10 @@ class BigCard extends StatefulWidget {
 class _BigCardState extends State<BigCard> {
   double flippedDistance = 0;
   Duration? panStartTime;
+  bool droppingIn = false;
+  int dropNumber = 0;
+  final int numberOfDrops = 300;
+  List<List<int>> randoms = [];
 
   Widget generateBigCard(CardType cardType) {
     switch (cardType) {
@@ -101,8 +107,23 @@ class _BigCardState extends State<BigCard> {
     }
   }
 
-  void cardFadeIn() async {
-    developer.log('fade');
+  void cardDropping() async {
+    Random random = Random();
+    setState(() {
+      droppingIn = true;
+      randoms = List.generate(numberOfDrops, (index) => [random.nextInt(numberOfDrops), random.nextInt(numberOfDrops)]);
+    });
+
+    for (int time = 0; time < numberOfDrops; time++) {
+      setState(() {
+        dropNumber += 1;
+      });
+      await Future.delayed(const Duration(microseconds: 1000));
+    }
+    setState(() {
+      droppingIn = false;
+    });
+    widget.onDoneFading();
   }
 
   @override
@@ -111,8 +132,8 @@ class _BigCardState extends State<BigCard> {
 
     if (widget.cardStatus == CardStatus.unroll) {
       pageFlipping(widget.screenSize, CardStatus.unroll, 6400);
-    } else if (widget.cardStatus == CardStatus.fade) {
-      cardFadeIn();
+    } else if (widget.cardStatus == CardStatus.drop) {
+      cardDropping();
     }
   }
 
@@ -121,9 +142,11 @@ class _BigCardState extends State<BigCard> {
     double panLimit = sqrt(pow(widget.screenSize.width / 6, 2) + pow(widget.screenSize.height / 6, 2));
     return GestureDetector(
       onPanUpdate: (details) {
-        if (details.localPosition.dx < 2 * widget.screenSize.width / 3 && details.localPosition.dy > widget.screenSize.height / 2) {
+        if (widget.cardStatus == CardStatus.inert &&
+            details.localPosition.dx < 2 * widget.screenSize.width / 3 &&
+            details.localPosition.dy > widget.screenSize.height / 2) {
           panStartTime ??= details.sourceTimeStamp;
-          if (flippedDistance >= panLimit && widget.cardStatus == CardStatus.inert) {
+          if (flippedDistance >= panLimit) {
             double userSpeed = sqrt(1000 * details.delta.distance / (details.sourceTimeStamp!.inMilliseconds - panStartTime!.inMilliseconds));
             pageFlipping(widget.screenSize, CardStatus.roll, userSpeed);
           } else {
@@ -146,6 +169,10 @@ class _BigCardState extends State<BigCard> {
           ClipPath(
             clipper: BigCardContour(
               flippedDistance: flippedDistance,
+              droppingIn: droppingIn,
+              numberOfDrops: numberOfDrops,
+              dropNumber: dropNumber,
+              randoms: randoms,
             ),
             child: Container(
               decoration: CardDecoration.getBigDecoration(widget.cardType),

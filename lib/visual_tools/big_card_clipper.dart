@@ -1,12 +1,24 @@
 import 'dart:math';
-// import 'dart:developer' as developer;
+import 'dart:ui';
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/visual_tools/drop_paths.dart';
 
 class BigCardContour extends CustomClipper<Path> {
   final double flippedDistance;
+  final bool droppingIn;
+  final int numberOfDrops;
+  final int dropNumber;
+  final List<List<int>> randoms;
 
-  BigCardContour({required this.flippedDistance});
+  BigCardContour({
+    required this.flippedDistance,
+    required this.droppingIn,
+    required this.numberOfDrops,
+    required this.dropNumber,
+    required this.randoms,
+  });
 
   Point calculateCornerPoint(Size size, double cord, double cornerOffset) {
     // The radius of the circle on which the corner travels.
@@ -24,28 +36,66 @@ class BigCardContour extends CustomClipper<Path> {
     );
   }
 
+  Path generateDropPath(int dropNumber, Size size) {
+    Path path = Path();
+
+    int pattern = dropNumber % 3;
+    if (pattern == 0) {
+      return DropPaths.getBlop(size);
+    } else if (pattern == 1) {
+      return DropPaths.getBlip(size);
+    } else if (pattern == 2) {
+      return DropPaths.getPloc(size);
+    }
+
+    return path;
+  }
+
+  Offset generateDropOffset(int dropNumber, Size size, double cornerOffset, PathMetric pathMetric) {
+    double x = (randoms[dropNumber][0] * size.width / numberOfDrops) - 40;
+    double y = (randoms[dropNumber][1] * size.height / numberOfDrops) - 40;
+
+    Point cornerControl = calculateCornerPoint(size, 0, cornerOffset);
+    double dropLength = pathMetric.length / pi;
+
+    if (x <= cornerControl.x && y >= cornerControl.y - dropLength * 0.85) {
+      x += dropLength * 0.85;
+      y -= dropLength * 0.85;
+    }
+
+    return Offset(x, y);
+  }
+
   @override
   Path getClip(Size size) {
+    Path path = Path();
     final double flippedCornerLength = size.shortestSide / 5;
 
-    Point cornerControl = calculateCornerPoint(size, flippedDistance, flippedCornerLength);
+    if (droppingIn) {
+      Size newSize = Size(size.width / 5, size.height / 7.5);
+      for (int drop = 0; drop < dropNumber; drop++) {
+        Path dropPath = generateDropPath(drop, newSize);
+        path.addPath(dropPath, generateDropOffset(drop, size, flippedCornerLength, dropPath.computeMetrics().first));
+      }
+    } else {
+      Point cornerControl = calculateCornerPoint(size, flippedDistance, flippedCornerLength);
 
-    Point topLeft = Point(0, cornerControl.y - flippedDistance * 1.65);
-    if (topLeft.y < 0) {
-      topLeft = Point(flippedDistance - cornerControl.y / 1.65, 0);
+      Point topLeft = Point(0, cornerControl.y - flippedDistance * 1.65);
+      if (topLeft.y < 0) {
+        topLeft = Point(flippedDistance - cornerControl.y / 1.65, 0);
+      }
+
+      Point bottomRight = Point(cornerControl.x - flippedDistance * 0.25, size.height);
+      if (bottomRight.x > size.width) {
+        bottomRight = Point(size.width, size.height);
+      }
+
+      path.lineTo(topLeft.x.toDouble(), topLeft.y.toDouble());
+      path.lineTo(bottomRight.x.toDouble(), bottomRight.y.toDouble());
+      path.lineTo(size.width, size.height);
+      path.lineTo(size.width, 0);
+      path.lineTo(topLeft.x.toDouble(), 0);
     }
-
-    Point bottomRight = Point(cornerControl.x - flippedDistance * 0.25, size.height);
-    if (bottomRight.x > size.width) {
-      bottomRight = Point(size.width, size.height);
-    }
-
-    Path path = Path();
-    path.lineTo(topLeft.x.toDouble(), topLeft.y.toDouble());
-    path.lineTo(bottomRight.x.toDouble(), bottomRight.y.toDouble());
-    path.lineTo(size.width, size.height);
-    path.lineTo(size.width, 0);
-    path.lineTo(topLeft.x.toDouble(), 0);
 
     return path;
   }
