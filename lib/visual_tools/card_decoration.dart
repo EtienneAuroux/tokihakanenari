@@ -4,56 +4,62 @@ import 'package:tokihakanenari/my_enums.dart';
 
 class CardDecoration {
   static BoxDecoration getBigCornerDecoration(CardType cardType) {
-    switch (cardType) {
-      case CardType.addCard:
-        return const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [ColorPalette.spaceBlue, ColorPalette.spaceGrey],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
-        );
-      case CardType.contentCreation:
-        return const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.black, Colors.green],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
-        );
-      case CardType.indexFunds:
-        return const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.black, Colors.green],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
-        );
-      case CardType.passiveIncome:
-        return const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [ColorPalette.spaceBlue, ColorPalette.spaceGrey],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
-        );
-      case CardType.privateFunds:
-        return const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.black, Colors.green],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
-        );
-      case CardType.savingAccounts:
-        return const BoxDecoration(
-          gradient: LinearGradient(
-            colors: [Colors.black, Colors.green],
-            begin: Alignment.bottomLeft,
-            end: Alignment.topRight,
-          ),
-        );
-    }
+    return const BoxDecoration(
+        gradient: LinearGradient(
+      colors: [ColorPalette.rockDarkGrey, ColorPalette.rockLightGrey],
+      begin: Alignment.bottomLeft,
+      end: Alignment.topRight,
+    ));
+    // switch (cardType) {
+    //   case CardType.addCard:
+    //     return const BoxDecoration(
+    //       gradient: LinearGradient(
+    //         colors: [ColorPalette.spaceBlue, ColorPalette.spaceGrey],
+    //         begin: Alignment.bottomLeft,
+    //         end: Alignment.topRight,
+    //       ),
+    //     );
+    //   case CardType.contentCreation:
+    //     return const BoxDecoration(
+    //       gradient: LinearGradient(
+    //         colors: [Colors.black, Colors.green],
+    //         begin: Alignment.bottomLeft,
+    //         end: Alignment.topRight,
+    //       ),
+    //     );
+    //   case CardType.indexFunds:
+    //     return const BoxDecoration(
+    //       gradient: LinearGradient(
+    //         colors: [Colors.black, Colors.green],
+    //         begin: Alignment.bottomLeft,
+    //         end: Alignment.topRight,
+    //       ),
+    //     );
+    //   case CardType.passiveIncome:
+    //     return const BoxDecoration(
+    //       gradient: LinearGradient(
+    //         colors: [ColorPalette.spaceBlue, ColorPalette.spaceGrey],
+    //         begin: Alignment.bottomLeft,
+    //         end: Alignment.topRight,
+    //       ),
+    //     );
+    //   case CardType.privateFunds:
+    //     return const BoxDecoration(
+    //       gradient: LinearGradient(
+    //         colors: [Colors.black, Colors.green],
+    //         begin: Alignment.bottomLeft,
+    //         end: Alignment.topRight,
+    //       ),
+    //     );
+    //   case CardType.savingAccounts:
+    //     return const BoxDecoration(
+    //       gradient: LinearGradient(
+    //         colors: [Colors.black, Colors.green],
+    //         begin: Alignment.bottomLeft,
+    //         end: Alignment.topRight,
+    //       ),
+    //     );
+    // }
   }
 
   static BoxDecoration getBigDecoration(CardType cardType) {
@@ -90,8 +96,12 @@ class CardDecoration {
         return [ColorPalette.oceanBlue.withAlpha(getColorAlpha(cardStatus)), ColorPalette.oceanOpal.withAlpha(getColorAlpha(cardStatus))];
       case CardType.privateFunds:
         return [ColorPalette.lusciousGreen.withAlpha(getColorAlpha(cardStatus)), ColorPalette.lusciousYellow.withAlpha(getColorAlpha(cardStatus))];
+      case CardType.realEstate:
+        return [ColorPalette.bleachedGreen.withAlpha(getColorAlpha(cardStatus)), ColorPalette.bleachedOrange.withAlpha(getColorAlpha(cardStatus))];
       case CardType.savingAccounts:
-        return [ColorPalette.rockDarkGrey.withAlpha(getColorAlpha(cardStatus)), ColorPalette.rockLightGrey.withAlpha(getColorAlpha(cardStatus))];
+        return [ColorPalette.exoticPink.withAlpha(getColorAlpha(cardStatus)), ColorPalette.exoticOrange.withAlpha(getColorAlpha(cardStatus))];
+      case CardType.stocks:
+        return [ColorPalette.toxicYellow.withAlpha(getColorAlpha(cardStatus)), ColorPalette.toxicBlue.withAlpha(getColorAlpha(cardStatus))];
     }
   }
 
@@ -127,8 +137,12 @@ class CardDecoration {
         return ColorPalette.oceanOpal.withAlpha(127);
       case CardType.privateFunds:
         return ColorPalette.lusciousYellow.withAlpha(127);
+      case CardType.realEstate:
+        return ColorPalette.bleachedOrange.withAlpha(127);
       case CardType.savingAccounts:
-        return ColorPalette.rockLightGrey.withAlpha(127);
+        return ColorPalette.exoticOrange.withAlpha(127);
+      case CardType.stocks:
+        return ColorPalette.toxicBlue.withAlpha(127);
     }
   }
 }

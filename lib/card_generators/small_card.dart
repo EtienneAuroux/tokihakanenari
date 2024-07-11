@@ -3,6 +3,8 @@ import 'package:tokihakanenari/card_types/add_card.dart';
 import 'package:tokihakanenari/card_types/content_creation.dart';
 import 'package:tokihakanenari/card_types/index_funds.dart';
 import 'package:tokihakanenari/card_types/private_funds.dart';
+import 'package:tokihakanenari/card_types/real_estate.dart';
+import 'package:tokihakanenari/card_types/stocks.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/card_types/passive_income.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
@@ -51,8 +53,16 @@ class _SmallCardState extends State<SmallCard> {
         return const PrivateFunds(
           cardSize: CardSize.small,
         );
+      case CardType.realEstate:
+        return const RealEstate(
+          cardSize: CardSize.small,
+        );
       case CardType.savingAccounts:
         return const SavingAccounts(
+          cardSize: CardSize.small,
+        );
+      case CardType.stocks:
+        return const Stocks(
           cardSize: CardSize.small,
         );
     }
@@ -66,7 +76,7 @@ class _SmallCardState extends State<SmallCard> {
       alignment: Alignment.center,
       child: Material(
         color: Colors.transparent,
-        child: Container(
+        child: SizedBox(
           width: deviceSize.width * 0.8,
           height: deviceSize.height * 0.6,
           child: InkWell(
