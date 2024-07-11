@@ -29,30 +29,31 @@ class _SmallCardState extends State<SmallCard> {
     switch (cardType) {
       case CardType.addCard:
         return AddCard(
-          cardStatus: CardStatus.small,
+          cardSize: CardSize.small,
+          cardStatus: CardStatus.inert,
           onRequestToAddCard: (_) {
             throw ErrorDescription('It should not be possible to tap on a mini AddCard.');
           },
         );
       case CardType.contentCreation:
         return const ContentCreation(
-          cardStatus: CardStatus.small,
+          cardSize: CardSize.small,
         );
       case CardType.indexFunds:
         return const IndexFunds(
-          cardStatus: CardStatus.small,
+          cardSize: CardSize.small,
         );
       case CardType.passiveIncome:
         return const PassiveIncome(
-          cardStatus: CardStatus.small,
+          cardSize: CardSize.small,
         );
       case CardType.privateFunds:
         return const PrivateFunds(
-          cardStatus: CardStatus.small,
+          cardSize: CardSize.small,
         );
       case CardType.savingAccounts:
         return const SavingAccounts(
-          cardStatus: CardStatus.small,
+          cardSize: CardSize.small,
         );
     }
   }

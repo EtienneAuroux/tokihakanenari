@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/card_types/add_card.dart';
 import 'package:tokihakanenari/card_types/content_creation.dart';
 import 'package:tokihakanenari/card_types/index_funds.dart';
-import 'package:tokihakanenari/card_types/passive_income.dart';
 import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
@@ -28,31 +26,24 @@ class _MiniCardState extends State<MiniCard> {
   Widget generateMiniCard(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
-        return AddCard(
-          cardStatus: CardStatus.mini,
-          onRequestToAddCard: (_) {
-            throw ErrorDescription('It should not be possible to tap on a mini AddCard.');
-          },
-        );
+        throw ErrorDescription('It should not be possible to generate a mini AddCard.');
       case CardType.contentCreation:
         return const ContentCreation(
-          cardStatus: CardStatus.mini,
+          cardSize: CardSize.mini,
         );
       case CardType.indexFunds:
         return const IndexFunds(
-          cardStatus: CardStatus.mini,
+          cardSize: CardSize.mini,
         );
       case CardType.passiveIncome:
-        return const PassiveIncome(
-          cardStatus: CardStatus.mini,
-        );
+        throw ErrorDescription('It should not be possible to generate a mini PassiveIncome.');
       case CardType.privateFunds:
         return const PrivateFunds(
-          cardStatus: CardStatus.mini,
+          cardSize: CardSize.mini,
         );
       case CardType.savingAccounts:
         return const SavingAccounts(
-          cardStatus: CardStatus.mini,
+          cardSize: CardSize.mini,
         );
     }
   }

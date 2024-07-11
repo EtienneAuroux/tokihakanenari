@@ -16,16 +16,18 @@ import 'package:tokihakanenari/visual_tools/big_card_clipper.dart';
 class BigCard extends StatefulWidget {
   final CardType cardType;
   final Size screenSize;
-  final CardTransition cardTransition; // This could be an enum if more than two kinds of transition.
-  final void Function() onPanBigCardCorner;
+  final CardStatus cardStatus;
+  final void Function() onBigCardRollDone;
+  final void Function() onBigCardUnrollDone;
   final void Function(CardType cardType) onRequestToAddCard;
 
   const BigCard({
     super.key,
     required this.cardType,
     required this.screenSize,
-    required this.cardTransition,
-    required this.onPanBigCardCorner,
+    required this.cardStatus,
+    required this.onBigCardRollDone,
+    required this.onBigCardUnrollDone,
     required this.onRequestToAddCard,
   });
 
@@ -36,55 +38,56 @@ class BigCard extends StatefulWidget {
 class _BigCardState extends State<BigCard> {
   double flippedDistance = 0;
   Duration? panStartTime;
-  bool forwardPageFlipping = false;
-  bool cardIsChanging = false;
-  late BoxDecoration bigCardDecoration;
+  late CardStatus cardStatus;
 
   Widget generateBigCard(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
         return AddCard(
-          cardStatus: CardStatus.big,
+          cardSize: CardSize.big,
+          cardStatus: widget.cardStatus,
           onRequestToAddCard: (CardType cardType) {
             widget.onRequestToAddCard(cardType);
           },
         );
       case CardType.contentCreation:
         return const ContentCreation(
-          cardStatus: CardStatus.big,
+          cardSize: CardSize.big,
         );
       case CardType.indexFunds:
         return const IndexFunds(
-          cardStatus: CardStatus.big,
+          cardSize: CardSize.big,
         );
       case CardType.passiveIncome:
         return const PassiveIncome(
-          cardStatus: CardStatus.big,
+          cardSize: CardSize.big,
         );
       case CardType.privateFunds:
         return const PrivateFunds(
-          cardStatus: CardStatus.big,
+          cardSize: CardSize.big,
         );
       case CardType.savingAccounts:
         return const SavingAccounts(
-          cardStatus: CardStatus.big,
+          cardSize: CardSize.big,
         );
     }
   }
 
-  void pageFlipping(Size size, bool forward, double speed) async {
-    if (forward) {
-      int time = 1;
+  void pageFlipping(Size size, CardStatus cardStatus, double speed) async {
+    if (cardStatus == CardStatus.roll) {
+      int time = 0;
       while (flippedDistance < size.width * 3) {
         setState(() {
-          flippedDistance += sqrt(speed * time);
+          flippedDistance += speed * (1 + time * 0.01);
         });
         time += 1;
         await Future.delayed(const Duration(milliseconds: 1));
       }
-      widget.onPanBigCardCorner();
-      forwardPageFlipping = false;
-    } else {
+      setState(() {
+        cardStatus = CardStatus.inert;
+      });
+      widget.onBigCardRollDone();
+    } else if (cardStatus == CardStatus.unroll) {
       const int animationTime = 200;
       for (int time = 1; time <= animationTime; time++) {
         setState(() {
@@ -94,32 +97,31 @@ class _BigCardState extends State<BigCard> {
           }
         });
         if (flippedDistance == 0) {
+          setState(() {
+            cardStatus = CardStatus.inert;
+          });
+
+          widget.onBigCardUnrollDone();
           return;
         }
         await Future.delayed(const Duration(milliseconds: 1));
       }
-      cardIsChanging = false;
     }
   }
 
   void cardFadeIn() async {
-    bigCardDecoration = CardDecoration.getBigDecoration(widget.cardType);
-    // for (int time = 0; time < 256; time++) {
-    //   setState(() {
-
-    //   });
-    //   await Future.delayed(const Duration(milliseconds: 1));
-    // }
+    developer.log('fade');
   }
 
   @override
   void initState() {
     super.initState();
 
-    if (widget.cardTransition == CardTransition.pageFlip) {
-      bigCardDecoration = CardDecoration.getBigDecoration(widget.cardType);
-      pageFlipping(widget.screenSize, forwardPageFlipping, 6400);
-    } else if (widget.cardTransition == CardTransition.fadeIn) {
+    cardStatus = widget.cardStatus;
+
+    if (cardStatus == CardStatus.unroll) {
+      pageFlipping(widget.screenSize, cardStatus, 6400);
+    } else if (cardStatus == CardStatus.fade) {
       cardFadeIn();
     }
   }
@@ -127,15 +129,14 @@ class _BigCardState extends State<BigCard> {
   @override
   Widget build(BuildContext context) {
     double panLimit = sqrt(pow(widget.screenSize.width / 6, 2) + pow(widget.screenSize.height / 6, 2));
-
     return GestureDetector(
       onPanUpdate: (details) {
         if (details.localPosition.dx < 2 * widget.screenSize.width / 3 && details.localPosition.dy > widget.screenSize.height / 2) {
           panStartTime ??= details.sourceTimeStamp;
-          if (flippedDistance >= panLimit && !forwardPageFlipping) {
-            double userSpeed = flippedDistance / (details.sourceTimeStamp!.inMilliseconds - panStartTime!.inMilliseconds);
-            forwardPageFlipping = true;
-            pageFlipping(widget.screenSize, forwardPageFlipping, userSpeed);
+          if (flippedDistance >= panLimit && cardStatus != CardStatus.roll) {
+            double userSpeed = sqrt(1000 * details.delta.distance / (details.sourceTimeStamp!.inMilliseconds - panStartTime!.inMilliseconds));
+            cardStatus = CardStatus.roll;
+            pageFlipping(widget.screenSize, cardStatus, userSpeed);
           } else {
             setState(() {
               flippedDistance += details.delta.distance;
@@ -158,7 +159,7 @@ class _BigCardState extends State<BigCard> {
               flippedDistance: flippedDistance,
             ),
             child: Container(
-              decoration: bigCardDecoration,
+              decoration: CardDecoration.getBigDecoration(widget.cardType),
               child: generateBigCard(widget.cardType),
             ),
           ),

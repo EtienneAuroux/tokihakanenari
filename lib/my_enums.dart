@@ -1,7 +1,7 @@
-enum CardStatus { mini, small, big }
+enum CardSize { mini, small, big }
+
+enum CardStatus { inert, unroll, roll, fade }
 
 enum CardType { addCard, contentCreation, indexFunds, passiveIncome, privateFunds, savingAccounts }
-
-enum CardTransition { pageFlip, fadeIn }
 
 enum MainView { carousel, primaryBigCard, secondaryBigCard }

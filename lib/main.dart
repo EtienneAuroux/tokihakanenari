@@ -5,6 +5,8 @@ import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
+import 'dart:developer' as developer;
+
 // import 'dart:developer' as developer;
 
 void main() {
@@ -39,9 +41,9 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   MainView mainView = MainView.carousel;
-  CardTransition cardTransition = CardTransition.pageFlip;
   CardType bigCard = CardType.passiveIncome;
   CardType newBigCard = CardType.contentCreation;
+  CardStatus cardStatus = CardStatus.inert;
 
   @override
   Widget build(BuildContext context) {
@@ -54,6 +56,7 @@ class _MainPageState extends State<MainPage> {
           onRequestBigCard: (cardType) {
             setState(() {
               bigCard = cardType;
+              cardStatus = CardStatus.unroll;
               mainView = MainView.primaryBigCard;
             });
           },
@@ -63,16 +66,20 @@ class _MainPageState extends State<MainPage> {
           child: BigCard(
             cardType: bigCard,
             screenSize: screenSize,
-            cardTransition: cardTransition,
-            onPanBigCardCorner: () {
+            cardStatus: cardStatus,
+            onBigCardRollDone: () {
               setState(() {
                 mainView = MainView.carousel;
-                cardTransition = CardTransition.pageFlip;
+              });
+            },
+            onBigCardUnrollDone: () {
+              developer.log('unroll done');
+              setState(() {
+                cardStatus = CardStatus.inert;
               });
             },
             onRequestToAddCard: (cardType) {
               setState(() {
-                cardTransition = CardTransition.fadeIn;
                 newBigCard = cardType;
                 mainView = MainView.secondaryBigCard;
               });
@@ -84,15 +91,19 @@ class _MainPageState extends State<MainPage> {
           child: BigCard(
             cardType: newBigCard,
             screenSize: screenSize,
-            cardTransition: cardTransition,
-            onPanBigCardCorner: () {
+            cardStatus: cardStatus,
+            onBigCardRollDone: () {
               setState(() {
                 mainView = MainView.carousel;
-                cardTransition = CardTransition.pageFlip;
+              });
+            },
+            onBigCardUnrollDone: () {
+              setState(() {
+                cardStatus = CardStatus.inert;
               });
             },
             onRequestToAddCard: (cardType) {
-              throw ErrorDescription('It should not be possible to request AddCard from MainView.secondary.');
+              throw ErrorDescription('It should not be possible to request AddCard from MainView.secondaryBigCard.');
             },
           ),
         ),

@@ -59,25 +59,25 @@ class CardDecoration {
   static BoxDecoration getBigDecoration(CardType cardType) {
     return BoxDecoration(
       gradient: LinearGradient(
-        colors: getGradientColors(cardType, CardStatus.big),
+        colors: getGradientColors(cardType, CardSize.big),
         begin: Alignment.bottomCenter,
         end: Alignment.topRight,
       ),
     );
   }
 
-  static int getColorAlpha(CardStatus cardStatus) {
-    if (cardStatus == CardStatus.small) {
+  static int getColorAlpha(CardSize cardStatus) {
+    if (cardStatus == CardSize.small) {
       return 127;
     } else {
       return 255;
     }
   }
 
-  static List<Color> getGradientColors(CardType cardType, CardStatus cardStatus) {
+  static List<Color> getGradientColors(CardType cardType, CardSize cardStatus) {
     switch (cardType) {
       case CardType.addCard:
-        if (cardStatus == CardStatus.big) {
+        if (cardStatus == CardSize.big) {
           return [ColorPalette.silkBeige, ColorPalette.silkWhite];
         } else {
           return [ColorPalette.mirrorGrey.withAlpha(getColorAlpha(cardStatus)), ColorPalette.mirrorYellow.withAlpha(getColorAlpha(cardStatus))];
@@ -98,7 +98,7 @@ class CardDecoration {
   static BoxDecoration getMiniDecoration(CardType cardType) {
     return BoxDecoration(
         gradient: LinearGradient(
-          colors: getGradientColors(cardType, CardStatus.mini),
+          colors: getGradientColors(cardType, CardSize.mini),
           begin: Alignment.bottomCenter,
           end: Alignment.topRight,
         ),
@@ -108,7 +108,7 @@ class CardDecoration {
   static BoxDecoration getSmallDecoration(CardType cardType) {
     return BoxDecoration(
         gradient: LinearGradient(
-          colors: getGradientColors(cardType, CardStatus.small),
+          colors: getGradientColors(cardType, CardSize.small),
           begin: Alignment.bottomCenter,
           end: Alignment.topRight,
         ),

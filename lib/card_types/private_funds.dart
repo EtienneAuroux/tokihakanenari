@@ -3,11 +3,11 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
 class PrivateFunds extends StatefulWidget {
-  final CardStatus cardStatus;
+  final CardSize cardSize;
 
   const PrivateFunds({
     super.key,
-    required this.cardStatus,
+    required this.cardSize,
   });
 
   @override
@@ -15,16 +15,16 @@ class PrivateFunds extends StatefulWidget {
 }
 
 class _PrivateFundsState extends State<PrivateFunds> {
-  Widget getCardContent(CardStatus cardStatus) {
+  Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
-      case CardStatus.big:
+      case CardSize.big:
         return const Center(
           child: Text(
             'Private funds',
             style: TextStyles.bigCardTitle,
           ),
         );
-      case CardStatus.mini:
+      case CardSize.mini:
         return const Center(
           child: Text(
             'Private funds',
@@ -32,7 +32,7 @@ class _PrivateFundsState extends State<PrivateFunds> {
             textAlign: TextAlign.center,
           ),
         );
-      case CardStatus.small:
+      case CardSize.small:
         return const Center(
           child: Text(
             'Private funds',
@@ -44,6 +44,6 @@ class _PrivateFundsState extends State<PrivateFunds> {
 
   @override
   Widget build(BuildContext context) {
-    return getCardContent(widget.cardStatus);
+    return getCardContent(widget.cardSize);
   }
 }

@@ -3,12 +3,16 @@ import 'package:tokihakanenari/card_generators/mini_card.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'dart:developer' as developer;
+
 class AddCard extends StatefulWidget {
+  final CardSize cardSize;
   final CardStatus cardStatus;
   final void Function(CardType) onRequestToAddCard;
 
   const AddCard({
     super.key,
+    required this.cardSize,
     required this.cardStatus,
     required this.onRequestToAddCard,
   });
@@ -27,8 +31,10 @@ class _AddCardState extends State<AddCard> {
           MiniCard(
             cardType: cardType,
             onTapMiniCard: () {
-              // Need to prevent this until animation of add card coming in is done.
-              widget.onRequestToAddCard(cardType);
+              developer.log('on tap ${cardType.name}, size ${widget.cardSize.name}, status ${widget.cardStatus.name}');
+              if (widget.cardStatus == CardStatus.inert) {
+                widget.onRequestToAddCard(cardType);
+              }
             },
           ),
         );
@@ -37,9 +43,9 @@ class _AddCardState extends State<AddCard> {
     return remainingCards;
   }
 
-  Widget getCardContent(CardStatus cardStatus) {
+  Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
-      case CardStatus.big:
+      case CardSize.big:
         return Container(
           padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
           alignment: Alignment.topCenter,
@@ -63,9 +69,9 @@ class _AddCardState extends State<AddCard> {
             ],
           ),
         );
-      case CardStatus.mini:
+      case CardSize.mini:
         throw UnimplementedError('addCard should not be used as a mini card.');
-      case CardStatus.small:
+      case CardSize.small:
         return const Center(
           child: Icon(
             Icons.add_rounded,
@@ -79,13 +85,13 @@ class _AddCardState extends State<AddCard> {
   void initState() {
     super.initState();
 
-    if (widget.cardStatus == CardStatus.big) {
+    if (widget.cardSize == CardSize.big) {
       initializeRemainingCards();
     }
   }
 
   @override
   Widget build(BuildContext context) {
-    return getCardContent(widget.cardStatus);
+    return getCardContent(widget.cardSize);
   }
 }
