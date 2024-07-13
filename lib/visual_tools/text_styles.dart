@@ -13,6 +13,18 @@ class TextStyles {
     decoration: TextDecoration.none,
   );
 
+  static const dialogTitle = TextStyle(
+    fontSize: 20,
+    color: Colors.black,
+    decoration: TextDecoration.none,
+  );
+
+  static const dialogText = TextStyle(
+    fontSize: 15,
+    color: Colors.black,
+    decoration: TextDecoration.none,
+  );
+
   static const miniCardTitle = TextStyle(
     fontSize: 20,
     color: Colors.black,

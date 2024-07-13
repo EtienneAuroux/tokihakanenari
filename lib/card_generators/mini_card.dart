@@ -3,8 +3,9 @@ import 'package:tokihakanenari/card_types/content_creation.dart';
 import 'package:tokihakanenari/card_types/index_funds.dart';
 import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/card_types/real_estate.dart';
+import 'package:tokihakanenari/card_types/salaries.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
-import 'package:tokihakanenari/card_types/stocks.dart';
+import 'package:tokihakanenari/card_types/stock_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 
@@ -47,12 +48,16 @@ class _MiniCardState extends State<MiniCard> {
         return const RealEstate(
           cardSize: CardSize.mini,
         );
+      case CardType.salaries:
+        return const Salaries(
+          cardSize: CardSize.mini,
+        );
       case CardType.savingAccounts:
         return const SavingAccounts(
           cardSize: CardSize.mini,
         );
-      case CardType.stocks:
-        return const Stocks(
+      case CardType.stockAccounts:
+        return const StockAccounts(
           cardSize: CardSize.mini,
         );
     }

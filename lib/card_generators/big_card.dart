@@ -9,8 +9,9 @@ import 'package:tokihakanenari/card_types/index_funds.dart';
 import 'package:tokihakanenari/card_types/passive_income.dart';
 import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/card_types/real_estate.dart';
+import 'package:tokihakanenari/card_types/salaries.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
-import 'package:tokihakanenari/card_types/stocks.dart';
+import 'package:tokihakanenari/card_types/stock_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/big_card_clipper.dart';
@@ -77,12 +78,16 @@ class _BigCardState extends State<BigCard> {
         return const RealEstate(
           cardSize: CardSize.big,
         );
+      case CardType.salaries:
+        return const Salaries(
+          cardSize: CardSize.big,
+        );
       case CardType.savingAccounts:
         return const SavingAccounts(
           cardSize: CardSize.big,
         );
-      case CardType.stocks:
-        return const Stocks(
+      case CardType.stockAccounts:
+        return const StockAccounts(
           cardSize: CardSize.big,
         );
     }

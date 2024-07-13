@@ -2,32 +2,32 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
-class Stocks extends StatefulWidget {
+class Salaries extends StatefulWidget {
   final CardSize cardSize;
 
-  const Stocks({
+  const Salaries({
     super.key,
     required this.cardSize,
   });
 
   @override
-  State<Stocks> createState() => _StocksState();
+  State<Salaries> createState() => _SalariesState();
 }
 
-class _StocksState extends State<Stocks> {
+class _SalariesState extends State<Salaries> {
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
         return const Center(
           child: Text(
-            'Stocks',
+            'Salaries',
             style: TextStyles.bigCardTitle,
           ),
         );
       case CardSize.mini:
         return const Center(
           child: Text(
-            'Stocks',
+            'Salaries',
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),
@@ -35,7 +35,7 @@ class _StocksState extends State<Stocks> {
       case CardSize.small:
         return const Center(
           child: Text(
-            'Stocks',
+            'Salaries',
             style: TextStyles.smallCardTitle,
           ),
         );

@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/alert_dialogs/add_new_dialog.dart';
+import 'package:tokihakanenari/alert_dialogs/new_income_dialog.dart';
 import 'package:tokihakanenari/my_enums.dart';
-import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 import 'dart:developer' as developer;
 
@@ -18,63 +17,86 @@ class SavingAccounts extends StatefulWidget {
 }
 
 class _SavingAccountsState extends State<SavingAccounts> {
-  late List<Widget> savingAccounts;
-  int numberOfSavingAccounts = 0;
-  TextEditingController accountNameController = TextEditingController();
-
-  List<Widget> initializeSavingAccounts() {
-    return <Widget>[
-      const Text(
-        'Saving accounts',
-        style: TextStyles.bigCardTitle,
-      ),
-      const Icon(Icons.new_label),
-    ];
-  }
-
-  // void addSavingAccount() {
-  //   savingAccounts.insert(
-  //       savingAccounts.length - 1,
-  //       const Row(
-  //         mainAxisAlignment: MainAxisAlignment.spaceBetween,
-  //         crossAxisAlignment: CrossAxisAlignment.center,
-  //         children: [
-  //           Icon(Icons.abc),
-  //           Text(
-  //             'amount',
-  //             style: TextStyles.bigCardText,
-  //           ),
-  //           Text(
-  //             'rate',
-  //             style: TextStyles.bigCardText,
-  //           ),
-  //         ],
-  //       ));
-  //   setState(() {});
-  // }
+  List<Widget> savingAccounts = <Widget>[
+    const SizedBox(
+      height: 10,
+    )
+  ];
 
   Widget getCardContent(CardSize cardStatus, BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     switch (cardStatus) {
       case CardSize.big:
-        return ListView.builder(
-          itemCount: savingAccounts.length,
-          itemBuilder: (BuildContext context, int index) {
-            return Container(
-              alignment: Alignment.center,
-              padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-              child: TextButton(
-                onPressed: () {
-                  // savingAccountDialog(index, numberOfSavingAccounts);
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return AddNewDialog(cardType: CardType.savingAccounts);
-                      });
-                },
-                child: savingAccounts[index],
+        return Container(
+          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          child: Column(
+            children: [
+              const Text(
+                'Saving accounts',
+                style: TextStyles.bigCardTitle,
               ),
-            );
-          },
+              Expanded(
+                child: ListView.builder(
+                  shrinkWrap: true,
+                  itemCount: savingAccounts.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                      child: savingAccounts[index],
+                    );
+                  },
+                ),
+              ),
+              Container(
+                alignment: Alignment.topCenter,
+                height: size.height / 4,
+                child: GestureDetector(
+                  child: const Text(
+                    'Double tap to add a new saving account.',
+                    style: TextStyles.bigCardText,
+                    textAlign: TextAlign.center,
+                  ),
+                  onDoubleTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return NewIncomeDialog(
+                            cardType: CardType.savingAccounts,
+                            onNewIncomeCallback: (List<dynamic> newSavingAccount) {
+                              developer.log('received: $newSavingAccount');
+                              Row savingAccount = Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Icon(newSavingAccount[0]),
+                                  Text(
+                                    newSavingAccount[1],
+                                    style: TextStyles.bigCardText,
+                                  ),
+                                  Text(
+                                    newSavingAccount[2],
+                                    style: TextStyles.bigCardText,
+                                  ),
+                                  Text(
+                                    newSavingAccount[3],
+                                    style: TextStyles.bigCardText,
+                                  ),
+                                ],
+                              );
+                              setState(() {
+                                savingAccounts.add(const SizedBox(
+                                  height: 15,
+                                ));
+                                savingAccounts.add(savingAccount);
+                              });
+                            },
+                          );
+                        });
+                  },
+                ),
+              ),
+            ],
+          ),
         );
       case CardSize.mini:
         return const Center(
@@ -92,20 +114,6 @@ class _SavingAccountsState extends State<SavingAccounts> {
           ),
         );
     }
-  }
-
-  @override
-  void initState() {
-    super.initState();
-
-    savingAccounts = initializeSavingAccounts();
-  }
-
-  @override
-  void dispose() {
-    accountNameController.dispose();
-
-    super.dispose();
   }
 
   @override

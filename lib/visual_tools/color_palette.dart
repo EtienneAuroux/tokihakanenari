@@ -11,6 +11,8 @@ class ColorPalette {
   static const Color mirrorYellow = Color.fromARGB(255, 228, 239, 233);
   static const Color oceanBlue = Color.fromARGB(255, 46, 49, 146);
   static const Color oceanOpal = Color.fromARGB(255, 27, 255, 255);
+  static const Color orbitGreen = Color.fromARGB(255, 146, 239, 253);
+  static const Color orbitPurple = Color.fromARGB(255, 78, 101, 255);
   static const Color pigletPale = Color.fromARGB(255, 255, 221, 225);
   static const Color pigletPink = Color.fromARGB(255, 238, 156, 167);
   static const Color rockDarkGrey = Color.fromARGB(255, 89, 97, 100);
