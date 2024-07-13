@@ -28,7 +28,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
     switch (cardStatus) {
       case CardSize.big:
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          padding: EdgeInsets.symmetric(vertical: size.height / 25),
           child: Column(
             children: [
               const Text(
@@ -51,6 +51,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
               Container(
                 alignment: Alignment.topCenter,
                 height: size.height / 4,
+                padding: const EdgeInsets.symmetric(vertical: 30),
                 child: GestureDetector(
                   child: const Text(
                     'Double tap to add a new saving account.',
@@ -64,22 +65,38 @@ class _SavingAccountsState extends State<SavingAccounts> {
                           return NewIncomeDialog(
                             cardType: CardType.savingAccounts,
                             onNewIncomeCallback: (List<dynamic> newSavingAccount) {
-                              developer.log('received: $newSavingAccount');
                               Row savingAccount = Row(
                                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Icon(newSavingAccount[0]),
-                                  Text(
-                                    newSavingAccount[1],
-                                    style: TextStyles.bigCardText,
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(0, 0, size.width / 30, 0),
+                                    child: Icon(newSavingAccount[0]),
                                   ),
-                                  Text(
-                                    newSavingAccount[2],
-                                    style: TextStyles.bigCardText,
+                                  Flexible(
+                                    child: Padding(
+                                      padding: EdgeInsets.symmetric(horizontal: size.width / 30),
+                                      child: Text(
+                                        newSavingAccount[1],
+                                        style: TextStyles.bigCardText,
+                                        textAlign: TextAlign.start,
+                                      ),
+                                    ),
                                   ),
-                                  Text(
-                                    newSavingAccount[3],
-                                    style: TextStyles.bigCardText,
+                                  Padding(
+                                    padding: EdgeInsets.symmetric(horizontal: size.width / 30),
+                                    child: Text(
+                                      newSavingAccount[2],
+                                      style: TextStyles.bigCardText,
+                                      textAlign: TextAlign.end,
+                                    ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsets.fromLTRB(size.width / 30, 0, 0, 0),
+                                    child: Text(
+                                      newSavingAccount[3],
+                                      style: TextStyles.bigCardText,
+                                      textAlign: TextAlign.end,
+                                    ),
                                   ),
                                 ],
                               );

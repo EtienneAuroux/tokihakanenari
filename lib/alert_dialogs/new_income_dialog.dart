@@ -24,6 +24,33 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
   TextEditingController amountController = TextEditingController();
   TextEditingController interestController = TextEditingController();
 
+  List<dynamic>? getUserInput(CardType cardType) {
+    switch (cardType) {
+      case CardType.addCard:
+        throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
+      case CardType.contentCreation:
+        return null;
+      case CardType.indexFunds:
+        return null;
+      case CardType.passiveIncome:
+        throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
+      case CardType.privateFunds:
+        return null;
+      case CardType.realEstate:
+        return null;
+      case CardType.salaries:
+        return null;
+      case CardType.savingAccounts:
+        if (nameController.text.isNotEmpty && amountController.text.isNotEmpty && interestController.text.isNotEmpty) {
+          return <dynamic>[icon, nameController.text, amountController.text, interestController.text];
+        } else {
+          return null;
+        }
+      case CardType.stockAccounts:
+        return null;
+    }
+  }
+
   List<Widget> getDialogContent(CardType cardType, Size size) {
     switch (cardType) {
       case CardType.addCard:
@@ -152,13 +179,9 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           TextButton(
             child: const Icon(Icons.check),
             onPressed: () {
-              if (nameController.text.isNotEmpty && amountController.text.isNotEmpty && interestController.text.isNotEmpty) {
-                widget.onNewIncomeCallback(<dynamic>[
-                  icon,
-                  nameController.text,
-                  amountController.text,
-                  interestController.text,
-                ]);
+              List<dynamic>? userInput = getUserInput(cardType);
+              if (userInput != null) {
+                widget.onNewIncomeCallback(userInput);
               }
               Navigator.of(context).pop();
             },
