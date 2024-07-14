@@ -17,18 +17,14 @@ class SavingAccounts extends StatefulWidget {
 }
 
 class _SavingAccountsState extends State<SavingAccounts> {
-  List<Widget> savingAccounts = <Widget>[
-    const SizedBox(
-      height: 10,
-    )
-  ];
+  List<Widget> savingAccounts = <Widget>[];
 
   Widget getCardContent(CardSize cardStatus, BuildContext context) {
     Size size = MediaQuery.of(context).size;
     switch (cardStatus) {
       case CardSize.big:
         return Container(
-          padding: EdgeInsets.symmetric(vertical: size.height / 25),
+          padding: EdgeInsets.fromLTRB(0, size.height / 20, 0, 0),
           child: Column(
             children: [
               const Text(
@@ -48,69 +44,72 @@ class _SavingAccountsState extends State<SavingAccounts> {
                   },
                 ),
               ),
-              Container(
-                alignment: Alignment.topCenter,
-                height: size.height / 4,
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: GestureDetector(
+              GestureDetector(
+                child: Container(
+                  alignment: Alignment.topCenter,
+                  height: size.height / 4,
+                  padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text(
                     'Double tap to add a new saving account.',
                     style: TextStyles.bigCardText,
                     textAlign: TextAlign.center,
                   ),
-                  onDoubleTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return NewIncomeDialog(
-                            cardType: CardType.savingAccounts,
-                            onNewIncomeCallback: (List<dynamic> newSavingAccount) {
-                              Row savingAccount = Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(0, 0, size.width / 30, 0),
-                                    child: Icon(newSavingAccount[0]),
-                                  ),
-                                  Flexible(
-                                    child: Padding(
-                                      padding: EdgeInsets.symmetric(horizontal: size.width / 30),
-                                      child: Text(
-                                        newSavingAccount[1],
-                                        style: TextStyles.bigCardText,
-                                        textAlign: TextAlign.start,
-                                      ),
-                                    ),
-                                  ),
-                                  Padding(
+                ),
+                onDoubleTap: () {
+                  showDialog(
+                      context: context,
+                      builder: (BuildContext context) {
+                        return NewIncomeDialog(
+                          cardType: CardType.savingAccounts,
+                          onNewIncomeCallback: (List<dynamic> newSavingAccount) {
+                            Row savingAccount = Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                              children: [
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(0, 0, size.width / 30, 0),
+                                  child: Icon(newSavingAccount[0]),
+                                ),
+                                Flexible(
+                                  child: Padding(
                                     padding: EdgeInsets.symmetric(horizontal: size.width / 30),
                                     child: Text(
-                                      newSavingAccount[2],
+                                      newSavingAccount[1],
                                       style: TextStyles.bigCardText,
-                                      textAlign: TextAlign.end,
+                                      textAlign: TextAlign.start,
+                                      overflow: TextOverflow.fade,
+                                      softWrap: false,
+                                      maxLines: 1,
                                     ),
                                   ),
-                                  Padding(
-                                    padding: EdgeInsets.fromLTRB(size.width / 30, 0, 0, 0),
-                                    child: Text(
-                                      newSavingAccount[3],
-                                      style: TextStyles.bigCardText,
-                                      textAlign: TextAlign.end,
-                                    ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.symmetric(horizontal: size.width / 30),
+                                  child: Text(
+                                    newSavingAccount[2],
+                                    style: TextStyles.bigCardText,
+                                    textAlign: TextAlign.end,
                                   ),
-                                ],
-                              );
-                              setState(() {
-                                savingAccounts.add(const SizedBox(
-                                  height: 15,
-                                ));
-                                savingAccounts.add(savingAccount);
-                              });
-                            },
-                          );
-                        });
-                  },
-                ),
+                                ),
+                                Padding(
+                                  padding: EdgeInsets.fromLTRB(size.width / 30, 0, 0, 0),
+                                  child: Text(
+                                    newSavingAccount[3],
+                                    style: TextStyles.bigCardText,
+                                    textAlign: TextAlign.end,
+                                  ),
+                                ),
+                              ],
+                            );
+                            setState(() {
+                              savingAccounts.add(const SizedBox(
+                                height: 15,
+                              ));
+                              savingAccounts.add(savingAccount);
+                            });
+                          },
+                        );
+                      });
+                },
               ),
             ],
           ),

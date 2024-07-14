@@ -28,7 +28,7 @@ class _IconsDialogState extends State<IconsDialog> {
   Widget build(BuildContext context) {
     return AlertDialog(
       content: DecoratedBox(
-        decoration: CardDecoration.getMiniDecoration(CardType.savingAccounts),
+        decoration: CardDecoration.getMiniDecoration(widget.cardType),
         child: GridView(
           shrinkWrap: true,
           gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(

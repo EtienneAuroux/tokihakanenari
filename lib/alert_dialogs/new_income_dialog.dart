@@ -20,6 +20,8 @@ class NewIncomeDialog extends StatefulWidget {
 
 class _NewIncomeDialogState extends State<NewIncomeDialog> {
   IconData icon = Icons.abc;
+  TimePeriod timePeriod = TimePeriod.month;
+
   TextEditingController nameController = TextEditingController();
   TextEditingController amountController = TextEditingController();
   TextEditingController interestController = TextEditingController();
@@ -39,7 +41,11 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.realEstate:
         return null;
       case CardType.salaries:
-        return null;
+        if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
+          return <dynamic>[icon, nameController.text, amountController.text, timePeriod.name];
+        } else {
+          return null;
+        }
       case CardType.savingAccounts:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty && interestController.text.isNotEmpty) {
           return <dynamic>[icon, nameController.text, amountController.text, interestController.text];
@@ -51,149 +57,180 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
     }
   }
 
-  List<Widget> getDialogContent(CardType cardType, Size size) {
+  String getDialogTitle(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
         throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
       case CardType.contentCreation:
-        return [
-          const Text(
-            'New content:', // Need better title.
-            style: TextStyles.dialogTitle,
-          ),
-        ];
+        return 'New content:';
       case CardType.indexFunds:
-        return [
-          const Text(
-            'New fund:',
-            style: TextStyles.dialogTitle,
-          ),
-        ];
+        return 'New fund:';
       case CardType.passiveIncome:
         throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
       case CardType.privateFunds:
-        return [
-          const Text(
-            'New fund:',
-            style: TextStyles.dialogTitle,
-          ),
-        ];
+        return 'New fund:';
       case CardType.realEstate:
-        return [
-          const Text(
-            'New property:',
-            style: TextStyles.dialogTitle,
-          ),
-        ];
+        return 'New property:';
+      case CardType.salaries:
+        return 'New salary:';
+      case CardType.savingAccounts:
+        return 'New account:';
+      case CardType.stockAccounts:
+        return 'New account:';
+    }
+  }
+
+  List<Widget> getDialogContent(CardType cardType) {
+    switch (cardType) {
+      case CardType.addCard:
+        throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
+      case CardType.contentCreation:
+        return [];
+      case CardType.indexFunds:
+        return [];
+      case CardType.passiveIncome:
+        throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
+      case CardType.privateFunds:
+        return [];
+      case CardType.realEstate:
+        return [];
       case CardType.salaries:
         return [
-          const Text(
-            'New salary:',
-            style: TextStyles.dialogTitle,
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'icon:',
+              style: TextStyles.dialogText,
+            ),
           ),
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return IconsDialog(
+                        cardType: widget.cardType,
+                        onIconChosenCallback: (newIcon) {
+                          setState(() {
+                            icon = newIcon;
+                          });
+                        },
+                      );
+                    });
+              },
+              icon: Icon(icon)),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'name:',
+              style: TextStyles.dialogText,
+            ),
+          ),
+          TextField(
+            controller: nameController,
+            textAlign: TextAlign.center,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'amount:',
+              style: TextStyles.dialogText,
+            ),
+          ),
+          TextField(
+            controller: amountController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'period:',
+              style: TextStyles.dialogText,
+            ),
+          ),
+          DropdownButton<TimePeriod>(
+            value: timePeriod,
+            isExpanded: true,
+            underline: const SizedBox(),
+            items: TimePeriod.values.map((TimePeriod timePeriod) {
+              return DropdownMenuItem<TimePeriod>(
+                value: timePeriod,
+                child: Text(
+                  timePeriod.name,
+                ),
+              );
+            }).toList(),
+            onChanged: (TimePeriod? newTimePeriod) {
+              setState(() {
+                timePeriod = newTimePeriod!;
+              });
+            },
+          )
         ];
       case CardType.savingAccounts:
         return [
-          const Text(
-            'New account:',
-            style: TextStyles.dialogTitle,
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'icon:',
+              style: TextStyles.dialogText,
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.start,
-            children: [
-              const Text(
-                'icon:',
-                style: TextStyles.dialogText,
-              ),
-              SizedBox(
-                width: size.width / 4,
-              ),
-              IconButton(
-                  onPressed: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return IconsDialog(
-                            cardType: widget.cardType,
-                            onIconChosenCallback: (newIcon) {
-                              setState(() {
-                                icon = newIcon;
-                              });
-                            },
-                          );
-                        });
-                  },
-                  icon: Icon(icon)),
-            ],
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return IconsDialog(
+                        cardType: widget.cardType,
+                        onIconChosenCallback: (newIcon) {
+                          setState(() {
+                            icon = newIcon;
+                          });
+                        },
+                      );
+                    });
+              },
+              icon: Icon(icon)),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'name:',
+              style: TextStyles.dialogText,
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'name:',
-                style: TextStyles.dialogText,
-              ),
-              SizedBox(
-                width: size.width / 3,
-                child: TextField(
-                  controller: nameController,
-                  textAlign: TextAlign.center,
-                ),
-              )
-            ],
+          TextField(
+            controller: nameController,
+            textAlign: TextAlign.center,
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'amount:',
-                style: TextStyles.dialogText,
-              ),
-              SizedBox(
-                width: size.width / 3,
-                child: TextField(
-                  controller: amountController,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'amount:',
+              style: TextStyles.dialogText,
+            ),
           ),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              const Text(
-                'interest (%):',
-                style: TextStyles.dialogText,
-              ),
-              SizedBox(
-                width: size.width / 3,
-                child: TextField(
-                  controller: interestController,
-                  keyboardType: TextInputType.number,
-                  textAlign: TextAlign.center,
-                ),
-              ),
-            ],
+          TextField(
+            controller: amountController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
           ),
-          TextButton(
-            child: const Icon(Icons.check),
-            onPressed: () {
-              List<dynamic>? userInput = getUserInput(cardType);
-              if (userInput != null) {
-                widget.onNewIncomeCallback(userInput);
-              }
-              Navigator.of(context).pop();
-            },
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'interest (%):',
+              style: TextStyles.dialogText,
+            ),
+          ),
+          TextField(
+            controller: interestController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
           ),
         ];
       case CardType.stockAccounts:
-        return [
-          const Text(
-            'New account:',
-            style: TextStyles.dialogTitle,
-          ),
-        ];
+        return [];
     }
   }
 
@@ -212,7 +249,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
 
     return AlertDialog(
       content: DecoratedBox(
-        decoration: CardDecoration.getMiniDecoration(CardType.savingAccounts),
+        decoration: CardDecoration.getMiniDecoration(widget.cardType),
         child: Padding(
           padding: EdgeInsets.symmetric(
             horizontal: dialogSize.width / 10,
@@ -220,7 +257,37 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
-            children: getDialogContent(widget.cardType, dialogSize),
+            children: [
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                child: Text(
+                  getDialogTitle(widget.cardType),
+                  style: TextStyles.dialogTitle,
+                ),
+              ),
+              GridView(
+                shrinkWrap: true,
+                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 2,
+                  crossAxisSpacing: 10,
+                  mainAxisExtent: 45,
+                ),
+                children: getDialogContent(widget.cardType),
+              ),
+              Padding(
+                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                child: TextButton(
+                  child: const Icon(Icons.check),
+                  onPressed: () {
+                    List<dynamic>? userInput = getUserInput(widget.cardType);
+                    if (userInput != null) {
+                      widget.onNewIncomeCallback(userInput);
+                    }
+                    Navigator.of(context).pop();
+                  },
+                ),
+              ),
+            ],
           ),
         ),
       ),
