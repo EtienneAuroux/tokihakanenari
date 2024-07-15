@@ -45,7 +45,6 @@ class SalariesData {
   List<String> names = <String>[];
   List<double> salaries = <double>[];
   List<TimePeriod> timePeriods = <TimePeriod>[];
-  double totalSalaries = 0;
   double earnedPerDay = 0;
 }
 

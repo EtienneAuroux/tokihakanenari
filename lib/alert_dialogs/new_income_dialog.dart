@@ -37,7 +37,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
       case CardType.contentCreation:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
-          return <dynamic>[nameController.text, amountController.text, timePeriod.name];
+          return <dynamic>[nameController.text, amountController.text, timePeriod];
         } else {
           return null;
         }
@@ -63,7 +63,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         }
       case CardType.salaries:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
-          return <dynamic>[icon, nameController.text, amountController.text, timePeriod.name];
+          return <dynamic>[icon, nameController.text, amountController.text, timePeriod];
         } else {
           return null;
         }

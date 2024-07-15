@@ -63,34 +63,10 @@ class _ContentCreationState extends State<ContentCreation> {
                         return NewIncomeDialog(
                           cardType: CardType.contentCreation,
                           onNewIncomeCallback: (List<dynamic> newContent) {
-                            Row content = Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, size.width / 30, 0),
-                                  child: Text(
-                                    newContent[0],
-                                    style: TextStyles.bigCardText,
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: size.width / 30),
-                                  child: Text(
-                                    '${newContent[1]} / ${newContent[2]}',
-                                    style: TextStyles.bigCardText,
-                                    textAlign: TextAlign.start,
-                                  ),
-                                ),
-                              ],
-                            );
+                            ledger.addCardData(CardType.contentCreation, newContent);
+                            contents = getContents(CardType.contentCreation);
+                            setState(() {});
                             ledger.addCarouselCard(CardType.contentCreation);
-                            setState(() {
-                              contents.add(const SizedBox(
-                                height: 15,
-                              ));
-                              contents.add(content);
-                            });
                           },
                         );
                       });
@@ -115,6 +91,17 @@ class _ContentCreationState extends State<ContentCreation> {
           ),
         );
     }
+  }
+
+  List<Widget> getContents(CardType cardType, {double width = 0}) {
+    return ledger.getCardData(cardType, width);
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    contents = getContents(CardType.contentCreation);
   }
 
   @override
