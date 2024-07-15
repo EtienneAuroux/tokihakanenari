@@ -225,13 +225,13 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           const Align(
             alignment: Alignment.centerLeft,
             child: Tooltip(
-              message: 'the rent you receive from the property',
+              message: 'the revenues you receive from the property per month',
               child: Text(
-                'rent:',
+                'revenue:',
                 style: TextStyles.dialogText,
               ),
             ),
-          ),
+          ), // TODO SHOULD BE POSSIBLE TO CHOOSE PERIOD?
           TextField(
             controller: rentController,
             keyboardType: TextInputType.number,
@@ -281,7 +281,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           const Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'name:',
+              'name:', // TODO SHOULD BE COMPANIES OR EMPLOYERS?
               style: TextStyles.dialogText,
             ),
           ),
@@ -371,9 +371,12 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           ),
           const Align(
             alignment: Alignment.centerLeft,
-            child: Text(
-              'amount:',
-              style: TextStyles.dialogText,
+            child: Tooltip(
+              message: 'the money invested',
+              child: Text(
+                'amount:',
+                style: TextStyles.dialogText,
+              ),
             ),
           ),
           TextField(

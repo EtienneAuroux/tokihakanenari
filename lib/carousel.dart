@@ -2,9 +2,11 @@ import 'dart:async';
 import 'dart:math';
 import 'dart:developer' as developer;
 
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tokihakanenari/card_generators/small_card.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 class Carousel extends StatefulWidget {
@@ -22,6 +24,7 @@ class Carousel extends StatefulWidget {
 }
 
 class _CarouselState extends State<Carousel> {
+  Ledger ledger = Ledger();
   late List<SmallCard> smallCards;
 
   Future<bool> ensureInitialization() {
@@ -42,62 +45,71 @@ class _CarouselState extends State<Carousel> {
     }
   }
 
+  List<SmallCard> getSmallCards() {
+    List<SmallCard> carouselCards = <SmallCard>[];
+
+    for (CardType cardType in ledger.carouselCards) {
+      carouselCards.add(
+        SmallCard(
+          cardType: cardType,
+          onTapSmallCard: () {
+            if (widget.cardStatus == CardStatus.inert) {
+              widget.onRequestBigCard(cardType);
+            }
+          },
+          onLongPressSmallCard: () {},
+        ),
+      );
+    }
+
+    // TODO IF ALL CARD TYPE REMOVE ADDCARD.
+
+    return carouselCards;
+  }
+
   @override
   void initState() {
     super.initState();
 
-    smallCards = [
-      SmallCard(
-        cardType: CardType.addCard,
-        onTapSmallCard: () {
-          if (widget.cardStatus == CardStatus.inert) {
-            widget.onRequestBigCard(CardType.addCard);
-          }
-        },
-        onLongPressSmallCard: () {},
-      ),
-      SmallCard(
-        cardType: CardType.passiveIncome,
-        onTapSmallCard: () {
-          if (widget.cardStatus == CardStatus.inert) {
-            widget.onRequestBigCard(CardType.passiveIncome);
-          }
-        },
-        onLongPressSmallCard: () {},
-      ),
-      SmallCard(
-        cardType: CardType.addCard,
-        onTapSmallCard: () {
-          if (widget.cardStatus == CardStatus.inert) {
-            widget.onRequestBigCard(CardType.addCard);
-          }
-        },
-        onLongPressSmallCard: () {},
-      ),
-    ];
+    smallCards = getSmallCards();
+
+    ledger.addListener(() {
+      smallCards = getSmallCards();
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
     const double viewportFraction = 0.5;
-    final pageController = PageController(viewportFraction: viewportFraction, initialPage: 1);
+    final PageController pageController = PageController(
+      viewportFraction: viewportFraction,
+      initialPage: 1,
+    );
 
     return FutureBuilder(
         future: ensureInitialization(),
         builder: (BuildContext context, AsyncSnapshot<void> snap) {
           return LayoutBuilder(builder: (context, constraints) {
-            final maxHeight = constraints.maxHeight;
+            final double maxHeight = constraints.maxHeight;
             return PageView.builder(
               scrollDirection: Axis.vertical,
               allowImplicitScrolling: true,
               controller: pageController,
               itemCount: smallCards.length,
               itemBuilder: ((context, index) {
-                final card = smallCards[index];
+                final SmallCard card = smallCards[index];
                 return AnimatedBuilder(
                   animation: pageController,
                   builder: ((context, widget) {
-                    final ratioY = pageController.offset / maxHeight / viewportFraction - index;
+                    final double ratioY = pageController.offset / maxHeight / viewportFraction - index;
                     return Transform.rotate(
                       angle: pi * 0.08 * ratioY,
                       alignment: setAlignment(pageController, index),

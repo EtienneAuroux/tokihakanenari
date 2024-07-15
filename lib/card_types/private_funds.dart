@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/alert_dialogs/new_income_dialog.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
@@ -16,6 +17,7 @@ class PrivateFunds extends StatefulWidget {
 }
 
 class _PrivateFundsState extends State<PrivateFunds> {
+  Ledger ledger = Ledger();
   List<Widget> privateFunds = <Widget>[];
 
   Widget getCardContent(CardSize cardStatus, BuildContext context) {
@@ -99,6 +101,7 @@ class _PrivateFundsState extends State<PrivateFunds> {
                                 ),
                               ],
                             );
+                            ledger.addCarouselCard(CardType.privateFunds);
                             setState(() {
                               privateFunds.add(const SizedBox(
                                 height: 15,

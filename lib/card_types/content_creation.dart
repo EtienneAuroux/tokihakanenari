@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/alert_dialogs/new_income_dialog.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
@@ -16,6 +17,7 @@ class ContentCreation extends StatefulWidget {
 }
 
 class _ContentCreationState extends State<ContentCreation> {
+  Ledger ledger = Ledger();
   List<Widget> contents = <Widget>[];
 
   Widget getCardContent(CardSize cardStatus, BuildContext context) {
@@ -66,7 +68,11 @@ class _ContentCreationState extends State<ContentCreation> {
                               children: [
                                 Padding(
                                   padding: EdgeInsets.fromLTRB(0, 0, size.width / 30, 0),
-                                  child: Icon(newContent[0]),
+                                  child: Text(
+                                    newContent[0],
+                                    style: TextStyles.bigCardText,
+                                    textAlign: TextAlign.start,
+                                  ),
                                 ),
                                 Padding(
                                   padding: EdgeInsets.symmetric(horizontal: size.width / 30),
@@ -78,6 +84,7 @@ class _ContentCreationState extends State<ContentCreation> {
                                 ),
                               ],
                             );
+                            ledger.addCarouselCard(CardType.contentCreation);
                             setState(() {
                               contents.add(const SizedBox(
                                 height: 15,

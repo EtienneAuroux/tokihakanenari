@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/alert_dialogs/new_income_dialog.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
@@ -16,6 +17,7 @@ class RealEstate extends StatefulWidget {
 }
 
 class _RealEstateState extends State<RealEstate> {
+  Ledger ledger = Ledger();
   List<Widget> properties = <Widget>[];
 
   Widget getCardContent(CardSize cardStatus, BuildContext context) {
@@ -71,6 +73,7 @@ class _RealEstateState extends State<RealEstate> {
                                     child: Text(
                                       newProperty[0],
                                       textAlign: TextAlign.start,
+                                      style: TextStyles.bigCardText,
                                     ),
                                   ),
                                 ),
@@ -92,6 +95,7 @@ class _RealEstateState extends State<RealEstate> {
                                 ),
                               ],
                             );
+                            ledger.addCarouselCard(CardType.realEstate);
                             setState(() {
                               properties.add(const SizedBox(
                                 height: 15,
