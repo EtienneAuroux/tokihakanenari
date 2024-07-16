@@ -85,12 +85,20 @@ class _SavingAccountsState extends State<SavingAccounts> {
           ),
         );
       case CardSize.small:
-        return const Center(
-          child: Text(
+        return Column(children: [
+          const Text(
             'Saving accounts',
             style: TextStyles.smallCardTitle,
           ),
-        );
+          Text(
+            '${ledger.savingAccountsData.earnedPerDay} / day',
+            style: TextStyles.smallCardText,
+          ),
+          Text(
+            '${ledger.savingAccountsData.totalInvested} invested',
+            style: TextStyles.smallCardText,
+          ),
+        ]);
     }
   }
 

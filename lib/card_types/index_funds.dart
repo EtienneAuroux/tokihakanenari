@@ -84,12 +84,20 @@ class _IndexFundsState extends State<IndexFunds> {
           ),
         );
       case CardSize.small:
-        return const Center(
-          child: Text(
+        return Column(children: [
+          const Text(
             'Index funds',
             style: TextStyles.smallCardTitle,
           ),
-        );
+          Text(
+            '${ledger.indexFundsData.earnedPerDay} / day',
+            style: TextStyles.smallCardText,
+          ),
+          Text(
+            '${ledger.indexFundsData.totalInvested} invested',
+            style: TextStyles.smallCardText,
+          ),
+        ]);
     }
   }
 

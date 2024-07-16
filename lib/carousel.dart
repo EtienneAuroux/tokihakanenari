@@ -26,6 +26,8 @@ class Carousel extends StatefulWidget {
 class _CarouselState extends State<Carousel> {
   Ledger ledger = Ledger();
   late List<SmallCard> smallCards;
+  final double viewportFraction = 0.5;
+  late PageController pageController;
 
   Future<bool> ensureInitialization() {
     Completer<bool> completer = Completer<bool>();
@@ -71,11 +73,17 @@ class _CarouselState extends State<Carousel> {
   void initState() {
     super.initState();
 
+    pageController = PageController(
+      viewportFraction: viewportFraction,
+      initialPage: ledger.pageInFocus,
+    );
+
     smallCards = getSmallCards();
 
     ledger.addListener(() {
       smallCards = getSmallCards();
       setState(() {});
+      pageController.jumpToPage(ledger.pageInFocus);
     });
   }
 
@@ -88,12 +96,6 @@ class _CarouselState extends State<Carousel> {
 
   @override
   Widget build(BuildContext context) {
-    const double viewportFraction = 0.5;
-    final PageController pageController = PageController(
-      viewportFraction: viewportFraction,
-      initialPage: 1,
-    );
-
     return FutureBuilder(
         future: ensureInitialization(),
         builder: (BuildContext context, AsyncSnapshot<void> snap) {

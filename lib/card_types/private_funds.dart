@@ -84,12 +84,20 @@ class _PrivateFundsState extends State<PrivateFunds> {
           ),
         );
       case CardSize.small:
-        return const Center(
-          child: Text(
+        return Column(children: [
+          const Text(
             'Private funds',
             style: TextStyles.smallCardTitle,
           ),
-        );
+          Text(
+            '${ledger.privateFundsData.earnedPerDay} / day',
+            style: TextStyles.smallCardText,
+          ),
+          Text(
+            '${ledger.privateFundsData.totalInvested} invested',
+            style: TextStyles.smallCardText,
+          ),
+        ]);
     }
   }
 

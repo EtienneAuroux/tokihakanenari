@@ -38,4 +38,10 @@ class TextStyles {
     color: Colors.black,
     decoration: TextDecoration.none,
   );
+
+  static const smallCardText = TextStyle(
+    fontSize: 15,
+    color: Colors.black,
+    decoration: TextDecoration.none,
+  );
 }

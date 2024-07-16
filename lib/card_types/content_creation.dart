@@ -84,11 +84,18 @@ class _ContentCreationState extends State<ContentCreation> {
           ),
         );
       case CardSize.small:
-        return const Center(
-          child: Text(
-            'Content creation',
-            style: TextStyles.smallCardTitle,
-          ),
+        return Column(
+          children: [
+            const Text(
+              'Content creation',
+              style: TextStyles.smallCardTitle,
+              textAlign: TextAlign.center,
+            ),
+            Text(
+              '${ledger.contentCreationData.earnedPerDay} / day',
+              style: TextStyles.smallCardText,
+            ),
+          ],
         );
     }
   }

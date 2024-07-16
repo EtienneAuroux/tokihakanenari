@@ -78,18 +78,26 @@ class _StockAccountsState extends State<StockAccounts> {
       case CardSize.mini:
         return const Center(
           child: Text(
-            'Stocks',
+            'Stock accounts',
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),
         );
       case CardSize.small:
-        return const Center(
-          child: Text(
-            'Stocks',
+        return Column(children: [
+          const Text(
+            'Stock accounts',
             style: TextStyles.smallCardTitle,
           ),
-        );
+          Text(
+            '${ledger.stockAccountsData.earnedPerDay.toStringAsFixed(2)} / day',
+            style: TextStyles.smallCardText,
+          ),
+          Text(
+            '${ledger.stockAccountsData.totalInvested} invested',
+            style: TextStyles.smallCardText,
+          ),
+        ]);
     }
   }
 
@@ -118,7 +126,7 @@ class _StockAccountsState extends State<StockAccounts> {
                 textAlign: TextAlign.end,
               ),
               Text(
-                '${ledger.stockAccountsData.interests[i].toStringAsFixed(2)} %',
+                '${ledger.stockAccountsData.interests[i]} %',
                 style: TextStyles.bigCardText,
                 textAlign: TextAlign.end,
               ),

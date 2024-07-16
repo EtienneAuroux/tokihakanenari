@@ -117,12 +117,16 @@ class _SalariesState extends State<Salaries> {
           ),
         );
       case CardSize.small:
-        return const Center(
-          child: Text(
+        return Column(children: [
+          const Text(
             'Salaries',
             style: TextStyles.smallCardTitle,
           ),
-        );
+          Text(
+            '${ledger.salariesData.earnedPerDay} / day',
+            style: TextStyles.smallCardText,
+          )
+        ]);
     }
   }
 

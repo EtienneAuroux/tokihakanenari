@@ -84,12 +84,20 @@ class _RealEstateState extends State<RealEstate> {
           ),
         );
       case CardSize.small:
-        return const Center(
-          child: Text(
+        return Column(children: [
+          const Text(
             'Real estate',
             style: TextStyles.smallCardTitle,
           ),
-        );
+          Text(
+            '${ledger.realEstateData.earnedPerDay} / day',
+            style: TextStyles.smallCardText,
+          ),
+          Text(
+            '${ledger.realEstateData.totalInvested} invested',
+            style: TextStyles.smallCardText,
+          ),
+        ]);
     }
   }
 
