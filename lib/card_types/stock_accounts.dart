@@ -30,7 +30,7 @@ class _StockAccountsState extends State<StockAccounts> {
             children: [
               const Text(
                 'Stock accounts',
-                style: TextStyles.bigCardTitle,
+                style: TextStyles.cardTitle,
               ),
               Expanded(
                 child: ListView.builder(
@@ -52,7 +52,7 @@ class _StockAccountsState extends State<StockAccounts> {
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text(
                     'Double tap to add a new stock account.',
-                    style: TextStyles.bigCardText,
+                    style: TextStyles.cardBody,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -84,20 +84,25 @@ class _StockAccountsState extends State<StockAccounts> {
           ),
         );
       case CardSize.small:
-        return Column(children: [
-          const Text(
-            'Stock accounts',
-            style: TextStyles.smallCardTitle,
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Stock accounts',
+                style: TextStyles.cardTitle,
+              ),
+              Text(
+                '${ledger.stockAccountsData.earnedPerDay.toStringAsFixed(2)} / day',
+                style: TextStyles.cardBody,
+              ),
+              Text(
+                '${ledger.stockAccountsData.totalInvested} invested',
+                style: TextStyles.cardBody,
+              ),
+            ],
           ),
-          Text(
-            '${ledger.stockAccountsData.earnedPerDay.toStringAsFixed(2)} / day',
-            style: TextStyles.smallCardText,
-          ),
-          Text(
-            '${ledger.stockAccountsData.totalInvested} invested',
-            style: TextStyles.smallCardText,
-          ),
-        ]);
+        );
     }
   }
 
@@ -113,7 +118,7 @@ class _StockAccountsState extends State<StockAccounts> {
               Flexible(
                 child: Text(
                   ledger.stockAccountsData.names[i],
-                  style: TextStyles.bigCardText,
+                  style: TextStyles.cardBody,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.fade,
                   softWrap: false,
@@ -122,12 +127,12 @@ class _StockAccountsState extends State<StockAccounts> {
               ),
               Text(
                 '${ledger.stockAccountsData.amounts[i]}',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
               Text(
                 '${ledger.stockAccountsData.interests[i]} %',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
             ],

@@ -30,7 +30,7 @@ class _PrivateFundsState extends State<PrivateFunds> {
             children: [
               const Text(
                 'Private funds',
-                style: TextStyles.bigCardTitle,
+                style: TextStyles.cardTitle,
               ),
               Expanded(
                 child: ListView.builder(
@@ -52,7 +52,7 @@ class _PrivateFundsState extends State<PrivateFunds> {
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text(
                     'Double tap to add a new private fund.',
-                    style: TextStyles.bigCardText,
+                    style: TextStyles.cardBody,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -84,20 +84,25 @@ class _PrivateFundsState extends State<PrivateFunds> {
           ),
         );
       case CardSize.small:
-        return Column(children: [
-          const Text(
-            'Private funds',
-            style: TextStyles.smallCardTitle,
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Private funds',
+                style: TextStyles.cardTitle,
+              ),
+              Text(
+                '${ledger.privateFundsData.earnedPerDay.toStringAsFixed(2)} / day',
+                style: TextStyles.cardBody,
+              ),
+              Text(
+                '${ledger.privateFundsData.totalInvested} invested',
+                style: TextStyles.cardBody,
+              ),
+            ],
           ),
-          Text(
-            '${ledger.privateFundsData.earnedPerDay} / day',
-            style: TextStyles.smallCardText,
-          ),
-          Text(
-            '${ledger.privateFundsData.totalInvested} invested',
-            style: TextStyles.smallCardText,
-          ),
-        ]);
+        );
     }
   }
 
@@ -113,7 +118,7 @@ class _PrivateFundsState extends State<PrivateFunds> {
               Flexible(
                 child: Text(
                   ledger.privateFundsData.names[i],
-                  style: TextStyles.bigCardText,
+                  style: TextStyles.cardBody,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.fade,
                   softWrap: false,
@@ -122,12 +127,12 @@ class _PrivateFundsState extends State<PrivateFunds> {
               ),
               Text(
                 '${ledger.privateFundsData.amounts[i]}',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
               Text(
                 '${ledger.privateFundsData.interests[i].toStringAsFixed(2)} %',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
             ],

@@ -31,7 +31,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
             children: [
               const Text(
                 'Saving accounts',
-                style: TextStyles.bigCardTitle,
+                style: TextStyles.cardTitle,
               ),
               Expanded(
                 child: ListView.builder(
@@ -53,7 +53,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text(
                     'Double tap to add a new saving account.',
-                    style: TextStyles.bigCardText,
+                    style: TextStyles.cardBody,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -85,20 +85,25 @@ class _SavingAccountsState extends State<SavingAccounts> {
           ),
         );
       case CardSize.small:
-        return Column(children: [
-          const Text(
-            'Saving accounts',
-            style: TextStyles.smallCardTitle,
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Saving accounts',
+                style: TextStyles.cardTitle,
+              ),
+              Text(
+                '${ledger.savingAccountsData.earnedPerDay.toStringAsFixed(2)} / day',
+                style: TextStyles.cardBody,
+              ),
+              Text(
+                '${ledger.savingAccountsData.totalInvested} invested',
+                style: TextStyles.cardBody,
+              ),
+            ],
           ),
-          Text(
-            '${ledger.savingAccountsData.earnedPerDay} / day',
-            style: TextStyles.smallCardText,
-          ),
-          Text(
-            '${ledger.savingAccountsData.totalInvested} invested',
-            style: TextStyles.smallCardText,
-          ),
-        ]);
+        );
     }
   }
 
@@ -114,7 +119,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
               Flexible(
                 child: Text(
                   ledger.savingAccountsData.names[i],
-                  style: TextStyles.bigCardText,
+                  style: TextStyles.cardBody,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.fade,
                   softWrap: false,
@@ -123,12 +128,12 @@ class _SavingAccountsState extends State<SavingAccounts> {
               ),
               Text(
                 '${ledger.savingAccountsData.amounts[i]}',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
               Text(
                 '${ledger.savingAccountsData.interests[i].toStringAsFixed(2)} %',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
             ],

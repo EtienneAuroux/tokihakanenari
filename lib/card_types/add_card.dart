@@ -54,7 +54,7 @@ class _AddCardState extends State<AddCard> {
               const Text(
                 'Add Income Source',
                 textAlign: TextAlign.center,
-                style: TextStyles.bigCardTitle,
+                style: TextStyles.cardTitle,
               ),
               GridView(
                 shrinkWrap: true,

@@ -102,6 +102,7 @@ class _CarouselState extends State<Carousel> {
           return LayoutBuilder(builder: (context, constraints) {
             final double maxHeight = constraints.maxHeight;
             return PageView.builder(
+              //TODO IMPLEMENT LISTENER TO GO THROUGH SEVERAL PAGE?
               scrollDirection: Axis.vertical,
               allowImplicitScrolling: true,
               controller: pageController,

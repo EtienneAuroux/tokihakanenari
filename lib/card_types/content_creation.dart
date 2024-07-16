@@ -30,7 +30,7 @@ class _ContentCreationState extends State<ContentCreation> {
             children: [
               const Text(
                 'Content creation',
-                style: TextStyles.bigCardTitle,
+                style: TextStyles.cardTitle,
               ),
               Expanded(
                 child: ListView.builder(
@@ -52,7 +52,7 @@ class _ContentCreationState extends State<ContentCreation> {
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text(
                     'Double tap to add a content platform.',
-                    style: TextStyles.bigCardText,
+                    style: TextStyles.cardBody,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -84,18 +84,20 @@ class _ContentCreationState extends State<ContentCreation> {
           ),
         );
       case CardSize.small:
-        return Column(
-          children: [
-            const Text(
-              'Content creation',
-              style: TextStyles.smallCardTitle,
-              textAlign: TextAlign.center,
-            ),
-            Text(
-              '${ledger.contentCreationData.earnedPerDay} / day',
-              style: TextStyles.smallCardText,
-            ),
-          ],
+        return Center(
+          child: Column(
+            children: [
+              const Text(
+                'Content creation',
+                style: TextStyles.cardTitle,
+                textAlign: TextAlign.center,
+              ),
+              Text(
+                '${ledger.contentCreationData.earnedPerDay.toStringAsFixed(2)} / day',
+                style: TextStyles.cardBody,
+              ),
+            ],
+          ),
         );
     }
   }
@@ -110,12 +112,12 @@ class _ContentCreationState extends State<ContentCreation> {
             children: [
               Text(
                 ledger.contentCreationData.platforms[i],
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.start,
               ),
               Text(
                 '${ledger.contentCreationData.revenues[i]} / ${ledger.contentCreationData.timePeriods[i].name}',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.start,
               ),
             ],

@@ -30,7 +30,7 @@ class _IndexFundsState extends State<IndexFunds> {
             children: [
               const Text(
                 'Index funds',
-                style: TextStyles.bigCardTitle,
+                style: TextStyles.cardTitle,
               ),
               Expanded(
                 child: ListView.builder(
@@ -52,7 +52,7 @@ class _IndexFundsState extends State<IndexFunds> {
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text(
                     'Double tap to add a new index fund.',
-                    style: TextStyles.bigCardText,
+                    style: TextStyles.cardBody,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -84,20 +84,25 @@ class _IndexFundsState extends State<IndexFunds> {
           ),
         );
       case CardSize.small:
-        return Column(children: [
-          const Text(
-            'Index funds',
-            style: TextStyles.smallCardTitle,
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Index funds',
+                style: TextStyles.cardTitle,
+              ),
+              Text(
+                '${ledger.indexFundsData.earnedPerDay.toStringAsExponential(2)} / day',
+                style: TextStyles.cardBody,
+              ),
+              Text(
+                '${ledger.indexFundsData.totalInvested} invested',
+                style: TextStyles.cardBody,
+              ),
+            ],
           ),
-          Text(
-            '${ledger.indexFundsData.earnedPerDay} / day',
-            style: TextStyles.smallCardText,
-          ),
-          Text(
-            '${ledger.indexFundsData.totalInvested} invested',
-            style: TextStyles.smallCardText,
-          ),
-        ]);
+        );
     }
   }
 
@@ -113,7 +118,7 @@ class _IndexFundsState extends State<IndexFunds> {
               Flexible(
                 child: Text(
                   ledger.indexFundsData.names[i],
-                  style: TextStyles.bigCardText,
+                  style: TextStyles.cardBody,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.fade,
                   softWrap: false,
@@ -122,12 +127,12 @@ class _IndexFundsState extends State<IndexFunds> {
               ),
               Text(
                 '${ledger.indexFundsData.amounts[i]}',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
               Text(
                 '${ledger.indexFundsData.interests[i].toStringAsFixed(2)} %',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
             ],

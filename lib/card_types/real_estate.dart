@@ -30,7 +30,7 @@ class _RealEstateState extends State<RealEstate> {
             children: [
               const Text(
                 'Real estate',
-                style: TextStyles.bigCardTitle,
+                style: TextStyles.cardTitle,
               ),
               Expanded(
                 child: ListView.builder(
@@ -52,7 +52,7 @@ class _RealEstateState extends State<RealEstate> {
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text(
                     'Double tap to add a new property.',
-                    style: TextStyles.bigCardText,
+                    style: TextStyles.cardBody,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -84,20 +84,25 @@ class _RealEstateState extends State<RealEstate> {
           ),
         );
       case CardSize.small:
-        return Column(children: [
-          const Text(
-            'Real estate',
-            style: TextStyles.smallCardTitle,
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Real estate',
+                style: TextStyles.cardTitle,
+              ),
+              Text(
+                '${ledger.realEstateData.earnedPerDay.toStringAsFixed(2)} / day',
+                style: TextStyles.cardBody,
+              ),
+              Text(
+                '${ledger.realEstateData.totalInvested} invested',
+                style: TextStyles.cardBody,
+              ),
+            ],
           ),
-          Text(
-            '${ledger.realEstateData.earnedPerDay} / day',
-            style: TextStyles.smallCardText,
-          ),
-          Text(
-            '${ledger.realEstateData.totalInvested} invested',
-            style: TextStyles.smallCardText,
-          ),
-        ]);
+        );
     }
   }
 
@@ -111,21 +116,21 @@ class _RealEstateState extends State<RealEstate> {
             children: [
               Tooltip(
                 message: ledger.realEstateData.descriptions[i],
-                showDuration: const Duration(seconds: 4),
+                showDuration: const Duration(seconds: 2),
                 child: Text(
                   ledger.realEstateData.locations[i],
                   textAlign: TextAlign.start,
-                  style: TextStyles.bigCardText,
+                  style: TextStyles.cardBody,
                 ),
               ),
               Text(
                 '${ledger.realEstateData.capitals[i].round()}',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
               Text(
                 '${ledger.realEstateData.fullReturns[i].toStringAsFixed(2)} %',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
             ],

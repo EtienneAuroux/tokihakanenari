@@ -30,7 +30,7 @@ class _SalariesState extends State<Salaries> {
             children: [
               const Text(
                 'Salaries',
-                style: TextStyles.bigCardTitle,
+                style: TextStyles.cardTitle,
               ),
               Expanded(
                 child: ListView.builder(
@@ -52,7 +52,7 @@ class _SalariesState extends State<Salaries> {
                   padding: const EdgeInsets.symmetric(vertical: 30),
                   child: const Text(
                     'Double tap to add a new salary.',
-                    style: TextStyles.bigCardText,
+                    style: TextStyles.cardBody,
                     textAlign: TextAlign.center,
                   ),
                 ),
@@ -63,43 +63,10 @@ class _SalariesState extends State<Salaries> {
                         return NewIncomeDialog(
                           cardType: CardType.salaries,
                           onNewIncomeCallback: (List<dynamic> newSalary) {
-                            Row salary = Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, size.width / 30, 0),
-                                  child: Icon(newSalary[0]),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: size.width / 30),
-                                    child: Text(
-                                      newSalary[1],
-                                      style: TextStyles.bigCardText,
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.fade,
-                                      softWrap: false,
-                                      maxLines: 1,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: size.width / 30),
-                                  child: Text(
-                                    '${newSalary[2]} / ${newSalary[3]}',
-                                    style: TextStyles.bigCardText,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                ),
-                              ],
-                            );
+                            ledger.addCardData(CardType.salaries, newSalary);
+                            salaries = getSalaries(CardSize.big);
+                            setState(() {});
                             ledger.addCarouselCard(CardType.salaries);
-                            setState(() {
-                              salaries.add(const SizedBox(
-                                height: 15,
-                              ));
-                              salaries.add(salary);
-                            });
                           },
                         );
                       });
@@ -117,16 +84,24 @@ class _SalariesState extends State<Salaries> {
           ),
         );
       case CardSize.small:
-        return Column(children: [
-          const Text(
-            'Salaries',
-            style: TextStyles.smallCardTitle,
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Salaries',
+                style: TextStyles.cardTitle,
+              ),
+              SizedBox(
+                height: size.height / 10,
+              ),
+              Text(
+                '${ledger.salariesData.earnedPerDay.toStringAsFixed(2)} / day',
+                style: TextStyles.cardBody,
+              )
+            ],
           ),
-          Text(
-            '${ledger.salariesData.earnedPerDay} / day',
-            style: TextStyles.smallCardText,
-          )
-        ]);
+        );
     }
   }
 
@@ -142,7 +117,7 @@ class _SalariesState extends State<Salaries> {
               Flexible(
                 child: Text(
                   ledger.salariesData.names[i],
-                  style: TextStyles.bigCardText,
+                  style: TextStyles.cardBody,
                   textAlign: TextAlign.start,
                   overflow: TextOverflow.fade,
                   softWrap: false,
@@ -151,7 +126,7 @@ class _SalariesState extends State<Salaries> {
               ),
               Text(
                 '${ledger.salariesData.salaries[i]} / ${ledger.salariesData.timePeriods[i].name}',
-                style: TextStyles.bigCardText,
+                style: TextStyles.cardBody,
                 textAlign: TextAlign.end,
               ),
             ],

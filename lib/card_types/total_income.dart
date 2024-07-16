@@ -21,7 +21,7 @@ class _TotalIncomeState extends State<TotalIncome> {
         return const Center(
           child: Text(
             'Passive income',
-            style: TextStyles.bigCardTitle,
+            style: TextStyles.cardTitle,
           ),
         );
       case CardSize.mini:
@@ -30,7 +30,7 @@ class _TotalIncomeState extends State<TotalIncome> {
         return const Center(
           child: Text(
             'Passive income',
-            style: TextStyles.smallCardTitle,
+            style: TextStyles.cardTitle,
           ),
         );
     }
