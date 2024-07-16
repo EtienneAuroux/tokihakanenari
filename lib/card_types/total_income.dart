@@ -2,19 +2,19 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
-class PassiveIncome extends StatefulWidget {
+class TotalIncome extends StatefulWidget {
   final CardSize cardSize;
 
-  const PassiveIncome({
+  const TotalIncome({
     super.key,
     required this.cardSize,
   });
 
   @override
-  State<PassiveIncome> createState() => _PassiveIncomeState();
+  State<TotalIncome> createState() => _TotalIncomeState();
 }
 
-class _PassiveIncomeState extends State<PassiveIncome> {
+class _TotalIncomeState extends State<TotalIncome> {
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:

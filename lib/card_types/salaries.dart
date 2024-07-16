@@ -126,6 +126,52 @@ class _SalariesState extends State<Salaries> {
     }
   }
 
+  List<Widget> getSalaries(CardSize cardSize) {
+    List<Widget> salaries = <Widget>[];
+    switch (cardSize) {
+      case CardSize.big:
+        for (int i = 0; i < ledger.salariesData.names.length; i++) {
+          salaries.add(Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(ledger.salariesData.icons[i]),
+              Flexible(
+                child: Text(
+                  ledger.salariesData.names[i],
+                  style: TextStyles.bigCardText,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                ),
+              ),
+              Text(
+                '${ledger.salariesData.salaries[i]} / ${ledger.salariesData.timePeriods[i].name}',
+                style: TextStyles.bigCardText,
+                textAlign: TextAlign.end,
+              ),
+            ],
+          ));
+          salaries.add(const SizedBox(
+            height: 15,
+          ));
+        }
+        break;
+      case CardSize.mini:
+        break;
+      case CardSize.small:
+        break;
+    }
+    return salaries;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    salaries = getSalaries(CardSize.big);
+  }
+
   @override
   Widget build(BuildContext context) {
     return getCardContent(widget.cardSize, context);

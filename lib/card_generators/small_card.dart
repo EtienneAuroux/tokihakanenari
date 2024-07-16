@@ -7,7 +7,7 @@ import 'package:tokihakanenari/card_types/real_estate.dart';
 import 'package:tokihakanenari/card_types/salaries.dart';
 import 'package:tokihakanenari/card_types/stock_accounts.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
-import 'package:tokihakanenari/card_types/passive_income.dart';
+import 'package:tokihakanenari/card_types/total_income.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
@@ -46,8 +46,8 @@ class _SmallCardState extends State<SmallCard> {
         return const IndexFunds(
           cardSize: CardSize.small,
         );
-      case CardType.passiveIncome:
-        return const PassiveIncome(
+      case CardType.totalIncome:
+        return const TotalIncome(
           cardSize: CardSize.small,
         );
       case CardType.privateFunds:

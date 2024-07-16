@@ -38,7 +38,7 @@ class _MiniCardState extends State<MiniCard> {
         return const IndexFunds(
           cardSize: CardSize.mini,
         );
-      case CardType.passiveIncome:
+      case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to generate a mini PassiveIncome.');
       case CardType.privateFunds:
         return const PrivateFunds(

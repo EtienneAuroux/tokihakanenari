@@ -1,6 +1,4 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:tokihakanenari/alert_dialogs/icons_dialog.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
@@ -41,7 +39,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         } else {
           return null;
         }
-      case CardType.passiveIncome:
+      case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
       case CardType.realEstate:
         if (nameController.text.isNotEmpty &&
@@ -88,7 +86,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         return 'New content:';
       case CardType.indexFunds:
         return 'New fund:';
-      case CardType.passiveIncome:
+      case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
       case CardType.privateFunds:
         return 'New fund:';
@@ -161,7 +159,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             },
           ),
         ];
-      case CardType.passiveIncome:
+      case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
       case CardType.realEstate:
         return [
@@ -428,39 +426,41 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             horizontal: dialogSize.width / 10,
             vertical: dialogSize.height / 50,
           ),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
-                child: Text(
-                  getDialogTitle(widget.cardType),
-                  style: TextStyles.dialogTitle,
+          child: SingleChildScrollView(
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  child: Text(
+                    getDialogTitle(widget.cardType),
+                    style: TextStyles.dialogTitle,
+                  ),
                 ),
-              ),
-              GridView(
-                shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
-                  crossAxisSpacing: 10,
-                  mainAxisExtent: 45,
+                GridView(
+                  shrinkWrap: true,
+                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                    crossAxisCount: 2,
+                    crossAxisSpacing: 10,
+                    mainAxisExtent: 45,
+                  ),
+                  children: getDialogContent(widget.cardType),
                 ),
-                children: getDialogContent(widget.cardType),
-              ),
-              Padding(
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                child: TextButton(
-                  child: const Icon(Icons.check),
-                  onPressed: () {
-                    List<dynamic>? userInput = getUserInput(widget.cardType);
-                    if (userInput != null) {
-                      widget.onNewIncomeCallback(userInput);
-                    }
-                    Navigator.of(context).pop();
-                  },
+                Padding(
+                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  child: TextButton(
+                    child: const Icon(Icons.check),
+                    onPressed: () {
+                      List<dynamic>? userInput = getUserInput(widget.cardType);
+                      if (userInput != null) {
+                        widget.onNewIncomeCallback(userInput);
+                      }
+                      Navigator.of(context).pop();
+                    },
+                  ),
                 ),
-              ),
-            ],
+              ],
+            ),
           ),
         ),
       ),

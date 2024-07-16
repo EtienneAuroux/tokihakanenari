@@ -63,51 +63,10 @@ class _IndexFundsState extends State<IndexFunds> {
                         return NewIncomeDialog(
                           cardType: CardType.indexFunds,
                           onNewIncomeCallback: (List<dynamic> newIndexFund) {
-                            Row indexFund = Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, size.width / 30, 0),
-                                  child: Icon(newIndexFund[0]),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: size.width / 30),
-                                    child: Text(
-                                      newIndexFund[1],
-                                      style: TextStyles.bigCardText,
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.fade,
-                                      softWrap: false,
-                                      maxLines: 1,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: size.width / 30),
-                                  child: Text(
-                                    newIndexFund[2],
-                                    style: TextStyles.bigCardText,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(size.width / 30, 0, 0, 0),
-                                  child: Text(
-                                    newIndexFund[3],
-                                    style: TextStyles.bigCardText,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                ),
-                              ],
-                            );
+                            ledger.addCardData(CardType.indexFunds, newIndexFund);
+                            indexFunds = getIndexFunds(CardSize.big);
+                            setState(() {});
                             ledger.addCarouselCard(CardType.indexFunds);
-                            setState(() {
-                              indexFunds.add(const SizedBox(
-                                height: 15,
-                              ));
-                              indexFunds.add(indexFund);
-                            });
                           },
                         );
                       });
@@ -132,6 +91,57 @@ class _IndexFundsState extends State<IndexFunds> {
           ),
         );
     }
+  }
+
+  List<Widget> getIndexFunds(CardSize cardSize) {
+    List<Widget> indexFunds = <Widget>[];
+    switch (cardSize) {
+      case CardSize.big:
+        for (int i = 0; i < ledger.indexFundsData.names.length; i++) {
+          indexFunds.add(Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(ledger.indexFundsData.icons[i]),
+              Flexible(
+                child: Text(
+                  ledger.indexFundsData.names[i],
+                  style: TextStyles.bigCardText,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                ),
+              ),
+              Text(
+                '${ledger.indexFundsData.amounts[i]}',
+                style: TextStyles.bigCardText,
+                textAlign: TextAlign.end,
+              ),
+              Text(
+                '${ledger.indexFundsData.interests[i].toStringAsFixed(2)} %',
+                style: TextStyles.bigCardText,
+                textAlign: TextAlign.end,
+              ),
+            ],
+          ));
+          indexFunds.add(const SizedBox(
+            height: 15,
+          ));
+        }
+        break;
+      case CardSize.mini:
+        break;
+      case CardSize.small:
+        break;
+    }
+    return indexFunds;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    indexFunds = getIndexFunds(CardSize.big);
   }
 
   @override

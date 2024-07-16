@@ -41,7 +41,7 @@ class MainPage extends StatefulWidget {
 
 class _MainPageState extends State<MainPage> {
   MainView mainView = MainView.carousel;
-  CardType bigCard = CardType.passiveIncome;
+  CardType bigCard = CardType.totalIncome;
   CardType newBigCard = CardType.contentCreation;
   late CardStatus cardStatus;
 

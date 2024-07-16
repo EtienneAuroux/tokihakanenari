@@ -19,15 +19,16 @@ class Ledger extends ChangeNotifier {
   // Carousel
   final List<CardType> _carouselCards = <CardType>[
     CardType.addCard,
-    CardType.passiveIncome,
+    CardType.totalIncome,
     CardType.addCard,
   ];
 
   List<CardType> get carouselCards => _carouselCards;
 
   void addCarouselCard(CardType cardType) {
+    int indexTotalIncome = _carouselCards.indexOf(CardType.totalIncome);
     if (!_carouselCards.contains(cardType)) {
-      int index = _carouselCards.length.isOdd ? 2 : 1;
+      int index = indexTotalIncome + (_carouselCards.length.isOdd ? 1 : 0);
       _carouselCards.insert(index, cardType);
     }
     notifyListeners();
@@ -63,7 +64,7 @@ class Ledger extends ChangeNotifier {
         _indexFundsData.names.add(data[1]);
         _indexFundsData.amounts.add(double.parse(data[2]));
         _indexFundsData.interests.add(double.parse(data[3]));
-      case CardType.passiveIncome:
+      case CardType.totalIncome:
       // TODO: Handle this case.
       case CardType.privateFunds:
         _privateFundsData.icons.add(data[0]);
@@ -127,7 +128,7 @@ class Ledger extends ChangeNotifier {
         _indexFundsData.averageInterest = 100 * yearlyIncrease / _indexFundsData.totalInvested;
         _indexFundsData.earnedPerDay = _indexFundsData.totalInvested * _indexFundsData.averageInterest / 100 / 365.25;
         break;
-      case CardType.passiveIncome:
+      case CardType.totalIncome:
         break; // TODO: Handle this case.
       case CardType.privateFunds:
         double yearlyIncrease = 0;

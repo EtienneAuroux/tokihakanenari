@@ -64,51 +64,10 @@ class _SavingAccountsState extends State<SavingAccounts> {
                         return NewIncomeDialog(
                           cardType: CardType.savingAccounts,
                           onNewIncomeCallback: (List<dynamic> newSavingAccount) {
-                            Row savingAccount = Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, size.width / 30, 0),
-                                  child: Icon(newSavingAccount[0]),
-                                ),
-                                Flexible(
-                                  child: Padding(
-                                    padding: EdgeInsets.symmetric(horizontal: size.width / 30),
-                                    child: Text(
-                                      newSavingAccount[1],
-                                      style: TextStyles.bigCardText,
-                                      textAlign: TextAlign.start,
-                                      overflow: TextOverflow.fade,
-                                      softWrap: false,
-                                      maxLines: 1,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: size.width / 30),
-                                  child: Text(
-                                    newSavingAccount[2],
-                                    style: TextStyles.bigCardText,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(size.width / 30, 0, 0, 0),
-                                  child: Text(
-                                    newSavingAccount[3],
-                                    style: TextStyles.bigCardText,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                ),
-                              ],
-                            );
+                            ledger.addCardData(CardType.savingAccounts, newSavingAccount);
+                            savingAccounts = getSavingAccounts(CardSize.big);
+                            setState(() {});
                             ledger.addCarouselCard(CardType.savingAccounts);
-                            setState(() {
-                              savingAccounts.add(const SizedBox(
-                                height: 15,
-                              ));
-                              savingAccounts.add(savingAccount);
-                            });
                           },
                         );
                       });
@@ -133,6 +92,57 @@ class _SavingAccountsState extends State<SavingAccounts> {
           ),
         );
     }
+  }
+
+  List<Widget> getSavingAccounts(CardSize cardSize) {
+    List<Widget> savingAccounts = <Widget>[];
+    switch (cardSize) {
+      case CardSize.big:
+        for (int i = 0; i < ledger.savingAccountsData.names.length; i++) {
+          savingAccounts.add(Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Icon(ledger.savingAccountsData.icons[i]),
+              Flexible(
+                child: Text(
+                  ledger.savingAccountsData.names[i],
+                  style: TextStyles.bigCardText,
+                  textAlign: TextAlign.start,
+                  overflow: TextOverflow.fade,
+                  softWrap: false,
+                  maxLines: 1,
+                ),
+              ),
+              Text(
+                '${ledger.savingAccountsData.amounts[i]}',
+                style: TextStyles.bigCardText,
+                textAlign: TextAlign.end,
+              ),
+              Text(
+                '${ledger.savingAccountsData.interests[i].toStringAsFixed(2)} %',
+                style: TextStyles.bigCardText,
+                textAlign: TextAlign.end,
+              ),
+            ],
+          ));
+          savingAccounts.add(const SizedBox(
+            height: 15,
+          ));
+        }
+        break;
+      case CardSize.mini:
+        break;
+      case CardSize.small:
+        break;
+    }
+    return savingAccounts;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    savingAccounts = getSavingAccounts(CardSize.big);
   }
 
   @override

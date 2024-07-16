@@ -26,7 +26,7 @@ class _AddCardState extends State<AddCard> {
 
   List<MiniCard> initializeRemainingCards() {
     for (CardType cardType in CardType.values) {
-      if (cardType != CardType.addCard && cardType != CardType.passiveIncome) {
+      if (cardType != CardType.addCard && cardType != CardType.totalIncome) {
         remainingCards.add(
           MiniCard(
             cardType: cardType,
