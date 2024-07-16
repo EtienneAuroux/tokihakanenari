@@ -20,7 +20,7 @@ class _ContentCreationState extends State<ContentCreation> {
   Ledger ledger = Ledger();
   List<Widget> contents = <Widget>[];
 
-  Widget getCardContent(CardSize cardStatus, BuildContext context) {
+  Widget getCardWidget(CardSize cardStatus, BuildContext context) {
     Size size = MediaQuery.of(context).size;
     switch (cardStatus) {
       case CardSize.big:
@@ -64,7 +64,7 @@ class _ContentCreationState extends State<ContentCreation> {
                           cardType: CardType.contentCreation,
                           onNewIncomeCallback: (List<dynamic> newContent) {
                             ledger.addCardData(CardType.contentCreation, newContent);
-                            contents = getContents(CardType.contentCreation);
+                            contents = getContents(CardSize.big);
                             setState(() {});
                             ledger.addCarouselCard(CardType.contentCreation);
                           },
@@ -93,19 +93,48 @@ class _ContentCreationState extends State<ContentCreation> {
     }
   }
 
-  List<Widget> getContents(CardType cardType, {double width = 0}) {
-    return ledger.getCardData(cardType, width);
+  List<Widget> getContents(CardSize cardSize) {
+    List<Widget> contents = <Widget>[];
+    switch (cardSize) {
+      case CardSize.big:
+        for (int i = 0; i < ledger.contentCreationData.platforms.length; i++) {
+          contents.add(Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Text(
+                ledger.contentCreationData.platforms[i],
+                style: TextStyles.bigCardText,
+                textAlign: TextAlign.start,
+              ),
+              Text(
+                '${ledger.contentCreationData.revenues[i]} / ${ledger.contentCreationData.timePeriods[i].name}',
+                style: TextStyles.bigCardText,
+                textAlign: TextAlign.start,
+              ),
+            ],
+          ));
+          contents.add(const SizedBox(
+            height: 15,
+          ));
+        }
+        break;
+      case CardSize.mini:
+        break;
+      case CardSize.small:
+        break;
+    }
+    return contents;
   }
 
   @override
   void initState() {
     super.initState();
 
-    contents = getContents(CardType.contentCreation);
+    contents = getContents(CardSize.big);
   }
 
   @override
   Widget build(BuildContext context) {
-    return getCardContent(widget.cardSize, context);
+    return getCardWidget(widget.cardSize, context);
   }
 }

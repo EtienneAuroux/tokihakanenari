@@ -35,9 +35,11 @@ class RealEstateData {
   List<double> payments = <double>[];
   List<double> revenues = <double>[];
   List<double> interests = <double>[];
+  List<DateTime> registeredDates = <DateTime>[];
+  List<double> fullReturns = <double>[]; // in %
   double totalInvested = 0;
   double earnedPerDay = 0;
-  double averageInterest = 0;
+  double averageFullReturn = 0;
 }
 
 class SalariesData {

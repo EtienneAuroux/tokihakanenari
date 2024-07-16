@@ -1,7 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
-import 'package:tokihakanenari/visual_tools/text_styles.dart';
+
+import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.
@@ -49,57 +50,6 @@ class Ledger extends ChangeNotifier {
   SavingAccountsData get savingAccountsData => _savingAccountsData;
   StockAccountsData get stockAccountsData => _stockAccountsData;
 
-  List<Widget> getCardData(CardType cardType, double width) {
-    List<Widget> cardData = <Widget>[];
-    switch (cardType) {
-      case CardType.addCard:
-        throw ErrorDescription('It should not be possible to get data from AddCard.');
-      case CardType.contentCreation:
-        for (int i = 0; i < _contentCreationData.platforms.length; i++) {
-          cardData.add(Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Padding(
-                padding: EdgeInsets.fromLTRB(0, 0, width / 30, 0),
-                child: Text(
-                  _contentCreationData.platforms[i],
-                  style: TextStyles.bigCardText,
-                  textAlign: TextAlign.start,
-                ),
-              ),
-              Padding(
-                padding: EdgeInsets.symmetric(horizontal: width / 30),
-                child: Text(
-                  '${_contentCreationData.revenues[i]} / ${_contentCreationData.timePeriods[i].name}',
-                  style: TextStyles.bigCardText,
-                  textAlign: TextAlign.start,
-                ),
-              ),
-            ],
-          ));
-          cardData.add(const SizedBox(
-            height: 15,
-          ));
-        }
-        break;
-      case CardType.indexFunds:
-        break;
-      case CardType.passiveIncome:
-        break;
-      case CardType.privateFunds:
-        break;
-      case CardType.realEstate:
-        break;
-      case CardType.salaries:
-        break;
-      case CardType.savingAccounts:
-        break;
-      case CardType.stockAccounts:
-        break;
-    }
-    return cardData;
-  }
-
   void addCardData(CardType cardType, List<dynamic> data) {
     switch (cardType) {
       case CardType.addCard:
@@ -127,6 +77,8 @@ class Ledger extends ChangeNotifier {
         _realEstateData.payments.add(double.parse(data[3]));
         _realEstateData.revenues.add(double.parse(data[4]));
         _realEstateData.interests.add(double.parse(data[5]));
+        _realEstateData.fullReturns.add(0);
+        _realEstateData.registeredDates.add(data[6]);
       case CardType.salaries:
         _salariesData.icons.add(data[0]);
         _salariesData.names.add(data[1]);
@@ -153,7 +105,7 @@ class Ledger extends ChangeNotifier {
       case CardType.addCard:
         throw ErrorDescription('It should not be possible to add data to AddCard.');
       case CardType.contentCreation:
-        for (int i = 0; i < _contentCreationData.revenues.length; i++) {
+        for (int i = 0; i < _contentCreationData.platforms.length; i++) {
           switch (_contentCreationData.timePeriods[i]) {
             case TimePeriod.day:
               _contentCreationData.earnedPerDay += _contentCreationData.revenues[i];
@@ -165,28 +117,43 @@ class Ledger extends ChangeNotifier {
               _contentCreationData.earnedPerDay += _contentCreationData.revenues[i] / 365.25;
           }
         }
+        break;
       case CardType.indexFunds:
         double yearlyIncrease = 0;
-        for (int i = 0; i < _indexFundsData.amounts.length; i++) {
+        for (int i = 0; i < _indexFundsData.names.length; i++) {
           _indexFundsData.totalInvested += _indexFundsData.amounts[i];
           yearlyIncrease += _indexFundsData.amounts[i] * _indexFundsData.interests[i] / 100;
         }
         _indexFundsData.averageInterest = 100 * yearlyIncrease / _indexFundsData.totalInvested;
         _indexFundsData.earnedPerDay = _indexFundsData.totalInvested * _indexFundsData.averageInterest / 100 / 365.25;
+        break;
       case CardType.passiveIncome:
-        return; // TODO: Handle this case.
+        break; // TODO: Handle this case.
       case CardType.privateFunds:
         double yearlyIncrease = 0;
-        for (int i = 0; i < _privateFundsData.amounts.length; i++) {
+        for (int i = 0; i < _privateFundsData.names.length; i++) {
           _privateFundsData.totalInvested += _privateFundsData.amounts[i];
           yearlyIncrease += _privateFundsData.amounts[i] * _privateFundsData.interests[i] / 100;
         }
         _privateFundsData.averageInterest = 100 * yearlyIncrease / _privateFundsData.totalInvested;
         _privateFundsData.earnedPerDay = _privateFundsData.totalInvested * _privateFundsData.averageInterest / 100 / 365.25;
+        break;
       case CardType.realEstate:
-        return; // TODO: NEED INPUT DATE.
+        double sumFullReturns = 0;
+        for (int i = 0; i < _realEstateData.locations.length; i++) {
+          int monthElapsed = (DateTime.now().difference(_realEstateData.registeredDates[i]).inDays / 30.437).floor();
+          _realEstateData.capitals[i] += _realEstateData.payments[i] * monthElapsed;
+          _realEstateData.totalInvested += _realEstateData.capitals[i];
+
+          double capitalIncrease = _realEstateData.capitals[i] * (1 + _realEstateData.interests[i] / 100) + _realEstateData.revenues[i];
+          _realEstateData.fullReturns[i] = 100 * (capitalIncrease - _realEstateData.capitals[i]) / _realEstateData.capitals[i];
+          sumFullReturns += _realEstateData.fullReturns[i];
+        }
+        _realEstateData.averageFullReturn = sumFullReturns / _realEstateData.locations.length;
+        _realEstateData.earnedPerDay = _realEstateData.totalInvested * _realEstateData.averageFullReturn / 100 / 365.25;
+        break;
       case CardType.salaries:
-        for (int i = 0; i < _salariesData.salaries.length; i++) {
+        for (int i = 0; i < _salariesData.names.length; i++) {
           switch (_salariesData.timePeriods[i]) {
             case TimePeriod.day:
               _salariesData.earnedPerDay += _salariesData.salaries[i];
@@ -198,22 +165,25 @@ class Ledger extends ChangeNotifier {
               _salariesData.earnedPerDay += _salariesData.salaries[i] / 365.25;
           }
         }
+        break;
       case CardType.savingAccounts:
         double yearlyIncrease = 0;
-        for (int i = 0; i < _savingAccountsData.amounts.length; i++) {
+        for (int i = 0; i < _savingAccountsData.names.length; i++) {
           _savingAccountsData.totalInvested += _savingAccountsData.amounts[i];
           yearlyIncrease += _savingAccountsData.amounts[i] * _savingAccountsData.interests[i] / 100;
         }
         _savingAccountsData.averageInterest = 100 * yearlyIncrease / _savingAccountsData.totalInvested;
         _savingAccountsData.earnedPerDay = _savingAccountsData.totalInvested * _savingAccountsData.averageInterest / 100 / 365.25;
+        break;
       case CardType.stockAccounts:
         double yearlyIncrease = 0;
-        for (int i = 0; i < _stockAccountsData.amounts.length; i++) {
+        for (int i = 0; i < _stockAccountsData.names.length; i++) {
           _stockAccountsData.totalInvested += _stockAccountsData.amounts[i];
           yearlyIncrease += _stockAccountsData.amounts[i] * _stockAccountsData.interests[i] / 100;
         }
         _stockAccountsData.averageInterest = 100 * yearlyIncrease / _stockAccountsData.totalInvested;
         _stockAccountsData.earnedPerDay = _stockAccountsData.totalInvested * _stockAccountsData.averageInterest / 100 / 365.25;
+        break;
     }
   }
 }

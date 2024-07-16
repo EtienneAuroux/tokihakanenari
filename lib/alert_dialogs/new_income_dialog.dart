@@ -56,7 +56,8 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             amountController.text,
             capitalPaymentController.text,
             rentController.text,
-            interestController.text
+            interestController.text.replaceAll(',', '.'),
+            DateTime.now(),
           ];
         } else {
           return null;
@@ -72,7 +73,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.stockAccounts:
       case CardType.savingAccounts:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty && interestController.text.isNotEmpty) {
-          return <dynamic>[icon, nameController.text, amountController.text, interestController.text];
+          return <dynamic>[icon, nameController.text, amountController.text, interestController.text.replaceAll(',', '.')];
         } else {
           return null;
         }

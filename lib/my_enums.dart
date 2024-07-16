@@ -1,4 +1,4 @@
-enum CardSize { mini, small, big }
+enum CardSize { big, mini, small }
 
 enum CardStatus { inert, unroll, roll, drop }
 

@@ -20,7 +20,7 @@ class _RealEstateState extends State<RealEstate> {
   Ledger ledger = Ledger();
   List<Widget> properties = <Widget>[];
 
-  Widget getCardContent(CardSize cardStatus, BuildContext context) {
+  Widget getCardWidget(CardSize cardStatus, BuildContext context) {
     Size size = MediaQuery.of(context).size;
     switch (cardStatus) {
       case CardSize.big:
@@ -63,45 +63,10 @@ class _RealEstateState extends State<RealEstate> {
                         return NewIncomeDialog(
                           cardType: CardType.realEstate,
                           onNewIncomeCallback: (List<dynamic> newProperty) {
-                            Row property = Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(0, 0, size.width / 30, 0),
-                                  child: Tooltip(
-                                    message: newProperty[1],
-                                    child: Text(
-                                      newProperty[0],
-                                      textAlign: TextAlign.start,
-                                      style: TextStyles.bigCardText,
-                                    ),
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.symmetric(horizontal: size.width / 30),
-                                  child: Text(
-                                    newProperty[2],
-                                    style: TextStyles.bigCardText,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                ),
-                                Padding(
-                                  padding: EdgeInsets.fromLTRB(size.width / 30, 0, 0, 0),
-                                  child: const Text(
-                                    'to do!',
-                                    style: TextStyles.bigCardText,
-                                    textAlign: TextAlign.end,
-                                  ),
-                                ),
-                              ],
-                            );
+                            ledger.addCardData(CardType.realEstate, newProperty);
+                            properties = getProperties(CardSize.big);
+                            setState(() {});
                             ledger.addCarouselCard(CardType.realEstate);
-                            setState(() {
-                              properties.add(const SizedBox(
-                                height: 15,
-                              ));
-                              properties.add(property);
-                            });
                           },
                         );
                       });
@@ -128,8 +93,57 @@ class _RealEstateState extends State<RealEstate> {
     }
   }
 
+  List<Widget> getProperties(CardSize cardSize) {
+    List<Widget> properties = <Widget>[];
+    switch (cardSize) {
+      case CardSize.big:
+        for (int i = 0; i < ledger.realEstateData.locations.length; i++) {
+          properties.add(Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Tooltip(
+                message: ledger.realEstateData.descriptions[i],
+                showDuration: const Duration(seconds: 4),
+                child: Text(
+                  ledger.realEstateData.locations[i],
+                  textAlign: TextAlign.start,
+                  style: TextStyles.bigCardText,
+                ),
+              ),
+              Text(
+                '${ledger.realEstateData.capitals[i].round()}',
+                style: TextStyles.bigCardText,
+                textAlign: TextAlign.end,
+              ),
+              Text(
+                '${ledger.realEstateData.fullReturns[i].toStringAsFixed(2)} %',
+                style: TextStyles.bigCardText,
+                textAlign: TextAlign.end,
+              ),
+            ],
+          ));
+          properties.add(const SizedBox(
+            height: 15,
+          ));
+        }
+        break;
+      case CardSize.mini:
+        break;
+      case CardSize.small:
+        break;
+    }
+    return properties;
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    properties = getProperties(CardSize.big);
+  }
+
   @override
   Widget build(BuildContext context) {
-    return getCardContent(widget.cardSize, context);
+    return getCardWidget(widget.cardSize, context);
   }
 }
