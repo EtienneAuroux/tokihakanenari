@@ -24,7 +24,6 @@ class Ledger extends ChangeNotifier {
 
   // Carousel
   final List<CardType> _carouselCards = <CardType>[
-    CardType.addCard,
     CardType.totalIncome,
     CardType.addCard,
   ];
@@ -38,6 +37,7 @@ class Ledger extends ChangeNotifier {
     if (!_carouselCards.contains(cardType)) {
       _pageInFocus = indexTotalIncome + (_carouselCards.length.isOdd ? 1 : 0);
       _carouselCards.insert(_pageInFocus, cardType);
+      _pageInFocus += 99;
     }
     notifyListeners();
   }

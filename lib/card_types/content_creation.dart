@@ -86,6 +86,7 @@ class _ContentCreationState extends State<ContentCreation> {
       case CardSize.small:
         return Center(
           child: Column(
+            mainAxisSize: MainAxisSize.min,
             children: [
               const Text(
                 'Content creation',

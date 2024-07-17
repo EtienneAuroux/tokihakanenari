@@ -8,6 +8,7 @@ import 'package:flutter/widgets.dart';
 import 'package:tokihakanenari/card_generators/small_card.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/overscroll_physics.dart';
 
 class Carousel extends StatefulWidget {
   final CardStatus cardStatus;
@@ -75,7 +76,7 @@ class _CarouselState extends State<Carousel> {
 
     pageController = PageController(
       viewportFraction: viewportFraction,
-      initialPage: ledger.pageInFocus,
+      initialPage: 99,
     );
 
     smallCards = getSmallCards();
@@ -102,13 +103,14 @@ class _CarouselState extends State<Carousel> {
           return LayoutBuilder(builder: (context, constraints) {
             final double maxHeight = constraints.maxHeight;
             return PageView.builder(
-              //TODO IMPLEMENT LISTENER TO GO THROUGH SEVERAL PAGE?
               scrollDirection: Axis.vertical,
               allowImplicitScrolling: true,
+              pageSnapping: false,
+              physics: const OverscrollPhysics(velocityPerOverscroll: 100),
               controller: pageController,
-              itemCount: smallCards.length,
+              // itemCount: smallCards.length,
               itemBuilder: ((context, index) {
-                final SmallCard card = smallCards[index];
+                final SmallCard card = smallCards[index % smallCards.length];
                 return AnimatedBuilder(
                   animation: pageController,
                   builder: ((context, widget) {
