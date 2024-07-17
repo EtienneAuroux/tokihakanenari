@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
@@ -15,22 +16,37 @@ class TotalIncome extends StatefulWidget {
 }
 
 class _TotalIncomeState extends State<TotalIncome> {
+  Ledger ledger = Ledger();
+
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
         return const Center(
           child: Text(
-            'Passive income',
+            'Total income',
             style: TextStyles.cardTitle,
           ),
         );
       case CardSize.mini:
-        throw UnimplementedError('addCard should not be used as a mini card.');
+        throw ErrorDescription('TotalIncome should not be used as a mini card.');
       case CardSize.small:
-        return const Center(
-          child: Text(
-            'Passive income',
-            style: TextStyles.cardTitle,
+        return Center(
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              const Text(
+                'Total income',
+                style: TextStyles.cardTitle,
+              ),
+              Text(
+                '${ledger.totalIncomeData.earnedPerDay.toStringAsFixed(2)} / day',
+                style: TextStyles.cardBody,
+              ),
+              Text(
+                '${ledger.totalIncomeData.totalInvested} invested',
+                style: TextStyles.cardBody,
+              ),
+            ],
           ),
         );
     }

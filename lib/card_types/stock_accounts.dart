@@ -64,7 +64,7 @@ class _StockAccountsState extends State<StockAccounts> {
                           cardType: CardType.stockAccounts,
                           onNewIncomeCallback: (List<dynamic> newStockAccount) {
                             ledger.addCardData(CardType.stockAccounts, newStockAccount);
-                            stockAccounts = getStockAccounts(CardSize.big);
+                            stockAccounts = getStockAccountsList();
                             setState(() {});
                             ledger.addCarouselCard(CardType.stockAccounts);
                           },
@@ -106,46 +106,38 @@ class _StockAccountsState extends State<StockAccounts> {
     }
   }
 
-  List<Widget> getStockAccounts(CardSize cardSize) {
+  List<Widget> getStockAccountsList() {
     List<Widget> stockAccounts = <Widget>[];
-    switch (cardSize) {
-      case CardSize.big:
-        for (int i = 0; i < ledger.stockAccountsData.names.length; i++) {
-          stockAccounts.add(Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(ledger.stockAccountsData.icons[i]),
-              Flexible(
-                child: Text(
-                  ledger.stockAccountsData.names[i],
-                  style: TextStyles.cardBody,
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.fade,
-                  softWrap: false,
-                  maxLines: 1,
-                ),
-              ),
-              Text(
-                '${ledger.stockAccountsData.amounts[i]}',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-              Text(
-                '${ledger.stockAccountsData.interests[i]} %',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-            ],
-          ));
-          stockAccounts.add(const SizedBox(
-            height: 15,
-          ));
-        }
-        break;
-      case CardSize.mini:
-        break;
-      case CardSize.small:
-        break;
+    for (int i = 0; i < ledger.stockAccountsData.names.length; i++) {
+      stockAccounts.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(ledger.stockAccountsData.icons[i]),
+          Flexible(
+            child: Text(
+              ledger.stockAccountsData.names[i],
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.fade,
+              softWrap: false,
+              maxLines: 1,
+            ),
+          ),
+          Text(
+            '${ledger.stockAccountsData.amounts[i]}',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+          Text(
+            '${ledger.stockAccountsData.interests[i]} %',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+        ],
+      ));
+      stockAccounts.add(const SizedBox(
+        height: 15,
+      ));
     }
     return stockAccounts;
   }
@@ -154,7 +146,7 @@ class _StockAccountsState extends State<StockAccounts> {
   void initState() {
     super.initState();
 
-    stockAccounts = getStockAccounts(CardSize.big);
+    stockAccounts = getStockAccountsList();
   }
 
   @override

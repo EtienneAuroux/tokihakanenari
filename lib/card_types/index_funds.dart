@@ -64,7 +64,7 @@ class _IndexFundsState extends State<IndexFunds> {
                           cardType: CardType.indexFunds,
                           onNewIncomeCallback: (List<dynamic> newIndexFund) {
                             ledger.addCardData(CardType.indexFunds, newIndexFund);
-                            indexFunds = getIndexFunds(CardSize.big);
+                            indexFunds = getIndexFundsList();
                             setState(() {});
                             ledger.addCarouselCard(CardType.indexFunds);
                           },
@@ -93,7 +93,7 @@ class _IndexFundsState extends State<IndexFunds> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.indexFundsData.earnedPerDay.toStringAsExponential(2)} / day',
+                '${ledger.indexFundsData.earnedPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               ),
               Text(
@@ -106,46 +106,38 @@ class _IndexFundsState extends State<IndexFunds> {
     }
   }
 
-  List<Widget> getIndexFunds(CardSize cardSize) {
+  List<Widget> getIndexFundsList() {
     List<Widget> indexFunds = <Widget>[];
-    switch (cardSize) {
-      case CardSize.big:
-        for (int i = 0; i < ledger.indexFundsData.names.length; i++) {
-          indexFunds.add(Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(ledger.indexFundsData.icons[i]),
-              Flexible(
-                child: Text(
-                  ledger.indexFundsData.names[i],
-                  style: TextStyles.cardBody,
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.fade,
-                  softWrap: false,
-                  maxLines: 1,
-                ),
-              ),
-              Text(
-                '${ledger.indexFundsData.amounts[i]}',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-              Text(
-                '${ledger.indexFundsData.interests[i].toStringAsFixed(2)} %',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-            ],
-          ));
-          indexFunds.add(const SizedBox(
-            height: 15,
-          ));
-        }
-        break;
-      case CardSize.mini:
-        break;
-      case CardSize.small:
-        break;
+    for (int i = 0; i < ledger.indexFundsData.names.length; i++) {
+      indexFunds.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(ledger.indexFundsData.icons[i]),
+          Flexible(
+            child: Text(
+              ledger.indexFundsData.names[i],
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.fade,
+              softWrap: false,
+              maxLines: 1,
+            ),
+          ),
+          Text(
+            '${ledger.indexFundsData.amounts[i]}',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+          Text(
+            '${ledger.indexFundsData.interests[i].toStringAsFixed(2)} %',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+        ],
+      ));
+      indexFunds.add(const SizedBox(
+        height: 15,
+      ));
     }
     return indexFunds;
   }
@@ -154,7 +146,7 @@ class _IndexFundsState extends State<IndexFunds> {
   void initState() {
     super.initState();
 
-    indexFunds = getIndexFunds(CardSize.big);
+    indexFunds = getIndexFundsList();
   }
 
   @override

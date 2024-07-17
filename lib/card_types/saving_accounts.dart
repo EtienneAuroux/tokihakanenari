@@ -65,7 +65,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
                           cardType: CardType.savingAccounts,
                           onNewIncomeCallback: (List<dynamic> newSavingAccount) {
                             ledger.addCardData(CardType.savingAccounts, newSavingAccount);
-                            savingAccounts = getSavingAccounts(CardSize.big);
+                            savingAccounts = getSavingAccountsList();
                             setState(() {});
                             ledger.addCarouselCard(CardType.savingAccounts);
                           },
@@ -107,46 +107,39 @@ class _SavingAccountsState extends State<SavingAccounts> {
     }
   }
 
-  List<Widget> getSavingAccounts(CardSize cardSize) {
+  List<Widget> getSavingAccountsList() {
     List<Widget> savingAccounts = <Widget>[];
-    switch (cardSize) {
-      case CardSize.big:
-        for (int i = 0; i < ledger.savingAccountsData.names.length; i++) {
-          savingAccounts.add(Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(ledger.savingAccountsData.icons[i]),
-              Flexible(
-                child: Text(
-                  ledger.savingAccountsData.names[i],
-                  style: TextStyles.cardBody,
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.fade,
-                  softWrap: false,
-                  maxLines: 1,
-                ),
-              ),
-              Text(
-                '${ledger.savingAccountsData.amounts[i]}',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-              Text(
-                '${ledger.savingAccountsData.interests[i].toStringAsFixed(2)} %',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-            ],
-          ));
-          savingAccounts.add(const SizedBox(
-            height: 15,
-          ));
-        }
-        break;
-      case CardSize.mini:
-        break;
-      case CardSize.small:
-        break;
+
+    for (int i = 0; i < ledger.savingAccountsData.names.length; i++) {
+      savingAccounts.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(ledger.savingAccountsData.icons[i]),
+          Flexible(
+            child: Text(
+              ledger.savingAccountsData.names[i],
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.fade,
+              softWrap: false,
+              maxLines: 1,
+            ),
+          ),
+          Text(
+            '${ledger.savingAccountsData.amounts[i]}',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+          Text(
+            '${ledger.savingAccountsData.interests[i].toStringAsFixed(2)} %',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+        ],
+      ));
+      savingAccounts.add(const SizedBox(
+        height: 15,
+      ));
     }
     return savingAccounts;
   }
@@ -155,7 +148,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
   void initState() {
     super.initState();
 
-    savingAccounts = getSavingAccounts(CardSize.big);
+    savingAccounts = getSavingAccountsList();
   }
 
   @override

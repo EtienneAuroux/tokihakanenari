@@ -64,7 +64,7 @@ class _ContentCreationState extends State<ContentCreation> {
                           cardType: CardType.contentCreation,
                           onNewIncomeCallback: (List<dynamic> newContent) {
                             ledger.addCardData(CardType.contentCreation, newContent);
-                            contents = getContents(CardSize.big);
+                            contents = getContentsList();
                             setState(() {});
                             ledger.addCarouselCard(CardType.contentCreation);
                           },
@@ -102,35 +102,27 @@ class _ContentCreationState extends State<ContentCreation> {
     }
   }
 
-  List<Widget> getContents(CardSize cardSize) {
+  List<Widget> getContentsList() {
     List<Widget> contents = <Widget>[];
-    switch (cardSize) {
-      case CardSize.big:
-        for (int i = 0; i < ledger.contentCreationData.platforms.length; i++) {
-          contents.add(Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Text(
-                ledger.contentCreationData.platforms[i],
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.start,
-              ),
-              Text(
-                '${ledger.contentCreationData.revenues[i]} / ${ledger.contentCreationData.timePeriods[i].name}',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.start,
-              ),
-            ],
-          ));
-          contents.add(const SizedBox(
-            height: 15,
-          ));
-        }
-        break;
-      case CardSize.mini:
-        break;
-      case CardSize.small:
-        break;
+    for (int i = 0; i < ledger.contentCreationData.platforms.length; i++) {
+      contents.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            ledger.contentCreationData.platforms[i],
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.start,
+          ),
+          Text(
+            '${ledger.contentCreationData.revenues[i]} / ${ledger.contentCreationData.timePeriods[i].name}',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.start,
+          ),
+        ],
+      ));
+      contents.add(const SizedBox(
+        height: 15,
+      ));
     }
     return contents;
   }
@@ -139,7 +131,7 @@ class _ContentCreationState extends State<ContentCreation> {
   void initState() {
     super.initState();
 
-    contents = getContents(CardSize.big);
+    contents = getContentsList();
   }
 
   @override

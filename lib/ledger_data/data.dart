@@ -69,3 +69,9 @@ class StockAccountsData {
   double earnedPerDay = 0;
   double averageInterest = 0;
 }
+
+class TotalIncomeData {
+  double totalInvested = 0;
+  double earnedPerDay = 0;
+  double averageInterest = 0;
+}

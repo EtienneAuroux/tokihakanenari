@@ -64,7 +64,7 @@ class _PrivateFundsState extends State<PrivateFunds> {
                           cardType: CardType.privateFunds,
                           onNewIncomeCallback: (List<dynamic> newPrivateFund) {
                             ledger.addCardData(CardType.privateFunds, newPrivateFund);
-                            privateFunds = getPrivateFunds(CardSize.big);
+                            privateFunds = getPrivateFundsList();
                             setState(() {});
                             ledger.addCarouselCard(CardType.privateFunds);
                           },
@@ -106,46 +106,38 @@ class _PrivateFundsState extends State<PrivateFunds> {
     }
   }
 
-  List<Widget> getPrivateFunds(CardSize cardSize) {
+  List<Widget> getPrivateFundsList() {
     List<Widget> privateFunds = <Widget>[];
-    switch (cardSize) {
-      case CardSize.big:
-        for (int i = 0; i < ledger.privateFundsData.names.length; i++) {
-          privateFunds.add(Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Icon(ledger.privateFundsData.icons[i]),
-              Flexible(
-                child: Text(
-                  ledger.privateFundsData.names[i],
-                  style: TextStyles.cardBody,
-                  textAlign: TextAlign.start,
-                  overflow: TextOverflow.fade,
-                  softWrap: false,
-                  maxLines: 1,
-                ),
-              ),
-              Text(
-                '${ledger.privateFundsData.amounts[i]}',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-              Text(
-                '${ledger.privateFundsData.interests[i].toStringAsFixed(2)} %',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-            ],
-          ));
-          privateFunds.add(const SizedBox(
-            height: 15,
-          ));
-        }
-        break;
-      case CardSize.mini:
-        break;
-      case CardSize.small:
-        break;
+    for (int i = 0; i < ledger.privateFundsData.names.length; i++) {
+      privateFunds.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Icon(ledger.privateFundsData.icons[i]),
+          Flexible(
+            child: Text(
+              ledger.privateFundsData.names[i],
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.start,
+              overflow: TextOverflow.fade,
+              softWrap: false,
+              maxLines: 1,
+            ),
+          ),
+          Text(
+            '${ledger.privateFundsData.amounts[i]}',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+          Text(
+            '${ledger.privateFundsData.interests[i].toStringAsFixed(2)} %',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+        ],
+      ));
+      privateFunds.add(const SizedBox(
+        height: 15,
+      ));
     }
     return privateFunds;
   }
@@ -154,7 +146,7 @@ class _PrivateFundsState extends State<PrivateFunds> {
   void initState() {
     super.initState();
 
-    privateFunds = getPrivateFunds(CardSize.big);
+    privateFunds = getPrivateFundsList();
   }
 
   @override

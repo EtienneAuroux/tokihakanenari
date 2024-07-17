@@ -64,7 +64,7 @@ class _RealEstateState extends State<RealEstate> {
                           cardType: CardType.realEstate,
                           onNewIncomeCallback: (List<dynamic> newProperty) {
                             ledger.addCardData(CardType.realEstate, newProperty);
-                            properties = getProperties(CardSize.big);
+                            properties = getPropertiesList();
                             setState(() {});
                             ledger.addCarouselCard(CardType.realEstate);
                           },
@@ -106,44 +106,36 @@ class _RealEstateState extends State<RealEstate> {
     }
   }
 
-  List<Widget> getProperties(CardSize cardSize) {
+  List<Widget> getPropertiesList() {
     List<Widget> properties = <Widget>[];
-    switch (cardSize) {
-      case CardSize.big:
-        for (int i = 0; i < ledger.realEstateData.locations.length; i++) {
-          properties.add(Row(
-            mainAxisAlignment: MainAxisAlignment.spaceBetween,
-            children: [
-              Tooltip(
-                message: ledger.realEstateData.descriptions[i],
-                showDuration: const Duration(seconds: 2),
-                child: Text(
-                  ledger.realEstateData.locations[i],
-                  textAlign: TextAlign.start,
-                  style: TextStyles.cardBody,
-                ),
-              ),
-              Text(
-                '${ledger.realEstateData.capitals[i].round()}',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-              Text(
-                '${ledger.realEstateData.fullReturns[i].toStringAsFixed(2)} %',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.end,
-              ),
-            ],
-          ));
-          properties.add(const SizedBox(
-            height: 15,
-          ));
-        }
-        break;
-      case CardSize.mini:
-        break;
-      case CardSize.small:
-        break;
+    for (int i = 0; i < ledger.realEstateData.locations.length; i++) {
+      properties.add(Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Tooltip(
+            message: ledger.realEstateData.descriptions[i],
+            showDuration: const Duration(seconds: 2),
+            child: Text(
+              ledger.realEstateData.locations[i],
+              textAlign: TextAlign.start,
+              style: TextStyles.cardBody,
+            ),
+          ),
+          Text(
+            '${ledger.realEstateData.capitals[i].round()}',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+          Text(
+            '${ledger.realEstateData.fullReturns[i].toStringAsFixed(2)} %',
+            style: TextStyles.cardBody,
+            textAlign: TextAlign.end,
+          ),
+        ],
+      ));
+      properties.add(const SizedBox(
+        height: 15,
+      ));
     }
     return properties;
   }
@@ -152,7 +144,7 @@ class _RealEstateState extends State<RealEstate> {
   void initState() {
     super.initState();
 
-    properties = getProperties(CardSize.big);
+    properties = getPropertiesList();
   }
 
   @override
