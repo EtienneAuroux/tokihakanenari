@@ -147,6 +147,20 @@ class _IndexFundsState extends State<IndexFunds> {
     super.initState();
 
     indexFunds = getIndexFundsList();
+
+    ledger.addListener(() {
+      indexFunds = getIndexFundsList();
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override

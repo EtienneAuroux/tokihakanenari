@@ -147,6 +147,20 @@ class _StockAccountsState extends State<StockAccounts> {
     super.initState();
 
     stockAccounts = getStockAccountsList();
+
+    ledger.addListener(() {
+      stockAccounts = getStockAccountsList();
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override

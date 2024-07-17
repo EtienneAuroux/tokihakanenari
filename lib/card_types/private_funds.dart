@@ -147,6 +147,20 @@ class _PrivateFundsState extends State<PrivateFunds> {
     super.initState();
 
     privateFunds = getPrivateFundsList();
+
+    ledger.addListener(() {
+      privateFunds = getPrivateFundsList();
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override

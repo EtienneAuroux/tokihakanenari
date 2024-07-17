@@ -149,6 +149,20 @@ class _SavingAccountsState extends State<SavingAccounts> {
     super.initState();
 
     savingAccounts = getSavingAccountsList();
+
+    ledger.addListener(() {
+      savingAccounts = getSavingAccountsList();
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override

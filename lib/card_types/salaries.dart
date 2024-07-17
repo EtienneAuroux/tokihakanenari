@@ -141,6 +141,20 @@ class _SalariesState extends State<Salaries> {
     super.initState();
 
     salaries = getSalariesList();
+
+    ledger.addListener(() {
+      salaries = getSalariesList();
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override

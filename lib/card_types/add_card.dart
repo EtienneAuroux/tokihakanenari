@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/mini_card.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
@@ -22,16 +23,17 @@ class AddCard extends StatefulWidget {
 }
 
 class _AddCardState extends State<AddCard> {
+  Ledger ledger = Ledger();
   List<MiniCard> remainingCards = <MiniCard>[];
 
-  List<MiniCard> initializeRemainingCards() {
+  List<MiniCard> getRemainingCards() {
+    List<MiniCard> remainingCards = <MiniCard>[];
     for (CardType cardType in CardType.values) {
-      if (cardType != CardType.addCard && cardType != CardType.totalIncome) {
+      if (!ledger.carouselCards.contains(cardType)) {
         remainingCards.add(
           MiniCard(
             cardType: cardType,
             onTapMiniCard: () {
-              developer.log('on tap ${cardType.name}, size ${widget.cardSize.name}, status ${widget.cardStatus.name}');
               if (widget.cardStatus == CardStatus.inert) {
                 widget.onRequestToAddCard(cardType);
               }
@@ -85,9 +87,7 @@ class _AddCardState extends State<AddCard> {
   void initState() {
     super.initState();
 
-    if (widget.cardSize == CardSize.big) {
-      initializeRemainingCards();
-    }
+    remainingCards = getRemainingCards();
   }
 
   @override

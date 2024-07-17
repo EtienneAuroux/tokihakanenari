@@ -145,6 +145,20 @@ class _RealEstateState extends State<RealEstate> {
     super.initState();
 
     properties = getPropertiesList();
+
+    ledger.addListener(() {
+      properties = getPropertiesList();
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override

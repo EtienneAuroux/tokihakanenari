@@ -132,6 +132,20 @@ class _ContentCreationState extends State<ContentCreation> {
     super.initState();
 
     contents = getContentsList();
+
+    ledger.addListener(() {
+      contents = getContentsList();
+      if (mounted) {
+        setState(() {});
+      }
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override

@@ -17,6 +17,11 @@ class Ledger extends ChangeNotifier {
     return _ledger;
   }
 
+  // Update
+  void update() {
+    notifyListeners();
+  }
+
   // Carousel
   final List<CardType> _carouselCards = <CardType>[
     CardType.addCard,
@@ -181,7 +186,6 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.savingAccounts:
         _savingAccountsData.totalInvested = 0;
-        developer.log('saving accounts ${_savingAccountsData.amounts}');
         double yearlyIncrease = 0;
         for (int i = 0; i < _savingAccountsData.names.length; i++) {
           _savingAccountsData.totalInvested += _savingAccountsData.amounts[i];
@@ -189,7 +193,6 @@ class Ledger extends ChangeNotifier {
         }
         _savingAccountsData.averageInterest = 100 * yearlyIncrease / _savingAccountsData.totalInvested;
         _savingAccountsData.earnedPerDay = _savingAccountsData.totalInvested * _savingAccountsData.averageInterest / 100 / 365.25;
-        developer.log('total saving accounts ${_savingAccountsData.totalInvested}');
         break;
       case CardType.stockAccounts:
         _stockAccountsData.totalInvested = 0;
