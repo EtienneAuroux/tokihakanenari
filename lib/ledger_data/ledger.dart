@@ -29,15 +29,16 @@ class Ledger extends ChangeNotifier {
   ];
   List<CardType> get carouselCards => _carouselCards;
 
-  int _pageInFocus = 1;
+  final defaultPage = 50 * 2; // Only 2 cards originally.
+  int _pageInFocus = 0;
   int get pageInFocus => _pageInFocus;
 
   void addCarouselCard(CardType cardType) {
-    int indexTotalIncome = _carouselCards.indexOf(CardType.totalIncome);
+    bool oddNumberOfCard = _carouselCards.length.isOdd;
+    int newCardEvenIndex = (_carouselCards.length / 2).floor();
     if (!_carouselCards.contains(cardType)) {
-      _pageInFocus = indexTotalIncome + (_carouselCards.length.isOdd ? 1 : 0);
-      _carouselCards.insert(_pageInFocus, cardType);
-      _pageInFocus += 99;
+      _carouselCards.insert(oddNumberOfCard ? newCardEvenIndex - 1 : newCardEvenIndex, cardType);
+      _pageInFocus = 50 * _carouselCards.length + (oddNumberOfCard ? newCardEvenIndex - 1 : newCardEvenIndex);
     }
     notifyListeners();
   }

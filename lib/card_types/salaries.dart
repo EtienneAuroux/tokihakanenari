@@ -92,9 +92,6 @@ class _SalariesState extends State<Salaries> {
                 'Salaries',
                 style: TextStyles.cardTitle,
               ),
-              SizedBox(
-                height: size.height / 10,
-              ),
               Text(
                 '${ledger.salariesData.earnedPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,

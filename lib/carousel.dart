@@ -13,11 +13,13 @@ import 'package:tokihakanenari/overscroll_physics.dart';
 class Carousel extends StatefulWidget {
   final CardStatus cardStatus;
   final void Function(CardType cardType) onRequestBigCard;
+  final void Function(CardType cardType) onRequestSettings;
 
   const Carousel({
     super.key,
     required this.cardStatus,
     required this.onRequestBigCard,
+    required this.onRequestSettings,
   });
 
   @override
@@ -60,7 +62,9 @@ class _CarouselState extends State<Carousel> {
               widget.onRequestBigCard(cardType);
             }
           },
-          onLongPressSmallCard: () {},
+          onLongPressSmallCard: () {
+            widget.onRequestSettings(cardType);
+          },
         ),
       );
     }
@@ -76,7 +80,7 @@ class _CarouselState extends State<Carousel> {
 
     pageController = PageController(
       viewportFraction: viewportFraction,
-      initialPage: 99,
+      initialPage: ledger.defaultPage,
     );
 
     smallCards = getSmallCards();
@@ -106,9 +110,7 @@ class _CarouselState extends State<Carousel> {
               scrollDirection: Axis.vertical,
               allowImplicitScrolling: true,
               pageSnapping: false,
-              physics: const OverscrollPhysics(velocityPerOverscroll: 100),
               controller: pageController,
-              // itemCount: smallCards.length,
               itemBuilder: ((context, index) {
                 final SmallCard card = smallCards[index % smallCards.length];
                 return AnimatedBuilder(

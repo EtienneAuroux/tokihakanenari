@@ -41,7 +41,7 @@ class OverscrollPhysics extends ScrollPhysics {
     final double target = _getTargetPixels(position, velocity);
     developer.log('target = $target');
     if (target != position.pixels) {
-      return ScrollSpringSimulation(spring, position.pixels, target, velocity);
+      return ScrollSpringSimulation(spring, position.pixels, target + 0.5, velocity);
     }
     return null;
   }

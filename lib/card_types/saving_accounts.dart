@@ -20,6 +20,22 @@ class SavingAccounts extends StatefulWidget {
 class _SavingAccountsState extends State<SavingAccounts> {
   Ledger ledger = Ledger();
   List<Widget> savingAccounts = <Widget>[];
+  int alphaDelete = 0;
+  bool deleting = false;
+
+  Future<void> deleteColorUpdate() async {
+    while (deleting) {
+      setState(() {
+        alphaDelete += 1;
+      });
+      await Future.delayed(const Duration(milliseconds: 1));
+    }
+    if (!deleting) {
+      setState(() {
+        alphaDelete = 0;
+      });
+    }
+  }
 
   Widget getCardContent(CardSize cardStatus, BuildContext context) {
     Size size = MediaQuery.of(context).size;
@@ -111,35 +127,49 @@ class _SavingAccountsState extends State<SavingAccounts> {
     List<Widget> savingAccounts = <Widget>[];
 
     for (int i = 0; i < ledger.savingAccountsData.names.length; i++) {
-      savingAccounts.add(Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(ledger.savingAccountsData.icons[i]),
-          Flexible(
-            child: Text(
-              ledger.savingAccountsData.names[i],
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.fade,
-              softWrap: false,
-              maxLines: 1,
+      savingAccounts.add(
+        Container(
+          color: Colors.red.withAlpha(alphaDelete),
+          padding: const EdgeInsets.symmetric(vertical: 5),
+          child: Listener(
+            onPointerDown: (event) {
+              developer.log('down');
+              deleting = true;
+              deleteColorUpdate();
+            },
+            onPointerUp: (event) {
+              developer.log('up');
+              deleting = false;
+            },
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Icon(ledger.savingAccountsData.icons[i]),
+                Flexible(
+                  child: Text(
+                    ledger.savingAccountsData.names[i],
+                    style: TextStyles.cardBody,
+                    textAlign: TextAlign.start,
+                    overflow: TextOverflow.fade,
+                    softWrap: false,
+                    maxLines: 1,
+                  ),
+                ),
+                Text(
+                  '${ledger.savingAccountsData.amounts[i]}',
+                  style: TextStyles.cardBody,
+                  textAlign: TextAlign.end,
+                ),
+                Text(
+                  '${ledger.savingAccountsData.interests[i].toStringAsFixed(2)} %',
+                  style: TextStyles.cardBody,
+                  textAlign: TextAlign.end,
+                ),
+              ],
             ),
           ),
-          Text(
-            '${ledger.savingAccountsData.amounts[i]}',
-            style: TextStyles.cardBody,
-            textAlign: TextAlign.end,
-          ),
-          Text(
-            '${ledger.savingAccountsData.interests[i].toStringAsFixed(2)} %',
-            style: TextStyles.cardBody,
-            textAlign: TextAlign.end,
-          ),
-        ],
-      ));
-      savingAccounts.add(const SizedBox(
-        height: 15,
-      ));
+        ),
+      );
     }
     return savingAccounts;
   }

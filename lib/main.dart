@@ -70,6 +70,9 @@ class _MainPageState extends State<MainPage> {
               });
             }
           },
+          onRequestSettings: (cardType) {
+            developer.log('user requested settings on ${cardType.name}');
+          },
         ),
         Visibility(
           visible: mainView == MainView.primaryBigCard || cardStatus == CardStatus.drop,
