@@ -7,12 +7,16 @@ import 'package:tokihakanenari/visual_tools/text_styles.dart';
 import 'dart:developer' as developer;
 
 class BigContent extends StatefulWidget {
+  final String cardTitle;
+  final String itemName;
   final CardType cardType;
   final List<Row> cardItems;
   final void Function() onUpdateItems;
 
   const BigContent({
     super.key,
+    required this.cardTitle,
+    required this.itemName,
     required this.cardType,
     required this.cardItems,
     required this.onUpdateItems,
@@ -26,6 +30,22 @@ class _BigContentState extends State<BigContent> {
   Ledger ledger = Ledger();
 
   @override
+  void initState() {
+    super.initState();
+
+    ledger.addListener(() {
+      widget.onUpdateItems();
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
+  }
+
+  @override
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
@@ -33,8 +53,8 @@ class _BigContentState extends State<BigContent> {
       padding: EdgeInsets.fromLTRB(0, size.height / 20, 0, 0),
       child: Column(
         children: [
-          const Text(
-            'Saving accounts',
+          Text(
+            widget.cardTitle,
             style: TextStyles.cardTitle,
           ),
           Expanded(
@@ -45,20 +65,7 @@ class _BigContentState extends State<BigContent> {
                 return Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                  child: List.generate(
-                    widget.cardItems.length,
-                    (index) => Container(
-                      padding: const EdgeInsets.symmetric(vertical: 5),
-                      child: Listener(
-                        onPointerDown: (event) {
-                          developer.log('down');
-                        },
-                        onPointerUp: (event) {
-                          developer.log('up');
-                        },
-                      ),
-                    ),
-                  )[index],
+                  child: widget.cardItems[index],
                 );
               },
             ),
@@ -68,8 +75,8 @@ class _BigContentState extends State<BigContent> {
               alignment: Alignment.topCenter,
               height: size.height / 4,
               padding: const EdgeInsets.symmetric(vertical: 30),
-              child: const Text(
-                'Double tap to add a new saving account.',
+              child: Text(
+                'Double tap to add a new ${widget.itemName}.',
                 style: TextStyles.cardBody,
                 textAlign: TextAlign.center,
               ),
@@ -80,8 +87,8 @@ class _BigContentState extends State<BigContent> {
                   builder: (BuildContext context) {
                     return NewIncomeDialog(
                       cardType: widget.cardType,
-                      onNewIncomeCallback: (List<dynamic> newSavingAccount) {
-                        ledger.addCardData(widget.cardType, newSavingAccount);
+                      onNewIncomeCallback: (List<dynamic> newIncome) {
+                        ledger.addCardData(widget.cardType, newIncome);
                         widget.onUpdateItems();
                         ledger.addCarouselCard(widget.cardType);
                       },

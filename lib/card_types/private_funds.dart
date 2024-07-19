@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/alert_dialogs/new_income_dialog.dart';
+import 'package:tokihakanenari/card_generators/big_content.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -18,62 +18,22 @@ class PrivateFunds extends StatefulWidget {
 
 class _PrivateFundsState extends State<PrivateFunds> {
   Ledger ledger = Ledger();
-  List<Widget> privateFunds = <Widget>[];
+  List<Row> privateFunds = <Row>[];
 
-  Widget getCardContent(CardSize cardStatus, BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+  Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return Container(
-          padding: EdgeInsets.fromLTRB(0, size.height / 20, 0, 0),
-          child: Column(
-            children: [
-              const Text(
-                'Private funds',
-                style: TextStyles.cardTitle,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: privateFunds.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                      child: privateFunds[index],
-                    );
-                  },
-                ),
-              ),
-              GestureDetector(
-                child: Container(
-                  alignment: Alignment.topCenter,
-                  height: size.height / 4,
-                  padding: const EdgeInsets.symmetric(vertical: 30),
-                  child: const Text(
-                    'Double tap to add a new private fund.',
-                    style: TextStyles.cardBody,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                onDoubleTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return NewIncomeDialog(
-                          cardType: CardType.privateFunds,
-                          onNewIncomeCallback: (List<dynamic> newPrivateFund) {
-                            ledger.addCardData(CardType.privateFunds, newPrivateFund);
-                            privateFunds = getPrivateFundsList();
-                            setState(() {});
-                            ledger.addCarouselCard(CardType.privateFunds);
-                          },
-                        );
-                      });
-                },
-              ),
-            ],
-          ),
+        return BigContent(
+          cardTitle: 'Private funds',
+          itemName: 'private fund',
+          cardType: CardType.privateFunds,
+          cardItems: privateFunds,
+          onUpdateItems: () {
+            privateFunds = getPrivateFunds();
+            if (mounted) {
+              setState(() {});
+            }
+          },
         );
       case CardSize.mini:
         return const Center(
@@ -106,38 +66,37 @@ class _PrivateFundsState extends State<PrivateFunds> {
     }
   }
 
-  List<Widget> getPrivateFundsList() {
-    List<Widget> privateFunds = <Widget>[];
+  List<Row> getPrivateFunds() {
+    List<Row> privateFunds = <Row>[];
     for (int i = 0; i < ledger.privateFundsData.names.length; i++) {
-      privateFunds.add(Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(ledger.privateFundsData.icons[i]),
-          Flexible(
-            child: Text(
-              ledger.privateFundsData.names[i],
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.fade,
-              softWrap: false,
-              maxLines: 1,
+      privateFunds.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(ledger.privateFundsData.icons[i]),
+            Flexible(
+              child: Text(
+                ledger.privateFundsData.names[i],
+                style: TextStyles.cardBody,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.fade,
+                softWrap: false,
+                maxLines: 1,
+              ),
             ),
-          ),
-          Text(
-            '${ledger.privateFundsData.amounts[i]}',
-            style: TextStyles.cardBody,
-            textAlign: TextAlign.end,
-          ),
-          Text(
-            '${ledger.privateFundsData.interests[i].toStringAsFixed(2)} %',
-            style: TextStyles.cardBody,
-            textAlign: TextAlign.end,
-          ),
-        ],
-      ));
-      privateFunds.add(const SizedBox(
-        height: 15,
-      ));
+            Text(
+              '${ledger.privateFundsData.amounts[i]}',
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.end,
+            ),
+            Text(
+              '${ledger.privateFundsData.interests[i].toStringAsFixed(2)} %',
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.end,
+            ),
+          ],
+        ),
+      );
     }
     return privateFunds;
   }
@@ -146,25 +105,11 @@ class _PrivateFundsState extends State<PrivateFunds> {
   void initState() {
     super.initState();
 
-    privateFunds = getPrivateFundsList();
-
-    ledger.addListener(() {
-      privateFunds = getPrivateFundsList();
-      if (mounted) {
-        setState(() {});
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    ledger.removeListener(() {});
-
-    super.dispose();
+    privateFunds = getPrivateFunds();
   }
 
   @override
   Widget build(BuildContext context) {
-    return getCardContent(widget.cardSize, context);
+    return getCardContent(widget.cardSize);
   }
 }
