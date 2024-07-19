@@ -71,18 +71,19 @@ class Ledger extends ChangeNotifier {
         _contentCreationData.platforms.add(data[0]);
         _contentCreationData.revenues.add(double.parse(data[1]));
         _contentCreationData.timePeriods.add(data[2]);
+        break;
       case CardType.indexFunds:
         _indexFundsData.icons.add(data[0]);
         _indexFundsData.names.add(data[1]);
         _indexFundsData.amounts.add(double.parse(data[2]));
         _indexFundsData.interests.add(double.parse(data[3]));
-      case CardType.totalIncome:
-      // TODO: Handle this case.
+        break;
       case CardType.privateFunds:
         _privateFundsData.icons.add(data[0]);
         _privateFundsData.names.add(data[1]);
         _privateFundsData.amounts.add(double.parse(data[2]));
         _privateFundsData.interests.add(double.parse(data[3]));
+        break;
       case CardType.realEstate:
         _realEstateData.locations.add(data[0]);
         _realEstateData.descriptions.add(data[1]);
@@ -92,21 +93,84 @@ class Ledger extends ChangeNotifier {
         _realEstateData.interests.add(double.parse(data[5]));
         _realEstateData.fullReturns.add(0);
         _realEstateData.registeredDates.add(data[6]);
+        break;
       case CardType.salaries:
         _salariesData.icons.add(data[0]);
         _salariesData.names.add(data[1]);
         _salariesData.salaries.add(double.parse(data[2]));
         _salariesData.timePeriods.add(data[3]);
+        break;
       case CardType.savingAccounts:
         _savingAccountsData.icons.add(data[0]);
         _savingAccountsData.names.add(data[1]);
         _savingAccountsData.amounts.add(double.parse(data[2]));
         _savingAccountsData.interests.add(double.parse(data[3]));
+        break;
       case CardType.stockAccounts:
         _stockAccountsData.icons.add(data[0]);
         _stockAccountsData.names.add(data[1]);
         _stockAccountsData.amounts.add(double.parse(data[2]));
         _stockAccountsData.interests.add(double.parse(data[3]));
+        break;
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to add data to TotalIncome.');
+    }
+
+    _aggregateData(cardType);
+    notifyListeners();
+  }
+
+  void deleteCardData(CardType cardType, int index) {
+    switch (cardType) {
+      case CardType.addCard:
+        throw ErrorDescription('It should not be possible to delete data from AddCard.');
+      case CardType.contentCreation:
+        _contentCreationData.platforms.removeAt(index);
+        _contentCreationData.revenues.removeAt(index);
+        _contentCreationData.timePeriods.removeAt(index);
+        break;
+      case CardType.indexFunds:
+        _indexFundsData.icons.removeAt(index);
+        _indexFundsData.names.removeAt(index);
+        _indexFundsData.amounts.removeAt(index);
+        _indexFundsData.interests.removeAt(index);
+        break;
+      case CardType.privateFunds:
+        _privateFundsData.icons.removeAt(index);
+        _privateFundsData.names.removeAt(index);
+        _privateFundsData.amounts.removeAt(index);
+        _privateFundsData.interests.removeAt(index);
+        break;
+      case CardType.realEstate:
+        _realEstateData.locations.removeAt(index);
+        _realEstateData.descriptions.removeAt(index);
+        _realEstateData.capitals.removeAt(index);
+        _realEstateData.payments.removeAt(index);
+        _realEstateData.revenues.removeAt(index);
+        _realEstateData.interests.removeAt(index);
+        _realEstateData.fullReturns.removeAt(index);
+        _realEstateData.registeredDates.removeAt(index);
+        break;
+      case CardType.salaries:
+        _salariesData.icons.removeAt(index);
+        _salariesData.names.removeAt(index);
+        _salariesData.salaries.removeAt(index);
+        _salariesData.timePeriods.removeAt(index);
+        break;
+      case CardType.savingAccounts:
+        _savingAccountsData.icons.removeAt(index);
+        _savingAccountsData.names.removeAt(index);
+        _savingAccountsData.amounts.removeAt(index);
+        _savingAccountsData.interests.removeAt(index);
+        break;
+      case CardType.stockAccounts:
+        _stockAccountsData.icons.removeAt(index);
+        _stockAccountsData.names.removeAt(index);
+        _stockAccountsData.amounts.removeAt(index);
+        _stockAccountsData.interests.removeAt(index);
+        break;
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to delete data from TotalIncome.');
     }
 
     _aggregateData(cardType);

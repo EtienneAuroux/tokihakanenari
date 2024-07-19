@@ -34,6 +34,12 @@ class _ContentCreationState extends State<ContentCreation> {
               setState(() {});
             }
           },
+          onDeleteItem: () {
+            contents = getContents();
+            if (mounted) {
+              setState(() {});
+            }
+          },
         );
       case CardSize.mini:
         return const Center(

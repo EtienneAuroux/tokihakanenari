@@ -34,6 +34,12 @@ class _PrivateFundsState extends State<PrivateFunds> {
               setState(() {});
             }
           },
+          onDeleteItem: () {
+            privateFunds = getPrivateFunds();
+            if (mounted) {
+              setState(() {});
+            }
+          },
         );
       case CardSize.mini:
         return const Center(

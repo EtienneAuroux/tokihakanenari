@@ -35,6 +35,12 @@ class _SavingAccountsState extends State<SavingAccounts> {
               setState(() {});
             }
           },
+          onDeleteItem: () {
+            savingAccounts = getSavingAccounts();
+            if (mounted) {
+              setState(() {});
+            }
+          },
         );
       case CardSize.mini:
         return const Center(

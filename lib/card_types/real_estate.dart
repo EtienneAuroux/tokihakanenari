@@ -34,6 +34,12 @@ class _RealEstateState extends State<RealEstate> {
               setState(() {});
             }
           },
+          onDeleteItem: () {
+            properties = getProperties();
+            if (mounted) {
+              setState(() {});
+            }
+          },
         );
       case CardSize.mini:
         return const Center(
