@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/alert_dialogs/new_income_dialog.dart';
+import 'package:tokihakanenari/card_generators/big_content.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -19,78 +19,20 @@ class SavingAccounts extends StatefulWidget {
 
 class _SavingAccountsState extends State<SavingAccounts> {
   Ledger ledger = Ledger();
-  List<Widget> savingAccounts = <Widget>[];
-  int alphaDelete = 0;
-  bool deleting = false;
+  List<Row> savingAccounts = <Row>[];
 
-  Future<void> deleteColorUpdate() async {
-    while (deleting) {
-      setState(() {
-        alphaDelete += 1;
-      });
-      await Future.delayed(const Duration(milliseconds: 1));
-    }
-    if (!deleting) {
-      setState(() {
-        alphaDelete = 0;
-      });
-    }
-  }
-
-  Widget getCardContent(CardSize cardStatus, BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+  Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return Container(
-          padding: EdgeInsets.fromLTRB(0, size.height / 20, 0, 0),
-          child: Column(
-            children: [
-              const Text(
-                'Saving accounts',
-                style: TextStyles.cardTitle,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: savingAccounts.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                      child: savingAccounts[index],
-                    );
-                  },
-                ),
-              ),
-              GestureDetector(
-                child: Container(
-                  alignment: Alignment.topCenter,
-                  height: size.height / 4,
-                  padding: const EdgeInsets.symmetric(vertical: 30),
-                  child: const Text(
-                    'Double tap to add a new saving account.',
-                    style: TextStyles.cardBody,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                onDoubleTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return NewIncomeDialog(
-                          cardType: CardType.savingAccounts,
-                          onNewIncomeCallback: (List<dynamic> newSavingAccount) {
-                            ledger.addCardData(CardType.savingAccounts, newSavingAccount);
-                            savingAccounts = getSavingAccountsList();
-                            setState(() {});
-                            ledger.addCarouselCard(CardType.savingAccounts);
-                          },
-                        );
-                      });
-                },
-              ),
-            ],
-          ),
+        return BigContent(
+          cardTitle: 'Saving accounts',
+          itemName: 'saving account',
+          cardType: CardType.savingAccounts,
+          cardItems: savingAccounts,
+          onUpdateItems: () {
+            savingAccounts = getSavingAccounts();
+            setState(() {});
+          },
         );
       case CardSize.mini:
         return const Center(
@@ -123,51 +65,35 @@ class _SavingAccountsState extends State<SavingAccounts> {
     }
   }
 
-  List<Widget> getSavingAccountsList() {
-    List<Widget> savingAccounts = <Widget>[];
-
+  List<Row> getSavingAccounts() {
+    List<Row> savingAccounts = <Row>[];
     for (int i = 0; i < ledger.savingAccountsData.names.length; i++) {
       savingAccounts.add(
-        Container(
-          color: Colors.red.withAlpha(alphaDelete),
-          padding: const EdgeInsets.symmetric(vertical: 5),
-          child: Listener(
-            onPointerDown: (event) {
-              developer.log('down');
-              deleting = true;
-              deleteColorUpdate();
-            },
-            onPointerUp: (event) {
-              developer.log('up');
-              deleting = false;
-            },
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-              children: [
-                Icon(ledger.savingAccountsData.icons[i]),
-                Flexible(
-                  child: Text(
-                    ledger.savingAccountsData.names[i],
-                    style: TextStyles.cardBody,
-                    textAlign: TextAlign.start,
-                    overflow: TextOverflow.fade,
-                    softWrap: false,
-                    maxLines: 1,
-                  ),
-                ),
-                Text(
-                  '${ledger.savingAccountsData.amounts[i]}',
-                  style: TextStyles.cardBody,
-                  textAlign: TextAlign.end,
-                ),
-                Text(
-                  '${ledger.savingAccountsData.interests[i].toStringAsFixed(2)} %',
-                  style: TextStyles.cardBody,
-                  textAlign: TextAlign.end,
-                ),
-              ],
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(ledger.savingAccountsData.icons[i]),
+            Flexible(
+              child: Text(
+                ledger.savingAccountsData.names[i],
+                style: TextStyles.cardBody,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.fade,
+                softWrap: false,
+                maxLines: 1,
+              ),
             ),
-          ),
+            Text(
+              '${ledger.savingAccountsData.amounts[i]}',
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.end,
+            ),
+            Text(
+              '${ledger.savingAccountsData.interests[i].toStringAsFixed(2)} %',
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.end,
+            ),
+          ],
         ),
       );
     }
@@ -178,25 +104,11 @@ class _SavingAccountsState extends State<SavingAccounts> {
   void initState() {
     super.initState();
 
-    savingAccounts = getSavingAccountsList();
-
-    ledger.addListener(() {
-      savingAccounts = getSavingAccountsList();
-      if (mounted) {
-        setState(() {});
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    ledger.removeListener(() {});
-
-    super.dispose();
+    savingAccounts = getSavingAccounts();
   }
 
   @override
   Widget build(BuildContext context) {
-    return getCardContent(widget.cardSize, context);
+    return getCardContent(widget.cardSize);
   }
 }

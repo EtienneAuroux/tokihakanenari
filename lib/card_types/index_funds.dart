@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/alert_dialogs/new_income_dialog.dart';
+import 'package:tokihakanenari/card_generators/big_content.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -18,62 +18,20 @@ class IndexFunds extends StatefulWidget {
 
 class _IndexFundsState extends State<IndexFunds> {
   Ledger ledger = Ledger();
-  List<Widget> indexFunds = <Widget>[];
+  List<Row> indexFunds = <Row>[];
 
-  Widget getCardContent(CardSize cardStatus, BuildContext context) {
-    Size size = MediaQuery.of(context).size;
+  Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return Container(
-          padding: EdgeInsets.fromLTRB(0, size.height / 20, 0, 0),
-          child: Column(
-            children: [
-              const Text(
-                'Index funds',
-                style: TextStyles.cardTitle,
-              ),
-              Expanded(
-                child: ListView.builder(
-                  shrinkWrap: true,
-                  itemCount: indexFunds.length,
-                  itemBuilder: (BuildContext context, int index) {
-                    return Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                      child: indexFunds[index],
-                    );
-                  },
-                ),
-              ),
-              GestureDetector(
-                child: Container(
-                  alignment: Alignment.topCenter,
-                  height: size.height / 4,
-                  padding: const EdgeInsets.symmetric(vertical: 30),
-                  child: const Text(
-                    'Double tap to add a new index fund.',
-                    style: TextStyles.cardBody,
-                    textAlign: TextAlign.center,
-                  ),
-                ),
-                onDoubleTap: () {
-                  showDialog(
-                      context: context,
-                      builder: (BuildContext context) {
-                        return NewIncomeDialog(
-                          cardType: CardType.indexFunds,
-                          onNewIncomeCallback: (List<dynamic> newIndexFund) {
-                            ledger.addCardData(CardType.indexFunds, newIndexFund);
-                            indexFunds = getIndexFundsList();
-                            setState(() {});
-                            ledger.addCarouselCard(CardType.indexFunds);
-                          },
-                        );
-                      });
-                },
-              ),
-            ],
-          ),
+        return BigContent(
+          cardTitle: 'Index funds',
+          itemName: 'index fund',
+          cardType: CardType.indexFunds,
+          cardItems: indexFunds,
+          onUpdateItems: () {
+            indexFunds = getIndexFunds();
+            setState(() {});
+          },
         );
       case CardSize.mini:
         return const Center(
@@ -106,38 +64,37 @@ class _IndexFundsState extends State<IndexFunds> {
     }
   }
 
-  List<Widget> getIndexFundsList() {
-    List<Widget> indexFunds = <Widget>[];
+  List<Row> getIndexFunds() {
+    List<Row> indexFunds = <Row>[];
     for (int i = 0; i < ledger.indexFundsData.names.length; i++) {
-      indexFunds.add(Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
-        children: [
-          Icon(ledger.indexFundsData.icons[i]),
-          Flexible(
-            child: Text(
-              ledger.indexFundsData.names[i],
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.start,
-              overflow: TextOverflow.fade,
-              softWrap: false,
-              maxLines: 1,
+      indexFunds.add(
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            Icon(ledger.indexFundsData.icons[i]),
+            Flexible(
+              child: Text(
+                ledger.indexFundsData.names[i],
+                style: TextStyles.cardBody,
+                textAlign: TextAlign.start,
+                overflow: TextOverflow.fade,
+                softWrap: false,
+                maxLines: 1,
+              ),
             ),
-          ),
-          Text(
-            '${ledger.indexFundsData.amounts[i]}',
-            style: TextStyles.cardBody,
-            textAlign: TextAlign.end,
-          ),
-          Text(
-            '${ledger.indexFundsData.interests[i].toStringAsFixed(2)} %',
-            style: TextStyles.cardBody,
-            textAlign: TextAlign.end,
-          ),
-        ],
-      ));
-      indexFunds.add(const SizedBox(
-        height: 15,
-      ));
+            Text(
+              '${ledger.indexFundsData.amounts[i]}',
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.end,
+            ),
+            Text(
+              '${ledger.indexFundsData.interests[i].toStringAsFixed(2)} %',
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.end,
+            ),
+          ],
+        ),
+      );
     }
     return indexFunds;
   }
@@ -146,25 +103,11 @@ class _IndexFundsState extends State<IndexFunds> {
   void initState() {
     super.initState();
 
-    indexFunds = getIndexFundsList();
-
-    ledger.addListener(() {
-      indexFunds = getIndexFundsList();
-      if (mounted) {
-        setState(() {});
-      }
-    });
-  }
-
-  @override
-  void dispose() {
-    ledger.removeListener(() {});
-
-    super.dispose();
+    indexFunds = getIndexFunds();
   }
 
   @override
   Widget build(BuildContext context) {
-    return getCardContent(widget.cardSize, context);
+    return getCardContent(widget.cardSize);
   }
 }
