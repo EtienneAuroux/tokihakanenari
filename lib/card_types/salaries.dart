@@ -30,7 +30,9 @@ class _SalariesState extends State<Salaries> {
           cardItems: salaries,
           onUpdateItems: () {
             salaries = getSalaries();
-            setState(() {});
+            if (mounted) {
+              setState(() {});
+            }
           },
         );
       case CardSize.mini:

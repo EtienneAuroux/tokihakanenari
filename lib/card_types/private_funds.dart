@@ -30,7 +30,9 @@ class _PrivateFundsState extends State<PrivateFunds> {
           cardItems: privateFunds,
           onUpdateItems: () {
             privateFunds = getPrivateFunds();
-            setState(() {});
+            if (mounted) {
+              setState(() {});
+            }
           },
         );
       case CardSize.mini:

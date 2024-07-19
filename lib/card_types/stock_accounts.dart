@@ -30,7 +30,9 @@ class _StockAccountsState extends State<StockAccounts> {
           cardItems: stockAccounts,
           onUpdateItems: () {
             stockAccounts = getStockAccounts();
-            setState(() {});
+            if (mounted) {
+              setState(() {});
+            }
           },
         );
       case CardSize.mini:

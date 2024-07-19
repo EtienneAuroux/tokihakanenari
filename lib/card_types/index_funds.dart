@@ -30,7 +30,9 @@ class _IndexFundsState extends State<IndexFunds> {
           cardItems: indexFunds,
           onUpdateItems: () {
             indexFunds = getIndexFunds();
-            setState(() {});
+            if (mounted) {
+              setState(() {});
+            }
           },
         );
       case CardSize.mini:

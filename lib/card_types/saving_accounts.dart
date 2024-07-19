@@ -31,7 +31,9 @@ class _SavingAccountsState extends State<SavingAccounts> {
           cardItems: savingAccounts,
           onUpdateItems: () {
             savingAccounts = getSavingAccounts();
-            setState(() {});
+            if (mounted) {
+              setState(() {});
+            }
           },
         );
       case CardSize.mini:

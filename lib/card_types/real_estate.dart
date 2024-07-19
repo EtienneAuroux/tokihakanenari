@@ -30,7 +30,9 @@ class _RealEstateState extends State<RealEstate> {
           cardItems: properties,
           onUpdateItems: () {
             properties = getProperties();
-            setState(() {});
+            if (mounted) {
+              setState(() {});
+            }
           },
         );
       case CardSize.mini:

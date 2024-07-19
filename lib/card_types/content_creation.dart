@@ -30,7 +30,9 @@ class _ContentCreationState extends State<ContentCreation> {
           cardItems: contents,
           onUpdateItems: () {
             contents = getContents();
-            setState(() {});
+            if (mounted) {
+              setState(() {});
+            }
           },
         );
       case CardSize.mini:
