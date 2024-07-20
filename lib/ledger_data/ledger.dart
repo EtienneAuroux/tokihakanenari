@@ -43,6 +43,80 @@ class Ledger extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteCarouselCard(CardType cardType) {
+    switch (cardType) {
+      case CardType.addCard:
+        break;
+      case CardType.contentCreation:
+        _contentCreationData.platforms.clear();
+        _contentCreationData.revenues.clear();
+        _contentCreationData.timePeriods.clear();
+        _contentCreationData.earnedPerDay = 0;
+        break;
+      case CardType.indexFunds:
+        _indexFundsData.icons.clear();
+        _indexFundsData.names.clear();
+        _indexFundsData.amounts.clear();
+        _indexFundsData.interests.clear();
+        _indexFundsData.totalInvested = 0;
+        _indexFundsData.earnedPerDay = 0;
+        _indexFundsData.averageInterest = 0;
+        break;
+      case CardType.privateFunds:
+        _privateFundsData.icons.clear();
+        _privateFundsData.names.clear();
+        _privateFundsData.amounts.clear();
+        _privateFundsData.interests.clear();
+        _privateFundsData.totalInvested = 0;
+        _privateFundsData.earnedPerDay = 0;
+        _privateFundsData.averageInterest = 0;
+        break;
+      case CardType.realEstate:
+        _realEstateData.locations.clear();
+        _realEstateData.descriptions.clear();
+        _realEstateData.capitals.clear();
+        _realEstateData.payments.clear();
+        _realEstateData.revenues.clear();
+        _realEstateData.interests.clear();
+        _realEstateData.registeredDates.clear();
+        _realEstateData.fullReturns.clear();
+        _realEstateData.totalInvested = 0;
+        _realEstateData.earnedPerDay = 0;
+        _realEstateData.averageFullReturn = 0;
+        break;
+      case CardType.salaries:
+        _salariesData.icons.clear();
+        _salariesData.names.clear();
+        _salariesData.salaries.clear();
+        _salariesData.timePeriods.clear();
+        _salariesData.earnedPerDay = 0;
+        break;
+      case CardType.savingAccounts:
+        _savingAccountsData.icons.clear();
+        _savingAccountsData.names.clear();
+        _savingAccountsData.amounts.clear();
+        _savingAccountsData.interests.clear();
+        _savingAccountsData.totalInvested = 0;
+        _savingAccountsData.earnedPerDay = 0;
+        _savingAccountsData.averageInterest = 0;
+      case CardType.stockAccounts:
+        _stockAccountsData.icons.clear();
+        _stockAccountsData.names.clear();
+        _stockAccountsData.amounts.clear();
+        _stockAccountsData.interests.clear();
+        _stockAccountsData.totalInvested = 0;
+        _stockAccountsData.earnedPerDay = 0;
+        _stockAccountsData.averageInterest = 0;
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to remove TotalIncome.');
+    }
+
+    int deletedCardIndex = _carouselCards.indexOf(cardType);
+    _carouselCards.remove(cardType);
+    _pageInFocus = 50 * _carouselCards.length + deletedCardIndex;
+    notifyListeners();
+  }
+
   // Cards
   final ContentCreationData _contentCreationData = ContentCreationData();
   final IndexFundsData _indexFundsData = IndexFundsData();
@@ -71,18 +145,19 @@ class Ledger extends ChangeNotifier {
         _contentCreationData.platforms.add(data[0]);
         _contentCreationData.revenues.add(double.parse(data[1]));
         _contentCreationData.timePeriods.add(data[2]);
+        break;
       case CardType.indexFunds:
         _indexFundsData.icons.add(data[0]);
         _indexFundsData.names.add(data[1]);
         _indexFundsData.amounts.add(double.parse(data[2]));
         _indexFundsData.interests.add(double.parse(data[3]));
-      case CardType.totalIncome:
-      // TODO: Handle this case.
+        break;
       case CardType.privateFunds:
         _privateFundsData.icons.add(data[0]);
         _privateFundsData.names.add(data[1]);
         _privateFundsData.amounts.add(double.parse(data[2]));
         _privateFundsData.interests.add(double.parse(data[3]));
+        break;
       case CardType.realEstate:
         _realEstateData.locations.add(data[0]);
         _realEstateData.descriptions.add(data[1]);
@@ -92,21 +167,84 @@ class Ledger extends ChangeNotifier {
         _realEstateData.interests.add(double.parse(data[5]));
         _realEstateData.fullReturns.add(0);
         _realEstateData.registeredDates.add(data[6]);
+        break;
       case CardType.salaries:
         _salariesData.icons.add(data[0]);
         _salariesData.names.add(data[1]);
         _salariesData.salaries.add(double.parse(data[2]));
         _salariesData.timePeriods.add(data[3]);
+        break;
       case CardType.savingAccounts:
         _savingAccountsData.icons.add(data[0]);
         _savingAccountsData.names.add(data[1]);
         _savingAccountsData.amounts.add(double.parse(data[2]));
         _savingAccountsData.interests.add(double.parse(data[3]));
+        break;
       case CardType.stockAccounts:
         _stockAccountsData.icons.add(data[0]);
         _stockAccountsData.names.add(data[1]);
         _stockAccountsData.amounts.add(double.parse(data[2]));
         _stockAccountsData.interests.add(double.parse(data[3]));
+        break;
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to add data to TotalIncome.');
+    }
+
+    _aggregateData(cardType);
+    notifyListeners();
+  }
+
+  void deleteCardData(CardType cardType, int index) {
+    switch (cardType) {
+      case CardType.addCard:
+        throw ErrorDescription('It should not be possible to delete data from AddCard.');
+      case CardType.contentCreation:
+        _contentCreationData.platforms.removeAt(index);
+        _contentCreationData.revenues.removeAt(index);
+        _contentCreationData.timePeriods.removeAt(index);
+        break;
+      case CardType.indexFunds:
+        _indexFundsData.icons.removeAt(index);
+        _indexFundsData.names.removeAt(index);
+        _indexFundsData.amounts.removeAt(index);
+        _indexFundsData.interests.removeAt(index);
+        break;
+      case CardType.privateFunds:
+        _privateFundsData.icons.removeAt(index);
+        _privateFundsData.names.removeAt(index);
+        _privateFundsData.amounts.removeAt(index);
+        _privateFundsData.interests.removeAt(index);
+        break;
+      case CardType.realEstate:
+        _realEstateData.locations.removeAt(index);
+        _realEstateData.descriptions.removeAt(index);
+        _realEstateData.capitals.removeAt(index);
+        _realEstateData.payments.removeAt(index);
+        _realEstateData.revenues.removeAt(index);
+        _realEstateData.interests.removeAt(index);
+        _realEstateData.fullReturns.removeAt(index);
+        _realEstateData.registeredDates.removeAt(index);
+        break;
+      case CardType.salaries:
+        _salariesData.icons.removeAt(index);
+        _salariesData.names.removeAt(index);
+        _salariesData.salaries.removeAt(index);
+        _salariesData.timePeriods.removeAt(index);
+        break;
+      case CardType.savingAccounts:
+        _savingAccountsData.icons.removeAt(index);
+        _savingAccountsData.names.removeAt(index);
+        _savingAccountsData.amounts.removeAt(index);
+        _savingAccountsData.interests.removeAt(index);
+        break;
+      case CardType.stockAccounts:
+        _stockAccountsData.icons.removeAt(index);
+        _stockAccountsData.names.removeAt(index);
+        _stockAccountsData.amounts.removeAt(index);
+        _stockAccountsData.interests.removeAt(index);
+        break;
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to delete data from TotalIncome.');
     }
 
     _aggregateData(cardType);
@@ -143,7 +281,7 @@ class Ledger extends ChangeNotifier {
         _indexFundsData.earnedPerDay = _indexFundsData.totalInvested * _indexFundsData.averageInterest / 100 / 365.25;
         break;
       case CardType.totalIncome:
-        break; // TODO: Handle this case.
+        throw ErrorDescription('It should not be possible to add data to TotalIncome manually.');
       case CardType.privateFunds:
         _privateFundsData.totalInvested = 0;
         double yearlyIncrease = 0;

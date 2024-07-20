@@ -28,6 +28,31 @@ class BigContent extends StatefulWidget {
 
 class _BigContentState extends State<BigContent> {
   Ledger ledger = Ledger();
+  List<bool> pressingItem = List.filled(100000, false);
+  List<double> gradientEnd = List.filled(100000, -1);
+
+  Future<void> updateGradientEnd(int itemIndex) async {
+    int counter = 0;
+    while (pressingItem[itemIndex]) {
+      setState(() {
+        gradientEnd[itemIndex] += 0.01;
+      });
+      await Future.delayed(const Duration(milliseconds: 1));
+      counter += 1;
+      if (counter == 300) {
+        pressingItem[itemIndex] = false;
+        ledger.deleteCardData(widget.cardType, itemIndex);
+        if (widget.cardItems.length == 1) {
+          ledger.deleteCarouselCard(widget.cardType);
+        }
+      }
+    }
+    if (!pressingItem[itemIndex]) {
+      setState(() {
+        gradientEnd[itemIndex] = -1;
+      });
+    }
+  }
 
   @override
   void initState() {
@@ -65,7 +90,27 @@ class _BigContentState extends State<BigContent> {
                 return Container(
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                  child: widget.cardItems[index],
+                  child: GestureDetector(
+                    onTapDown: (details) {
+                      pressingItem[index] = true;
+                      updateGradientEnd(index);
+                    },
+                    onTapUp: (details) {
+                      pressingItem[index] = false;
+                    },
+                    child: Container(
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(10),
+                        gradient: LinearGradient(
+                          colors: [Colors.red, Colors.red.withAlpha(0)],
+                          begin: Alignment.centerLeft,
+                          end: Alignment(gradientEnd[index], 0),
+                        ),
+                      ),
+                      padding: const EdgeInsets.symmetric(vertical: 8),
+                      child: widget.cardItems[index],
+                    ),
+                  ),
                 );
               },
             ),
