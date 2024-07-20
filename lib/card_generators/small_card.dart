@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_types/add_card.dart';
 import 'package:tokihakanenari/card_types/content_creation.dart';
+import 'package:tokihakanenari/card_types/custom_income.dart';
 import 'package:tokihakanenari/card_types/index_funds.dart';
 import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/card_types/real_estate.dart';
@@ -48,6 +49,11 @@ class _SmallCardState extends State<SmallCard> {
       case CardType.contentCreation:
         // ignore: prefer_const_constructors
         return ContentCreation(
+          cardSize: CardSize.small,
+        );
+      case CardType.customIncome:
+        // ignore: prefer_const_constructors
+        return CustomIncome(
           cardSize: CardSize.small,
         );
       case CardType.indexFunds:

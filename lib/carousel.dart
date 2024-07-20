@@ -67,8 +67,6 @@ class _CarouselState extends State<Carousel> {
       );
     }
 
-    // TODO IF ALL CARD TYPE REMOVE ADDCARD.
-
     return carouselCards;
   }
 

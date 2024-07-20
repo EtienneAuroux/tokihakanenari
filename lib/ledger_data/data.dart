@@ -8,6 +8,19 @@ class ContentCreationData {
   double earnedPerDay = 0;
 }
 
+class CustomIncomeData {
+  List<IconData> icons = <IconData>[];
+  List<String> categories = <String>[];
+  List<String> names = <String>[];
+  List<double> amounts = <double>[];
+  List<double> interests = <double>[];
+  List<double> revenues = <double>[];
+  List<double> fullReturns = <double>[]; // in %
+  double totalInvested = 0;
+  double earnedPerDay = 0;
+  double averageFullReturn = 0;
+}
+
 class IndexFundsData {
   List<IconData> icons = <IconData>[];
   List<String> names = <String>[];

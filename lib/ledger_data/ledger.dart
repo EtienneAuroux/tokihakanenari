@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:tokihakanenari/card_types/total_income.dart';
 import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
@@ -20,6 +19,28 @@ class Ledger extends ChangeNotifier {
   // Update
   void update() {
     notifyListeners();
+  }
+
+  // Cards
+  final ContentCreationData _contentCreationData = ContentCreationData();
+  final CustomIncomeData _customIncomeData = CustomIncomeData();
+  final IndexFundsData _indexFundsData = IndexFundsData();
+  final PrivateFundsData _privateFundsData = PrivateFundsData();
+  final RealEstateData _realEstateData = RealEstateData();
+  final SalariesData _salariesData = SalariesData();
+  final SavingAccountsData _savingAccountsData = SavingAccountsData();
+  final StockAccountsData _stockAccountsData = StockAccountsData();
+
+  ContentCreationData get contentCreationData => _contentCreationData;
+  CustomIncomeData get customIncomeData => _customIncomeData;
+  IndexFundsData get indexFundsData => _indexFundsData;
+  PrivateFundsData get privateFundsData => _privateFundsData;
+  RealEstateData get realEstateData => _realEstateData;
+  SalariesData get salariesData => _salariesData;
+  SavingAccountsData get savingAccountsData => _savingAccountsData;
+  StockAccountsData get stockAccountsData => _stockAccountsData;
+  TotalIncomeData get totalIncomeData {
+    return _getTotalIncomeData(_carouselCards);
   }
 
   // Carousel
@@ -52,6 +73,18 @@ class Ledger extends ChangeNotifier {
         _contentCreationData.revenues.clear();
         _contentCreationData.timePeriods.clear();
         _contentCreationData.earnedPerDay = 0;
+        break;
+      case CardType.customIncome:
+        _customIncomeData.icons.clear();
+        _customIncomeData.categories.clear();
+        _customIncomeData.names.clear();
+        _customIncomeData.amounts.clear();
+        _customIncomeData.interests.clear();
+        _customIncomeData.revenues.clear();
+        _customIncomeData.fullReturns.clear();
+        _customIncomeData.totalInvested = 0;
+        _customIncomeData.earnedPerDay = 0;
+        _customIncomeData.averageFullReturn = 0;
         break;
       case CardType.indexFunds:
         _indexFundsData.icons.clear();
@@ -117,26 +150,6 @@ class Ledger extends ChangeNotifier {
     notifyListeners();
   }
 
-  // Cards
-  final ContentCreationData _contentCreationData = ContentCreationData();
-  final IndexFundsData _indexFundsData = IndexFundsData();
-  final PrivateFundsData _privateFundsData = PrivateFundsData();
-  final RealEstateData _realEstateData = RealEstateData();
-  final SalariesData _salariesData = SalariesData();
-  final SavingAccountsData _savingAccountsData = SavingAccountsData();
-  final StockAccountsData _stockAccountsData = StockAccountsData();
-
-  ContentCreationData get contentCreationData => _contentCreationData;
-  IndexFundsData get indexFundsData => _indexFundsData;
-  PrivateFundsData get privateFundsData => _privateFundsData;
-  RealEstateData get realEstateData => _realEstateData;
-  SalariesData get salariesData => _salariesData;
-  SavingAccountsData get savingAccountsData => _savingAccountsData;
-  StockAccountsData get stockAccountsData => _stockAccountsData;
-  TotalIncomeData get totalIncomeData {
-    return _getTotalIncomeData(_carouselCards);
-  }
-
   void addCardData(CardType cardType, List<dynamic> data) {
     switch (cardType) {
       case CardType.addCard:
@@ -146,6 +159,14 @@ class Ledger extends ChangeNotifier {
         _contentCreationData.revenues.add(double.parse(data[1]));
         _contentCreationData.timePeriods.add(data[2]);
         break;
+      case CardType.customIncome:
+        _customIncomeData.icons.add(data[0]);
+        _customIncomeData.categories.add(data[1]);
+        _customIncomeData.names.add(data[2]);
+        _customIncomeData.amounts.add(double.parse(data[3]));
+        _customIncomeData.interests.add(double.parse(data[4]));
+        _customIncomeData.revenues.add(double.parse(data[5]));
+        _customIncomeData.fullReturns.add(0);
       case CardType.indexFunds:
         _indexFundsData.icons.add(data[0]);
         _indexFundsData.names.add(data[1]);
@@ -202,6 +223,15 @@ class Ledger extends ChangeNotifier {
         _contentCreationData.platforms.removeAt(index);
         _contentCreationData.revenues.removeAt(index);
         _contentCreationData.timePeriods.removeAt(index);
+        break;
+      case CardType.customIncome:
+        _customIncomeData.icons.removeAt(index);
+        _customIncomeData.categories.removeAt(index);
+        _customIncomeData.names.removeAt(index);
+        _customIncomeData.amounts.removeAt(index);
+        _customIncomeData.interests.removeAt(index);
+        _customIncomeData.revenues.removeAt(index);
+        _customIncomeData.fullReturns.removeAt(index);
         break;
       case CardType.indexFunds:
         _indexFundsData.icons.removeAt(index);
@@ -270,6 +300,17 @@ class Ledger extends ChangeNotifier {
           }
         }
         break;
+      case CardType.customIncome:
+        _customIncomeData.totalInvested = 0;
+        double yearlyIncrease = 0;
+        for (int i = 0; i < _realEstateData.locations.length; i++) {
+          _realEstateData.totalInvested += _customIncomeData.amounts[i];
+          // TODO MISTAKE; SEE REAL ESTATE; REVENUE SHOULD ACCRUE FROM DATE, SO ADD DATE TO CLASS.
+          yearlyIncrease += _customIncomeData.amounts[i] * _customIncomeData.interests[i] / 100;
+        }
+        _customIncomeData.averageFullReturn = 100 * yearlyIncrease / _customIncomeData.totalInvested;
+        _customIncomeData.earnedPerDay = _customIncomeData.totalInvested * _customIncomeData.averageFullReturn / 100 / 365.25;
+        break;
       case CardType.indexFunds:
         _indexFundsData.totalInvested = 0;
         double yearlyIncrease = 0;
@@ -300,7 +341,7 @@ class Ledger extends ChangeNotifier {
           int monthElapsed = (DateTime.now().difference(_realEstateData.registeredDates[i]).inDays / 30.437).floor();
           sumOfPayments[i] += _realEstateData.payments[i] * monthElapsed;
           _realEstateData.totalInvested += sumOfPayments[i];
-
+          // TODO MISTAKE; REVENUE SHOULD ALSO TAKE INTO ACCOUNT MONTH ELAPSED.
           double capitalIncrease = sumOfPayments[i] * (1 + _realEstateData.interests[i] / 100) + _realEstateData.revenues[i];
           _realEstateData.fullReturns[i] = 100 * (capitalIncrease - sumOfPayments[i]) / sumOfPayments[i];
           sumFullReturns += _realEstateData.fullReturns[i];
@@ -355,6 +396,10 @@ class Ledger extends ChangeNotifier {
         case CardType.contentCreation:
           totalIncomeData.earnedPerDay += _contentCreationData.earnedPerDay;
           break;
+        case CardType.customIncome:
+          totalIncomeData.totalInvested += _customIncomeData.totalInvested;
+          totalIncomeData.earnedPerDay += _customIncomeData.earnedPerDay;
+          totalIncomeData.averageInterest += (_customIncomeData.totalInvested * _customIncomeData.averageFullReturn / 100);
         case CardType.indexFunds:
           totalIncomeData.totalInvested += _indexFundsData.totalInvested;
           totalIncomeData.earnedPerDay += _indexFundsData.earnedPerDay;
@@ -369,7 +414,6 @@ class Ledger extends ChangeNotifier {
           totalIncomeData.totalInvested += _realEstateData.totalInvested;
           totalIncomeData.earnedPerDay += _realEstateData.earnedPerDay;
           totalIncomeData.averageInterest += (_realEstateData.totalInvested * _realEstateData.averageFullReturn / 100);
-
           break;
         case CardType.salaries:
           totalIncomeData.earnedPerDay += _salariesData.earnedPerDay;

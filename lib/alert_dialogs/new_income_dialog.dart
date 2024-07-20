@@ -39,6 +39,8 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         } else {
           return null;
         }
+      case CardType.customIncome:
+        return null;
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
       case CardType.realEstate:
@@ -84,6 +86,8 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
       case CardType.contentCreation:
         return 'New content:';
+      case CardType.customIncome:
+        return 'New income:';
       case CardType.indexFunds:
         return 'New fund:';
       case CardType.totalIncome:
@@ -159,6 +163,8 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             },
           ),
         ];
+      case CardType.customIncome:
+        return [const Text('><')];
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
       case CardType.realEstate:

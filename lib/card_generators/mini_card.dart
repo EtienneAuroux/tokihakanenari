@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_types/content_creation.dart';
+import 'package:tokihakanenari/card_types/custom_income.dart';
 import 'package:tokihakanenari/card_types/index_funds.dart';
 import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/card_types/real_estate.dart';
@@ -32,6 +33,10 @@ class _MiniCardState extends State<MiniCard> {
         throw ErrorDescription('It should not be possible to generate a mini AddCard.');
       case CardType.contentCreation:
         return const ContentCreation(
+          cardSize: CardSize.mini,
+        );
+      case CardType.customIncome:
+        return const CustomIncome(
           cardSize: CardSize.mini,
         );
       case CardType.indexFunds:

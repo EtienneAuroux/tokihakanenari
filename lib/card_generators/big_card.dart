@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tokihakanenari/card_types/add_card.dart';
 import 'package:tokihakanenari/card_types/content_creation.dart';
+import 'package:tokihakanenari/card_types/custom_income.dart';
 import 'package:tokihakanenari/card_types/index_funds.dart';
 import 'package:tokihakanenari/card_types/total_income.dart';
 import 'package:tokihakanenari/card_types/private_funds.dart';
@@ -60,6 +61,10 @@ class _BigCardState extends State<BigCard> {
         );
       case CardType.contentCreation:
         return const ContentCreation(
+          cardSize: CardSize.big,
+        );
+      case CardType.customIncome:
+        return const CustomIncome(
           cardSize: CardSize.big,
         );
       case CardType.indexFunds:

@@ -15,6 +15,8 @@ class ColorPalette {
   static const Color orbitPurple = Color.fromARGB(255, 78, 101, 255);
   static const Color pigletPale = Color.fromARGB(255, 255, 221, 225);
   static const Color pigletPink = Color.fromARGB(255, 238, 156, 167);
+  static const Color plumPurple = Color.fromARGB(255, 168, 144, 254);
+  static const Color plumPink = Color.fromARGB(255, 234, 141, 141); // green 30,174,152
   static const Color rockDarkGrey = Color.fromARGB(255, 89, 97, 100);
   static const Color rockLightGrey = Color.fromARGB(255, 134, 143, 150);
   static const Color sanguineOrange = Color.fromARGB(255, 251, 176, 59);
