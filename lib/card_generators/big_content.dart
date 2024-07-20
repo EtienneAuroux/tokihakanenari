@@ -42,6 +42,9 @@ class _BigContentState extends State<BigContent> {
       if (counter == 300) {
         pressingItem[itemIndex] = false;
         ledger.deleteCardData(widget.cardType, itemIndex);
+        if (widget.cardItems.length == 1) {
+          ledger.deleteCarouselCard(widget.cardType);
+        }
       }
     }
     if (!pressingItem[itemIndex]) {
