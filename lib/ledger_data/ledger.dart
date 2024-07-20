@@ -43,6 +43,80 @@ class Ledger extends ChangeNotifier {
     notifyListeners();
   }
 
+  void deleteCarouselCard(CardType cardType) {
+    switch (cardType) {
+      case CardType.addCard:
+        break;
+      case CardType.contentCreation:
+        _contentCreationData.platforms.clear();
+        _contentCreationData.revenues.clear();
+        _contentCreationData.timePeriods.clear();
+        _contentCreationData.earnedPerDay = 0;
+        break;
+      case CardType.indexFunds:
+        _indexFundsData.icons.clear();
+        _indexFundsData.names.clear();
+        _indexFundsData.amounts.clear();
+        _indexFundsData.interests.clear();
+        _indexFundsData.totalInvested = 0;
+        _indexFundsData.earnedPerDay = 0;
+        _indexFundsData.averageInterest = 0;
+        break;
+      case CardType.privateFunds:
+        _privateFundsData.icons.clear();
+        _privateFundsData.names.clear();
+        _privateFundsData.amounts.clear();
+        _privateFundsData.interests.clear();
+        _privateFundsData.totalInvested = 0;
+        _privateFundsData.earnedPerDay = 0;
+        _privateFundsData.averageInterest = 0;
+        break;
+      case CardType.realEstate:
+        _realEstateData.locations.clear();
+        _realEstateData.descriptions.clear();
+        _realEstateData.capitals.clear();
+        _realEstateData.payments.clear();
+        _realEstateData.revenues.clear();
+        _realEstateData.interests.clear();
+        _realEstateData.registeredDates.clear();
+        _realEstateData.fullReturns.clear();
+        _realEstateData.totalInvested = 0;
+        _realEstateData.earnedPerDay = 0;
+        _realEstateData.averageFullReturn = 0;
+        break;
+      case CardType.salaries:
+        _salariesData.icons.clear();
+        _salariesData.names.clear();
+        _salariesData.salaries.clear();
+        _salariesData.timePeriods.clear();
+        _salariesData.earnedPerDay = 0;
+        break;
+      case CardType.savingAccounts:
+        _savingAccountsData.icons.clear();
+        _savingAccountsData.names.clear();
+        _savingAccountsData.amounts.clear();
+        _savingAccountsData.interests.clear();
+        _savingAccountsData.totalInvested = 0;
+        _savingAccountsData.earnedPerDay = 0;
+        _savingAccountsData.averageInterest = 0;
+      case CardType.stockAccounts:
+        _stockAccountsData.icons.clear();
+        _stockAccountsData.names.clear();
+        _stockAccountsData.amounts.clear();
+        _stockAccountsData.interests.clear();
+        _stockAccountsData.totalInvested = 0;
+        _stockAccountsData.earnedPerDay = 0;
+        _stockAccountsData.averageInterest = 0;
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to remove TotalIncome.');
+    }
+
+    int deletedCardIndex = _carouselCards.indexOf(cardType);
+    _carouselCards.remove(cardType);
+    _pageInFocus = 50 * _carouselCards.length + deletedCardIndex;
+    notifyListeners();
+  }
+
   // Cards
   final ContentCreationData _contentCreationData = ContentCreationData();
   final IndexFundsData _indexFundsData = IndexFundsData();
@@ -207,7 +281,7 @@ class Ledger extends ChangeNotifier {
         _indexFundsData.earnedPerDay = _indexFundsData.totalInvested * _indexFundsData.averageInterest / 100 / 365.25;
         break;
       case CardType.totalIncome:
-        break; // TODO: Handle this case.
+        throw ErrorDescription('It should not be possible to add data to TotalIncome manually.');
       case CardType.privateFunds:
         _privateFundsData.totalInvested = 0;
         double yearlyIncrease = 0;

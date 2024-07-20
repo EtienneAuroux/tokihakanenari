@@ -6,6 +6,7 @@ import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/card_types/real_estate.dart';
 import 'package:tokihakanenari/card_types/salaries.dart';
 import 'package:tokihakanenari/card_types/stock_accounts.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/card_types/total_income.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
@@ -30,6 +31,10 @@ class SmallCard extends StatefulWidget {
 }
 
 class _SmallCardState extends State<SmallCard> {
+  Ledger ledger = Ledger();
+  bool longPress = false;
+  double gradientOffset = 0;
+
   Widget generateSmallCard(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
@@ -82,35 +87,77 @@ class _SmallCardState extends State<SmallCard> {
     }
   }
 
+  Future<void> updateGradient(CardType cardType) async {
+    if (cardType == CardType.addCard || cardType == CardType.totalIncome) {
+      return;
+    }
+    int counter = 0;
+    while (longPress) {
+      setState(() {
+        gradientOffset += 0.01;
+      });
+      await Future.delayed(const Duration(milliseconds: 1));
+      counter += 1;
+      if (counter == 600) {
+        longPress = false;
+        widget.onLongPressSmallCard();
+        ledger.deleteCarouselCard(cardType);
+      }
+    }
+    if (!longPress) {
+      setState(() {
+        gradientOffset = 0;
+      });
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     Size deviceSize = MediaQuery.of(context).size;
 
-    return Container(
+    return Stack(
       alignment: Alignment.center,
-      child: Material(
-        color: Colors.transparent,
-        child: SizedBox(
+      children: [
+        Container(
           width: deviceSize.width * 0.8,
           height: deviceSize.height * 0.6,
-          child: InkWell(
-            customBorder: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(20),
-            ),
-            splashColor: CardDecoration.getSplashColor(widget.cardType),
-            onLongPress: () {
-              widget.onLongPressSmallCard();
-            },
-            onTap: () {
-              widget.onTapSmallCard();
-            },
-            child: Ink(
-              decoration: CardDecoration.getSmallDecoration(widget.cardType),
-              child: generateSmallCard(widget.cardType),
+          decoration: CardDecoration.getSmallDecoration(widget.cardType),
+          child: generateSmallCard(widget.cardType),
+        ),
+        Material(
+          color: Colors.transparent,
+          child: SizedBox(
+            width: deviceSize.width * 0.8,
+            height: deviceSize.height * 0.6,
+            child: InkWell(
+              customBorder: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(20),
+              ),
+              splashColor: CardDecoration.getSplashColor(widget.cardType),
+              onLongPress: () {
+                longPress = true;
+                updateGradient(widget.cardType);
+              },
+              onTap: () {
+                widget.onTapSmallCard();
+              },
+              onTapUp: (details) {
+                longPress = false;
+              },
+              child: Ink(
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: [Colors.red, Colors.red.withAlpha(0)],
+                    begin: Alignment(-1, 5 - gradientOffset),
+                    end: Alignment(-1, 1 - gradientOffset),
+                  ),
+                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                ),
+              ),
             ),
           ),
         ),
-      ),
+      ],
     );
   }
 }

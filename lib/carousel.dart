@@ -8,18 +8,15 @@ import 'package:flutter/widgets.dart';
 import 'package:tokihakanenari/card_generators/small_card.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
-import 'package:tokihakanenari/overscroll_physics.dart';
 
 class Carousel extends StatefulWidget {
   final CardStatus cardStatus;
   final void Function(CardType cardType) onRequestBigCard;
-  final void Function(CardType cardType) onRequestSettings;
 
   const Carousel({
     super.key,
     required this.cardStatus,
     required this.onRequestBigCard,
-    required this.onRequestSettings,
   });
 
   @override
@@ -31,6 +28,7 @@ class _CarouselState extends State<Carousel> {
   late List<SmallCard> smallCards;
   final double viewportFraction = 0.5;
   late PageController pageController;
+  bool longPress = false;
 
   Future<bool> ensureInitialization() {
     Completer<bool> completer = Completer<bool>();
@@ -63,7 +61,7 @@ class _CarouselState extends State<Carousel> {
             }
           },
           onLongPressSmallCard: () {
-            widget.onRequestSettings(cardType);
+            longPress = true;
           },
         ),
       );
@@ -88,7 +86,11 @@ class _CarouselState extends State<Carousel> {
     ledger.addListener(() {
       smallCards = getSmallCards();
       setState(() {});
-      pageController.jumpToPage(ledger.pageInFocus);
+      if (!longPress) {
+        pageController.jumpToPage(ledger.pageInFocus);
+      } else {
+        longPress = false;
+      }
     });
   }
 
