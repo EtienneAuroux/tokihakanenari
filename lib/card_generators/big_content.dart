@@ -12,7 +12,6 @@ class BigContent extends StatefulWidget {
   final CardType cardType;
   final List<Row> cardItems;
   final void Function() onUpdateItems;
-  final void Function() onDeleteItem;
 
   const BigContent({
     super.key,
@@ -21,7 +20,6 @@ class BigContent extends StatefulWidget {
     required this.cardType,
     required this.cardItems,
     required this.onUpdateItems,
-    required this.onDeleteItem,
   });
 
   @override
@@ -42,10 +40,8 @@ class _BigContentState extends State<BigContent> {
       await Future.delayed(const Duration(milliseconds: 1));
       counter += 1;
       if (counter == 300) {
-        developer.log('user pressed long enough to delete');
         pressingItem[itemIndex] = false;
         ledger.deleteCardData(widget.cardType, itemIndex);
-        // widget.onDeleteItem();
       }
     }
     if (!pressingItem[itemIndex]) {
@@ -93,12 +89,10 @@ class _BigContentState extends State<BigContent> {
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: GestureDetector(
                     onTapDown: (details) {
-                      developer.log('tap down $index');
                       pressingItem[index] = true;
                       updateGradientEnd(index);
                     },
                     onTapUp: (details) {
-                      developer.log('tap up $index');
                       pressingItem[index] = false;
                     },
                     child: Container(

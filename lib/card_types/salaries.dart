@@ -8,10 +8,12 @@ import 'dart:developer' as developer;
 
 class Salaries extends StatefulWidget {
   final CardSize cardSize;
+  final void Function()? onUpdateContent;
 
   const Salaries({
     super.key,
     required this.cardSize,
+    this.onUpdateContent,
   });
 
   @override
@@ -32,12 +34,7 @@ class _SalariesState extends State<Salaries> {
           cardItems: salaries,
           onUpdateItems: () {
             salaries = getSalaries();
-            if (mounted) {
-              setState(() {});
-            }
-          },
-          onDeleteItem: () {
-            salaries = getSalaries();
+            widget.onUpdateContent;
             if (mounted) {
               setState(() {});
             }

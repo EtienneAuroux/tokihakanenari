@@ -34,12 +34,6 @@ class _IndexFundsState extends State<IndexFunds> {
               setState(() {});
             }
           },
-          onDeleteItem: () {
-            indexFunds = getIndexFunds();
-            if (mounted) {
-              setState(() {});
-            }
-          },
         );
       case CardSize.mini:
         return const Center(

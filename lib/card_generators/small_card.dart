@@ -11,6 +11,8 @@ import 'package:tokihakanenari/card_types/total_income.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
+import 'dart:developer' as developer;
+
 class SmallCard extends StatefulWidget {
   final CardType cardType;
   final void Function() onTapSmallCard;
@@ -39,11 +41,13 @@ class _SmallCardState extends State<SmallCard> {
           },
         );
       case CardType.contentCreation:
-        return const ContentCreation(
+        // ignore: prefer_const_constructors
+        return ContentCreation(
           cardSize: CardSize.small,
         );
       case CardType.indexFunds:
-        return const IndexFunds(
+        // ignore: prefer_const_constructors
+        return IndexFunds(
           cardSize: CardSize.small,
         );
       case CardType.totalIncome:
@@ -51,23 +55,28 @@ class _SmallCardState extends State<SmallCard> {
           cardSize: CardSize.small,
         );
       case CardType.privateFunds:
-        return const PrivateFunds(
+        // ignore: prefer_const_constructors
+        return PrivateFunds(
           cardSize: CardSize.small,
         );
       case CardType.realEstate:
-        return const RealEstate(
+        // ignore: prefer_const_constructors
+        return RealEstate(
           cardSize: CardSize.small,
         );
       case CardType.salaries:
-        return const Salaries(
+        // ignore: prefer_const_constructors
+        return Salaries(
           cardSize: CardSize.small,
         );
       case CardType.savingAccounts:
-        return const SavingAccounts(
+        // ignore: prefer_const_constructors
+        return SavingAccounts(
           cardSize: CardSize.small,
         );
       case CardType.stockAccounts:
-        return const StockAccounts(
+        // ignore: prefer_const_constructors
+        return StockAccounts(
           cardSize: CardSize.small,
         );
     }

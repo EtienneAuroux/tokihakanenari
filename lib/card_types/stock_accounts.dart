@@ -34,12 +34,6 @@ class _StockAccountsState extends State<StockAccounts> {
               setState(() {});
             }
           },
-          onDeleteItem: () {
-            stockAccounts = getStockAccounts();
-            if (mounted) {
-              setState(() {});
-            }
-          },
         );
       case CardSize.mini:
         return const Center(
