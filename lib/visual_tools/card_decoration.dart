@@ -41,7 +41,7 @@ class CardDecoration {
       case CardType.contentCreation:
         return [ColorPalette.sanguineRed.withAlpha(getColorAlpha(cardStatus)), ColorPalette.sanguineOrange.withAlpha(getColorAlpha(cardStatus))];
       case CardType.customIncome:
-        return [ColorPalette.plumPurple.withAlpha(getColorAlpha(cardStatus)), ColorPalette.plumPink..withAlpha(getColorAlpha(cardStatus))];
+        return [ColorPalette.sunOrange.withAlpha(getColorAlpha(cardStatus)), ColorPalette.sunYellow..withAlpha(getColorAlpha(cardStatus))];
       case CardType.indexFunds:
         return [ColorPalette.pigletPink.withAlpha(getColorAlpha(cardStatus)), ColorPalette.pigletPale.withAlpha(getColorAlpha(cardStatus))];
       case CardType.totalIncome:
@@ -86,7 +86,7 @@ class CardDecoration {
       case CardType.contentCreation:
         return ColorPalette.sanguineOrange.withAlpha(127);
       case CardType.customIncome:
-        return ColorPalette.plumPink.withAlpha(127);
+        return ColorPalette.sunYellow.withAlpha(127);
       case CardType.indexFunds:
         return ColorPalette.pigletPale.withAlpha(127);
       case CardType.totalIncome:

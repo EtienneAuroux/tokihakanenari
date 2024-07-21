@@ -27,7 +27,7 @@ class _TotalIncomeState extends State<TotalIncome> {
           padding: EdgeInsets.fromLTRB(0, size.height / 20, 0, 0),
           child: Column(children: [
             const Text(
-              'Content creation',
+              'Total income',
               style: TextStyles.cardTitle,
             ),
             Expanded(

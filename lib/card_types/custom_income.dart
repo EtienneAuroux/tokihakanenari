@@ -53,9 +53,13 @@ class _CustomIncomeState extends State<CustomIncome> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.salariesData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.customIncomeData.earnedPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
-              )
+              ),
+              Text(
+                '${ledger.customIncomeData.totalInvested} invested',
+                style: TextStyles.cardBody,
+              ),
             ],
           ),
         );
@@ -63,16 +67,16 @@ class _CustomIncomeState extends State<CustomIncome> {
   }
 
   List<Row> getCustomIncomes() {
-    List<Row> salaries = <Row>[];
-    for (int i = 0; i < ledger.salariesData.names.length; i++) {
-      salaries.add(
+    List<Row> customIncomes = <Row>[];
+    for (int i = 0; i < ledger.customIncomeData.names.length; i++) {
+      customIncomes.add(
         Row(
           mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Icon(ledger.salariesData.icons[i]),
+            Icon(ledger.customIncomeData.icons[i]),
             Flexible(
               child: Text(
-                ledger.salariesData.names[i],
+                ledger.customIncomeData.names[i],
                 style: TextStyles.cardBody,
                 textAlign: TextAlign.start,
                 overflow: TextOverflow.fade,
@@ -81,7 +85,12 @@ class _CustomIncomeState extends State<CustomIncome> {
               ),
             ),
             Text(
-              '${ledger.salariesData.salaries[i]} / ${ledger.salariesData.timePeriods[i].name}',
+              '${ledger.customIncomeData.amounts[i]}',
+              style: TextStyles.cardBody,
+              textAlign: TextAlign.end,
+            ),
+            Text(
+              '${ledger.customIncomeData.interests[i].toStringAsFixed(2)} %',
               style: TextStyles.cardBody,
               textAlign: TextAlign.end,
             ),
@@ -89,7 +98,7 @@ class _CustomIncomeState extends State<CustomIncome> {
         ),
       );
     }
-    return salaries;
+    return customIncomes;
   }
 
   @override

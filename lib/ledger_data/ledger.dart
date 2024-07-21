@@ -2,7 +2,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.
@@ -76,7 +76,6 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.customIncome:
         _customIncomeData.icons.clear();
-        _customIncomeData.categories.clear();
         _customIncomeData.names.clear();
         _customIncomeData.amounts.clear();
         _customIncomeData.interests.clear();
@@ -161,11 +160,10 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.customIncome:
         _customIncomeData.icons.add(data[0]);
-        _customIncomeData.categories.add(data[1]);
-        _customIncomeData.names.add(data[2]);
-        _customIncomeData.amounts.add(double.parse(data[3]));
-        _customIncomeData.interests.add(double.parse(data[4]));
-        _customIncomeData.revenues.add(double.parse(data[5]));
+        _customIncomeData.names.add(data[1]);
+        _customIncomeData.amounts.add(double.parse(data[2]));
+        _customIncomeData.interests.add(double.parse(data[3]));
+        _customIncomeData.revenues.add(double.parse(data[4]));
         _customIncomeData.fullReturns.add(0);
       case CardType.indexFunds:
         _indexFundsData.icons.add(data[0]);
@@ -226,7 +224,6 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.customIncome:
         _customIncomeData.icons.removeAt(index);
-        _customIncomeData.categories.removeAt(index);
         _customIncomeData.names.removeAt(index);
         _customIncomeData.amounts.removeAt(index);
         _customIncomeData.interests.removeAt(index);
@@ -302,13 +299,14 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.customIncome:
         _customIncomeData.totalInvested = 0;
-        double yearlyIncrease = 0;
-        for (int i = 0; i < _realEstateData.locations.length; i++) {
-          _realEstateData.totalInvested += _customIncomeData.amounts[i];
-          // TODO MISTAKE; SEE REAL ESTATE; REVENUE SHOULD ACCRUE FROM DATE, SO ADD DATE TO CLASS.
-          yearlyIncrease += _customIncomeData.amounts[i] * _customIncomeData.interests[i] / 100;
+        double sumFullReturns = 0;
+        for (int i = 0; i < _customIncomeData.names.length; i++) {
+          _customIncomeData.totalInvested += _customIncomeData.amounts[i];
+
+          _customIncomeData.fullReturns[i] += _customIncomeData.interests[i] + 100 * _customIncomeData.revenues[i] / _customIncomeData.amounts[i];
+          sumFullReturns += _customIncomeData.fullReturns[i];
         }
-        _customIncomeData.averageFullReturn = 100 * yearlyIncrease / _customIncomeData.totalInvested;
+        _customIncomeData.averageFullReturn = sumFullReturns / _customIncomeData.names.length;
         _customIncomeData.earnedPerDay = _customIncomeData.totalInvested * _customIncomeData.averageFullReturn / 100 / 365.25;
         break;
       case CardType.indexFunds:
@@ -340,10 +338,10 @@ class Ledger extends ChangeNotifier {
         for (int i = 0; i < _realEstateData.locations.length; i++) {
           int monthElapsed = (DateTime.now().difference(_realEstateData.registeredDates[i]).inDays / 30.437).floor();
           sumOfPayments[i] += _realEstateData.payments[i] * monthElapsed;
-          _realEstateData.totalInvested += sumOfPayments[i];
-          // TODO MISTAKE; REVENUE SHOULD ALSO TAKE INTO ACCOUNT MONTH ELAPSED.
-          double capitalIncrease = sumOfPayments[i] * (1 + _realEstateData.interests[i] / 100) + _realEstateData.revenues[i];
-          _realEstateData.fullReturns[i] = 100 * (capitalIncrease - sumOfPayments[i]) / sumOfPayments[i];
+          _realEstateData.capitals[i] += sumOfPayments[i];
+          _realEstateData.totalInvested += _realEstateData.capitals[i];
+
+          _realEstateData.fullReturns[i] += _realEstateData.interests[i] + 100 * _realEstateData.revenues[i] / _realEstateData.capitals[i];
           sumFullReturns += _realEstateData.fullReturns[i];
         }
         _realEstateData.averageFullReturn = sumFullReturns / _realEstateData.locations.length;

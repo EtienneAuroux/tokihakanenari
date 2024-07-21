@@ -10,7 +10,6 @@ class ContentCreationData {
 
 class CustomIncomeData {
   List<IconData> icons = <IconData>[];
-  List<String> categories = <String>[];
   List<String> names = <String>[];
   List<double> amounts = <double>[];
   List<double> interests = <double>[];

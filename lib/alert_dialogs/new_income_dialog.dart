@@ -27,7 +27,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
   TextEditingController amountController = TextEditingController();
   TextEditingController interestController = TextEditingController();
   TextEditingController capitalPaymentController = TextEditingController();
-  TextEditingController rentController = TextEditingController();
+  TextEditingController revenueController = TextEditingController();
 
   List<dynamic>? getUserInput(CardType cardType) {
     switch (cardType) {
@@ -35,12 +35,26 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
       case CardType.contentCreation:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
-          return <dynamic>[nameController.text, amountController.text, timePeriod];
+          return <dynamic>[
+            nameController.text,
+            amountController.text.replaceAll(',', ','),
+            timePeriod,
+          ];
         } else {
           return null;
         }
       case CardType.customIncome:
-        return null;
+        if (nameController.text.isNotEmpty && amountController.text.isNotEmpty && revenueController.text.isNotEmpty && interestController.text.isNotEmpty) {
+          return <dynamic>[
+            icon,
+            nameController.text,
+            amountController.text.replaceAll(',', '.'),
+            revenueController.text.replaceAll(',', ','),
+            interestController.text.replaceAll(',', ','),
+          ];
+        } else {
+          return null;
+        }
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
       case CardType.realEstate:
@@ -48,14 +62,14 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             descriptionController.text.isNotEmpty &&
             amountController.text.isNotEmpty &&
             capitalPaymentController.text.isNotEmpty &&
-            rentController.text.isNotEmpty &&
+            revenueController.text.isNotEmpty &&
             interestController.text.isNotEmpty) {
           return <dynamic>[
             nameController.text,
             descriptionController.text,
-            amountController.text,
-            capitalPaymentController.text,
-            rentController.text,
+            amountController.text.replaceAll(',', ','),
+            capitalPaymentController.text.replaceAll(',', ','),
+            revenueController.text.replaceAll(',', ','),
             interestController.text.replaceAll(',', '.'),
             DateTime.now(),
           ];
@@ -64,7 +78,12 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         }
       case CardType.salaries:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
-          return <dynamic>[icon, nameController.text, amountController.text, timePeriod];
+          return <dynamic>[
+            icon,
+            nameController.text,
+            amountController.text.replaceAll(',', ','),
+            timePeriod,
+          ];
         } else {
           return null;
         }
@@ -73,7 +92,12 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.stockAccounts:
       case CardType.savingAccounts:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty && interestController.text.isNotEmpty) {
-          return <dynamic>[icon, nameController.text, amountController.text, interestController.text.replaceAll(',', '.')];
+          return <dynamic>[
+            icon,
+            nameController.text,
+            amountController.text.replaceAll(',', ','),
+            interestController.text.replaceAll(',', '.'),
+          ];
         } else {
           return null;
         }
@@ -164,7 +188,90 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           ),
         ];
       case CardType.customIncome:
-        return [const Text('><')];
+        return [
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
+              'icon:',
+              style: TextStyles.dialogText,
+            ),
+          ),
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return IconsDialog(
+                        cardType: widget.cardType,
+                        onIconChosenCallback: (newIcon) {
+                          setState(() {
+                            icon = newIcon;
+                          });
+                        },
+                      );
+                    });
+              },
+              icon: Icon(icon)),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Tooltip(
+              message: 'the name of the income',
+              child: Text(
+                'name:',
+                style: TextStyles.dialogText,
+              ),
+            ),
+          ),
+          TextField(
+            controller: nameController,
+            textAlign: TextAlign.center,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Tooltip(
+              message: 'the money invested',
+              child: Text(
+                'amount:',
+                style: TextStyles.dialogText,
+              ),
+            ),
+          ),
+          TextField(
+            controller: amountController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Tooltip(
+              message: 'the revenues you receive from the income per month',
+              child: Text(
+                'revenue:',
+                style: TextStyles.dialogText,
+              ),
+            ),
+          ),
+          TextField(
+            controller: revenueController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+          ),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Tooltip(
+              message: 'average return per year',
+              child: Text(
+                'interest (%):',
+                style: TextStyles.dialogText,
+              ),
+            ),
+          ),
+          TextField(
+            controller: interestController,
+            keyboardType: TextInputType.number,
+            textAlign: TextAlign.center,
+          ),
+        ];
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
       case CardType.realEstate:
@@ -236,9 +343,9 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                 style: TextStyles.dialogText,
               ),
             ),
-          ), // TODO SHOULD BE POSSIBLE TO CHOOSE PERIOD?
+          ),
           TextField(
-            controller: rentController,
+            controller: revenueController,
             keyboardType: TextInputType.number,
             textAlign: TextAlign.center,
           ),
@@ -415,7 +522,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
     amountController.dispose();
     interestController.dispose();
     capitalPaymentController.dispose();
-    rentController.dispose();
+    revenueController.dispose();
 
     super.dispose();
   }
