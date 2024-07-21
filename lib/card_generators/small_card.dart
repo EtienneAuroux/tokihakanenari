@@ -135,29 +135,31 @@ class _SmallCardState extends State<SmallCard> {
           child: SizedBox(
             width: deviceSize.width * 0.8,
             height: deviceSize.height * 0.6,
-            child: InkWell(
-              customBorder: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(20),
-              ),
-              splashColor: CardDecoration.getSplashColor(widget.cardType),
+            child: GestureDetector(
+              onTap: () {
+                widget.onTapSmallCard();
+              },
               onLongPress: () {
                 longPress = true;
                 updateGradient(widget.cardType);
               },
-              onTap: () {
-                widget.onTapSmallCard();
-              },
-              onTapUp: (details) {
+              onLongPressUp: () {
                 longPress = false;
               },
-              child: Ink(
-                decoration: BoxDecoration(
-                  gradient: LinearGradient(
-                    colors: [Colors.red, Colors.red.withAlpha(0)],
-                    begin: Alignment(-1, 5 - gradientOffset),
-                    end: Alignment(-1, 1 - gradientOffset),
+              child: InkWell(
+                customBorder: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(20),
+                ),
+                splashColor: CardDecoration.getSplashColor(widget.cardType),
+                child: Ink(
+                  decoration: BoxDecoration(
+                    gradient: LinearGradient(
+                      colors: [Colors.red, Colors.red.withAlpha(0)],
+                      begin: Alignment(-1, 5 - gradientOffset),
+                      end: Alignment(-1, 1 - gradientOffset),
+                    ),
+                    borderRadius: const BorderRadius.all(Radius.circular(20)),
                   ),
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
                 ),
               ),
             ),
