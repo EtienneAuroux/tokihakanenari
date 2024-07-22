@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/card_generators/big_content.dart';
+import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -25,7 +25,7 @@ class _SalariesState extends State<Salaries> {
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return BigContent(
+        return BigCardContainer(
           cardTitle: 'Salaries',
           itemName: 'salary',
           cardType: CardType.salaries,

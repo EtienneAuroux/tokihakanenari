@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/card_generators/big_content.dart';
+import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -19,17 +20,20 @@ class IndexFunds extends StatefulWidget {
 class _IndexFundsState extends State<IndexFunds> {
   Ledger ledger = Ledger();
   List<Row> indexFunds = <Row>[];
+  List<Income> indexFunds2 = <Income>[];
 
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return BigContent(
+        return BigCardContainer(
           cardTitle: 'Index funds',
           itemName: 'index fund',
           cardType: CardType.indexFunds,
           cardItems: indexFunds,
+          incomes: indexFunds2,
           onUpdateItems: () {
             indexFunds = getIndexFunds();
+            indexFunds2 = getIndexFunds2();
             if (mounted) {
               setState(() {});
             }
@@ -64,6 +68,21 @@ class _IndexFundsState extends State<IndexFunds> {
           ),
         );
     }
+  }
+
+  List<Income> getIndexFunds2() {
+    List<Income> indexFunds2 = <Income>[];
+    for (int i = 0; i < ledger.indexFundsData.names.length; i++) {
+      double earnedPerDay = ledger.indexFundsData.amounts[i] * ledger.indexFundsData.interests[i] / 100 / 365.25;
+      indexFunds2.add(Income(
+        ledger.indexFundsData.names[i],
+        earnedPerDay,
+        icon: ledger.indexFundsData.icons[i],
+        amount: ledger.indexFundsData.amounts[i],
+        interest: ledger.indexFundsData.interests[i],
+      ));
+    }
+    return indexFunds2;
   }
 
   List<Row> getIndexFunds() {
@@ -106,6 +125,7 @@ class _IndexFundsState extends State<IndexFunds> {
     super.initState();
 
     indexFunds = getIndexFunds();
+    indexFunds2 = getIndexFunds2();
   }
 
   @override

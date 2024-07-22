@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
+// TODO LOOK INTO SEALED CLASS.
 class ContentCreationData {
   List<String> platforms = <String>[];
   List<double> revenues = <double>[];

@@ -1,32 +1,36 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/alert_dialogs/new_income_dialog.dart';
+import 'package:tokihakanenari/customized_widgets/income_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
 import 'dart:developer' as developer;
 
-class BigContent extends StatefulWidget {
+class BigCardContainer extends StatefulWidget {
   final String cardTitle;
   final String itemName;
   final CardType cardType;
   final List<Row> cardItems;
+  final List<Income>? incomes;
   final void Function() onUpdateItems;
 
-  const BigContent({
+  const BigCardContainer({
     super.key,
     required this.cardTitle,
     required this.itemName,
     required this.cardType,
     required this.cardItems,
+    this.incomes,
     required this.onUpdateItems,
   });
 
   @override
-  State<BigContent> createState() => _BigContentState();
+  State<BigCardContainer> createState() => _BigCardContainerState();
 }
 
-class _BigContentState extends State<BigContent> {
+class _BigCardContainerState extends State<BigCardContainer> {
   Ledger ledger = Ledger();
   List<bool> pressingItem = List.filled(100000, false);
   List<double> gradientEnd = List.filled(100000, -1);
@@ -98,18 +102,26 @@ class _BigContentState extends State<BigContent> {
                     onTapUp: (details) {
                       pressingItem[index] = false;
                     },
-                    child: Container(
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(10),
-                        gradient: LinearGradient(
-                          colors: [Colors.red, Colors.red.withAlpha(0)],
-                          begin: Alignment.centerLeft,
-                          end: Alignment(gradientEnd[index], 0),
-                        ),
-                      ),
-                      padding: const EdgeInsets.symmetric(vertical: 8),
-                      child: widget.cardItems[index],
-                    ),
+                    onTapCancel: () {
+                      pressingItem[index] = false;
+                    },
+                    child: widget.incomes != null
+                        ? IncomeContainer(
+                            income: widget.incomes![index],
+                            gradientEnd: gradientEnd[index],
+                          )
+                        : Container(
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              gradient: LinearGradient(
+                                colors: [Colors.red, Colors.red.withAlpha(0)],
+                                begin: Alignment.centerLeft,
+                                end: Alignment(gradientEnd[index], 0),
+                              ),
+                            ),
+                            padding: const EdgeInsets.symmetric(vertical: 8),
+                            child: widget.cardItems[index],
+                          ),
                   ),
                 );
               },
