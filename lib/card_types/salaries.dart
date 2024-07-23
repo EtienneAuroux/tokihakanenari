@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/card_generators/big_content.dart';
+import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -20,16 +21,16 @@ class Salaries extends StatefulWidget {
 
 class _SalariesState extends State<Salaries> {
   Ledger ledger = Ledger();
-  List<Row> salaries = <Row>[];
+  List<Income> salaries = <Income>[];
 
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return BigContent(
+        return BigCardContainer(
           cardTitle: 'Salaries',
           itemName: 'salary',
           cardType: CardType.salaries,
-          cardItems: salaries,
+          incomes: salaries,
           onUpdateItems: () {
             salaries = getSalaries();
             if (mounted) {
@@ -55,7 +56,7 @@ class _SalariesState extends State<Salaries> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.salariesData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.salariesData.totalPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               )
             ],
@@ -64,30 +65,16 @@ class _SalariesState extends State<Salaries> {
     }
   }
 
-  List<Row> getSalaries() {
-    List<Row> salaries = <Row>[];
+  List<Income> getSalaries() {
+    List<Income> salaries = <Income>[];
     for (int i = 0; i < ledger.salariesData.names.length; i++) {
       salaries.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(ledger.salariesData.icons[i]),
-            Flexible(
-              child: Text(
-                ledger.salariesData.names[i],
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                maxLines: 1,
-              ),
-            ),
-            Text(
-              '${ledger.salariesData.salaries[i]} / ${ledger.salariesData.timePeriods[i].name}',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-          ],
+        Income(
+          ledger.salariesData.names[i],
+          ledger.salariesData.perDay[i],
+          icon: ledger.salariesData.icons[i],
+          revenue: ledger.salariesData.salaries[i],
+          timePeriod: ledger.salariesData.timePeriods[i],
         ),
       );
     }

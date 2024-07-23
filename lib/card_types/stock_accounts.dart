@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/card_generators/big_content.dart';
+import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -18,16 +19,16 @@ class StockAccounts extends StatefulWidget {
 
 class _StockAccountsState extends State<StockAccounts> {
   Ledger ledger = Ledger();
-  List<Row> stockAccounts = <Row>[];
+  List<Income> stockAccounts = <Income>[];
 
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return BigContent(
+        return BigCardContainer(
           cardTitle: 'Stock accounts',
           itemName: 'stock account',
           cardType: CardType.stockAccounts,
-          cardItems: stockAccounts,
+          incomes: stockAccounts,
           onUpdateItems: () {
             stockAccounts = getStockAccounts();
             if (mounted) {
@@ -53,7 +54,7 @@ class _StockAccountsState extends State<StockAccounts> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.stockAccountsData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.stockAccountsData.totalPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               ),
               Text(
@@ -66,35 +67,16 @@ class _StockAccountsState extends State<StockAccounts> {
     }
   }
 
-  List<Row> getStockAccounts() {
-    List<Row> stockAccounts = <Row>[];
+  List<Income> getStockAccounts() {
+    List<Income> stockAccounts = <Income>[];
     for (int i = 0; i < ledger.stockAccountsData.names.length; i++) {
       stockAccounts.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(ledger.stockAccountsData.icons[i]),
-            Flexible(
-              child: Text(
-                ledger.stockAccountsData.names[i],
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                maxLines: 1,
-              ),
-            ),
-            Text(
-              '${ledger.stockAccountsData.amounts[i]}',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-            Text(
-              '${ledger.stockAccountsData.interests[i]} %',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-          ],
+        Income(
+          ledger.stockAccountsData.names[i],
+          ledger.stockAccountsData.perDay[i],
+          icon: ledger.stockAccountsData.icons[i],
+          amount: ledger.stockAccountsData.amounts[i],
+          interest: ledger.stockAccountsData.interests[i],
         ),
       );
     }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/card_generators/big_content.dart';
+import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -18,16 +19,16 @@ class PrivateFunds extends StatefulWidget {
 
 class _PrivateFundsState extends State<PrivateFunds> {
   Ledger ledger = Ledger();
-  List<Row> privateFunds = <Row>[];
+  List<Income> privateFunds = <Income>[];
 
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return BigContent(
+        return BigCardContainer(
           cardTitle: 'Private funds',
           itemName: 'private fund',
           cardType: CardType.privateFunds,
-          cardItems: privateFunds,
+          incomes: privateFunds,
           onUpdateItems: () {
             privateFunds = getPrivateFunds();
             if (mounted) {
@@ -53,7 +54,7 @@ class _PrivateFundsState extends State<PrivateFunds> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.privateFundsData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.privateFundsData.totalPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               ),
               Text(
@@ -66,35 +67,16 @@ class _PrivateFundsState extends State<PrivateFunds> {
     }
   }
 
-  List<Row> getPrivateFunds() {
-    List<Row> privateFunds = <Row>[];
+  List<Income> getPrivateFunds() {
+    List<Income> privateFunds = <Income>[];
     for (int i = 0; i < ledger.privateFundsData.names.length; i++) {
       privateFunds.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(ledger.privateFundsData.icons[i]),
-            Flexible(
-              child: Text(
-                ledger.privateFundsData.names[i],
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                maxLines: 1,
-              ),
-            ),
-            Text(
-              '${ledger.privateFundsData.amounts[i]}',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-            Text(
-              '${ledger.privateFundsData.interests[i].toStringAsFixed(2)} %',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-          ],
+        Income(
+          ledger.privateFundsData.names[i],
+          ledger.privateFundsData.perDay[i],
+          icon: ledger.privateFundsData.icons[i],
+          amount: ledger.privateFundsData.amounts[i],
+          interest: ledger.privateFundsData.interests[i],
         ),
       );
     }

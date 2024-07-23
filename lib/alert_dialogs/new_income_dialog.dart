@@ -37,7 +37,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
           return <dynamic>[
             nameController.text,
-            amountController.text.replaceAll(',', ','),
+            amountController.text.replaceAll(',', '.'),
             timePeriod,
           ];
         } else {
@@ -49,8 +49,8 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             icon,
             nameController.text,
             amountController.text.replaceAll(',', '.'),
-            revenueController.text.replaceAll(',', ','),
-            interestController.text.replaceAll(',', ','),
+            revenueController.text.replaceAll(',', '.'),
+            interestController.text.replaceAll(',', '.'),
           ];
         } else {
           return null;
@@ -67,9 +67,9 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           return <dynamic>[
             nameController.text,
             descriptionController.text,
-            amountController.text.replaceAll(',', ','),
-            capitalPaymentController.text.replaceAll(',', ','),
-            revenueController.text.replaceAll(',', ','),
+            amountController.text.replaceAll(',', '.'),
+            capitalPaymentController.text.replaceAll(',', '.'),
+            revenueController.text.replaceAll(',', '.'),
             interestController.text.replaceAll(',', '.'),
             DateTime.now(),
           ];
@@ -81,7 +81,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           return <dynamic>[
             icon,
             nameController.text,
-            amountController.text.replaceAll(',', ','),
+            amountController.text.replaceAll(',', '.'),
             timePeriod,
           ];
         } else {
@@ -95,7 +95,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           return <dynamic>[
             icon,
             nameController.text,
-            amountController.text.replaceAll(',', ','),
+            amountController.text.replaceAll(',', '.'),
             interestController.text.replaceAll(',', '.'),
           ];
         } else {

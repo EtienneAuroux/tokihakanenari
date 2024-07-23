@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/card_generators/big_content.dart';
+import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -18,16 +19,16 @@ class IndexFunds extends StatefulWidget {
 
 class _IndexFundsState extends State<IndexFunds> {
   Ledger ledger = Ledger();
-  List<Row> indexFunds = <Row>[];
+  List<Income> indexFunds = <Income>[];
 
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return BigContent(
+        return BigCardContainer(
           cardTitle: 'Index funds',
           itemName: 'index fund',
           cardType: CardType.indexFunds,
-          cardItems: indexFunds,
+          incomes: indexFunds,
           onUpdateItems: () {
             indexFunds = getIndexFunds();
             if (mounted) {
@@ -53,7 +54,7 @@ class _IndexFundsState extends State<IndexFunds> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.indexFundsData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.indexFundsData.totalPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               ),
               Text(
@@ -66,39 +67,20 @@ class _IndexFundsState extends State<IndexFunds> {
     }
   }
 
-  List<Row> getIndexFunds() {
-    List<Row> indexFunds = <Row>[];
+  List<Income> getIndexFunds() {
+    List<Income> indexFunds2 = <Income>[];
     for (int i = 0; i < ledger.indexFundsData.names.length; i++) {
-      indexFunds.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(ledger.indexFundsData.icons[i]),
-            Flexible(
-              child: Text(
-                ledger.indexFundsData.names[i],
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                maxLines: 1,
-              ),
-            ),
-            Text(
-              '${ledger.indexFundsData.amounts[i]}',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-            Text(
-              '${ledger.indexFundsData.interests[i].toStringAsFixed(2)} %',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-          ],
+      indexFunds2.add(
+        Income(
+          ledger.indexFundsData.names[i],
+          ledger.indexFundsData.perDay[i],
+          icon: ledger.indexFundsData.icons[i],
+          amount: ledger.indexFundsData.amounts[i],
+          interest: ledger.indexFundsData.interests[i],
         ),
       );
     }
-    return indexFunds;
+    return indexFunds2;
   }
 
   @override

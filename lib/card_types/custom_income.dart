@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/card_generators/big_content.dart';
+import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -18,16 +19,16 @@ class CustomIncome extends StatefulWidget {
 
 class _CustomIncomeState extends State<CustomIncome> {
   Ledger ledger = Ledger();
-  List<Row> customIncomes = <Row>[];
+  List<Income> customIncomes = <Income>[];
 
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
       case CardSize.big:
-        return BigContent(
+        return BigCardContainer(
           cardTitle: 'Custom incomes',
           itemName: 'custom income',
           cardType: CardType.customIncome,
-          cardItems: customIncomes,
+          incomes: customIncomes,
           onUpdateItems: () {
             customIncomes = getCustomIncomes();
             if (mounted) {
@@ -53,7 +54,7 @@ class _CustomIncomeState extends State<CustomIncome> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.customIncomeData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.customIncomeData.totalPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               ),
               Text(
@@ -66,35 +67,17 @@ class _CustomIncomeState extends State<CustomIncome> {
     }
   }
 
-  List<Row> getCustomIncomes() {
-    List<Row> customIncomes = <Row>[];
+  List<Income> getCustomIncomes() {
+    List<Income> customIncomes = <Income>[];
     for (int i = 0; i < ledger.customIncomeData.names.length; i++) {
       customIncomes.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(ledger.customIncomeData.icons[i]),
-            Flexible(
-              child: Text(
-                ledger.customIncomeData.names[i],
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                maxLines: 1,
-              ),
-            ),
-            Text(
-              '${ledger.customIncomeData.amounts[i]}',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-            Text(
-              '${ledger.customIncomeData.interests[i].toStringAsFixed(2)} %',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-          ],
+        Income(
+          ledger.customIncomeData.names[i],
+          ledger.customIncomeData.perDay[i],
+          icon: ledger.customIncomeData.icons[i],
+          amount: ledger.customIncomeData.amounts[i],
+          interest: ledger.customIncomeData.interests[i],
+          revenue: ledger.customIncomeData.revenues[i],
         ),
       );
     }

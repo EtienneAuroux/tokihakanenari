@@ -12,8 +12,21 @@ class CardDecoration {
     ));
   }
 
-  static BoxDecoration getBigDecoration(CardType cardType) {
+  static BoxDecoration getBigDecoration(CardType cardType, {bool totalIncome = false}) {
     return BoxDecoration(
+      borderRadius: totalIncome ? BorderRadius.circular(10) : null,
+      border: totalIncome
+          ? Border(
+              bottom: BorderSide(
+                color: Colors.black.withAlpha(50),
+                width: 4,
+              ),
+              right: BorderSide(
+                color: Colors.black.withAlpha(50),
+                width: 4,
+              ),
+            )
+          : null,
       gradient: LinearGradient(
         colors: getGradientColors(cardType, CardSize.big),
         begin: Alignment.bottomCenter,
