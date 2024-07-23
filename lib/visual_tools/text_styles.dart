@@ -15,6 +15,14 @@ class TextStyles {
     decoration: TextDecoration.none,
   );
 
+  static const incomeExtraInformation = TextStyle(
+    fontSize: 15,
+    fontFamily: 'Arial',
+    fontStyle: FontStyle.italic,
+    color: Colors.black,
+    decoration: TextDecoration.none,
+  );
+
   static const dialogTitle = TextStyle(
     fontSize: 20,
     color: Colors.black,

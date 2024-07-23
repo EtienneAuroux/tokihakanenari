@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -20,7 +21,7 @@ class SavingAccounts extends StatefulWidget {
 
 class _SavingAccountsState extends State<SavingAccounts> {
   Ledger ledger = Ledger();
-  List<Row> savingAccounts = <Row>[];
+  List<Income> savingAccounts = <Income>[];
 
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
@@ -29,7 +30,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
           cardTitle: 'Saving accounts',
           itemName: 'saving account',
           cardType: CardType.savingAccounts,
-          cardItems: savingAccounts,
+          incomes: savingAccounts,
           onUpdateItems: () {
             savingAccounts = getSavingAccounts();
             if (mounted) {
@@ -55,7 +56,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.savingAccountsData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.savingAccountsData.totalPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               ),
               Text(
@@ -68,35 +69,16 @@ class _SavingAccountsState extends State<SavingAccounts> {
     }
   }
 
-  List<Row> getSavingAccounts() {
-    List<Row> savingAccounts = <Row>[];
+  List<Income> getSavingAccounts() {
+    List<Income> savingAccounts = <Income>[];
     for (int i = 0; i < ledger.savingAccountsData.names.length; i++) {
       savingAccounts.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(ledger.savingAccountsData.icons[i]),
-            Flexible(
-              child: Text(
-                ledger.savingAccountsData.names[i],
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                maxLines: 1,
-              ),
-            ),
-            Text(
-              '${ledger.savingAccountsData.amounts[i]}',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-            Text(
-              '${ledger.savingAccountsData.interests[i].toStringAsFixed(2)} %',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-          ],
+        Income(
+          ledger.savingAccountsData.names[i],
+          ledger.savingAccountsData.perDay[i],
+          icon: ledger.savingAccountsData.icons[i],
+          amount: ledger.savingAccountsData.amounts[i],
+          interest: ledger.savingAccountsData.interests[i],
         ),
       );
     }

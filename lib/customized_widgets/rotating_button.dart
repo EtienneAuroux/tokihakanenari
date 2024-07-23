@@ -40,8 +40,13 @@ class _RotatingButtonState extends State<RotatingButton> with SingleTickerProvid
   Widget build(BuildContext context) {
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 1.0).animate(controller),
-      child: TextButton(
-        child: Icon(widget.iconData),
+      child: IconButton(
+        padding: EdgeInsets.zero,
+        constraints: const BoxConstraints(),
+        style: ButtonStyle(
+          overlayColor: MaterialStateProperty.all(Colors.transparent),
+          tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+        ),
         onPressed: () {
           rotated = !rotated;
           if (!rotated) {
@@ -49,9 +54,12 @@ class _RotatingButtonState extends State<RotatingButton> with SingleTickerProvid
           } else {
             controller.forward(from: 0.0);
           }
-
           widget.onPressed(rotated);
         },
+        icon: Icon(
+          widget.iconData,
+          size: 40,
+        ),
       ),
     );
   }

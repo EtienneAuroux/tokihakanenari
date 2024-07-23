@@ -12,8 +12,7 @@ class BigCardContainer extends StatefulWidget {
   final String cardTitle;
   final String itemName;
   final CardType cardType;
-  final List<Row> cardItems;
-  final List<Income>? incomes;
+  final List<Income> incomes;
   final void Function() onUpdateItems;
 
   const BigCardContainer({
@@ -21,8 +20,7 @@ class BigCardContainer extends StatefulWidget {
     required this.cardTitle,
     required this.itemName,
     required this.cardType,
-    required this.cardItems,
-    this.incomes,
+    required this.incomes,
     required this.onUpdateItems,
   });
 
@@ -38,6 +36,7 @@ class _BigCardContainerState extends State<BigCardContainer> {
   Future<void> updateGradientEnd(int itemIndex) async {
     int counter = 0;
     while (pressingItem[itemIndex]) {
+      // TODO COULD ADD A SMALL DELAY TO AVOID BLINK ON EXPAND/SHRINK IncomeContainer
       setState(() {
         gradientEnd[itemIndex] += 0.01;
       });
@@ -46,7 +45,7 @@ class _BigCardContainerState extends State<BigCardContainer> {
       if (counter == 300) {
         pressingItem[itemIndex] = false;
         ledger.deleteCardData(widget.cardType, itemIndex);
-        if (widget.cardItems.length == 1) {
+        if (widget.incomes.length == 1) {
           ledger.deleteCarouselCard(widget.cardType);
         }
       }
@@ -89,7 +88,7 @@ class _BigCardContainerState extends State<BigCardContainer> {
           Expanded(
             child: ListView.builder(
               shrinkWrap: true,
-              itemCount: widget.cardItems.length,
+              itemCount: widget.incomes.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   alignment: Alignment.center,
@@ -105,23 +104,11 @@ class _BigCardContainerState extends State<BigCardContainer> {
                     onTapCancel: () {
                       pressingItem[index] = false;
                     },
-                    child: widget.incomes != null
-                        ? IncomeContainer(
-                            income: widget.incomes![index],
-                            gradientEnd: gradientEnd[index],
-                          )
-                        : Container(
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              gradient: LinearGradient(
-                                colors: [Colors.red, Colors.red.withAlpha(0)],
-                                begin: Alignment.centerLeft,
-                                end: Alignment(gradientEnd[index], 0),
-                              ),
-                            ),
-                            padding: const EdgeInsets.symmetric(vertical: 8),
-                            child: widget.cardItems[index],
-                          ),
+                    child: IncomeContainer(
+                      cardType: widget.cardType,
+                      income: widget.incomes[index],
+                      gradientEnd: gradientEnd[index],
+                    ),
                   ),
                 );
               },

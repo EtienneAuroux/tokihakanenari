@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -18,7 +19,7 @@ class RealEstate extends StatefulWidget {
 
 class _RealEstateState extends State<RealEstate> {
   Ledger ledger = Ledger();
-  List<Row> properties = <Row>[];
+  List<Income> properties = <Income>[];
 
   Widget getCardWidget(CardSize cardStatus) {
     switch (cardStatus) {
@@ -27,7 +28,7 @@ class _RealEstateState extends State<RealEstate> {
           cardTitle: 'Real estate',
           itemName: 'property',
           cardType: CardType.realEstate,
-          cardItems: properties,
+          incomes: properties,
           onUpdateItems: () {
             properties = getProperties();
             if (mounted) {
@@ -53,7 +54,7 @@ class _RealEstateState extends State<RealEstate> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.realEstateData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.realEstateData.totalPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               ),
               Text(
@@ -66,33 +67,18 @@ class _RealEstateState extends State<RealEstate> {
     }
   }
 
-  List<Row> getProperties() {
-    List<Row> properties = <Row>[];
+  List<Income> getProperties() {
+    List<Income> properties = <Income>[];
     for (int i = 0; i < ledger.realEstateData.locations.length; i++) {
       properties.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Tooltip(
-              message: ledger.realEstateData.descriptions[i],
-              showDuration: const Duration(seconds: 2),
-              child: Text(
-                ledger.realEstateData.locations[i],
-                textAlign: TextAlign.start,
-                style: TextStyles.cardBody,
-              ),
-            ),
-            Text(
-              '${ledger.realEstateData.capitals[i].round()}',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-            Text(
-              '${ledger.realEstateData.fullReturns[i].toStringAsFixed(2)} %',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-          ],
+        Income(
+          ledger.realEstateData.locations[i],
+          ledger.realEstateData.perDay[i],
+          description: ledger.realEstateData.descriptions[i],
+          amount: ledger.realEstateData.capitals[i],
+          payment: ledger.realEstateData.payments[i],
+          interest: ledger.realEstateData.interests[i],
+          revenue: ledger.realEstateData.revenues[i],
         ),
       );
     }

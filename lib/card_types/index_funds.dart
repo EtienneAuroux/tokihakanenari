@@ -19,8 +19,7 @@ class IndexFunds extends StatefulWidget {
 
 class _IndexFundsState extends State<IndexFunds> {
   Ledger ledger = Ledger();
-  List<Row> indexFunds = <Row>[];
-  List<Income> indexFunds2 = <Income>[];
+  List<Income> indexFunds = <Income>[];
 
   Widget getCardContent(CardSize cardStatus) {
     switch (cardStatus) {
@@ -29,11 +28,9 @@ class _IndexFundsState extends State<IndexFunds> {
           cardTitle: 'Index funds',
           itemName: 'index fund',
           cardType: CardType.indexFunds,
-          cardItems: indexFunds,
-          incomes: indexFunds2,
+          incomes: indexFunds,
           onUpdateItems: () {
             indexFunds = getIndexFunds();
-            indexFunds2 = getIndexFunds2();
             if (mounted) {
               setState(() {});
             }
@@ -57,7 +54,7 @@ class _IndexFundsState extends State<IndexFunds> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.indexFundsData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.indexFundsData.totalPerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               ),
               Text(
@@ -70,54 +67,20 @@ class _IndexFundsState extends State<IndexFunds> {
     }
   }
 
-  List<Income> getIndexFunds2() {
+  List<Income> getIndexFunds() {
     List<Income> indexFunds2 = <Income>[];
     for (int i = 0; i < ledger.indexFundsData.names.length; i++) {
-      double earnedPerDay = ledger.indexFundsData.amounts[i] * ledger.indexFundsData.interests[i] / 100 / 365.25;
-      indexFunds2.add(Income(
-        ledger.indexFundsData.names[i],
-        earnedPerDay,
-        icon: ledger.indexFundsData.icons[i],
-        amount: ledger.indexFundsData.amounts[i],
-        interest: ledger.indexFundsData.interests[i],
-      ));
-    }
-    return indexFunds2;
-  }
-
-  List<Row> getIndexFunds() {
-    List<Row> indexFunds = <Row>[];
-    for (int i = 0; i < ledger.indexFundsData.names.length; i++) {
-      indexFunds.add(
-        Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          children: [
-            Icon(ledger.indexFundsData.icons[i]),
-            Flexible(
-              child: Text(
-                ledger.indexFundsData.names[i],
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.start,
-                overflow: TextOverflow.fade,
-                softWrap: false,
-                maxLines: 1,
-              ),
-            ),
-            Text(
-              '${ledger.indexFundsData.amounts[i]}',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-            Text(
-              '${ledger.indexFundsData.interests[i].toStringAsFixed(2)} %',
-              style: TextStyles.cardBody,
-              textAlign: TextAlign.end,
-            ),
-          ],
+      indexFunds2.add(
+        Income(
+          ledger.indexFundsData.names[i],
+          ledger.indexFundsData.perDay[i],
+          icon: ledger.indexFundsData.icons[i],
+          amount: ledger.indexFundsData.amounts[i],
+          interest: ledger.indexFundsData.interests[i],
         ),
       );
     }
-    return indexFunds;
+    return indexFunds2;
   }
 
   @override
@@ -125,7 +88,6 @@ class _IndexFundsState extends State<IndexFunds> {
     super.initState();
 
     indexFunds = getIndexFunds();
-    indexFunds2 = getIndexFunds2();
   }
 
   @override

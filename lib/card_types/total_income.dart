@@ -57,7 +57,7 @@ class _TotalIncomeState extends State<TotalIncome> {
                 style: TextStyles.cardTitle,
               ),
               Text(
-                '${ledger.totalIncomeData.earnedPerDay.toStringAsFixed(2)} / day',
+                '${ledger.totalIncomeData.totalIncomePerDay.toStringAsFixed(2)} / day',
                 style: TextStyles.cardBody,
               ),
               Text(
@@ -85,7 +85,7 @@ class _TotalIncomeState extends State<TotalIncome> {
                   style: TextStyles.cardBody,
                 ),
                 Text(
-                  '${ledger.contentCreationData.earnedPerDay.toStringAsFixed(2)} / day',
+                  '${ledger.contentCreationData.totalPerDay.toStringAsFixed(2)} / day',
                   style: TextStyles.cardBody,
                 )
               ],
@@ -114,7 +114,7 @@ class _TotalIncomeState extends State<TotalIncome> {
                   style: TextStyles.cardBody,
                 ),
                 Text(
-                  '${ledger.indexFundsData.earnedPerDay.toStringAsFixed(2)} / day',
+                  '${ledger.indexFundsData.totalPerDay.toStringAsFixed(2)} / day',
                   style: TextStyles.cardBody,
                 )
               ],
@@ -143,7 +143,7 @@ class _TotalIncomeState extends State<TotalIncome> {
                   style: TextStyles.cardBody,
                 ),
                 Text(
-                  '${ledger.privateFundsData.earnedPerDay.toStringAsFixed(2)} / day',
+                  '${ledger.privateFundsData.totalPerDay.toStringAsFixed(2)} / day',
                   style: TextStyles.cardBody,
                 )
               ],
@@ -172,7 +172,7 @@ class _TotalIncomeState extends State<TotalIncome> {
                   style: TextStyles.cardBody,
                 ),
                 Text(
-                  '${ledger.realEstateData.earnedPerDay.toStringAsFixed(2)} / day',
+                  '${ledger.realEstateData.totalPerDay.toStringAsFixed(2)} / day',
                   style: TextStyles.cardBody,
                 )
               ],
@@ -197,7 +197,7 @@ class _TotalIncomeState extends State<TotalIncome> {
                   style: TextStyles.cardBody,
                 ),
                 Text(
-                  '${ledger.salariesData.earnedPerDay.toStringAsFixed(2)} / day',
+                  '${ledger.salariesData.totalPerDay.toStringAsFixed(2)} / day',
                   style: TextStyles.cardBody,
                 )
               ],
@@ -226,7 +226,7 @@ class _TotalIncomeState extends State<TotalIncome> {
                   style: TextStyles.cardBody,
                 ),
                 Text(
-                  '${ledger.savingAccountsData.earnedPerDay.toStringAsFixed(2)} / day',
+                  '${ledger.savingAccountsData.totalPerDay.toStringAsFixed(2)} / day',
                   style: TextStyles.cardBody,
                 )
               ],
@@ -255,7 +255,7 @@ class _TotalIncomeState extends State<TotalIncome> {
                   style: TextStyles.cardBody,
                 ),
                 Text(
-                  '${ledger.stockAccountsData.earnedPerDay.toStringAsFixed(2)} / day',
+                  '${ledger.stockAccountsData.totalPerDay.toStringAsFixed(2)} / day',
                   style: TextStyles.cardBody,
                 )
               ],
