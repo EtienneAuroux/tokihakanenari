@@ -93,6 +93,8 @@ class StockAccountsData {
 }
 
 class TotalIncomeData {
+  List<CardType> incomesType = <CardType>[];
+  List<double> incomesPerDay = <double>[];
   double totalInvested = 0;
   double totalIncomePerDay = 0;
   double averageInterest = 0;

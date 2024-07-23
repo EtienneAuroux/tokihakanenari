@@ -44,8 +44,12 @@ class _BigCardContainerState extends State<BigCardContainer> {
       counter += 1;
       if (counter == 300) {
         pressingItem[itemIndex] = false;
-        ledger.deleteCardData(widget.cardType, itemIndex);
-        if (widget.incomes.length == 1) {
+        if (widget.cardType != CardType.totalIncome) {
+          ledger.deleteCardData(widget.cardType, itemIndex);
+          if (widget.incomes.length == 1) {
+            ledger.deleteCarouselCard(widget.cardType);
+          }
+        } else {
           ledger.deleteCarouselCard(widget.cardType);
         }
       }
@@ -114,31 +118,34 @@ class _BigCardContainerState extends State<BigCardContainer> {
               },
             ),
           ),
-          GestureDetector(
-            child: Container(
-              alignment: Alignment.topCenter,
-              height: size.height / 4,
-              padding: const EdgeInsets.symmetric(vertical: 30),
-              child: Text(
-                'Double tap to add a new ${widget.itemName}.',
-                style: TextStyles.cardBody,
-                textAlign: TextAlign.center,
+          Visibility(
+            visible: widget.cardType != CardType.totalIncome,
+            child: GestureDetector(
+              child: Container(
+                alignment: Alignment.topCenter,
+                height: size.height / 4,
+                padding: const EdgeInsets.symmetric(vertical: 30),
+                child: Text(
+                  'Double tap to add a new ${widget.itemName}.',
+                  style: TextStyles.cardBody,
+                  textAlign: TextAlign.center,
+                ),
               ),
+              onDoubleTap: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return NewIncomeDialog(
+                        cardType: widget.cardType,
+                        onNewIncomeCallback: (List<dynamic> newIncome) {
+                          ledger.addCarouselCard(widget.cardType);
+                          ledger.addCardData(widget.cardType, newIncome);
+                          widget.onUpdateItems();
+                        },
+                      );
+                    });
+              },
             ),
-            onDoubleTap: () {
-              showDialog(
-                  context: context,
-                  builder: (BuildContext context) {
-                    return NewIncomeDialog(
-                      cardType: widget.cardType,
-                      onNewIncomeCallback: (List<dynamic> newIncome) {
-                        ledger.addCardData(widget.cardType, newIncome);
-                        widget.onUpdateItems();
-                        ledger.addCarouselCard(widget.cardType);
-                      },
-                    );
-                  });
-            },
           ),
         ],
       ),

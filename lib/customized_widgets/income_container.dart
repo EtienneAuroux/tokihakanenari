@@ -30,7 +30,7 @@ class _IncomeContainerState extends State<IncomeContainer> {
   );
 
   List<Widget> getHeader(CardType cardType) {
-    if (widget.cardType == CardType.contentCreation || widget.cardType == CardType.realEstate) {
+    if (widget.cardType == CardType.contentCreation || widget.cardType == CardType.realEstate || widget.cardType == CardType.totalIncome) {
       return [
         Text(
           widget.income.id,
@@ -115,6 +115,8 @@ class _IncomeContainerState extends State<IncomeContainer> {
           style: TextStyles.incomeExtraInformation,
         )
       ];
+    } else if (cardType == CardType.totalIncome) {
+      return [];
     } else {
       return [
         Text(

@@ -327,12 +327,15 @@ class Ledger extends ChangeNotifier {
         double sumFullReturns = 0;
         for (int i = 0; i < _customIncomeData.names.length; i++) {
           _customIncomeData.totalInvested += _customIncomeData.amounts[i];
+          double fullReturn;
           if (_customIncomeData.amounts[i] == 0) {
-            _customIncomeData.fullReturns[i] = 0;
+            fullReturn = 0;
+            _customIncomeData.fullReturns[i] += 0;
           } else {
-            _customIncomeData.fullReturns[i] += _customIncomeData.interests[i] + 100 * _customIncomeData.revenues[i] / _customIncomeData.amounts[i];
+            fullReturn = _customIncomeData.interests[i] + 100 * _customIncomeData.revenues[i] / _customIncomeData.amounts[i];
+            _customIncomeData.fullReturns[i] += fullReturn;
           }
-          _customIncomeData.perDay[i] = _customIncomeData.fullReturns[i] / 365.25;
+          _customIncomeData.perDay[i] = fullReturn / 365.25;
           sumFullReturns += _customIncomeData.fullReturns[i];
         }
         _customIncomeData.averageFullReturn = sumFullReturns / _customIncomeData.names.length;
@@ -340,51 +343,54 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.indexFunds:
         _indexFundsData.totalInvested = 0;
-        double yearlyIncrease = 0;
+        double sumYearlyIncreases = 0;
         for (int i = 0; i < _indexFundsData.names.length; i++) {
           _indexFundsData.totalInvested += _indexFundsData.amounts[i];
-          yearlyIncrease += _indexFundsData.amounts[i] * _indexFundsData.interests[i] / 100;
+          double yearlyIncrease = _indexFundsData.amounts[i] * _indexFundsData.interests[i] / 100;
+          sumYearlyIncreases += yearlyIncrease;
           _indexFundsData.perDay[i] = yearlyIncrease / 365.25;
         }
         if (_indexFundsData.totalInvested == 0) {
           _indexFundsData.averageInterest = 0;
         } else {
-          _indexFundsData.averageInterest = 100 * yearlyIncrease / _indexFundsData.totalInvested;
+          _indexFundsData.averageInterest = 100 * sumYearlyIncreases / _indexFundsData.totalInvested;
         }
         _indexFundsData.totalPerDay = _indexFundsData.totalInvested * _indexFundsData.averageInterest / 100 / 365.25;
         break;
-      case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to add data to TotalIncome manually.');
       case CardType.privateFunds:
         _privateFundsData.totalInvested = 0;
-        double yearlyIncrease = 0;
+        double sumYearlyIncreases = 0;
         for (int i = 0; i < _privateFundsData.names.length; i++) {
           _privateFundsData.totalInvested += _privateFundsData.amounts[i];
-          yearlyIncrease += _privateFundsData.amounts[i] * _privateFundsData.interests[i] / 100;
+          double yearlyIncrease = _privateFundsData.amounts[i] * _privateFundsData.interests[i] / 100;
+          sumYearlyIncreases += yearlyIncrease;
           _privateFundsData.perDay[i] = yearlyIncrease / 365.25;
         }
         if (_privateFundsData.totalInvested == 0) {
           _privateFundsData.averageInterest = 0;
         } else {
-          _privateFundsData.averageInterest = 100 * yearlyIncrease / _privateFundsData.totalInvested;
+          _privateFundsData.averageInterest = 100 * sumYearlyIncreases / _privateFundsData.totalInvested;
         }
         _privateFundsData.totalPerDay = _privateFundsData.totalInvested * _privateFundsData.averageInterest / 100 / 365.25;
         break;
       case CardType.realEstate:
         _realEstateData.totalInvested = 0;
-        List<double> sumOfPayments = List.from(_realEstateData.capitals);
+        List<double> sumOfPayments = List.generate(_realEstateData.locations.length, (index) => 0);
         double sumFullReturns = 0;
         for (int i = 0; i < _realEstateData.locations.length; i++) {
           int monthElapsed = (DateTime.now().difference(_realEstateData.registeredDates[i]).inDays / 30.437).floor();
-          sumOfPayments[i] += _realEstateData.payments[i] * monthElapsed;
+          sumOfPayments[i] = _realEstateData.payments[i] * monthElapsed;
           _realEstateData.capitals[i] += sumOfPayments[i];
           _realEstateData.totalInvested += _realEstateData.capitals[i];
+          double fullReturn;
           if (_realEstateData.capitals[i] == 0) {
-            _realEstateData.fullReturns[i] = 0;
+            fullReturn = 0;
+            _realEstateData.fullReturns[i] += 0;
           } else {
-            _realEstateData.fullReturns[i] += _realEstateData.interests[i] + 100 * _realEstateData.revenues[i] / _realEstateData.capitals[i];
+            fullReturn = _realEstateData.interests[i] + 100 * _realEstateData.revenues[i] / _realEstateData.capitals[i];
+            _realEstateData.fullReturns[i] += fullReturn;
           }
-          _realEstateData.perDay[i] = _realEstateData.fullReturns[i] / 365.25;
+          _realEstateData.perDay[i] = fullReturn / 365.25;
           sumFullReturns += _realEstateData.fullReturns[i];
         }
         _realEstateData.averageFullReturn = sumFullReturns / _realEstateData.locations.length;
@@ -408,74 +414,95 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.savingAccounts:
         _savingAccountsData.totalInvested = 0;
-        double yearlyIncrease = 0;
+        double sumYearlyIncreases = 0;
         for (int i = 0; i < _savingAccountsData.names.length; i++) {
           _savingAccountsData.totalInvested += _savingAccountsData.amounts[i];
-          yearlyIncrease += _savingAccountsData.amounts[i] * _savingAccountsData.interests[i] / 100;
+          double yearlyIncrease = _savingAccountsData.amounts[i] * _savingAccountsData.interests[i] / 100;
+          sumYearlyIncreases += yearlyIncrease;
           _savingAccountsData.perDay[i] = yearlyIncrease / 365.25;
         }
         if (_savingAccountsData.totalInvested == 0) {
           _savingAccountsData.averageInterest = 0;
         } else {
-          _savingAccountsData.averageInterest = 100 * yearlyIncrease / _savingAccountsData.totalInvested;
+          _savingAccountsData.averageInterest = 100 * sumYearlyIncreases / _savingAccountsData.totalInvested;
         }
         _savingAccountsData.totalPerDay = _savingAccountsData.totalInvested * _savingAccountsData.averageInterest / 100 / 365.25;
         break;
       case CardType.stockAccounts:
         _stockAccountsData.totalInvested = 0;
-        double yearlyIncrease = 0;
+        double sumYearlyIncreases = 0;
         for (int i = 0; i < _stockAccountsData.names.length; i++) {
           _stockAccountsData.totalInvested += _stockAccountsData.amounts[i];
-          yearlyIncrease += _stockAccountsData.amounts[i] * _stockAccountsData.interests[i] / 100;
+          double yearlyIncrease = _stockAccountsData.amounts[i] * _stockAccountsData.interests[i] / 100;
+          sumYearlyIncreases += yearlyIncrease;
           _stockAccountsData.perDay[i] = yearlyIncrease / 365.25;
         }
         if (_stockAccountsData.totalInvested == 0) {
           _stockAccountsData.averageInterest = 0;
         } else {
-          _stockAccountsData.averageInterest = 100 * yearlyIncrease / _stockAccountsData.totalInvested;
+          _stockAccountsData.averageInterest = 100 * sumYearlyIncreases / _stockAccountsData.totalInvested;
         }
         _stockAccountsData.totalPerDay = _stockAccountsData.totalInvested * _stockAccountsData.averageInterest / 100 / 365.25;
         break;
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to add data to TotalIncome manually.');
     }
   }
 
   TotalIncomeData _getTotalIncomeData(List<CardType> cards) {
     TotalIncomeData totalIncomeData = TotalIncomeData();
+    totalIncomeData.incomesPerDay.clear();
     for (CardType cardType in cards) {
       switch (cardType) {
         case CardType.addCard:
           break;
         case CardType.contentCreation:
+          totalIncomeData.incomesType.add(CardType.contentCreation);
+          totalIncomeData.incomesPerDay.add(_contentCreationData.totalPerDay);
           totalIncomeData.totalIncomePerDay += _contentCreationData.totalPerDay;
           break;
         case CardType.customIncome:
+          totalIncomeData.incomesType.add(CardType.customIncome);
+          totalIncomeData.incomesPerDay.add(_customIncomeData.totalPerDay);
           totalIncomeData.totalInvested += _customIncomeData.totalInvested;
           totalIncomeData.totalIncomePerDay += _customIncomeData.totalPerDay;
           totalIncomeData.averageInterest += (_customIncomeData.totalInvested * _customIncomeData.averageFullReturn / 100);
         case CardType.indexFunds:
+          totalIncomeData.incomesType.add(CardType.indexFunds);
+          totalIncomeData.incomesPerDay.add(_indexFundsData.totalPerDay);
           totalIncomeData.totalInvested += _indexFundsData.totalInvested;
           totalIncomeData.totalIncomePerDay += _indexFundsData.totalPerDay;
           totalIncomeData.averageInterest += (_indexFundsData.totalInvested * _indexFundsData.averageInterest / 100);
           break;
         case CardType.privateFunds:
+          totalIncomeData.incomesType.add(CardType.privateFunds);
+          totalIncomeData.incomesPerDay.add(_privateFundsData.totalPerDay);
           totalIncomeData.totalInvested += _privateFundsData.totalInvested;
           totalIncomeData.totalIncomePerDay += _privateFundsData.totalPerDay;
           totalIncomeData.averageInterest += (_privateFundsData.totalInvested * _privateFundsData.averageInterest / 100);
           break;
         case CardType.realEstate:
+          totalIncomeData.incomesType.add(CardType.realEstate);
+          totalIncomeData.incomesPerDay.add(_realEstateData.totalPerDay);
           totalIncomeData.totalInvested += _realEstateData.totalInvested;
           totalIncomeData.totalIncomePerDay += _realEstateData.totalPerDay;
           totalIncomeData.averageInterest += (_realEstateData.totalInvested * _realEstateData.averageFullReturn / 100);
           break;
         case CardType.salaries:
+          totalIncomeData.incomesType.add(CardType.salaries);
+          totalIncomeData.incomesPerDay.add(_salariesData.totalPerDay);
           totalIncomeData.totalIncomePerDay += _salariesData.totalPerDay;
           break;
         case CardType.savingAccounts:
+          totalIncomeData.incomesType.add(CardType.savingAccounts);
+          totalIncomeData.incomesPerDay.add(_savingAccountsData.totalPerDay);
           totalIncomeData.totalInvested += _savingAccountsData.totalInvested;
           totalIncomeData.totalIncomePerDay += _savingAccountsData.totalPerDay;
           totalIncomeData.averageInterest += (_savingAccountsData.totalInvested * _savingAccountsData.averageInterest / 100);
           break;
         case CardType.stockAccounts:
+          totalIncomeData.incomesType.add(CardType.stockAccounts);
+          totalIncomeData.incomesPerDay.add(_stockAccountsData.totalPerDay);
           totalIncomeData.totalInvested += _stockAccountsData.totalInvested;
           totalIncomeData.totalIncomePerDay += _stockAccountsData.totalPerDay;
           totalIncomeData.averageInterest += (_stockAccountsData.totalInvested * _stockAccountsData.averageInterest / 100);

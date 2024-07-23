@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -17,33 +19,23 @@ class TotalIncome extends StatefulWidget {
 
 class _TotalIncomeState extends State<TotalIncome> {
   Ledger ledger = Ledger();
-  List<Widget> totalIncomes = <Widget>[];
+  List<Income> totalIncomes = <Income>[];
 
   Widget getCardContent(CardSize cardStatus, BuildContext context) {
     Size size = MediaQuery.of(context).size;
     switch (cardStatus) {
       case CardSize.big:
-        return Container(
-          padding: EdgeInsets.fromLTRB(0, size.height / 20, 0, 0),
-          child: Column(children: [
-            const Text(
-              'Total income',
-              style: TextStyles.cardTitle,
-            ),
-            Expanded(
-              child: ListView.builder(
-                shrinkWrap: true,
-                itemCount: totalIncomes.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Container(
-                    alignment: Alignment.center,
-                    padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
-                    child: totalIncomes[index],
-                  );
-                },
-              ),
-            ),
-          ]),
+        return BigCardContainer(
+          cardTitle: 'Total income',
+          itemName: '',
+          cardType: CardType.totalIncome,
+          incomes: totalIncomes,
+          onUpdateItems: () {
+            totalIncomes = getTotalIncomes();
+            if (mounted) {
+              setState(() {});
+            }
+          },
         );
       case CardSize.mini:
         throw ErrorDescription('TotalIncome should not be used as a mini card.');
@@ -70,200 +62,13 @@ class _TotalIncomeState extends State<TotalIncome> {
     }
   }
 
-  List<Widget> getTotalIncomesList() {
-    List<Widget> totalIncomes = <Widget>[];
-    if (ledger.carouselCards.contains(CardType.contentCreation)) {
+  List<Income> getTotalIncomes() {
+    List<Income> totalIncomes = <Income>[];
+    for (int i = 0; i < ledger.totalIncomeData.incomesPerDay.length; i++) {
       totalIncomes.add(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const Text(
-                  'Content creation:',
-                  style: TextStyles.cardBody,
-                ),
-                Text(
-                  '${ledger.contentCreationData.totalPerDay.toStringAsFixed(2)} / day',
-                  style: TextStyles.cardBody,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
-        ),
-      );
-    }
-    if (ledger.carouselCards.contains(CardType.indexFunds)) {
-      totalIncomes.add(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Index funds:',
-              style: TextStyles.cardBody,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  '${ledger.indexFundsData.totalInvested}',
-                  style: TextStyles.cardBody,
-                ),
-                Text(
-                  '${ledger.indexFundsData.totalPerDay.toStringAsFixed(2)} / day',
-                  style: TextStyles.cardBody,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
-        ),
-      );
-    }
-    if (ledger.carouselCards.contains(CardType.privateFunds)) {
-      totalIncomes.add(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Private funds:',
-              style: TextStyles.cardBody,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  '${ledger.privateFundsData.totalInvested}',
-                  style: TextStyles.cardBody,
-                ),
-                Text(
-                  '${ledger.privateFundsData.totalPerDay.toStringAsFixed(2)} / day',
-                  style: TextStyles.cardBody,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
-        ),
-      );
-    }
-    if (ledger.carouselCards.contains(CardType.realEstate)) {
-      totalIncomes.add(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Real estate:',
-              style: TextStyles.cardBody,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  '${ledger.realEstateData.totalInvested}',
-                  style: TextStyles.cardBody,
-                ),
-                Text(
-                  '${ledger.realEstateData.totalPerDay.toStringAsFixed(2)} / day',
-                  style: TextStyles.cardBody,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
-        ),
-      );
-    }
-    if (ledger.carouselCards.contains(CardType.salaries)) {
-      totalIncomes.add(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                const Text(
-                  'Salaries:',
-                  style: TextStyles.cardBody,
-                ),
-                Text(
-                  '${ledger.salariesData.totalPerDay.toStringAsFixed(2)} / day',
-                  style: TextStyles.cardBody,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
-        ),
-      );
-    }
-    if (ledger.carouselCards.contains(CardType.savingAccounts)) {
-      totalIncomes.add(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Saving accounts:',
-              style: TextStyles.cardBody,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  '${ledger.savingAccountsData.totalInvested}',
-                  style: TextStyles.cardBody,
-                ),
-                Text(
-                  '${ledger.savingAccountsData.totalPerDay.toStringAsFixed(2)} / day',
-                  style: TextStyles.cardBody,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
-        ),
-      );
-    }
-    if (ledger.carouselCards.contains(CardType.stockAccounts)) {
-      totalIncomes.add(
-        Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            const Text(
-              'Stock accounts:',
-              style: TextStyles.cardBody,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-              children: [
-                Text(
-                  '${ledger.stockAccountsData.totalInvested}',
-                  style: TextStyles.cardBody,
-                ),
-                Text(
-                  '${ledger.stockAccountsData.totalPerDay.toStringAsFixed(2)} / day',
-                  style: TextStyles.cardBody,
-                )
-              ],
-            ),
-            const SizedBox(
-              height: 20,
-            )
-          ],
+        Income(
+          ledger.totalIncomeData.incomesType[i].title,
+          ledger.totalIncomeData.incomesPerDay[i],
         ),
       );
     }
@@ -274,10 +79,10 @@ class _TotalIncomeState extends State<TotalIncome> {
   void initState() {
     super.initState();
 
-    totalIncomes = getTotalIncomesList();
+    totalIncomes = getTotalIncomes();
 
     ledger.addListener(() {
-      totalIncomes = getTotalIncomesList();
+      totalIncomes = getTotalIncomes();
       if (mounted) {
         setState(() {});
       }
