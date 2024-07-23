@@ -69,6 +69,7 @@ class _TotalIncomeState extends State<TotalIncome> {
         Income(
           ledger.totalIncomeData.incomesType[i].title,
           ledger.totalIncomeData.incomesPerDay[i],
+          subIncomeCardType: ledger.totalIncomeData.incomesType[i],
         ),
       );
     }

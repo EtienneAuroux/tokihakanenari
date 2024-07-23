@@ -4,6 +4,7 @@ import 'package:tokihakanenari/customized_widgets/income_container.dart';
 import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
 import 'dart:developer' as developer;
@@ -50,7 +51,7 @@ class _BigCardContainerState extends State<BigCardContainer> {
             ledger.deleteCarouselCard(widget.cardType);
           }
         } else {
-          ledger.deleteCarouselCard(widget.cardType);
+          ledger.deleteCarouselCard(widget.incomes[itemIndex].subIncomeCardType!);
         }
       }
     }
@@ -90,11 +91,17 @@ class _BigCardContainerState extends State<BigCardContainer> {
             style: TextStyles.cardTitle,
           ),
           Expanded(
-            child: ListView.builder(
+            child: ListView.separated(
+              separatorBuilder: (context, index) {
+                return const SizedBox(
+                  height: 10,
+                );
+              },
               shrinkWrap: true,
               itemCount: widget.incomes.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
+                  // decoration: widget.cardType != CardType.totalIncome ? null : CardDecoration.getBigDecoration(CardType.contentCreation),
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: GestureDetector(
@@ -118,35 +125,36 @@ class _BigCardContainerState extends State<BigCardContainer> {
               },
             ),
           ),
-          Visibility(
-            visible: widget.cardType != CardType.totalIncome,
-            child: GestureDetector(
-              child: Container(
-                alignment: Alignment.topCenter,
-                height: size.height / 4,
-                padding: const EdgeInsets.symmetric(vertical: 30),
-                child: Text(
-                  'Double tap to add a new ${widget.itemName}.',
-                  style: TextStyles.cardBody,
-                  textAlign: TextAlign.center,
+          widget.cardType != CardType.totalIncome
+              ? GestureDetector(
+                  child: Container(
+                    alignment: Alignment.topCenter,
+                    height: size.height / 4,
+                    padding: const EdgeInsets.symmetric(vertical: 30),
+                    child: Text(
+                      'Double tap to add a new ${widget.itemName}.',
+                      style: TextStyles.cardBody,
+                      textAlign: TextAlign.center,
+                    ),
+                  ),
+                  onDoubleTap: () {
+                    showDialog(
+                        context: context,
+                        builder: (BuildContext context) {
+                          return NewIncomeDialog(
+                            cardType: widget.cardType,
+                            onNewIncomeCallback: (List<dynamic> newIncome) {
+                              ledger.addCarouselCard(widget.cardType);
+                              ledger.addCardData(widget.cardType, newIncome);
+                              widget.onUpdateItems();
+                            },
+                          );
+                        });
+                  },
+                )
+              : SizedBox(
+                  height: size.shortestSide / 5,
                 ),
-              ),
-              onDoubleTap: () {
-                showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return NewIncomeDialog(
-                        cardType: widget.cardType,
-                        onNewIncomeCallback: (List<dynamic> newIncome) {
-                          ledger.addCarouselCard(widget.cardType);
-                          ledger.addCardData(widget.cardType, newIncome);
-                          widget.onUpdateItems();
-                        },
-                      );
-                    });
-              },
-            ),
-          ),
         ],
       ),
     );

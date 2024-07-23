@@ -12,6 +12,7 @@ class Income {
   final double perDayIncome;
   final TimePeriod? timePeriod;
   final double? payment;
+  final CardType? subIncomeCardType;
 
   Income(
     this.id,
@@ -24,5 +25,6 @@ class Income {
     this.fullReturn,
     this.timePeriod,
     this.payment,
+    this.subIncomeCardType,
   });
 }
