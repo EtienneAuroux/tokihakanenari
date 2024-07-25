@@ -76,7 +76,7 @@ class _PrivateFundsState extends State<PrivateFunds> {
           ledger.privateFundsData.perDay[i],
           icon: ledger.privateFundsData.icons[i],
           amount: ledger.privateFundsData.amounts[i],
-          interest: ledger.privateFundsData.interests[i],
+          interest: ledger.privateFundsData.ratesOfReturn[i],
         ),
       );
     }

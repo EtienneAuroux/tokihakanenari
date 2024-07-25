@@ -76,7 +76,7 @@ class _StockAccountsState extends State<StockAccounts> {
           ledger.stockAccountsData.perDay[i],
           icon: ledger.stockAccountsData.icons[i],
           amount: ledger.stockAccountsData.amounts[i],
-          interest: ledger.stockAccountsData.interests[i],
+          interest: ledger.stockAccountsData.ratesOfReturn[i],
         ),
       );
     }

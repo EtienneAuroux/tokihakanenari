@@ -8,6 +8,7 @@ class ContentCreationData {
   List<double> revenues = <double>[];
   List<TimePeriod> timePeriods = <TimePeriod>[];
   List<double> perDay = <double>[];
+  double totalIncome = 0;
   double totalPerDay = 0;
 }
 
@@ -17,33 +18,33 @@ class CustomIncomeData {
   List<double> amounts = <double>[];
   List<double> interests = <double>[];
   List<double> revenues = <double>[];
-  List<double> fullReturns = <double>[]; // in %
+  List<double> ratesOfReturn = <double>[]; // in %
   List<double> perDay = <double>[];
   double totalInvested = 0;
   double totalPerDay = 0;
-  double averageFullReturn = 0;
+  double totalRateOfReturn = 0;
 }
 
 class IndexFundsData {
   List<IconData> icons = <IconData>[];
   List<String> names = <String>[];
   List<double> amounts = <double>[];
-  List<double> interests = <double>[];
+  List<double> ratesOfReturn = <double>[];
   List<double> perDay = <double>[];
   double totalInvested = 0;
   double totalPerDay = 0;
-  double averageInterest = 0;
+  double totalRateOfReturn = 0;
 }
 
 class PrivateFundsData {
   List<IconData> icons = <IconData>[];
   List<String> names = <String>[];
   List<double> amounts = <double>[];
-  List<double> interests = <double>[];
+  List<double> ratesOfReturn = <double>[];
   List<double> perDay = <double>[];
   double totalInvested = 0;
   double totalPerDay = 0;
-  double averageInterest = 0;
+  double totalRateOfReturn = 0;
 }
 
 class RealEstateData {
@@ -52,13 +53,13 @@ class RealEstateData {
   List<double> capitals = <double>[];
   List<double> payments = <double>[];
   List<double> revenues = <double>[]; //TODO REVENUES ARE ASSUMED PER YEAR?
-  List<double> interests = <double>[];
+  List<double> appreciations = <double>[];
   List<DateTime> registeredDates = <DateTime>[];
-  List<double> fullReturns = <double>[]; // in %
+  List<double> ratesOfReturn = <double>[]; // in %
   List<double> perDay = <double>[];
   double totalInvested = 0;
   double totalPerDay = 0;
-  double averageFullReturn = 0;
+  double totalRateOfReturn = 0;
 }
 
 class SalariesData {
@@ -67,6 +68,7 @@ class SalariesData {
   List<double> salaries = <double>[];
   List<TimePeriod> timePeriods = <TimePeriod>[];
   List<double> perDay = <double>[];
+  double totalIncome = 0;
   double totalPerDay = 0;
 }
 
@@ -74,22 +76,22 @@ class SavingAccountsData {
   List<IconData> icons = <IconData>[];
   List<String> names = <String>[];
   List<double> amounts = <double>[];
-  List<double> interests = <double>[];
+  List<double> ratesOfReturn = <double>[];
   List<double> perDay = <double>[];
   double totalInvested = 0;
   double totalPerDay = 0;
-  double averageInterest = 0;
+  double totalRateOfReturn = 0;
 }
 
 class StockAccountsData {
   List<IconData> icons = <IconData>[];
   List<String> names = <String>[];
   List<double> amounts = <double>[];
-  List<double> interests = <double>[];
+  List<double> ratesOfReturn = <double>[];
   List<double> perDay = <double>[];
   double totalInvested = 0;
   double totalPerDay = 0;
-  double averageInterest = 0;
+  double totalRateOfReturn = 0;
 }
 
 class TotalIncomeData {
@@ -97,5 +99,5 @@ class TotalIncomeData {
   List<double> incomesPerDay = <double>[];
   double totalInvested = 0;
   double totalIncomePerDay = 0;
-  double averageInterest = 0;
+  double totalRateOfReturn = 0;
 }

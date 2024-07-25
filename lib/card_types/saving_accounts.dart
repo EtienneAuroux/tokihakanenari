@@ -78,7 +78,7 @@ class _SavingAccountsState extends State<SavingAccounts> {
           ledger.savingAccountsData.perDay[i],
           icon: ledger.savingAccountsData.icons[i],
           amount: ledger.savingAccountsData.amounts[i],
-          interest: ledger.savingAccountsData.interests[i],
+          interest: ledger.savingAccountsData.ratesOfReturn[i],
         ),
       );
     }

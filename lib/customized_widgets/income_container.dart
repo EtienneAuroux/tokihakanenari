@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/rotating_button.dart';
 import 'package:tokihakanenari/ledger_data/income.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -24,6 +25,7 @@ class IncomeContainer extends StatefulWidget {
 }
 
 class _IncomeContainerState extends State<IncomeContainer> {
+  Ledger ledger = Ledger();
   bool expanded = false;
   final BorderSide borderSide = BorderSide(
     color: Colors.black.withAlpha(50),
@@ -117,7 +119,112 @@ class _IncomeContainerState extends State<IncomeContainer> {
         )
       ];
     } else if (cardType == CardType.totalIncome) {
-      return [];
+      switch (widget.income.subIncomeCardType) {
+        case null:
+          throw ErrorDescription('For Cardtype.totalIncome, income.subIncomeCardType should not be null.');
+        case CardType.addCard:
+          throw ErrorDescription('It should not be possible to have income.subIncomeCardType = addCard');
+        case CardType.contentCreation:
+          return [
+            Text(
+              'revenue: ${ledger.contentCreationData.totalIncome} / year',
+              style: TextStyles.incomeExtraInformation,
+            ),
+          ];
+        case CardType.customIncome:
+          return [
+            Text(
+              'investment: ${ledger.customIncomeData.totalInvested}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              'average return: ${ledger.customIncomeData.totalRateOfReturn.toStringAsFixed(2)}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+          ];
+        case CardType.indexFunds:
+          return [
+            Text(
+              'investment: ${ledger.indexFundsData.totalInvested}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              'average return: ${ledger.indexFundsData.totalRateOfReturn.toStringAsFixed(2)}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+          ];
+        case CardType.privateFunds:
+          return [
+            Text(
+              'investment: ${ledger.privateFundsData.totalInvested}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              'average return: ${ledger.privateFundsData.totalRateOfReturn.toStringAsFixed(2)}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+          ];
+        case CardType.realEstate:
+          return [
+            Text(
+              'investment: ${ledger.realEstateData.totalInvested}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              'average return: ${ledger.realEstateData.totalRateOfReturn.toStringAsFixed(2)}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+          ];
+        case CardType.salaries:
+          return [
+            Text(
+              'revenue: ${ledger.salariesData.totalIncome} / year',
+              style: TextStyles.incomeExtraInformation,
+            ),
+          ];
+        case CardType.savingAccounts:
+          return [
+            Text(
+              'investment: ${ledger.savingAccountsData.totalInvested}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              'average return: ${ledger.savingAccountsData.totalRateOfReturn.toStringAsFixed(2)}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+          ];
+        case CardType.stockAccounts:
+          return [
+            Text(
+              'investment: ${ledger.stockAccountsData.totalInvested}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+            const SizedBox(
+              height: 5,
+            ),
+            Text(
+              'average return: ${ledger.stockAccountsData.totalRateOfReturn.toStringAsFixed(2)}',
+              style: TextStyles.incomeExtraInformation,
+            ),
+          ];
+        case CardType.totalIncome:
+          throw ErrorDescription('It should not be possible to have income.subIncomeCardType = totalIncome');
+      }
     } else {
       return [
         Text(
@@ -142,6 +249,12 @@ class _IncomeContainerState extends State<IncomeContainer> {
       return 90;
     } else if (cardType == CardType.realEstate) {
       return 120;
+    } else if (cardType == CardType.totalIncome) {
+      if (widget.income.subIncomeCardType == CardType.contentCreation || widget.income.subIncomeCardType == CardType.salaries) {
+        return 30;
+      } else {
+        return 60;
+      }
     } else {
       return 60;
     }

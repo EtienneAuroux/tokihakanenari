@@ -76,7 +76,7 @@ class _IndexFundsState extends State<IndexFunds> {
           ledger.indexFundsData.perDay[i],
           icon: ledger.indexFundsData.icons[i],
           amount: ledger.indexFundsData.amounts[i],
-          interest: ledger.indexFundsData.interests[i],
+          interest: ledger.indexFundsData.ratesOfReturn[i],
         ),
       );
     }
