@@ -53,7 +53,7 @@ class RealEstateData {
   List<double> capitals = <double>[];
   List<double> payments = <double>[];
   List<double> revenues = <double>[]; //TODO REVENUES ARE ASSUMED PER YEAR?
-  List<double> interests = <double>[];
+  List<double> appreciations = <double>[];
   List<DateTime> registeredDates = <DateTime>[];
   List<double> ratesOfReturn = <double>[]; // in %
   List<double> perDay = <double>[];

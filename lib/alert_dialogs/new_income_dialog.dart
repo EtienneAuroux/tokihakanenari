@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/alert_dialogs/icons_dialog.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -7,11 +8,13 @@ import 'package:tokihakanenari/visual_tools/text_styles.dart';
 class NewIncomeDialog extends StatefulWidget {
   final CardType cardType;
   final void Function(List<dynamic>) onNewIncomeCallback;
+  final int? modify;
 
   const NewIncomeDialog({
     super.key,
     required this.cardType,
     required this.onNewIncomeCallback,
+    this.modify,
   });
 
   @override
@@ -19,6 +22,7 @@ class NewIncomeDialog extends StatefulWidget {
 }
 
 class _NewIncomeDialogState extends State<NewIncomeDialog> {
+  Ledger ledger = Ledger();
   IconData icon = Icons.abc;
   TimePeriod timePeriod = TimePeriod.month;
 
@@ -56,7 +60,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           return null;
         }
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
+        throw ErrorDescription('It should not be possible to open AddNewDialog from TotalIncome.');
       case CardType.realEstate:
         if (nameController.text.isNotEmpty &&
             descriptionController.text.isNotEmpty &&
@@ -115,7 +119,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.indexFunds:
         return 'New fund:';
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
+        throw ErrorDescription('It should not be possible to open AddNewDialog from TotalIncome.');
       case CardType.privateFunds:
         return 'New fund:';
       case CardType.realEstate:
@@ -273,7 +277,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           ),
         ];
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from PassiveIncome.');
+        throw ErrorDescription('It should not be possible to open AddNewDialog from TotalIncome.');
       case CardType.realEstate:
         return [
           const Align(
@@ -354,7 +358,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             child: Tooltip(
               message: 'the average yearly increase in property value',
               child: Text(
-                'interest (%):',
+                'appreciation (%):',
                 style: TextStyles.dialogText,
               ),
             ),
@@ -393,7 +397,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           const Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'name:', // TODO SHOULD BE COMPANIES OR EMPLOYERS?
+              'name:',
               style: TextStyles.dialogText,
             ),
           ),
@@ -512,6 +516,74 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             textAlign: TextAlign.center,
           ),
         ];
+    }
+  }
+
+  void initializeControllers(CardType cardType, int index) {
+    switch (cardType) {
+      case CardType.addCard:
+        throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
+      case CardType.contentCreation:
+        nameController.text = ledger.contentCreationData.platforms[index];
+        amountController.text = ledger.contentCreationData.revenues[index].toString();
+        timePeriod = ledger.contentCreationData.timePeriods[index];
+        break;
+      case CardType.customIncome:
+        icon = ledger.customIncomeData.icons[index];
+        nameController.text = ledger.customIncomeData.names[index];
+        amountController.text = ledger.customIncomeData.amounts[index].toString();
+        revenueController.text = ledger.customIncomeData.revenues[index].toString();
+        interestController.text = ledger.customIncomeData.ratesOfReturn[index].toStringAsFixed(2);
+        break;
+      case CardType.realEstate:
+        nameController.text = ledger.realEstateData.locations[index];
+        descriptionController.text = ledger.realEstateData.descriptions[index];
+        amountController.text = ledger.realEstateData.capitals[index].toString();
+        capitalPaymentController.text = ledger.realEstateData.payments[index].toString();
+        revenueController.text = ledger.realEstateData.revenues[index].toString();
+        interestController.text = ledger.realEstateData.appreciations[index].toStringAsFixed(2);
+        break;
+      case CardType.salaries:
+        icon = ledger.salariesData.icons[index];
+        nameController.text = ledger.salariesData.names[index];
+        amountController.text = ledger.salariesData.salaries[index].toString();
+        timePeriod = ledger.salariesData.timePeriods[index];
+        break;
+      case CardType.indexFunds:
+        icon = ledger.indexFundsData.icons[index];
+        nameController.text = ledger.indexFundsData.names[index];
+        amountController.text = ledger.indexFundsData.amounts[index].toString();
+        interestController.text = ledger.indexFundsData.ratesOfReturn[index].toStringAsFixed(2);
+        break;
+      case CardType.privateFunds:
+        icon = ledger.privateFundsData.icons[index];
+        nameController.text = ledger.privateFundsData.names[index];
+        amountController.text = ledger.privateFundsData.amounts[index].toString();
+        interestController.text = ledger.privateFundsData.ratesOfReturn[index].toStringAsFixed(2);
+        break;
+      case CardType.savingAccounts:
+        icon = ledger.savingAccountsData.icons[index];
+        nameController.text = ledger.savingAccountsData.names[index];
+        amountController.text = ledger.savingAccountsData.amounts[index].toString();
+        interestController.text = ledger.savingAccountsData.ratesOfReturn[index].toStringAsFixed(2);
+        break;
+      case CardType.stockAccounts:
+        icon = ledger.stockAccountsData.icons[index];
+        nameController.text = ledger.stockAccountsData.names[index];
+        amountController.text = ledger.stockAccountsData.amounts[index].toString();
+        interestController.text = ledger.stockAccountsData.ratesOfReturn[index].toStringAsFixed(2);
+        break;
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to open AddNewDialog from TotalIncome.');
+    }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    if (widget.modify != null) {
+      initializeControllers(widget.cardType, widget.modify!);
     }
   }
 

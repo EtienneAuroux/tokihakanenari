@@ -114,7 +114,7 @@ class Ledger extends ChangeNotifier {
         _realEstateData.capitals.clear();
         _realEstateData.payments.clear();
         _realEstateData.revenues.clear();
-        _realEstateData.interests.clear();
+        _realEstateData.appreciations.clear();
         _realEstateData.registeredDates.clear();
         _realEstateData.ratesOfReturn.clear();
         _realEstateData.perDay.clear();
@@ -197,7 +197,7 @@ class Ledger extends ChangeNotifier {
         _realEstateData.capitals.add(double.parse(data[2]));
         _realEstateData.payments.add(double.parse(data[3]));
         _realEstateData.revenues.add(double.parse(data[4]));
-        _realEstateData.interests.add(double.parse(data[5]));
+        _realEstateData.appreciations.add(double.parse(data[5]));
         _realEstateData.ratesOfReturn.add(0);
         _realEstateData.registeredDates.add(data[6]);
         _realEstateData.perDay.add(0);
@@ -270,7 +270,7 @@ class Ledger extends ChangeNotifier {
         _realEstateData.capitals.removeAt(index);
         _realEstateData.payments.removeAt(index);
         _realEstateData.revenues.removeAt(index);
-        _realEstateData.interests.removeAt(index);
+        _realEstateData.appreciations.removeAt(index);
         _realEstateData.ratesOfReturn.removeAt(index);
         _realEstateData.registeredDates.removeAt(index);
         _realEstateData.perDay.removeAt(index);
@@ -298,6 +298,68 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to delete data from TotalIncome.');
+    }
+
+    _aggregateData(cardType);
+    notifyListeners();
+  }
+
+  void updateCardData(CardType cardType, int index, List<dynamic> data) {
+    switch (cardType) {
+      case CardType.addCard:
+        throw ErrorDescription('It should not be possible to add data to AddCard.');
+      case CardType.contentCreation:
+        _contentCreationData.platforms[index] = data[0];
+        _contentCreationData.revenues[index] = double.parse(data[1]);
+        _contentCreationData.timePeriods[index] = data[2];
+        break;
+      case CardType.customIncome:
+        _customIncomeData.icons[index] = data[0];
+        _customIncomeData.names[index] = data[1];
+        _customIncomeData.amounts[index] = double.parse(data[2]);
+        _customIncomeData.interests[index] = double.parse(data[3]);
+        _customIncomeData.revenues[index] = double.parse(data[4]);
+      case CardType.indexFunds:
+        _indexFundsData.icons[index] = data[0];
+        _indexFundsData.names[index] = data[1];
+        _indexFundsData.amounts[index] = double.parse(data[2]);
+        _indexFundsData.ratesOfReturn[index] = double.parse(data[3]);
+        break;
+      case CardType.privateFunds:
+        _privateFundsData.icons[index] = data[0];
+        _privateFundsData.names[index] = data[1];
+        _privateFundsData.amounts[index] = double.parse(data[2]);
+        _privateFundsData.ratesOfReturn[index] = double.parse(data[3]);
+        break;
+      case CardType.realEstate:
+        _realEstateData.locations[index] = data[0];
+        _realEstateData.descriptions[index] = data[1];
+        _realEstateData.capitals[index] = double.parse(data[2]);
+        _realEstateData.payments[index] = double.parse(data[3]);
+        _realEstateData.revenues[index] = double.parse(data[4]);
+        _realEstateData.appreciations[index] = double.parse(data[5]);
+        // TODO REGISTERED DATE IS A PROBLEM HERE.
+        break;
+      case CardType.salaries:
+        _salariesData.icons[index] = data[0];
+        _salariesData.names[index] = data[1];
+        _salariesData.salaries[index] = double.parse(data[2]);
+        _salariesData.timePeriods[index] = data[3];
+        break;
+      case CardType.savingAccounts:
+        _savingAccountsData.icons[index] = data[0];
+        _savingAccountsData.names[index] = data[1];
+        _savingAccountsData.amounts[index] = double.parse(data[2]);
+        _savingAccountsData.ratesOfReturn[index] = double.parse(data[3]);
+        break;
+      case CardType.stockAccounts:
+        _stockAccountsData.icons[index] = data[0];
+        _stockAccountsData.names[index] = data[1];
+        _stockAccountsData.amounts[index] = double.parse(data[2]);
+        _stockAccountsData.ratesOfReturn[index] = double.parse(data[3]);
+        break;
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to add data to TotalIncome.');
     }
 
     _aggregateData(cardType);
@@ -393,7 +455,7 @@ class Ledger extends ChangeNotifier {
           if (_realEstateData.capitals[i] == 0) {
             _realEstateData.ratesOfReturn[i] = 0;
           } else {
-            _realEstateData.ratesOfReturn[i] = _realEstateData.interests[i] + 100 * _realEstateData.revenues[i] / _realEstateData.capitals[i];
+            _realEstateData.ratesOfReturn[i] = _realEstateData.appreciations[i] + 100 * _realEstateData.revenues[i] / _realEstateData.capitals[i];
           }
           _realEstateData.perDay[i] = _realEstateData.capitals[i] * _realEstateData.ratesOfReturn[i] / 100 / 365.25;
           _realEstateData.totalPerDay += _realEstateData.perDay[i];

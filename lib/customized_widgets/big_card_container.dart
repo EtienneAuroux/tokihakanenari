@@ -37,10 +37,11 @@ class _BigCardContainerState extends State<BigCardContainer> {
   Future<void> updateGradientEnd(int itemIndex) async {
     int counter = 0;
     while (pressingItem[itemIndex]) {
-      // TODO COULD ADD A SMALL DELAY TO AVOID BLINK ON EXPAND/SHRINK IncomeContainer
-      setState(() {
-        gradientEnd[itemIndex] += 0.01;
-      });
+      if (counter > 0) {
+        setState(() {
+          gradientEnd[itemIndex] += 0.01;
+        });
+      }
       await Future.delayed(const Duration(milliseconds: 1));
       counter += 1;
       if (counter == 300) {
@@ -101,7 +102,6 @@ class _BigCardContainerState extends State<BigCardContainer> {
               itemCount: widget.incomes.length,
               itemBuilder: (BuildContext context, int index) {
                 return Container(
-                  // decoration: widget.cardType != CardType.totalIncome ? null : CardDecoration.getBigDecoration(CardType.contentCreation),
                   alignment: Alignment.center,
                   padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
                   child: GestureDetector(
@@ -114,6 +114,22 @@ class _BigCardContainerState extends State<BigCardContainer> {
                     },
                     onTapCancel: () {
                       pressingItem[index] = false;
+                    },
+                    onDoubleTap: () {
+                      if (widget.cardType != CardType.totalIncome) {
+                        showDialog(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return NewIncomeDialog(
+                                cardType: widget.cardType,
+                                onNewIncomeCallback: (List<dynamic> updatedIncome) {
+                                  ledger.updateCardData(widget.cardType, index, updatedIncome);
+                                  widget.onUpdateItems();
+                                },
+                                modify: index,
+                              );
+                            });
+                      }
                     },
                     child: IncomeContainer(
                       cardType: widget.cardType,
