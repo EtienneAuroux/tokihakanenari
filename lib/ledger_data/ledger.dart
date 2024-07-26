@@ -54,14 +54,19 @@ class Ledger extends ChangeNotifier {
   int _pageInFocus = 0;
   int get pageInFocus => _pageInFocus;
 
-  void addCarouselCard(CardType cardType) {
+  void addCarouselCard(CardType cardType, {bool addCard = false}) {
     bool oddNumberOfCard = _carouselCards.length.isOdd;
     int newCardEvenIndex = (_carouselCards.length / 2).floor();
-    if (!_carouselCards.contains(cardType)) {
+    if (!_carouselCards.contains(cardType) && !addCard) {
       _carouselCards.insert(oddNumberOfCard ? newCardEvenIndex - 1 : newCardEvenIndex, cardType);
       _pageInFocus = 50 * _carouselCards.length + (oddNumberOfCard ? newCardEvenIndex - 1 : newCardEvenIndex);
+    } else if (addCard) {
+      _carouselCards.insert(0, CardType.addCard);
     }
     notifyListeners();
+    if (_carouselCards.length == CardType.values.length && !addCard) {
+      deleteCarouselCard(CardType.addCard);
+    }
   }
 
   void deleteCarouselCard(CardType cardType) {
@@ -151,6 +156,10 @@ class Ledger extends ChangeNotifier {
         _stockAccountsData.totalRateOfReturn = 0;
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to remove TotalIncome.');
+    }
+
+    if (!_carouselCards.contains(CardType.addCard)) {
+      addCarouselCard(CardType.addCard, addCard: true);
     }
 
     int deletedCardIndex = _carouselCards.indexOf(cardType);
