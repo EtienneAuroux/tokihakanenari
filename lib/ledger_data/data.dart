@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
+import 'dart:developer' as developer;
+
 // TODO LOOK INTO SEALED CLASS.
 // TODO IMPROVE OBJECT NAMES.
 class ContentCreationData {
@@ -10,6 +12,26 @@ class ContentCreationData {
   List<double> perDay = <double>[];
   double totalIncome = 0;
   double totalPerDay = 0;
+
+  ContentCreationData();
+
+  ContentCreationData.fromJson(Map<String, dynamic> json) {
+    platforms = List.from(json['platforms']);
+    revenues = List.from(json['revenues']);
+    timePeriods = List.generate(platforms.length, (index) => TimePeriod.values[json['timePeriod'][index]]);
+    perDay = List.from(json['perDay']);
+    totalIncome = json['totalIncome'];
+    totalPerDay = json['totalPerDay'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'platforms': platforms,
+        'revenues': revenues,
+        'timePeriod': List.generate(timePeriods.length, (index) => timePeriods[index].index),
+        'perDay': perDay,
+        'totalIncome': totalIncome,
+        'totalPerDay': totalPerDay,
+      };
 }
 
 class CustomIncomeData {

@@ -1,6 +1,6 @@
 import 'dart:async';
 import 'dart:math';
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
@@ -50,7 +50,6 @@ class _CarouselState extends State<Carousel> {
 
   List<SmallCard> getSmallCards() {
     List<SmallCard> carouselCards = <SmallCard>[];
-
     for (CardType cardType in ledger.carouselCards) {
       carouselCards.add(
         SmallCard(
@@ -76,7 +75,7 @@ class _CarouselState extends State<Carousel> {
 
     pageController = PageController(
       viewportFraction: viewportFraction,
-      initialPage: ledger.defaultPage,
+      initialPage: ledger.pageInFocus,
     );
 
     smallCards = getSmallCards();
