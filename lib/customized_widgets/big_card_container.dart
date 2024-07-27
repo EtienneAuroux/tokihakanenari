@@ -36,14 +36,14 @@ class _BigCardContainerState extends State<BigCardContainer> {
   Future<void> updateGradientEnd(int itemIndex) async {
     int counter = 0;
     while (pressingItem[itemIndex]) {
-      if (counter > 0) {
+      if (counter > 20) {
         setState(() {
           gradientEnd[itemIndex] += 0.01;
         });
       }
       await Future.delayed(const Duration(milliseconds: 1));
       counter += 1;
-      if (counter == 300) {
+      if (counter == 320) {
         pressingItem[itemIndex] = false;
         if (widget.cardType != CardType.totalIncome) {
           ledger.deleteCardData(widget.cardType, itemIndex);
@@ -115,6 +115,7 @@ class _BigCardContainerState extends State<BigCardContainer> {
                       pressingItem[index] = false;
                     },
                     onDoubleTap: () {
+                      pressingItem[index] = false;
                       if (widget.cardType != CardType.totalIncome) {
                         showDialog(
                             context: context,
