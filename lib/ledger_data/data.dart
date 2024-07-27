@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
-// TODO LOOK INTO SEALED CLASS.
-// TODO IMPROVE OBJECT NAMES.
+// import 'dart:developer' as developer;
+
 class ContentCreationData {
   List<String> platforms = <String>[];
   List<double> revenues = <double>[];
@@ -10,6 +10,26 @@ class ContentCreationData {
   List<double> perDay = <double>[];
   double totalIncome = 0;
   double totalPerDay = 0;
+
+  ContentCreationData();
+
+  ContentCreationData.fromJson(Map<String, dynamic> json) {
+    platforms = List.from(json['platforms']);
+    revenues = List.from(json['revenues']);
+    timePeriods = List.generate(platforms.length, (index) => TimePeriod.values[json['timePeriod'][index]]);
+    perDay = List.from(json['perDay']);
+    totalIncome = json['totalIncome'];
+    totalPerDay = json['totalPerDay'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'platforms': platforms,
+        'revenues': revenues,
+        'timePeriod': List.generate(timePeriods.length, (index) => timePeriods[index].index),
+        'perDay': perDay,
+        'totalIncome': totalIncome,
+        'totalPerDay': totalPerDay,
+      };
 }
 
 class CustomIncomeData {
@@ -23,6 +43,34 @@ class CustomIncomeData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+
+  CustomIncomeData();
+
+  CustomIncomeData.fromJson(Map<String, dynamic> json) {
+    names = List.from(json['names']);
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    amounts = List.from(json['amounts']);
+    interests = List.from(json['interests']);
+    revenues = List.from(json['revenues']);
+    ratesOfReturn = List.from(json['ratesOfReturn']);
+    perDay = List.from(json['perDay']);
+    totalInvested = json['totalInvested'];
+    totalPerDay = json['totalPerDay'];
+    totalRateOfReturn = json['totalRateOfReturn'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'icons': List.generate(icons.length, (index) => icons[index].codePoint),
+        'names': names,
+        'amounts': amounts,
+        'interests': interests,
+        'revenues': revenues,
+        'ratesOfReturn': ratesOfReturn,
+        'perDay': perDay,
+        'totalInvested': totalInvested,
+        'totalPerDay': totalPerDay,
+        'totalRateOfReturn': totalRateOfReturn
+      };
 }
 
 class IndexFundsData {
@@ -34,6 +82,30 @@ class IndexFundsData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+
+  IndexFundsData();
+
+  IndexFundsData.fromJson(Map<String, dynamic> json) {
+    names = List.from(json['names']);
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    amounts = List.from(json['amounts']);
+    ratesOfReturn = List.from(json['ratesOfReturn']);
+    perDay = List.from(json['perDay']);
+    totalInvested = json['totalInvested'];
+    totalPerDay = json['totalPerDay'];
+    totalRateOfReturn = json['totalRateOfReturn'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'icons': List.generate(icons.length, (index) => icons[index].codePoint),
+        'names': names,
+        'amounts': amounts,
+        'ratesOfReturn': ratesOfReturn,
+        'perDay': perDay,
+        'totalInvested': totalInvested,
+        'totalPerDay': totalPerDay,
+        'totalRateOfReturn': totalRateOfReturn
+      };
 }
 
 class PrivateFundsData {
@@ -45,6 +117,30 @@ class PrivateFundsData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+
+  PrivateFundsData();
+
+  PrivateFundsData.fromJson(Map<String, dynamic> json) {
+    names = List.from(json['names']);
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    amounts = List.from(json['amounts']);
+    ratesOfReturn = List.from(json['ratesOfReturn']);
+    perDay = List.from(json['perDay']);
+    totalInvested = json['totalInvested'];
+    totalPerDay = json['totalPerDay'];
+    totalRateOfReturn = json['totalRateOfReturn'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'icons': List.generate(icons.length, (index) => icons[index].codePoint),
+        'names': names,
+        'amounts': amounts,
+        'ratesOfReturn': ratesOfReturn,
+        'perDay': perDay,
+        'totalInvested': totalInvested,
+        'totalPerDay': totalPerDay,
+        'totalRateOfReturn': totalRateOfReturn
+      };
 }
 
 class RealEstateData {
@@ -60,6 +156,44 @@ class RealEstateData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+
+  RealEstateData();
+
+  RealEstateData.fromJson(Map<String, dynamic> json) {
+    locations = List.from(json['locations']);
+    descriptions = List.from(json['descriptions']);
+    capitals = List.from(json['capitals']);
+    payments = List.from(json['payments']);
+    revenues = List.from(json['revenues']);
+    appreciations = List.from(json['appreciations']);
+    registeredDates = List.generate(
+      locations.length,
+      (index) => DateTime.fromMillisecondsSinceEpoch(json['registeredDates'][index]),
+    );
+    ratesOfReturn = List.from(json['ratesOfReturn']);
+    perDay = List.from(json['perDay']);
+    totalInvested = json['totalInvested'];
+    totalPerDay = json['totalPerDay'];
+    totalRateOfReturn = json['totalRateOfReturn'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'locations': locations,
+        'descriptions': descriptions,
+        'capitals': capitals,
+        'payments': payments,
+        'revenues': revenues,
+        'appreciations': appreciations,
+        'registeredDates': List.generate(
+          locations.length,
+          (index) => registeredDates[index].millisecondsSinceEpoch,
+        ),
+        'ratesOfReturn': ratesOfReturn,
+        'perDay': perDay,
+        'totalInvested': totalInvested,
+        'totalPerDay': totalPerDay,
+        'totalRateOfReturn': totalRateOfReturn
+      };
 }
 
 class SalariesData {
@@ -70,6 +204,28 @@ class SalariesData {
   List<double> perDay = <double>[];
   double totalIncome = 0;
   double totalPerDay = 0;
+
+  SalariesData();
+
+  SalariesData.fromJson(Map<String, dynamic> json) {
+    names = List.from(json['names']);
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    salaries = List.from(json['salaries']);
+    timePeriods = List.generate(names.length, (index) => TimePeriod.values[json['timePeriod'][index]]);
+    perDay = List.from(json['perDay']);
+    totalIncome = json['totalIncome'];
+    totalPerDay = json['totalPerDay'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'icons': List.generate(icons.length, (index) => icons[index].codePoint),
+        'names': names,
+        'salaries': salaries,
+        'timePeriod': List.generate(timePeriods.length, (index) => timePeriods[index].index),
+        'perDay': perDay,
+        'totalIncome': totalIncome,
+        'totalPerDay': totalPerDay,
+      };
 }
 
 class SavingAccountsData {
@@ -81,6 +237,30 @@ class SavingAccountsData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+
+  SavingAccountsData();
+
+  SavingAccountsData.fromJson(Map<String, dynamic> json) {
+    names = List.from(json['names']);
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    amounts = List.from(json['amounts']);
+    ratesOfReturn = List.from(json['ratesOfReturn']);
+    perDay = List.from(json['perDay']);
+    totalInvested = json['totalInvested'];
+    totalPerDay = json['totalPerDay'];
+    totalRateOfReturn = json['totalRateOfReturn'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'icons': List.generate(icons.length, (index) => icons[index].codePoint),
+        'names': names,
+        'amounts': amounts,
+        'ratesOfReturn': ratesOfReturn,
+        'perDay': perDay,
+        'totalInvested': totalInvested,
+        'totalPerDay': totalPerDay,
+        'totalRateOfReturn': totalRateOfReturn
+      };
 }
 
 class StockAccountsData {
@@ -92,6 +272,30 @@ class StockAccountsData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+
+  StockAccountsData();
+
+  StockAccountsData.fromJson(Map<String, dynamic> json) {
+    names = List.from(json['names']);
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    amounts = List.from(json['amounts']);
+    ratesOfReturn = List.from(json['ratesOfReturn']);
+    perDay = List.from(json['perDay']);
+    totalInvested = json['totalInvested'];
+    totalPerDay = json['totalPerDay'];
+    totalRateOfReturn = json['totalRateOfReturn'];
+  }
+
+  Map<String, dynamic> toJson() => {
+        'icons': List.generate(icons.length, (index) => icons[index].codePoint),
+        'names': names,
+        'amounts': amounts,
+        'ratesOfReturn': ratesOfReturn,
+        'perDay': perDay,
+        'totalInvested': totalInvested,
+        'totalPerDay': totalPerDay,
+        'totalRateOfReturn': totalRateOfReturn
+      };
 }
 
 class TotalIncomeData {

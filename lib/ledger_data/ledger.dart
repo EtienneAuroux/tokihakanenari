@@ -1,8 +1,11 @@
+import 'dart:convert';
+
 import 'package:flutter/cupertino.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.
@@ -16,20 +19,22 @@ class Ledger extends ChangeNotifier {
     return _ledger;
   }
 
-  // Update
-  void update() {
-    notifyListeners();
+  // Loading preferences.
+  late SharedPreferences _preferences;
+  Future<void> init() async {
+    _preferences = await SharedPreferences.getInstance();
+    await _readLedger();
   }
 
   // Cards
-  final ContentCreationData _contentCreationData = ContentCreationData();
-  final CustomIncomeData _customIncomeData = CustomIncomeData();
-  final IndexFundsData _indexFundsData = IndexFundsData();
-  final PrivateFundsData _privateFundsData = PrivateFundsData();
-  final RealEstateData _realEstateData = RealEstateData();
-  final SalariesData _salariesData = SalariesData();
-  final SavingAccountsData _savingAccountsData = SavingAccountsData();
-  final StockAccountsData _stockAccountsData = StockAccountsData();
+  late ContentCreationData _contentCreationData;
+  late CustomIncomeData _customIncomeData;
+  late IndexFundsData _indexFundsData;
+  late PrivateFundsData _privateFundsData;
+  late RealEstateData _realEstateData;
+  late SalariesData _salariesData;
+  late SavingAccountsData _savingAccountsData;
+  late StockAccountsData _stockAccountsData;
 
   ContentCreationData get contentCreationData => _contentCreationData;
   CustomIncomeData get customIncomeData => _customIncomeData;
@@ -44,14 +49,13 @@ class Ledger extends ChangeNotifier {
   }
 
   // Carousel
-  final List<CardType> _carouselCards = <CardType>[
+  List<CardType> _carouselCards = <CardType>[
     CardType.totalIncome,
     CardType.addCard,
   ];
   List<CardType> get carouselCards => _carouselCards;
 
-  final defaultPage = 50 * 2; // Only 2 cards originally.
-  int _pageInFocus = 0;
+  int _pageInFocus = 50 * 2; // Only 2 cards originally.
   int get pageInFocus => _pageInFocus;
 
   void addCarouselCard(CardType cardType, {bool addCard = false}) {
@@ -166,6 +170,7 @@ class Ledger extends ChangeNotifier {
     _carouselCards.remove(cardType);
     _pageInFocus = 50 * _carouselCards.length + deletedCardIndex;
     notifyListeners();
+    _saveLedger();
   }
 
   void addCardData(CardType cardType, List<dynamic> data) {
@@ -238,6 +243,7 @@ class Ledger extends ChangeNotifier {
 
     _aggregateData(cardType);
     notifyListeners();
+    _saveLedger();
   }
 
   void deleteCardData(CardType cardType, int index) {
@@ -311,6 +317,7 @@ class Ledger extends ChangeNotifier {
 
     _aggregateData(cardType);
     notifyListeners();
+    _saveLedger();
   }
 
   void updateCardData(CardType cardType, int index, List<dynamic> data) {
@@ -373,6 +380,7 @@ class Ledger extends ChangeNotifier {
 
     _aggregateData(cardType);
     notifyListeners();
+    _saveLedger();
   }
 
   void _aggregateData(CardType cardType) {
@@ -402,6 +410,7 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.customIncome:
         _customIncomeData.totalInvested = 0;
+        _customIncomeData.totalPerDay = 0;
         double sumFullReturns = 0;
         for (int i = 0; i < _customIncomeData.names.length; i++) {
           _customIncomeData.totalInvested += _customIncomeData.amounts[i];
@@ -414,10 +423,11 @@ class Ledger extends ChangeNotifier {
             _customIncomeData.ratesOfReturn[i] += fullReturn;
           }
           _customIncomeData.perDay[i] = fullReturn / 365.25;
+          _customIncomeData.totalPerDay += _customIncomeData.perDay[i];
           sumFullReturns += _customIncomeData.ratesOfReturn[i];
         }
         _customIncomeData.totalRateOfReturn = sumFullReturns / _customIncomeData.names.length;
-        _customIncomeData.totalPerDay = _customIncomeData.totalInvested * _customIncomeData.totalRateOfReturn / 100 / 365.25;
+        // _customIncomeData.totalPerDay = _customIncomeData.totalInvested * _customIncomeData.totalRateOfReturn / 100 / 365.25;
         break;
       case CardType.indexFunds:
         _indexFundsData.totalInvested = 0;
@@ -594,5 +604,92 @@ class Ledger extends ChangeNotifier {
     }
     totalIncomeData.totalRateOfReturn /= totalIncomeData.totalInvested;
     return totalIncomeData;
+  }
+
+  // Read and Save data.
+  Future<void> _readLedger() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    String? carouselString = preferences.getString('carousel');
+    if (carouselString != null) {
+      List<dynamic> carouselIndexes = json.decode(carouselString);
+      _carouselCards = List.generate(carouselIndexes.length, (index) => CardType.values[carouselIndexes[index]]);
+      _pageInFocus = _carouselCards.length * 50 + _carouselCards.indexOf(CardType.totalIncome);
+    }
+
+    String? contentCreationString = preferences.getString(CardType.contentCreation.name);
+    if (contentCreationString != null) {
+      _contentCreationData = ContentCreationData.fromJson(json.decode(contentCreationString));
+    } else {
+      _contentCreationData = ContentCreationData();
+    }
+
+    String? customIncomeString = preferences.getString(CardType.customIncome.name);
+    if (customIncomeString != null) {
+      _customIncomeData = CustomIncomeData.fromJson(json.decode(customIncomeString));
+    } else {
+      _customIncomeData = CustomIncomeData();
+    }
+
+    String? indexFundsString = preferences.getString(CardType.indexFunds.name);
+    if (indexFundsString != null) {
+      _indexFundsData = IndexFundsData.fromJson(json.decode(indexFundsString));
+    } else {
+      _indexFundsData = IndexFundsData();
+    }
+
+    String? privateFundsString = preferences.getString(CardType.privateFunds.name);
+    if (privateFundsString != null) {
+      _privateFundsData = PrivateFundsData.fromJson(json.decode(privateFundsString));
+    } else {
+      _privateFundsData = PrivateFundsData();
+    }
+
+    String? realEstateString = preferences.getString(CardType.realEstate.name);
+    if (realEstateString != null) {
+      _realEstateData = RealEstateData.fromJson(json.decode(realEstateString));
+    } else {
+      _realEstateData = RealEstateData();
+    }
+
+    String? salariesString = preferences.getString(CardType.salaries.name);
+    if (salariesString != null) {
+      _salariesData = SalariesData.fromJson(json.decode(salariesString));
+    } else {
+      _salariesData = SalariesData();
+    }
+
+    String? savingAccountsString = preferences.getString(CardType.savingAccounts.name);
+    if (savingAccountsString != null) {
+      _savingAccountsData = SavingAccountsData.fromJson(json.decode(savingAccountsString));
+    } else {
+      _savingAccountsData = SavingAccountsData();
+    }
+
+    String? stockAccountsString = preferences.getString(CardType.stockAccounts.name);
+    if (stockAccountsString != null) {
+      _stockAccountsData = StockAccountsData.fromJson(json.decode(stockAccountsString));
+    } else {
+      _stockAccountsData = StockAccountsData();
+    }
+  }
+
+  Future<void> _saveLedger() async {
+    SharedPreferences preferences = await SharedPreferences.getInstance();
+    await preferences.setString(
+      'carousel',
+      json.encode(List.generate(
+        _carouselCards.length,
+        (index) => _carouselCards[index].index,
+      )),
+    );
+
+    await preferences.setString(CardType.contentCreation.name, json.encode(_contentCreationData.toJson()));
+    await preferences.setString(CardType.customIncome.name, json.encode(_customIncomeData.toJson()));
+    await preferences.setString(CardType.indexFunds.name, json.encode(_indexFundsData.toJson()));
+    await preferences.setString(CardType.privateFunds.name, json.encode(_privateFundsData.toJson()));
+    await preferences.setString(CardType.realEstate.name, json.encode(_realEstateData.toJson()));
+    await preferences.setString(CardType.salaries.name, json.encode(_salariesData.toJson()));
+    await preferences.setString(CardType.savingAccounts.name, json.encode(_savingAccountsData.toJson()));
+    await preferences.setString(CardType.stockAccounts.name, json.encode(_stockAccountsData.toJson()));
   }
 }

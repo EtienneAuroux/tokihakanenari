@@ -1,22 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/big_card.dart';
 import 'package:tokihakanenari/carousel.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 // import 'dart:developer' as developer;
 
-// import 'dart:developer' as developer;
-
-void main() {
-  runApp(const TokiHaKaneNari());
+void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  await Ledger().init();
+  runApp(const Okame());
 }
 
-class TokiHaKaneNari extends StatelessWidget {
-  const TokiHaKaneNari({super.key});
-
-  final String appTitle = '時は金なり';
+class Okame extends StatelessWidget {
+  const Okame({super.key});
+  final String appTitle = 'Okame';
 
   @override
   Widget build(BuildContext context) {

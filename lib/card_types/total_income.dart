@@ -22,7 +22,6 @@ class _TotalIncomeState extends State<TotalIncome> {
   List<Income> totalIncomes = <Income>[];
 
   Widget getCardContent(CardSize cardStatus, BuildContext context) {
-    Size size = MediaQuery.of(context).size;
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
