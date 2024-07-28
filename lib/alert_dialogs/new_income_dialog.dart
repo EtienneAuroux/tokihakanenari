@@ -4,6 +4,7 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
+import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 
 class NewIncomeDialog extends StatefulWidget {
   final CardType cardType;
@@ -23,7 +24,7 @@ class NewIncomeDialog extends StatefulWidget {
 
 class _NewIncomeDialogState extends State<NewIncomeDialog> {
   Ledger ledger = Ledger();
-  IconData icon = Icons.abc;
+  IconData icon = FontAwesome5.question;
   TimePeriod timePeriod = TimePeriod.month;
 
   TextEditingController nameController = TextEditingController();
@@ -40,6 +41,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.contentCreation:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
           return <dynamic>[
+            icon,
             nameController.text,
             amountController.text.replaceAll(',', '.'),
             timePeriod,
@@ -142,6 +144,29 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           const Align(
             alignment: Alignment.centerLeft,
             child: Text(
+              'icon:',
+              style: TextStyles.dialogText,
+            ),
+          ),
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return IconsDialog(
+                        cardType: cardType,
+                        onIconChosenCallback: (newIcon) {
+                          setState(() {
+                            icon = newIcon;
+                          });
+                        },
+                      );
+                    });
+              },
+              icon: Icon(icon)),
+          const Align(
+            alignment: Alignment.centerLeft,
+            child: Text(
               'platform:',
               style: TextStyles.dialogText,
             ),
@@ -206,7 +231,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     context: context,
                     builder: (BuildContext context) {
                       return IconsDialog(
-                        cardType: widget.cardType,
+                        cardType: cardType,
                         onIconChosenCallback: (newIcon) {
                           setState(() {
                             icon = newIcon;
@@ -384,7 +409,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     context: context,
                     builder: (BuildContext context) {
                       return IconsDialog(
-                        cardType: widget.cardType,
+                        cardType: cardType,
                         onIconChosenCallback: (newIcon) {
                           setState(() {
                             icon = newIcon;
@@ -464,7 +489,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     context: context,
                     builder: (BuildContext context) {
                       return IconsDialog(
-                        cardType: widget.cardType,
+                        cardType: cardType,
                         onIconChosenCallback: (newIcon) {
                           setState(() {
                             icon = newIcon;
