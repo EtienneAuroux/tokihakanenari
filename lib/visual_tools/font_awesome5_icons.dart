@@ -36,10 +36,125 @@ class FontAwesome5 {
     vk,
     vimeo_1,
     facebook_1,
-    facebook_messenger
+    facebook_messenger,
+    photo_video,
+    music_1,
+    telegram_plane,
+    comments,
   ];
 
-  static const List<IconData> financeIcons = <IconData>[money_bill_alt, money_bill_wave, money_check, chart_area, chart_bar, chart_line, chart_pie];
+  static const List<IconData> customIncomesIcons = <IconData>[
+    paypal_1,
+    apple_pay,
+    amazon_pay,
+    alipay,
+    gem,
+    project_diagram,
+    plane,
+    tree,
+    snowboarding,
+    snowflake,
+    snowman,
+    snowplow,
+    truck,
+    truck_loading,
+    truck_pickup,
+    car,
+    car_side,
+    luggage_cart,
+    baby_carriage,
+    cart_plus,
+    cart_arrow_down,
+    people_carry,
+    carrot,
+    glass_martini_alt,
+    glass_cheers,
+    wine_glass_alt,
+    wine_bottle,
+    cloud_1,
+  ];
+
+  static const List<IconData> indexFundsIcons = <IconData>[
+    hourglass_start,
+    hourglass_half,
+    hourglass_end,
+    hourglass_1,
+    globe_africa,
+    globe_americas,
+    globe_asia,
+    globe_europe,
+  ];
+
+  static const List<IconData> privateFundsIcons = <IconData>[
+    cogs,
+    tags,
+    tablets,
+    compass_1,
+    shopping_cart,
+    gamepad,
+    trophy_1,
+    globe_1,
+    terminal,
+    flask,
+    desktop,
+    space_shuttle,
+  ];
+
+  static const List<IconData> realEstateIcons = <IconData>[
+    building,
+    house_user,
+    laptop_house,
+    warehouse,
+    hospital,
+    hospital_alt,
+    hospital_user,
+    box_1,
+    boxes,
+    toolbox,
+    store,
+    store_alt,
+    home_1,
+    university,
+    couch,
+    pallet,
+  ];
+
+  static const List<IconData> salariesIcons = <IconData>[
+    money_bill_alt,
+    money_bill_wave,
+    money_check,
+    credit_card,
+    coins,
+    euro_sign,
+    dollar_sign,
+    yen_sign,
+    pound_sign,
+    rupee_sign,
+    won_sign,
+    lira_sign,
+    ruble_sign,
+    piggy_bank,
+    briefcase_1,
+    user_1,
+  ];
+
+  static const List<IconData> savingAccountsIcons = <IconData>[
+    piggy_bank,
+    coins,
+    save,
+    university,
+  ];
+
+  static const List<IconData> stockAccountsIcons = <IconData>[
+    signal_1,
+    gitter,
+    chart_area,
+    chart_bar,
+    chart_line,
+    chart_pie,
+    bitcoin,
+    calculator,
+  ];
 
   static const _kFontFam = 'FontAwesome5';
   static const String? _kFontPkg = null;

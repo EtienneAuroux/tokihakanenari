@@ -27,19 +27,19 @@ class _IconsDialogState extends State<IconsDialog> {
       case CardType.contentCreation:
         return FontAwesome5.contentCreationIcons;
       case CardType.customIncome:
-        return FontAwesome5.financeIcons;
+        return FontAwesome5.customIncomesIcons;
       case CardType.indexFunds:
-        return FontAwesome5.financeIcons;
+        return FontAwesome5.indexFundsIcons;
       case CardType.privateFunds:
-        return FontAwesome5.financeIcons;
+        return FontAwesome5.privateFundsIcons;
       case CardType.realEstate:
-        return FontAwesome5.financeIcons;
+        return FontAwesome5.realEstateIcons;
       case CardType.salaries:
-        return FontAwesome5.financeIcons;
+        return FontAwesome5.salariesIcons;
       case CardType.savingAccounts:
-        return FontAwesome5.financeIcons;
+        return FontAwesome5.savingAccountsIcons;
       case CardType.stockAccounts:
-        return FontAwesome5.financeIcons;
+        return FontAwesome5.stockAccountsIcons;
       case CardType.totalIncome:
         throw ErrorDescription('TotalIncome does not require Icons.');
     }
