@@ -6,7 +6,7 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 class IncomeContainer extends StatefulWidget {
   final CardType cardType;
@@ -33,7 +33,7 @@ class _IncomeContainerState extends State<IncomeContainer> {
   );
 
   List<Widget> getHeader(CardType cardType) {
-    if (widget.cardType == CardType.contentCreation || widget.cardType == CardType.realEstate || widget.cardType == CardType.totalIncome) {
+    if (widget.cardType == CardType.totalIncome) {
       return [
         Text(
           widget.income.id,

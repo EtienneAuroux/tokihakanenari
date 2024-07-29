@@ -5,7 +5,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.
@@ -78,7 +78,8 @@ class Ledger extends ChangeNotifier {
       case CardType.addCard:
         break;
       case CardType.contentCreation:
-        _contentCreationData.platforms.clear();
+        _contentCreationData.icons.clear();
+        _contentCreationData.names.clear();
         _contentCreationData.revenues.clear();
         _contentCreationData.timePeriods.clear();
         _contentCreationData.perDay.clear();
@@ -118,6 +119,7 @@ class Ledger extends ChangeNotifier {
         _privateFundsData.totalRateOfReturn = 0;
         break;
       case CardType.realEstate:
+        _realEstateData.icons.clear();
         _realEstateData.locations.clear();
         _realEstateData.descriptions.clear();
         _realEstateData.capitals.clear();
@@ -178,9 +180,10 @@ class Ledger extends ChangeNotifier {
       case CardType.addCard:
         throw ErrorDescription('It should not be possible to add data to AddCard.');
       case CardType.contentCreation:
-        _contentCreationData.platforms.add(data[0]);
-        _contentCreationData.revenues.add(double.parse(data[1]));
-        _contentCreationData.timePeriods.add(data[2]);
+        _contentCreationData.icons.add(data[0]);
+        _contentCreationData.names.add(data[1]);
+        _contentCreationData.revenues.add(double.parse(data[2]));
+        _contentCreationData.timePeriods.add(data[3]);
         _contentCreationData.perDay.add(0);
         break;
       case CardType.customIncome:
@@ -206,14 +209,15 @@ class Ledger extends ChangeNotifier {
         _privateFundsData.perDay.add(0);
         break;
       case CardType.realEstate:
-        _realEstateData.locations.add(data[0]);
-        _realEstateData.descriptions.add(data[1]);
-        _realEstateData.capitals.add(double.parse(data[2]));
-        _realEstateData.payments.add(double.parse(data[3]));
-        _realEstateData.revenues.add(double.parse(data[4]));
-        _realEstateData.appreciations.add(double.parse(data[5]));
+        _realEstateData.icons.add(data[0]);
+        _realEstateData.locations.add(data[1]);
+        _realEstateData.descriptions.add(data[2]);
+        _realEstateData.capitals.add(double.parse(data[3]));
+        _realEstateData.payments.add(double.parse(data[4]));
+        _realEstateData.revenues.add(double.parse(data[5]));
+        _realEstateData.appreciations.add(double.parse(data[6]));
         _realEstateData.ratesOfReturn.add(0);
-        _realEstateData.registeredDates.add(data[6]);
+        _realEstateData.registeredDates.add(data[7]);
         _realEstateData.perDay.add(0);
         break;
       case CardType.salaries:
@@ -251,7 +255,8 @@ class Ledger extends ChangeNotifier {
       case CardType.addCard:
         throw ErrorDescription('It should not be possible to delete data from AddCard.');
       case CardType.contentCreation:
-        _contentCreationData.platforms.removeAt(index);
+        _contentCreationData.icons.removeAt(index);
+        _contentCreationData.names.removeAt(index);
         _contentCreationData.revenues.removeAt(index);
         _contentCreationData.timePeriods.removeAt(index);
         _contentCreationData.perDay.removeAt(index);
@@ -280,6 +285,7 @@ class Ledger extends ChangeNotifier {
         _privateFundsData.perDay.removeAt(index);
         break;
       case CardType.realEstate:
+        _realEstateData.icons.removeAt(index);
         _realEstateData.locations.removeAt(index);
         _realEstateData.descriptions.removeAt(index);
         _realEstateData.capitals.removeAt(index);
@@ -325,9 +331,10 @@ class Ledger extends ChangeNotifier {
       case CardType.addCard:
         throw ErrorDescription('It should not be possible to add data to AddCard.');
       case CardType.contentCreation:
-        _contentCreationData.platforms[index] = data[0];
-        _contentCreationData.revenues[index] = double.parse(data[1]);
-        _contentCreationData.timePeriods[index] = data[2];
+        _contentCreationData.icons[index] = data[0];
+        _contentCreationData.names[index] = data[1];
+        _contentCreationData.revenues[index] = double.parse(data[2]);
+        _contentCreationData.timePeriods[index] = data[3];
         break;
       case CardType.customIncome:
         _customIncomeData.icons[index] = data[0];
@@ -348,12 +355,13 @@ class Ledger extends ChangeNotifier {
         _privateFundsData.ratesOfReturn[index] = double.parse(data[3]);
         break;
       case CardType.realEstate:
-        _realEstateData.locations[index] = data[0];
-        _realEstateData.descriptions[index] = data[1];
-        _realEstateData.capitals[index] = double.parse(data[2]);
-        _realEstateData.payments[index] = double.parse(data[3]);
-        _realEstateData.revenues[index] = double.parse(data[4]);
-        _realEstateData.appreciations[index] = double.parse(data[5]);
+        _realEstateData.icons[index] = data[0];
+        _realEstateData.locations[index] = data[1];
+        _realEstateData.descriptions[index] = data[2];
+        _realEstateData.capitals[index] = double.parse(data[3]);
+        _realEstateData.payments[index] = double.parse(data[4]);
+        _realEstateData.revenues[index] = double.parse(data[5]);
+        _realEstateData.appreciations[index] = double.parse(data[6]);
         // TODO REGISTERED DATE IS A PROBLEM HERE.
         break;
       case CardType.salaries:
@@ -390,7 +398,7 @@ class Ledger extends ChangeNotifier {
       case CardType.contentCreation:
         _contentCreationData.totalIncome = 0;
         _contentCreationData.totalPerDay = 0;
-        for (int i = 0; i < _contentCreationData.platforms.length; i++) {
+        for (int i = 0; i < _contentCreationData.names.length; i++) {
           switch (_contentCreationData.timePeriods[i]) {
             case TimePeriod.day:
               _contentCreationData.totalIncome += _contentCreationData.revenues[i] * 365.25;
@@ -608,64 +616,63 @@ class Ledger extends ChangeNotifier {
 
   // Read and Save data.
   Future<void> _readLedger() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    String? carouselString = preferences.getString('carousel');
+    String? carouselString = _preferences.getString('carousel');
     if (carouselString != null) {
       List<dynamic> carouselIndexes = json.decode(carouselString);
       _carouselCards = List.generate(carouselIndexes.length, (index) => CardType.values[carouselIndexes[index]]);
       _pageInFocus = _carouselCards.length * 50 + _carouselCards.indexOf(CardType.totalIncome);
     }
 
-    String? contentCreationString = preferences.getString(CardType.contentCreation.name);
+    String? contentCreationString = _preferences.getString(CardType.contentCreation.name);
     if (contentCreationString != null) {
       _contentCreationData = ContentCreationData.fromJson(json.decode(contentCreationString));
     } else {
       _contentCreationData = ContentCreationData();
     }
 
-    String? customIncomeString = preferences.getString(CardType.customIncome.name);
+    String? customIncomeString = _preferences.getString(CardType.customIncome.name);
     if (customIncomeString != null) {
       _customIncomeData = CustomIncomeData.fromJson(json.decode(customIncomeString));
     } else {
       _customIncomeData = CustomIncomeData();
     }
 
-    String? indexFundsString = preferences.getString(CardType.indexFunds.name);
+    String? indexFundsString = _preferences.getString(CardType.indexFunds.name);
     if (indexFundsString != null) {
       _indexFundsData = IndexFundsData.fromJson(json.decode(indexFundsString));
     } else {
       _indexFundsData = IndexFundsData();
     }
 
-    String? privateFundsString = preferences.getString(CardType.privateFunds.name);
+    String? privateFundsString = _preferences.getString(CardType.privateFunds.name);
     if (privateFundsString != null) {
       _privateFundsData = PrivateFundsData.fromJson(json.decode(privateFundsString));
     } else {
       _privateFundsData = PrivateFundsData();
     }
 
-    String? realEstateString = preferences.getString(CardType.realEstate.name);
+    String? realEstateString = _preferences.getString(CardType.realEstate.name);
     if (realEstateString != null) {
       _realEstateData = RealEstateData.fromJson(json.decode(realEstateString));
     } else {
       _realEstateData = RealEstateData();
     }
 
-    String? salariesString = preferences.getString(CardType.salaries.name);
+    String? salariesString = _preferences.getString(CardType.salaries.name);
     if (salariesString != null) {
       _salariesData = SalariesData.fromJson(json.decode(salariesString));
     } else {
       _salariesData = SalariesData();
     }
 
-    String? savingAccountsString = preferences.getString(CardType.savingAccounts.name);
+    String? savingAccountsString = _preferences.getString(CardType.savingAccounts.name);
     if (savingAccountsString != null) {
       _savingAccountsData = SavingAccountsData.fromJson(json.decode(savingAccountsString));
     } else {
       _savingAccountsData = SavingAccountsData();
     }
 
-    String? stockAccountsString = preferences.getString(CardType.stockAccounts.name);
+    String? stockAccountsString = _preferences.getString(CardType.stockAccounts.name);
     if (stockAccountsString != null) {
       _stockAccountsData = StockAccountsData.fromJson(json.decode(stockAccountsString));
     } else {
@@ -674,8 +681,7 @@ class Ledger extends ChangeNotifier {
   }
 
   Future<void> _saveLedger() async {
-    SharedPreferences preferences = await SharedPreferences.getInstance();
-    await preferences.setString(
+    await _preferences.setString(
       'carousel',
       json.encode(List.generate(
         _carouselCards.length,
@@ -683,13 +689,13 @@ class Ledger extends ChangeNotifier {
       )),
     );
 
-    await preferences.setString(CardType.contentCreation.name, json.encode(_contentCreationData.toJson()));
-    await preferences.setString(CardType.customIncome.name, json.encode(_customIncomeData.toJson()));
-    await preferences.setString(CardType.indexFunds.name, json.encode(_indexFundsData.toJson()));
-    await preferences.setString(CardType.privateFunds.name, json.encode(_privateFundsData.toJson()));
-    await preferences.setString(CardType.realEstate.name, json.encode(_realEstateData.toJson()));
-    await preferences.setString(CardType.salaries.name, json.encode(_salariesData.toJson()));
-    await preferences.setString(CardType.savingAccounts.name, json.encode(_savingAccountsData.toJson()));
-    await preferences.setString(CardType.stockAccounts.name, json.encode(_stockAccountsData.toJson()));
+    await _preferences.setString(CardType.contentCreation.name, json.encode(_contentCreationData.toJson()));
+    await _preferences.setString(CardType.customIncome.name, json.encode(_customIncomeData.toJson()));
+    await _preferences.setString(CardType.indexFunds.name, json.encode(_indexFundsData.toJson()));
+    await _preferences.setString(CardType.privateFunds.name, json.encode(_privateFundsData.toJson()));
+    await _preferences.setString(CardType.realEstate.name, json.encode(_realEstateData.toJson()));
+    await _preferences.setString(CardType.salaries.name, json.encode(_salariesData.toJson()));
+    await _preferences.setString(CardType.savingAccounts.name, json.encode(_savingAccountsData.toJson()));
+    await _preferences.setString(CardType.stockAccounts.name, json.encode(_stockAccountsData.toJson()));
   }
 }

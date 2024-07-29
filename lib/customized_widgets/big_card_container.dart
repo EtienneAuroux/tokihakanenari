@@ -82,15 +82,18 @@ class _BigCardContainerState extends State<BigCardContainer> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, size.height / 20, 0, 0),
+    return SafeArea(
       child: Column(
         children: [
           Text(
             widget.cardTitle,
             style: TextStyles.cardTitle,
           ),
-          Expanded(
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            constraints: BoxConstraints(maxHeight: size.height * 0.75),
             child: ListView.separated(
               separatorBuilder: (context, index) {
                 return const SizedBox(
@@ -141,36 +144,38 @@ class _BigCardContainerState extends State<BigCardContainer> {
               },
             ),
           ),
-          widget.cardType != CardType.totalIncome
-              ? GestureDetector(
-                  child: Container(
-                    alignment: Alignment.topCenter,
-                    height: size.height / 4,
-                    padding: const EdgeInsets.symmetric(vertical: 30),
-                    child: Text(
-                      'Double tap to add a new ${widget.itemName}.',
-                      style: TextStyles.cardBody,
-                      textAlign: TextAlign.center,
+          Expanded(
+            child: widget.cardType != CardType.totalIncome
+                ? GestureDetector(
+                    child: Container(
+                      alignment: Alignment.center,
+                      color: Colors.transparent,
+                      child: Visibility(
+                        visible: widget.incomes.isEmpty,
+                        child: Text(
+                          'Double tap to add a new ${widget.itemName}.',
+                          style: TextStyles.cardBody,
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
                     ),
-                  ),
-                  onDoubleTap: () {
-                    showDialog(
-                        context: context,
-                        builder: (BuildContext context) {
-                          return NewIncomeDialog(
-                            cardType: widget.cardType,
-                            onNewIncomeCallback: (List<dynamic> newIncome) {
-                              ledger.addCarouselCard(widget.cardType);
-                              ledger.addCardData(widget.cardType, newIncome);
-                              widget.onUpdateItems();
-                            },
-                          );
-                        });
-                  },
-                )
-              : SizedBox(
-                  height: size.shortestSide / 5,
-                ),
+                    onDoubleTap: () {
+                      showDialog(
+                          context: context,
+                          builder: (BuildContext context) {
+                            return NewIncomeDialog(
+                              cardType: widget.cardType,
+                              onNewIncomeCallback: (List<dynamic> newIncome) {
+                                ledger.addCarouselCard(widget.cardType);
+                                ledger.addCardData(widget.cardType, newIncome);
+                                widget.onUpdateItems();
+                              },
+                            );
+                          });
+                    },
+                  )
+                : const SizedBox(),
+          )
         ],
       ),
     );

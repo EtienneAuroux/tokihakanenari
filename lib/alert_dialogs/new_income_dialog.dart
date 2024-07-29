@@ -1,9 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/alert_dialogs/icons_dialog.dart';
+import 'package:tokihakanenari/customized_widgets/dialog_entry.dart';
+import 'package:tokihakanenari/customized_widgets/dialog_field.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
+import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 
 class NewIncomeDialog extends StatefulWidget {
   final CardType cardType;
@@ -23,7 +26,7 @@ class NewIncomeDialog extends StatefulWidget {
 
 class _NewIncomeDialogState extends State<NewIncomeDialog> {
   Ledger ledger = Ledger();
-  IconData icon = Icons.abc;
+  late IconData icon;
   TimePeriod timePeriod = TimePeriod.month;
 
   TextEditingController nameController = TextEditingController();
@@ -33,6 +36,31 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
   TextEditingController capitalPaymentController = TextEditingController();
   TextEditingController revenueController = TextEditingController();
 
+  IconData initializeIcon(CardType cardType) {
+    switch (cardType) {
+      case CardType.addCard:
+        throw ErrorDescription('AddCard does not require Icons.');
+      case CardType.contentCreation:
+        return FontAwesome5.contentCreationIcons.first;
+      case CardType.customIncome:
+        return FontAwesome5.customIncomesIcons.first;
+      case CardType.indexFunds:
+        return FontAwesome5.indexFundsIcons.first;
+      case CardType.privateFunds:
+        return FontAwesome5.privateFundsIcons.first;
+      case CardType.realEstate:
+        return FontAwesome5.realEstateIcons.first;
+      case CardType.salaries:
+        return FontAwesome5.salariesIcons.first;
+      case CardType.savingAccounts:
+        return FontAwesome5.savingAccountsIcons.first;
+      case CardType.stockAccounts:
+        return FontAwesome5.stockAccountsIcons.first;
+      case CardType.totalIncome:
+        throw ErrorDescription('TotalIncome does not require Icons.');
+    }
+  }
+
   List<dynamic>? getUserInput(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
@@ -40,6 +68,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.contentCreation:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
           return <dynamic>[
+            icon,
             nameController.text,
             amountController.text.replaceAll(',', '.'),
             timePeriod,
@@ -69,6 +98,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             revenueController.text.isNotEmpty &&
             interestController.text.isNotEmpty) {
           return <dynamic>[
+            icon,
             nameController.text,
             descriptionController.text,
             amountController.text.replaceAll(',', '.'),
@@ -139,39 +169,28 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
       case CardType.contentCreation:
         return [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'platform:',
-              style: TextStyles.dialogText,
-            ),
-          ),
-          TextField(
-            controller: nameController,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'average revenue per period',
-              child: Text(
-                'revenue:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: amountController,
-            textAlign: TextAlign.center,
-            keyboardType: TextInputType.number,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'period:',
-              style: TextStyles.dialogText,
-            ),
-          ),
+          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your content creation'),
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return IconsDialog(
+                        cardType: cardType,
+                        onIconChosenCallback: (newIcon) {
+                          setState(() {
+                            icon = newIcon;
+                          });
+                        },
+                      );
+                    });
+              },
+              icon: Icon(icon)),
+          const DialogEntry(entry: 'name', hint: 'the name of your content creation'),
+          DialogField(controller: nameController),
+          const DialogEntry(entry: 'revenue', hint: 'the average revenue that your content creation generate per period'),
+          DialogField(controller: amountController, inputType: TextInputType.number),
+          const DialogEntry(entry: 'period', hint: 'the frequency at which you receive the above revenue'),
           DropdownButton<TimePeriod>(
             value: timePeriod,
             isExpanded: true,
@@ -193,20 +212,14 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         ];
       case CardType.customIncome:
         return [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'icon:',
-              style: TextStyles.dialogText,
-            ),
-          ),
+          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your income'),
           IconButton(
               onPressed: () {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return IconsDialog(
-                        cardType: widget.cardType,
+                        cardType: cardType,
                         onIconChosenCallback: (newIcon) {
                           setState(() {
                             icon = newIcon;
@@ -216,175 +229,27 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     });
               },
               icon: Icon(icon)),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'the name of the income',
-              child: Text(
-                'name:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: nameController,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'the money invested',
-              child: Text(
-                'amount:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: amountController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'the revenues you receive from the income per month',
-              child: Text(
-                'revenue:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: revenueController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'average return per year',
-              child: Text(
-                'interest (%):',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: interestController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
+          const DialogEntry(entry: 'name', hint: 'the name of your income'),
+          DialogField(controller: nameController),
+          const DialogEntry(entry: 'amount', hint: 'the amount of money invested'),
+          DialogField(controller: amountController, inputType: TextInputType.number),
+          const DialogEntry(entry: 'revenue', hint: 'the revenue you receive from the income per month'), // TODO SHOULD BE PER PERIOD?
+          DialogField(controller: revenueController, inputType: TextInputType.number),
+          const DialogEntry(entry: 'return', hint: 'the average rate of return per year in %'),
+          DialogField(controller: interestController, inputType: TextInputType.number),
         ];
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to open AddNewDialog from TotalIncome.');
       case CardType.realEstate:
         return [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'the name or location of the property',
-              child: Text(
-                'location:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: nameController,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'surface, number of units, ...',
-              child: Text(
-                'description:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: descriptionController,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'the capital you own in the property',
-              child: Text(
-                'capital:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: amountController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'the monthly increase in capital',
-              child: Text(
-                'payment:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: capitalPaymentController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'the revenues you receive from the property per month',
-              child: Text(
-                'revenue:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: revenueController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'the average yearly increase in property value',
-              child: Text(
-                'appreciation (%):',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: interestController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
-        ];
-      case CardType.salaries:
-        return [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'icon:',
-              style: TextStyles.dialogText,
-            ),
-          ),
+          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your real estate property'),
           IconButton(
               onPressed: () {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return IconsDialog(
-                        cardType: widget.cardType,
+                        cardType: cardType,
                         onIconChosenCallback: (newIcon) {
                           setState(() {
                             icon = newIcon;
@@ -394,39 +259,43 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     });
               },
               icon: Icon(icon)),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'name:',
-              style: TextStyles.dialogText,
-            ),
-          ),
-          TextField(
-            controller: nameController,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'salary per period',
-              child: Text(
-                'salary:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: amountController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'period:',
-              style: TextStyles.dialogText,
-            ),
-          ),
+          const DialogEntry(entry: 'name', hint: 'the name of your real estate property'),
+          DialogField(controller: nameController),
+          const DialogEntry(entry: 'description', hint: 'surface, number of units, ...'),
+          DialogField(controller: descriptionController),
+          const DialogEntry(entry: 'capital', hint: 'the amount of money that you own in the property'),
+          DialogField(controller: amountController, inputType: TextInputType.number),
+          const DialogEntry(entry: 'payment', hint: 'the monthly contribution that you are making to the capital'), //TODO SHOULD BE PER PERIOD?
+          DialogField(controller: capitalPaymentController, inputType: TextInputType.number),
+          const DialogEntry(entry: 'revenue', hint: 'the revenue you receive from the property per month'), //TODO SHOULD BE PER PERIOD?
+          DialogField(controller: revenueController, inputType: TextInputType.number),
+          const DialogEntry(entry: 'appreciation', hint: 'the average yearly increase in property value per year (%)'),
+          DialogField(controller: interestController, inputType: TextInputType.number),
+        ];
+      case CardType.salaries:
+        return [
+          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your salary or its origin'),
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return IconsDialog(
+                        cardType: cardType,
+                        onIconChosenCallback: (newIcon) {
+                          setState(() {
+                            icon = newIcon;
+                          });
+                        },
+                      );
+                    });
+              },
+              icon: Icon(icon)),
+          const DialogEntry(entry: 'name', hint: 'the name of your salary or its origin'),
+          DialogField(controller: nameController),
+          const DialogEntry(entry: 'salary', hint: 'the amount of money that you receive as salary'),
+          DialogField(controller: amountController, inputType: TextInputType.number),
+          const DialogEntry(entry: 'period', hint: 'the frequency at which you receive your salary'),
           DropdownButton<TimePeriod>(
             value: timePeriod,
             isExpanded: true,
@@ -451,20 +320,14 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.savingAccounts:
       case CardType.stockAccounts:
         return [
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'icon:',
-              style: TextStyles.dialogText,
-            ),
-          ),
+          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your account'),
           IconButton(
               onPressed: () {
                 showDialog(
                     context: context,
                     builder: (BuildContext context) {
                       return IconsDialog(
-                        cardType: widget.cardType,
+                        cardType: cardType,
                         onIconChosenCallback: (newIcon) {
                           setState(() {
                             icon = newIcon;
@@ -474,47 +337,12 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     });
               },
               icon: Icon(icon)),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Text(
-              'name:',
-              style: TextStyles.dialogText,
-            ),
-          ),
-          TextField(
-            controller: nameController,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'the money invested',
-              child: Text(
-                'amount:',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: amountController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
-          const Align(
-            alignment: Alignment.centerLeft,
-            child: Tooltip(
-              message: 'average return per year',
-              child: Text(
-                'interest (%):',
-                style: TextStyles.dialogText,
-              ),
-            ),
-          ),
-          TextField(
-            controller: interestController,
-            keyboardType: TextInputType.number,
-            textAlign: TextAlign.center,
-          ),
+          const DialogEntry(entry: 'name', hint: 'the name of your account'),
+          DialogField(controller: nameController),
+          const DialogEntry(entry: 'amount', hint: 'the amount of money that you have invested'),
+          DialogField(controller: amountController, inputType: TextInputType.number),
+          const DialogEntry(entry: 'return', hint: 'the average yearly increase of your account per year (%)'),
+          DialogField(controller: interestController, inputType: TextInputType.number),
         ];
     }
   }
@@ -524,7 +352,8 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.addCard:
         throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
       case CardType.contentCreation:
-        nameController.text = ledger.contentCreationData.platforms[index];
+        icon = ledger.contentCreationData.icons[index];
+        nameController.text = ledger.contentCreationData.names[index];
         amountController.text = ledger.contentCreationData.revenues[index].toString();
         timePeriod = ledger.contentCreationData.timePeriods[index];
         break;
@@ -536,6 +365,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         interestController.text = ledger.customIncomeData.ratesOfReturn[index].toStringAsFixed(2);
         break;
       case CardType.realEstate:
+        icon = ledger.realEstateData.icons[index];
         nameController.text = ledger.realEstateData.locations[index];
         descriptionController.text = ledger.realEstateData.descriptions[index];
         amountController.text = ledger.realEstateData.capitals[index].toString();
@@ -582,6 +412,8 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
   void initState() {
     super.initState();
 
+    icon = initializeIcon(widget.cardType);
+
     if (widget.modify != null) {
       initializeControllers(widget.cardType, widget.modify!);
     }
@@ -624,17 +456,24 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                 ),
                 GridView(
                   shrinkWrap: true,
+                  physics: const NeverScrollableScrollPhysics(),
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
-                    mainAxisExtent: 45,
+                    mainAxisExtent: 40,
                   ),
                   children: getDialogContent(widget.cardType),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: TextButton(
-                    child: const Icon(Icons.check),
+                  child: IconButton(
+                    icon: const Icon(FontAwesome5.check_1),
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    constraints: const BoxConstraints(),
+                    style: ButtonStyle(
+                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
                     onPressed: () {
                       List<dynamic>? userInput = getUserInput(widget.cardType);
                       if (userInput != null) {

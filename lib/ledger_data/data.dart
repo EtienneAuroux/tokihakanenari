@@ -4,7 +4,8 @@ import 'package:tokihakanenari/my_enums.dart';
 // import 'dart:developer' as developer;
 
 class ContentCreationData {
-  List<String> platforms = <String>[];
+  List<IconData> icons = <IconData>[];
+  List<String> names = <String>[];
   List<double> revenues = <double>[];
   List<TimePeriod> timePeriods = <TimePeriod>[];
   List<double> perDay = <double>[];
@@ -14,16 +15,18 @@ class ContentCreationData {
   ContentCreationData();
 
   ContentCreationData.fromJson(Map<String, dynamic> json) {
-    platforms = List.from(json['platforms']);
+    names = List.from(json['names']);
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     revenues = List.from(json['revenues']);
-    timePeriods = List.generate(platforms.length, (index) => TimePeriod.values[json['timePeriod'][index]]);
+    timePeriods = List.generate(names.length, (index) => TimePeriod.values[json['timePeriod'][index]]);
     perDay = List.from(json['perDay']);
     totalIncome = json['totalIncome'];
     totalPerDay = json['totalPerDay'];
   }
 
   Map<String, dynamic> toJson() => {
-        'platforms': platforms,
+        'icons': List.generate(icons.length, (index) => icons[index].codePoint),
+        'names': names,
         'revenues': revenues,
         'timePeriod': List.generate(timePeriods.length, (index) => timePeriods[index].index),
         'perDay': perDay,
@@ -48,7 +51,7 @@ class CustomIncomeData {
 
   CustomIncomeData.fromJson(Map<String, dynamic> json) {
     names = List.from(json['names']);
-    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     amounts = List.from(json['amounts']);
     interests = List.from(json['interests']);
     revenues = List.from(json['revenues']);
@@ -87,7 +90,7 @@ class IndexFundsData {
 
   IndexFundsData.fromJson(Map<String, dynamic> json) {
     names = List.from(json['names']);
-    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     amounts = List.from(json['amounts']);
     ratesOfReturn = List.from(json['ratesOfReturn']);
     perDay = List.from(json['perDay']);
@@ -122,7 +125,7 @@ class PrivateFundsData {
 
   PrivateFundsData.fromJson(Map<String, dynamic> json) {
     names = List.from(json['names']);
-    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     amounts = List.from(json['amounts']);
     ratesOfReturn = List.from(json['ratesOfReturn']);
     perDay = List.from(json['perDay']);
@@ -144,6 +147,7 @@ class PrivateFundsData {
 }
 
 class RealEstateData {
+  List<IconData> icons = <IconData>[];
   List<String> locations = <String>[];
   List<String> descriptions = <String>[];
   List<double> capitals = <double>[];
@@ -161,6 +165,7 @@ class RealEstateData {
 
   RealEstateData.fromJson(Map<String, dynamic> json) {
     locations = List.from(json['locations']);
+    icons = List.generate(locations.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     descriptions = List.from(json['descriptions']);
     capitals = List.from(json['capitals']);
     payments = List.from(json['payments']);
@@ -178,6 +183,7 @@ class RealEstateData {
   }
 
   Map<String, dynamic> toJson() => {
+        'icons': List.generate(icons.length, (index) => icons[index].codePoint),
         'locations': locations,
         'descriptions': descriptions,
         'capitals': capitals,
@@ -209,7 +215,7 @@ class SalariesData {
 
   SalariesData.fromJson(Map<String, dynamic> json) {
     names = List.from(json['names']);
-    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     salaries = List.from(json['salaries']);
     timePeriods = List.generate(names.length, (index) => TimePeriod.values[json['timePeriod'][index]]);
     perDay = List.from(json['perDay']);
@@ -242,7 +248,7 @@ class SavingAccountsData {
 
   SavingAccountsData.fromJson(Map<String, dynamic> json) {
     names = List.from(json['names']);
-    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     amounts = List.from(json['amounts']);
     ratesOfReturn = List.from(json['ratesOfReturn']);
     perDay = List.from(json['perDay']);
@@ -277,7 +283,7 @@ class StockAccountsData {
 
   StockAccountsData.fromJson(Map<String, dynamic> json) {
     names = List.from(json['names']);
-    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'MaterialIcons'));
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     amounts = List.from(json['amounts']);
     ratesOfReturn = List.from(json['ratesOfReturn']);
     perDay = List.from(json['perDay']);
