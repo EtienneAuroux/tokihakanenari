@@ -82,15 +82,18 @@ class _BigCardContainerState extends State<BigCardContainer> {
   Widget build(BuildContext context) {
     Size size = MediaQuery.of(context).size;
 
-    return Container(
-      padding: EdgeInsets.fromLTRB(0, size.height / 20, 0, 0),
+    return SafeArea(
       child: Column(
         children: [
           Text(
             widget.cardTitle,
             style: TextStyles.cardTitle,
           ),
-          SizedBox(
+          const SizedBox(
+            height: 20,
+          ),
+          Container(
+            constraints: BoxConstraints(maxHeight: size.height * 0.75),
             child: ListView.separated(
               separatorBuilder: (context, index) {
                 return const SizedBox(
@@ -147,11 +150,13 @@ class _BigCardContainerState extends State<BigCardContainer> {
                     child: Container(
                       alignment: Alignment.center,
                       color: Colors.transparent,
-                      padding: const EdgeInsets.symmetric(vertical: 30),
-                      child: Text(
-                        'Double tap to add a new ${widget.itemName}.',
-                        style: TextStyles.cardBody,
-                        textAlign: TextAlign.center,
+                      child: Visibility(
+                        visible: widget.incomes.isEmpty,
+                        child: Text(
+                          'Double tap to add a new ${widget.itemName}.',
+                          style: TextStyles.cardBody,
+                          textAlign: TextAlign.center,
+                        ),
                       ),
                     ),
                     onDoubleTap: () {
@@ -169,9 +174,7 @@ class _BigCardContainerState extends State<BigCardContainer> {
                           });
                     },
                   )
-                : SizedBox(
-                    height: size.shortestSide / 5,
-                  ),
+                : const SizedBox(),
           )
         ],
       ),
