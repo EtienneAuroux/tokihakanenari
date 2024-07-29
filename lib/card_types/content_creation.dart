@@ -66,10 +66,10 @@ class _ContentCreationState extends State<ContentCreation> {
 
   List<Income> getContents() {
     List<Income> contents = <Income>[];
-    for (int i = 0; i < ledger.contentCreationData.platforms.length; i++) {
+    for (int i = 0; i < ledger.contentCreationData.names.length; i++) {
       contents.add(
         Income(
-          ledger.contentCreationData.platforms[i],
+          ledger.contentCreationData.names[i],
           ledger.contentCreationData.perDay[i],
           icon: ledger.contentCreationData.icons[i],
           revenue: ledger.contentCreationData.revenues[i],

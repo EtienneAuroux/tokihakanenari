@@ -74,6 +74,7 @@ class _RealEstateState extends State<RealEstate> {
         Income(
           ledger.realEstateData.locations[i],
           ledger.realEstateData.perDay[i],
+          icon: ledger.realEstateData.icons[i],
           description: ledger.realEstateData.descriptions[i],
           amount: ledger.realEstateData.capitals[i],
           payment: ledger.realEstateData.payments[i],

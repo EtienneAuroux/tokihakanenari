@@ -47,7 +47,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.privateFunds:
         return FontAwesome5.financeIcons.first;
       case CardType.realEstate:
-        throw ErrorDescription('RealEstate does not require Icons.');
+        return FontAwesome5.financeIcons.first;
       case CardType.salaries:
         return FontAwesome5.financeIcons.first;
       case CardType.savingAccounts:
@@ -192,7 +192,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           const Align(
             alignment: Alignment.centerLeft,
             child: Text(
-              'platform:',
+              'name:',
               style: TextStyles.dialogText,
             ),
           ),
@@ -332,6 +332,29 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         return [
           const Align(
             alignment: Alignment.centerLeft,
+            child: Text(
+              'icon:',
+              style: TextStyles.dialogText,
+            ),
+          ),
+          IconButton(
+              onPressed: () {
+                showDialog(
+                    context: context,
+                    builder: (BuildContext context) {
+                      return IconsDialog(
+                        cardType: cardType,
+                        onIconChosenCallback: (newIcon) {
+                          setState(() {
+                            icon = newIcon;
+                          });
+                        },
+                      );
+                    });
+              },
+              icon: Icon(icon)),
+          const Align(
+            alignment: Alignment.centerLeft,
             child: Tooltip(
               message: 'the name or location of the property',
               child: Text(
@@ -406,9 +429,9 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           const Align(
             alignment: Alignment.centerLeft,
             child: Tooltip(
-              message: 'the average yearly increase in property value',
+              message: 'the average yearly increase (%) in property value',
               child: Text(
-                'appreciation (%):',
+                'appreciation:',
                 style: TextStyles.dialogText,
               ),
             ),
@@ -575,7 +598,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
       case CardType.contentCreation:
         icon = ledger.contentCreationData.icons[index];
-        nameController.text = ledger.contentCreationData.platforms[index];
+        nameController.text = ledger.contentCreationData.names[index];
         amountController.text = ledger.contentCreationData.revenues[index].toString();
         timePeriod = ledger.contentCreationData.timePeriods[index];
         break;
@@ -587,6 +610,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         interestController.text = ledger.customIncomeData.ratesOfReturn[index].toStringAsFixed(2);
         break;
       case CardType.realEstate:
+        icon = ledger.realEstateData.icons[index];
         nameController.text = ledger.realEstateData.locations[index];
         descriptionController.text = ledger.realEstateData.descriptions[index];
         amountController.text = ledger.realEstateData.capitals[index].toString();
@@ -680,14 +704,20 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                   gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
                     crossAxisCount: 2,
                     crossAxisSpacing: 10,
-                    mainAxisExtent: 45,
+                    mainAxisExtent: 40,
                   ),
                   children: getDialogContent(widget.cardType),
                 ),
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
-                  child: TextButton(
-                    child: const Icon(Icons.check),
+                  child: IconButton(
+                    icon: const Icon(Icons.check),
+                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    constraints: const BoxConstraints(),
+                    style: ButtonStyle(
+                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      tapTargetSize: MaterialTapTargetSize.shrinkWrap,
+                    ),
                     onPressed: () {
                       List<dynamic>? userInput = getUserInput(widget.cardType);
                       if (userInput != null) {

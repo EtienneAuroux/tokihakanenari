@@ -79,7 +79,7 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.contentCreation:
         _contentCreationData.icons.clear();
-        _contentCreationData.platforms.clear();
+        _contentCreationData.names.clear();
         _contentCreationData.revenues.clear();
         _contentCreationData.timePeriods.clear();
         _contentCreationData.perDay.clear();
@@ -119,6 +119,7 @@ class Ledger extends ChangeNotifier {
         _privateFundsData.totalRateOfReturn = 0;
         break;
       case CardType.realEstate:
+        _realEstateData.icons.clear();
         _realEstateData.locations.clear();
         _realEstateData.descriptions.clear();
         _realEstateData.capitals.clear();
@@ -180,7 +181,7 @@ class Ledger extends ChangeNotifier {
         throw ErrorDescription('It should not be possible to add data to AddCard.');
       case CardType.contentCreation:
         _contentCreationData.icons.add(data[0]);
-        _contentCreationData.platforms.add(data[1]);
+        _contentCreationData.names.add(data[1]);
         _contentCreationData.revenues.add(double.parse(data[2]));
         _contentCreationData.timePeriods.add(data[3]);
         _contentCreationData.perDay.add(0);
@@ -208,14 +209,15 @@ class Ledger extends ChangeNotifier {
         _privateFundsData.perDay.add(0);
         break;
       case CardType.realEstate:
-        _realEstateData.locations.add(data[0]);
-        _realEstateData.descriptions.add(data[1]);
-        _realEstateData.capitals.add(double.parse(data[2]));
-        _realEstateData.payments.add(double.parse(data[3]));
-        _realEstateData.revenues.add(double.parse(data[4]));
-        _realEstateData.appreciations.add(double.parse(data[5]));
+        _realEstateData.icons.add(data[0]);
+        _realEstateData.locations.add(data[1]);
+        _realEstateData.descriptions.add(data[2]);
+        _realEstateData.capitals.add(double.parse(data[3]));
+        _realEstateData.payments.add(double.parse(data[4]));
+        _realEstateData.revenues.add(double.parse(data[5]));
+        _realEstateData.appreciations.add(double.parse(data[6]));
         _realEstateData.ratesOfReturn.add(0);
-        _realEstateData.registeredDates.add(data[6]);
+        _realEstateData.registeredDates.add(data[7]);
         _realEstateData.perDay.add(0);
         break;
       case CardType.salaries:
@@ -254,7 +256,7 @@ class Ledger extends ChangeNotifier {
         throw ErrorDescription('It should not be possible to delete data from AddCard.');
       case CardType.contentCreation:
         _contentCreationData.icons.removeAt(index);
-        _contentCreationData.platforms.removeAt(index);
+        _contentCreationData.names.removeAt(index);
         _contentCreationData.revenues.removeAt(index);
         _contentCreationData.timePeriods.removeAt(index);
         _contentCreationData.perDay.removeAt(index);
@@ -283,6 +285,7 @@ class Ledger extends ChangeNotifier {
         _privateFundsData.perDay.removeAt(index);
         break;
       case CardType.realEstate:
+        _realEstateData.icons.removeAt(index);
         _realEstateData.locations.removeAt(index);
         _realEstateData.descriptions.removeAt(index);
         _realEstateData.capitals.removeAt(index);
@@ -329,7 +332,7 @@ class Ledger extends ChangeNotifier {
         throw ErrorDescription('It should not be possible to add data to AddCard.');
       case CardType.contentCreation:
         _contentCreationData.icons[index] = data[0];
-        _contentCreationData.platforms[index] = data[1];
+        _contentCreationData.names[index] = data[1];
         _contentCreationData.revenues[index] = double.parse(data[2]);
         _contentCreationData.timePeriods[index] = data[3];
         break;
@@ -352,12 +355,13 @@ class Ledger extends ChangeNotifier {
         _privateFundsData.ratesOfReturn[index] = double.parse(data[3]);
         break;
       case CardType.realEstate:
-        _realEstateData.locations[index] = data[0];
-        _realEstateData.descriptions[index] = data[1];
-        _realEstateData.capitals[index] = double.parse(data[2]);
-        _realEstateData.payments[index] = double.parse(data[3]);
-        _realEstateData.revenues[index] = double.parse(data[4]);
-        _realEstateData.appreciations[index] = double.parse(data[5]);
+        _realEstateData.icons[index] = data[0];
+        _realEstateData.locations[index] = data[1];
+        _realEstateData.descriptions[index] = data[2];
+        _realEstateData.capitals[index] = double.parse(data[3]);
+        _realEstateData.payments[index] = double.parse(data[4]);
+        _realEstateData.revenues[index] = double.parse(data[5]);
+        _realEstateData.appreciations[index] = double.parse(data[6]);
         // TODO REGISTERED DATE IS A PROBLEM HERE.
         break;
       case CardType.salaries:
@@ -394,7 +398,7 @@ class Ledger extends ChangeNotifier {
       case CardType.contentCreation:
         _contentCreationData.totalIncome = 0;
         _contentCreationData.totalPerDay = 0;
-        for (int i = 0; i < _contentCreationData.platforms.length; i++) {
+        for (int i = 0; i < _contentCreationData.names.length; i++) {
           switch (_contentCreationData.timePeriods[i]) {
             case TimePeriod.day:
               _contentCreationData.totalIncome += _contentCreationData.revenues[i] * 365.25;

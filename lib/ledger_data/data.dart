@@ -5,7 +5,7 @@ import 'package:tokihakanenari/my_enums.dart';
 
 class ContentCreationData {
   List<IconData> icons = <IconData>[];
-  List<String> platforms = <String>[];
+  List<String> names = <String>[];
   List<double> revenues = <double>[];
   List<TimePeriod> timePeriods = <TimePeriod>[];
   List<double> perDay = <double>[];
@@ -15,10 +15,10 @@ class ContentCreationData {
   ContentCreationData();
 
   ContentCreationData.fromJson(Map<String, dynamic> json) {
-    platforms = List.from(json['platforms']);
-    icons = List.generate(platforms.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
+    names = List.from(json['names']);
+    icons = List.generate(names.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     revenues = List.from(json['revenues']);
-    timePeriods = List.generate(platforms.length, (index) => TimePeriod.values[json['timePeriod'][index]]);
+    timePeriods = List.generate(names.length, (index) => TimePeriod.values[json['timePeriod'][index]]);
     perDay = List.from(json['perDay']);
     totalIncome = json['totalIncome'];
     totalPerDay = json['totalPerDay'];
@@ -26,7 +26,7 @@ class ContentCreationData {
 
   Map<String, dynamic> toJson() => {
         'icons': List.generate(icons.length, (index) => icons[index].codePoint),
-        'platforms': platforms,
+        'names': names,
         'revenues': revenues,
         'timePeriod': List.generate(timePeriods.length, (index) => timePeriods[index].index),
         'perDay': perDay,
@@ -147,6 +147,7 @@ class PrivateFundsData {
 }
 
 class RealEstateData {
+  List<IconData> icons = <IconData>[];
   List<String> locations = <String>[];
   List<String> descriptions = <String>[];
   List<double> capitals = <double>[];
@@ -164,6 +165,7 @@ class RealEstateData {
 
   RealEstateData.fromJson(Map<String, dynamic> json) {
     locations = List.from(json['locations']);
+    icons = List.generate(locations.length, (index) => IconData(json['icons'][index], fontFamily: 'FontAwesome5'));
     descriptions = List.from(json['descriptions']);
     capitals = List.from(json['capitals']);
     payments = List.from(json['payments']);
@@ -181,6 +183,7 @@ class RealEstateData {
   }
 
   Map<String, dynamic> toJson() => {
+        'icons': List.generate(icons.length, (index) => icons[index].codePoint),
         'locations': locations,
         'descriptions': descriptions,
         'capitals': capitals,

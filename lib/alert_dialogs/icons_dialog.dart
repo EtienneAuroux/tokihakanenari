@@ -33,7 +33,7 @@ class _IconsDialogState extends State<IconsDialog> {
       case CardType.privateFunds:
         return FontAwesome5.financeIcons;
       case CardType.realEstate:
-        throw ErrorDescription('RealEstate does not require Icons.');
+        return FontAwesome5.financeIcons;
       case CardType.salaries:
         return FontAwesome5.financeIcons;
       case CardType.savingAccounts:
