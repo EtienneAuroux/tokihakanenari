@@ -18,39 +18,28 @@ class IconsDialog extends StatefulWidget {
 }
 
 class _IconsDialogState extends State<IconsDialog> {
-  final List<IconData> icons = [FontAwesome5.question];
+  late List<IconData> icons;
 
-  void getIcons(CardType cardType) {
+  List<IconData> getIcons(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
         throw ErrorDescription('AddCard does not require Icons.');
       case CardType.contentCreation:
-        icons.addAll([
-          FontAwesome5.youtube,
-          FontAwesome5.film,
-          FontAwesome5.instagram_1,
-          FontAwesome5.twitch,
-          FontAwesome5.patreon,
-          FontAwesome5.linkedin_1,
-          FontAwesome5.snapchat,
-          FontAwesome5.pinterest_1,
-          FontAwesome5.vk,
-          FontAwesome5.vimeo_1
-        ]);
+        return FontAwesome5.contentCreationIcons;
       case CardType.customIncome:
-      // TODO: Handle this case.
+        return FontAwesome5.financeIcons;
       case CardType.indexFunds:
-      // TODO: Handle this case.
+        return FontAwesome5.financeIcons;
       case CardType.privateFunds:
-      // TODO: Handle this case.
+        return FontAwesome5.financeIcons;
       case CardType.realEstate:
         throw ErrorDescription('RealEstate does not require Icons.');
       case CardType.salaries:
-      // TODO: Handle this case.
+        return FontAwesome5.financeIcons;
       case CardType.savingAccounts:
-      // TODO: Handle this case.
+        return FontAwesome5.financeIcons;
       case CardType.stockAccounts:
-      // TODO: Handle this case.
+        return FontAwesome5.financeIcons;
       case CardType.totalIncome:
         throw ErrorDescription('TotalIncome does not require Icons.');
     }
@@ -60,7 +49,7 @@ class _IconsDialogState extends State<IconsDialog> {
   void initState() {
     super.initState();
 
-    getIcons(widget.cardType);
+    icons = getIcons(widget.cardType);
   }
 
   @override

@@ -71,6 +71,7 @@ class _ContentCreationState extends State<ContentCreation> {
         Income(
           ledger.contentCreationData.platforms[i],
           ledger.contentCreationData.perDay[i],
+          icon: ledger.contentCreationData.icons[i],
           revenue: ledger.contentCreationData.revenues[i],
           timePeriod: ledger.contentCreationData.timePeriods[i],
         ),

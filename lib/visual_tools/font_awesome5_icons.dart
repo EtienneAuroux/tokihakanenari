@@ -24,6 +24,23 @@ import 'package:flutter/widgets.dart';
 class FontAwesome5 {
   FontAwesome5._();
 
+  static const List<IconData> contentCreationIcons = <IconData>[
+    film,
+    youtube,
+    instagram_1,
+    twitch,
+    patreon,
+    linkedin_1,
+    snapchat_ghost,
+    pinterest_1,
+    vk,
+    vimeo_1,
+    facebook_1,
+    facebook_messenger
+  ];
+
+  static const List<IconData> financeIcons = <IconData>[money_bill_alt, money_bill_wave, money_check, chart_area, chart_bar, chart_line, chart_pie];
+
   static const _kFontFam = 'FontAwesome5';
   static const String? _kFontPkg = null;
 

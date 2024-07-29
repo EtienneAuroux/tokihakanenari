@@ -24,7 +24,7 @@ class NewIncomeDialog extends StatefulWidget {
 
 class _NewIncomeDialogState extends State<NewIncomeDialog> {
   Ledger ledger = Ledger();
-  IconData icon = FontAwesome5.question;
+  late IconData icon;
   TimePeriod timePeriod = TimePeriod.month;
 
   TextEditingController nameController = TextEditingController();
@@ -33,6 +33,31 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
   TextEditingController interestController = TextEditingController();
   TextEditingController capitalPaymentController = TextEditingController();
   TextEditingController revenueController = TextEditingController();
+
+  IconData initializeIcon(CardType cardType) {
+    switch (cardType) {
+      case CardType.addCard:
+        throw ErrorDescription('AddCard does not require Icons.');
+      case CardType.contentCreation:
+        return FontAwesome5.contentCreationIcons.first;
+      case CardType.customIncome:
+        return FontAwesome5.financeIcons.first;
+      case CardType.indexFunds:
+        return FontAwesome5.financeIcons.first;
+      case CardType.privateFunds:
+        return FontAwesome5.financeIcons.first;
+      case CardType.realEstate:
+        throw ErrorDescription('RealEstate does not require Icons.');
+      case CardType.salaries:
+        return FontAwesome5.financeIcons.first;
+      case CardType.savingAccounts:
+        return FontAwesome5.financeIcons.first;
+      case CardType.stockAccounts:
+        return FontAwesome5.financeIcons.first;
+      case CardType.totalIncome:
+        throw ErrorDescription('TotalIncome does not require Icons.');
+    }
+  }
 
   List<dynamic>? getUserInput(CardType cardType) {
     switch (cardType) {
@@ -549,6 +574,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.addCard:
         throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
       case CardType.contentCreation:
+        icon = ledger.contentCreationData.icons[index];
         nameController.text = ledger.contentCreationData.platforms[index];
         amountController.text = ledger.contentCreationData.revenues[index].toString();
         timePeriod = ledger.contentCreationData.timePeriods[index];
@@ -606,6 +632,8 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
   @override
   void initState() {
     super.initState();
+
+    icon = initializeIcon(widget.cardType);
 
     if (widget.modify != null) {
       initializeControllers(widget.cardType, widget.modify!);
