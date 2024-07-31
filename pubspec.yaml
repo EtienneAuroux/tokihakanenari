@@ -78,6 +78,10 @@ flutter:
     - family: FontAwesome5
       fonts:
         - asset: assets/fonts/FontAwesome5.ttf
+
+    - family: MontserratAlternate
+      fonts:
+        - asset: assets/fonts/MontserratAlternates-Regular.ttf
   # fonts:
   #   - family: Schyler
   #     fonts:

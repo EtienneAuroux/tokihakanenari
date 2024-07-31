@@ -200,6 +200,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                 value: timePeriod,
                 child: Text(
                   timePeriod.name,
+                  style: TextStyles.dialogText,
                 ),
               );
             }).toList(),

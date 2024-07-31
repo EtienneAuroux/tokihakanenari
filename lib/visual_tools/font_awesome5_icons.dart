@@ -96,7 +96,10 @@ class FontAwesome5 {
     kickstarter,
     magic,
     bolt,
-    gavel, //3
+    gavel,
+    passport,
+    robot,
+    signature,
   ];
 
   static const List<IconData> indexFundsIcons = <IconData>[
@@ -115,7 +118,11 @@ class FontAwesome5 {
     chess_pawn,
     chess_queen,
     chess_rook,
-    crown, // 4
+    crown,
+    percent,
+    coins,
+    stopwatch,
+    calendar_alt,
   ];
 
   static const List<IconData> privateFundsIcons = <IconData>[
@@ -213,7 +220,9 @@ class FontAwesome5 {
     clock_1,
     umbrella_beach,
     user_shield,
-    hand_holding_heart, //2
+    hand_holding_heart,
+    hand_peace,
+    calendar_check,
   ];
 
   static const List<IconData> stockAccountsIcons = <IconData>[
@@ -237,7 +246,10 @@ class FontAwesome5 {
     book_reader,
     shipping_fast,
     dumbbell,
-    skull, //3
+    skull,
+    grin_beam_sweat,
+    search_dollar,
+    binoculars,
   ];
 
   static const _kFontFam = 'FontAwesome5';
