@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/alert_dialogs/new_income_dialog.dart';
 import 'package:tokihakanenari/customized_widgets/income_container.dart';
+import 'package:tokihakanenari/customized_widgets/tap_indicator.dart';
 import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
@@ -150,14 +151,19 @@ class _BigCardContainerState extends State<BigCardContainer> {
                     child: Container(
                       alignment: Alignment.center,
                       color: Colors.transparent,
-                      child: Visibility(
-                        visible: widget.incomes.isEmpty,
-                        child: Text(
-                          'Double tap to add a new ${widget.itemName}.',
-                          style: TextStyles.cardBody,
-                          textAlign: TextAlign.center,
-                        ),
-                      ),
+                      child: widget.incomes.length <= 3
+                          ? TapIndicator(
+                              size: size,
+                            )
+                          : null,
+                      // child: Visibility(
+                      //   visible: widget.incomes.isEmpty,
+                      //   child: Text(
+                      //     'Double tap to add a new ${widget.itemName}.',
+                      //     style: TextStyles.cardBody,
+                      //     textAlign: TextAlign.center,
+                      //   ),
+                      // ),
                     ),
                     onDoubleTap: () {
                       showDialog(
