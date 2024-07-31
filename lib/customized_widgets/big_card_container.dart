@@ -151,19 +151,11 @@ class _BigCardContainerState extends State<BigCardContainer> {
                     child: Container(
                       alignment: Alignment.center,
                       color: Colors.transparent,
-                      child: widget.incomes.length <= 3
+                      child: widget.incomes.isEmpty
                           ? TapIndicator(
                               size: size,
                             )
                           : null,
-                      // child: Visibility(
-                      //   visible: widget.incomes.isEmpty,
-                      //   child: Text(
-                      //     'Double tap to add a new ${widget.itemName}.',
-                      //     style: TextStyles.cardBody,
-                      //     textAlign: TextAlign.center,
-                      //   ),
-                      // ),
                     ),
                     onDoubleTap: () {
                       showDialog(

@@ -23,14 +23,26 @@ class _TapIndicatorState extends State<TapIndicator> with TickerProviderStateMix
   late final Animation<double> left;
   late final Animation<double> top;
   late final Animation<double> iconSize;
+  late final Animation<double> circleRadius;
 
   final Animatable<double> doubleClick = TweenSequence<double>([
     TweenSequenceItem<double>(
-      tween: Tween<double>(begin: 50, end: 45).chain(CurveTween(curve: Curves.linear)),
+      tween: Tween<double>(begin: 50, end: 40).chain(CurveTween(curve: Curves.linear)),
       weight: 1,
     ),
     TweenSequenceItem<double>(
-      tween: Tween<double>(begin: 45, end: 50).chain(CurveTween(curve: Curves.linear)),
+      tween: Tween<double>(begin: 40, end: 50).chain(CurveTween(curve: Curves.linear)),
+      weight: 1,
+    ),
+  ]);
+
+  final Animatable<double> circleExpansion = TweenSequence<double>([
+    TweenSequenceItem<double>(
+      tween: Tween<double>(begin: 0, end: 50).chain(CurveTween(curve: Curves.linear)),
+      weight: 1,
+    ),
+    TweenSequenceItem<double>(
+      tween: Tween<double>(begin: 50, end: 0).chain(CurveTween(curve: Curves.linear)),
       weight: 1,
     ),
   ]);
@@ -40,15 +52,17 @@ class _TapIndicatorState extends State<TapIndicator> with TickerProviderStateMix
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2),
+      duration: const Duration(seconds: 4),
     )..repeat(reverse: true);
 
     left = Tween<double>(begin: -100, end: (widget.size.width - beginIconSize) / 2)
-        .animate(CurvedAnimation(parent: controller, curve: const Interval(0, 0.8, curve: Curves.linear)));
-    top = Tween<double>(begin: widget.size.height, end: (widget.size.height - beginIconSize) / 2)
-        .animate(CurvedAnimation(parent: controller, curve: const Interval(0, 0.8, curve: Curves.linear)));
+        .animate(CurvedAnimation(parent: controller, curve: const Interval(0.5, 0.9, curve: Curves.linear)));
+    top = Tween<double>(begin: widget.size.height, end: (widget.size.height - beginIconSize) / 2 - 50)
+        .animate(CurvedAnimation(parent: controller, curve: const Interval(0.5, 0.9, curve: Curves.linear)));
 
-    iconSize = doubleClick.animate(CurvedAnimation(parent: controller, curve: const Interval(0.8, 1, curve: Curves.linear)));
+    iconSize = doubleClick.animate(CurvedAnimation(parent: controller, curve: const Interval(0.9, 1, curve: Curves.linear)));
+
+    circleRadius = circleExpansion.animate(CurvedAnimation(parent: controller, curve: const Interval(0.9, 1, curve: Curves.linear)));
 
     if (!widget.animationOn) {
       controller.dispose();
@@ -69,34 +83,45 @@ class _TapIndicatorState extends State<TapIndicator> with TickerProviderStateMix
           return Stack(
             children: [
               Positioned(
-                left: left.value,
-                top: top.value,
-                width: iconSize.value,
-                child: Icon(
-                  FontAwesome5.hand_point_up,
-                  size: iconSize.value,
-                ),
-              )
+                  left: left.value,
+                  top: top.value,
+                  width: iconSize.value,
+                  child: Stack(
+                    children: [
+                      Icon(
+                        FontAwesome5.hand_point_up,
+                        size: iconSize.value,
+                      ),
+                      CustomPaint(
+                        size: widget.size,
+                        painter: ClickCircle(const Offset(20, 0), circleRadius.value),
+                      )
+                    ],
+                  )),
             ],
           );
         });
-    // Size size = MediaQuery.of(context).size;
-    // return Stack(
-    //   children: [
-    //     PositionedTransition(
-    //       rect: RelativeRectTween(
-    //         begin: RelativeRect.fromSize(
-    //           Rect.fromLTWH(-size.width - 50, 50, iconSize.width, iconSize.height),
-    //           iconSize,
-    //         ),
-    //         end: RelativeRect.fromSize(
-    //           Rect.fromLTWH(0, 0, iconSize.width, iconSize.height),
-    //           iconSize,
-    //         ),
-    //       ).animate(CurvedAnimation(parent: controller, curve: Curves.linear)),
-    //       child: const Icon(FontAwesome5.hand_point_up),
-    //     )
-    //   ],
-    // );
+  }
+}
+
+class ClickCircle extends CustomPainter {
+  final Offset center;
+  final double radius;
+
+  ClickCircle(this.center, this.radius);
+
+  @override
+  void paint(Canvas canvas, Size size) {
+    final Paint paint = Paint()
+      ..color = Colors.black
+      ..strokeWidth = 4
+      ..style = PaintingStyle.stroke;
+
+    canvas.drawCircle(center, radius, paint);
+  }
+
+  @override
+  bool shouldRepaint(CustomPainter oldDelegate) {
+    return false;
   }
 }
