@@ -41,6 +41,18 @@ class FontAwesome5 {
     music_1,
     telegram_plane,
     comments,
+    images,
+    newspaper_1,
+    twitter_1,
+    xing,
+    weibo,
+    tencent_weibo,
+    renren_1,
+    reddit_alien,
+    audible,
+    sellcast,
+    tumblr_1,
+    hashtag,
   ];
 
   static const List<IconData> customIncomesIcons = <IconData>[
@@ -72,6 +84,19 @@ class FontAwesome5 {
     wine_glass_alt,
     wine_bottle,
     cloud_1,
+    etsy,
+    ebay,
+    adversal,
+    waze,
+    uber,
+    lyft,
+    dog,
+    shopping_bag,
+    barcode,
+    kickstarter,
+    magic,
+    bolt,
+    gavel, //3
   ];
 
   static const List<IconData> indexFundsIcons = <IconData>[
@@ -83,6 +108,14 @@ class FontAwesome5 {
     globe_americas,
     globe_asia,
     globe_europe,
+    chess,
+    chess_bishop,
+    chess_king,
+    chess_knight,
+    chess_pawn,
+    chess_queen,
+    chess_rook,
+    crown, // 4
   ];
 
   static const List<IconData> privateFundsIcons = <IconData>[
@@ -98,6 +131,14 @@ class FontAwesome5 {
     flask,
     desktop,
     space_shuttle,
+    car,
+    bolt,
+    home_1,
+    city,
+    newspaper_1,
+    network_wired,
+    wifi,
+    screwdriver,
   ];
 
   static const List<IconData> realEstateIcons = <IconData>[
@@ -117,6 +158,14 @@ class FontAwesome5 {
     university,
     couch,
     pallet,
+    city,
+    campground,
+    archway,
+    school,
+    hotel,
+    landmark,
+    shuttle_van,
+    trailer,
   ];
 
   static const List<IconData> salariesIcons = <IconData>[
@@ -136,6 +185,10 @@ class FontAwesome5 {
     piggy_bank,
     briefcase_1,
     user_1,
+    user_tie,
+    user_cog,
+    laptop,
+    pen_alt,
   ];
 
   static const List<IconData> savingAccountsIcons = <IconData>[
@@ -143,6 +196,24 @@ class FontAwesome5 {
     coins,
     save,
     university,
+    funnel_dollar,
+    flag_1,
+    sync_icon,
+    magnet_1,
+    life_ring,
+    percent,
+    percentage,
+    walking,
+    wallet,
+    balance_scale,
+    grin_beam,
+    hiking,
+    route,
+    user_clock,
+    clock_1,
+    umbrella_beach,
+    user_shield,
+    hand_holding_heart, //2
   ];
 
   static const List<IconData> stockAccountsIcons = <IconData>[
@@ -153,7 +224,20 @@ class FontAwesome5 {
     chart_line,
     chart_pie,
     bitcoin,
+    ethereum,
     calculator,
+    fire,
+    egg,
+    star_1,
+    dumpster,
+    dice_d20,
+    dice,
+    percent,
+    meteor,
+    book_reader,
+    shipping_fast,
+    dumbbell,
+    skull, //3
   ];
 
   static const _kFontFam = 'FontAwesome5';
