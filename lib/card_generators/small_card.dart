@@ -13,7 +13,7 @@ import 'package:tokihakanenari/card_types/total_income.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 class SmallCard extends StatefulWidget {
   final CardType cardType;

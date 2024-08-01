@@ -3,6 +3,7 @@ import 'package:tokihakanenari/card_generators/mini_card.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
+import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 
 // import 'dart:developer' as developer;
 
@@ -74,10 +75,11 @@ class _AddCardState extends State<AddCard> {
       case CardSize.mini:
         throw UnimplementedError('addCard should not be used as a mini card.');
       case CardSize.small:
-        return const Center(
+        return Center(
           child: Icon(
-            Icons.add_rounded,
-            size: 100,
+            FontAwesome5.plus_1,
+            size: 130,
+            color: Colors.black.withAlpha(150),
           ),
         );
     }
