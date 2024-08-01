@@ -70,7 +70,7 @@ class CardDecoration {
       case CardType.totalIncome:
         return [ColorPalette.oceanBlue.withAlpha(getColorAlpha(cardStatus)), ColorPalette.oceanOpal.withAlpha(getColorAlpha(cardStatus))];
       case CardType.settings:
-        throw ErrorDescription('not implemented'); // TODO IMPLEMENT.
+        return [ColorPalette.silkBeige, ColorPalette.silkWhite];
     }
   }
 

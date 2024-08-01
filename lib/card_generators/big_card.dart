@@ -7,6 +7,7 @@ import 'package:tokihakanenari/card_types/add_card.dart';
 import 'package:tokihakanenari/card_types/content_creation.dart';
 import 'package:tokihakanenari/card_types/custom_income.dart';
 import 'package:tokihakanenari/card_types/index_funds.dart';
+import 'package:tokihakanenari/card_types/settings.dart';
 import 'package:tokihakanenari/card_types/total_income.dart';
 import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/card_types/real_estate.dart';
@@ -23,7 +24,7 @@ class BigCard extends StatefulWidget {
   final CardStatus cardStatus;
   final void Function() onBigCardRollDone;
   final void Function() onBigCardUnrollDone;
-  final void Function(CardType cardType) onRequestToAddCard;
+  final void Function(CardType cardType) onRequestToDropCard;
   final void Function() onBigCardDropDone;
 
   const BigCard({
@@ -33,7 +34,7 @@ class BigCard extends StatefulWidget {
     required this.cardStatus,
     required this.onBigCardRollDone,
     required this.onBigCardUnrollDone,
-    required this.onRequestToAddCard,
+    required this.onRequestToDropCard,
     required this.onBigCardDropDone,
   });
 
@@ -56,7 +57,7 @@ class _BigCardState extends State<BigCard> {
           cardSize: CardSize.big,
           cardStatus: widget.cardStatus,
           onRequestToAddCard: (CardType cardType) {
-            widget.onRequestToAddCard(cardType);
+            widget.onRequestToDropCard(cardType);
           },
         );
       case CardType.contentCreation:
@@ -92,11 +93,14 @@ class _BigCardState extends State<BigCard> {
           cardSize: CardSize.big,
         );
       case CardType.totalIncome:
-        return const TotalIncome(
+        return TotalIncome(
           cardSize: CardSize.big,
+          onRequestSettings: () {
+            widget.onRequestToDropCard(CardType.settings);
+          },
         );
       case CardType.settings:
-        throw ErrorDescription('not implemented.'); // TODO IMPLEMENT
+        return const Settings();
     }
   }
 

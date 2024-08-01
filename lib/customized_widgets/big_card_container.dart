@@ -16,6 +16,7 @@ class BigCardContainer extends StatefulWidget {
   final CardType cardType;
   final List<Income> incomes;
   final void Function() onUpdateItems;
+  final void Function()? onRequestSettings;
 
   const BigCardContainer({
     super.key,
@@ -24,6 +25,7 @@ class BigCardContainer extends StatefulWidget {
     required this.cardType,
     required this.incomes,
     required this.onUpdateItems,
+    this.onRequestSettings,
   });
 
   @override
@@ -185,7 +187,9 @@ class _BigCardContainerState extends State<BigCardContainer> {
                       style: const ButtonStyle(
                         splashFactory: NoSplash.splashFactory,
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        widget.onRequestSettings?.call();
+                      },
                     ),
                   ),
           )

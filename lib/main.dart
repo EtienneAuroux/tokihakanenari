@@ -88,7 +88,7 @@ class _MainPageState extends State<MainPage> {
                 cardStatus = CardStatus.inert;
               });
             },
-            onRequestToAddCard: (cardType) {
+            onRequestToDropCard: (cardType) {
               setState(() {
                 newBigCard = cardType;
                 cardStatus = CardStatus.drop;
@@ -116,7 +116,7 @@ class _MainPageState extends State<MainPage> {
                 cardStatus = CardStatus.inert;
               });
             },
-            onRequestToAddCard: (cardType) {
+            onRequestToDropCard: (cardType) {
               throw ErrorDescription('It should not be possible to request AddCard from MainView.secondaryBigCard.');
             },
             onBigCardDropDone: () {
