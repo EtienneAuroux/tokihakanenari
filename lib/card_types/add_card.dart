@@ -77,8 +77,8 @@ class _AddCardState extends State<AddCard> {
       case CardSize.small:
         return Center(
           child: Icon(
-            FontAwesome5.plus_1,
-            size: 130,
+            Icons.add_chart_rounded,
+            size: 200,
             color: Colors.black.withAlpha(150),
           ),
         );

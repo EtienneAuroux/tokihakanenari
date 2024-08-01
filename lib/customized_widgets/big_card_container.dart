@@ -5,6 +5,7 @@ import 'package:tokihakanenari/customized_widgets/tap_indicator.dart';
 import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
 // import 'dart:developer' as developer;
@@ -172,7 +173,21 @@ class _BigCardContainerState extends State<BigCardContainer> {
                           });
                     },
                   )
-                : const SizedBox(),
+                : Align(
+                    alignment: Alignment.bottomRight,
+                    child: IconButton(
+                      icon: const Icon(
+                        FontAwesome5.tools_1,
+                        color: Colors.black,
+                        size: 40,
+                      ),
+                      padding: const EdgeInsets.all(15),
+                      style: const ButtonStyle(
+                        splashFactory: NoSplash.splashFactory,
+                      ),
+                      onPressed: () {},
+                    ),
+                  ),
           )
         ],
       ),
