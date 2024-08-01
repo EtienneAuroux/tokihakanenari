@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/customized_widgets/small_card_container.dart';
 import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
@@ -47,20 +48,9 @@ class _SalariesState extends State<Salaries> {
           ),
         );
       case CardSize.small:
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Salaries',
-                style: TextStyles.cardTitle,
-              ),
-              Text(
-                '${ledger.salariesData.totalPerDay.toStringAsFixed(2)} / day',
-                style: TextStyles.cardBody,
-              )
-            ],
-          ),
+        return SmallCardContainer(
+          cardTitle: 'Salaries',
+          perDay: ledger.salariesData.totalPerDay,
         );
     }
   }

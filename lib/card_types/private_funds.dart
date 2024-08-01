@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/customized_widgets/small_card_container.dart';
 import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
@@ -45,24 +46,10 @@ class _PrivateFundsState extends State<PrivateFunds> {
           ),
         );
       case CardSize.small:
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Private funds',
-                style: TextStyles.cardTitle,
-              ),
-              Text(
-                '${ledger.privateFundsData.totalPerDay.toStringAsFixed(2)} / day',
-                style: TextStyles.cardBody,
-              ),
-              Text(
-                '${ledger.privateFundsData.totalInvested} invested',
-                style: TextStyles.cardBody,
-              ),
-            ],
-          ),
+        return SmallCardContainer(
+          cardTitle: 'Private funds',
+          perDay: ledger.privateFundsData.totalPerDay,
+          investedAmount: ledger.privateFundsData.totalInvested,
         );
     }
   }

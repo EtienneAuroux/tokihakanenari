@@ -58,28 +58,28 @@ class _IncomeContainerState extends State<IncomeContainer> {
     if (cardType == CardType.contentCreation || cardType == CardType.salaries) {
       return [
         Text(
-          'revenue: ${widget.income.revenue} / ${widget.income.timePeriod!.name}',
+          'revenue: ${ledger.formatMonetaryAmounts(widget.income.revenue!)} / ${widget.income.timePeriod!.name}',
           style: TextStyles.incomeExtraInformation,
         ),
       ];
     } else if (cardType == CardType.customIncome) {
       return [
         Text(
-          'investment: ${widget.income.amount}',
+          'investment: ${ledger.formatMonetaryAmounts(widget.income.amount!)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'average return: ${widget.income.interest!.toStringAsFixed(2)} % / year',
+          'average return: ${ledger.formatMonetaryAmounts(widget.income.interest!)} % / year',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'generated revenue: ${widget.income.revenue} / year',
+          'generated revenue: ${ledger.formatMonetaryAmounts(widget.income.revenue!)} / year',
           style: TextStyles.incomeExtraInformation,
         )
       ];
@@ -93,28 +93,28 @@ class _IncomeContainerState extends State<IncomeContainer> {
           height: 5,
         ),
         Text(
-          'capital: ${widget.income.amount}',
+          'capital: ${ledger.formatMonetaryAmounts(widget.income.amount!)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'appreciation: ${widget.income.interest} % / year',
+          'appreciation: ${ledger.formatMonetaryAmounts(widget.income.interest!)} % / year',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'monthly payment: ${widget.income.payment}',
+          'monthly payment: ${ledger.formatMonetaryAmounts(widget.income.payment!)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'generated revenue: ${widget.income.revenue} / year',
+          'generated revenue: ${ledger.formatMonetaryAmounts(widget.income.revenue!)} / year',
           style: TextStyles.incomeExtraInformation,
         )
       ];
@@ -127,98 +127,98 @@ class _IncomeContainerState extends State<IncomeContainer> {
         case CardType.contentCreation:
           return [
             Text(
-              'revenue: ${ledger.contentCreationData.totalIncome} / year',
+              'revenue: ${ledger.formatMonetaryAmounts(ledger.contentCreationData.totalIncome)} / year',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.customIncome:
           return [
             Text(
-              'investment: ${ledger.customIncomeData.totalInvested}',
+              'investment: ${ledger.formatMonetaryAmounts(ledger.customIncomeData.totalInvested)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.customIncomeData.totalRateOfReturn.toStringAsFixed(2)}',
+              'average return: ${ledger.formatMonetaryAmounts(ledger.customIncomeData.totalRateOfReturn)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.indexFunds:
           return [
             Text(
-              'investment: ${ledger.indexFundsData.totalInvested}',
+              'investment: ${ledger.formatMonetaryAmounts(ledger.indexFundsData.totalInvested)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.indexFundsData.totalRateOfReturn.toStringAsFixed(2)}',
+              'average return: ${ledger.formatMonetaryAmounts(ledger.indexFundsData.totalRateOfReturn)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.privateFunds:
           return [
             Text(
-              'investment: ${ledger.privateFundsData.totalInvested}',
+              'investment: ${ledger.formatMonetaryAmounts(ledger.privateFundsData.totalInvested)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.privateFundsData.totalRateOfReturn.toStringAsFixed(2)}',
+              'average return: ${ledger.formatMonetaryAmounts(ledger.privateFundsData.totalRateOfReturn)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.realEstate:
           return [
             Text(
-              'investment: ${ledger.realEstateData.totalInvested}',
+              'investment: ${ledger.formatMonetaryAmounts(ledger.realEstateData.totalInvested)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.realEstateData.totalRateOfReturn.toStringAsFixed(2)}',
+              'average return: ${ledger.formatMonetaryAmounts(ledger.realEstateData.totalRateOfReturn)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.salaries:
           return [
             Text(
-              'revenue: ${ledger.salariesData.totalIncome} / year',
+              'revenue: ${ledger.formatMonetaryAmounts(ledger.salariesData.totalIncome)} / year',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.savingAccounts:
           return [
             Text(
-              'investment: ${ledger.savingAccountsData.totalInvested}',
+              'investment: ${ledger.formatMonetaryAmounts(ledger.savingAccountsData.totalInvested)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.savingAccountsData.totalRateOfReturn.toStringAsFixed(2)}',
+              'average return: ${ledger.formatMonetaryAmounts(ledger.savingAccountsData.totalRateOfReturn)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.stockAccounts:
           return [
             Text(
-              'investment: ${ledger.stockAccountsData.totalInvested}',
+              'investment: ${ledger.formatMonetaryAmounts(ledger.stockAccountsData.totalInvested)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.stockAccountsData.totalRateOfReturn.toStringAsFixed(2)}',
+              'average return: ${ledger.formatMonetaryAmounts(ledger.stockAccountsData.totalRateOfReturn)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
@@ -228,14 +228,14 @@ class _IncomeContainerState extends State<IncomeContainer> {
     } else {
       return [
         Text(
-          'investment: ${widget.income.amount!.round()}',
+          'investment: ${ledger.formatMonetaryAmounts(widget.income.amount!)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'average return: ${widget.income.interest!.toStringAsFixed(2)} % / year',
+          'average return: ${ledger.formatMonetaryAmounts(widget.income.interest!)} % / year',
           style: TextStyles.incomeExtraInformation,
         ),
       ];
@@ -310,7 +310,7 @@ class _IncomeContainerState extends State<IncomeContainer> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'income: ${widget.income.perDayIncome.toStringAsFixed(2)} / day',
+                    'income: ${ledger.formatMonetaryAmounts(widget.income.perDayIncome)} / day',
                     style: TextStyles.cardBody,
                   ),
                   RotatingButton(

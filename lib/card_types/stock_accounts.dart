@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/big_card_container.dart';
+import 'package:tokihakanenari/customized_widgets/small_card_container.dart';
 import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
@@ -45,24 +46,10 @@ class _StockAccountsState extends State<StockAccounts> {
           ),
         );
       case CardSize.small:
-        return Center(
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              const Text(
-                'Stock accounts',
-                style: TextStyles.cardTitle,
-              ),
-              Text(
-                '${ledger.stockAccountsData.totalPerDay.toStringAsFixed(2)} / day',
-                style: TextStyles.cardBody,
-              ),
-              Text(
-                '${ledger.stockAccountsData.totalInvested} invested',
-                style: TextStyles.cardBody,
-              ),
-            ],
-          ),
+        return SmallCardContainer(
+          cardTitle: 'Stock accounts',
+          perDay: ledger.stockAccountsData.totalPerDay,
+          investedAmount: ledger.stockAccountsData.totalInvested,
         );
     }
   }

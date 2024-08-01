@@ -48,6 +48,20 @@ class Ledger extends ChangeNotifier {
     return _getTotalIncomeData(_carouselCards);
   }
 
+  String formatMonetaryAmounts(double amount) {
+    if (amount >= 1e6 && amount < 1e9) {
+      return '${(amount / 1e6).toStringAsFixed(2)} M';
+    } else if (amount >= 1e9 && amount < 1e12) {
+      return '${(amount / 1e9).toStringAsFixed(2)} B';
+    } else if (amount >= 1e12 && amount < 1e15) {
+      return '${(amount / 1e12).toStringAsFixed(2)} T';
+    } else if (amount >= 1e15) {
+      return amount.toStringAsExponential(2);
+    } else {
+      return amount.toStringAsFixed(2);
+    }
+  }
+
   // Carousel
   List<CardType> _carouselCards = <CardType>[
     CardType.totalIncome,
