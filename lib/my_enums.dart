@@ -2,7 +2,7 @@ enum CardSize { big, mini, small }
 
 enum CardStatus { inert, unroll, roll, drop }
 
-enum CardType { addCard, contentCreation, customIncome, indexFunds, privateFunds, realEstate, salaries, savingAccounts, stockAccounts, totalIncome }
+enum CardType { addCard, contentCreation, customIncome, indexFunds, privateFunds, realEstate, salaries, savingAccounts, stockAccounts, totalIncome, settings }
 
 extension CardTypeExtension on CardType {
   String get title {
@@ -27,6 +27,8 @@ extension CardTypeExtension on CardType {
         return 'Stock accounts';
       case CardType.totalIncome:
         return 'Total income';
+      case CardType.settings:
+        return 'Settings';
     }
   }
 }

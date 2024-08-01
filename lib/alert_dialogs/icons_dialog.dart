@@ -42,6 +42,8 @@ class _IconsDialogState extends State<IconsDialog> {
         return FontAwesome5.stockAccountsIcons;
       case CardType.totalIncome:
         throw ErrorDescription('TotalIncome does not require Icons.');
+      case CardType.settings:
+        throw ErrorDescription('Settings do not require icons.');
     }
   }
 

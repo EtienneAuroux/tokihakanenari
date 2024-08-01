@@ -95,8 +95,8 @@ class _MainPageState extends State<MainPage> {
                 mainView = MainView.secondaryBigCard;
               });
             },
-            onDoneFading: () {
-              throw ErrorDescription('It should not be possible to fade from MainView.primaryBigCard.');
+            onBigCardDropDone: () {
+              throw ErrorDescription('It should not be possible to drop in from MainView.primaryBigCard.');
             },
           ),
         ),
@@ -119,7 +119,7 @@ class _MainPageState extends State<MainPage> {
             onRequestToAddCard: (cardType) {
               throw ErrorDescription('It should not be possible to request AddCard from MainView.secondaryBigCard.');
             },
-            onDoneFading: () {
+            onBigCardDropDone: () {
               setState(() {
                 cardStatus = CardStatus.inert;
               });

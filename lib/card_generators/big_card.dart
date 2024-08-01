@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -24,7 +24,7 @@ class BigCard extends StatefulWidget {
   final void Function() onBigCardRollDone;
   final void Function() onBigCardUnrollDone;
   final void Function(CardType cardType) onRequestToAddCard;
-  final void Function() onDoneFading;
+  final void Function() onBigCardDropDone;
 
   const BigCard({
     super.key,
@@ -34,7 +34,7 @@ class BigCard extends StatefulWidget {
     required this.onBigCardRollDone,
     required this.onBigCardUnrollDone,
     required this.onRequestToAddCard,
-    required this.onDoneFading,
+    required this.onBigCardDropDone,
   });
 
   @override
@@ -71,10 +71,6 @@ class _BigCardState extends State<BigCard> {
         return const IndexFunds(
           cardSize: CardSize.big,
         );
-      case CardType.totalIncome:
-        return const TotalIncome(
-          cardSize: CardSize.big,
-        );
       case CardType.privateFunds:
         return const PrivateFunds(
           cardSize: CardSize.big,
@@ -95,6 +91,12 @@ class _BigCardState extends State<BigCard> {
         return const StockAccounts(
           cardSize: CardSize.big,
         );
+      case CardType.totalIncome:
+        return const TotalIncome(
+          cardSize: CardSize.big,
+        );
+      case CardType.settings:
+        throw ErrorDescription('not implemented.'); // TODO IMPLEMENT
     }
   }
 
@@ -143,7 +145,7 @@ class _BigCardState extends State<BigCard> {
     setState(() {
       droppingIn = false;
     });
-    widget.onDoneFading();
+    widget.onBigCardDropDone();
   }
 
   @override

@@ -57,8 +57,6 @@ class CardDecoration {
         return [ColorPalette.sunOrange.withAlpha(getColorAlpha(cardStatus)), ColorPalette.sunYellow..withAlpha(getColorAlpha(cardStatus))];
       case CardType.indexFunds:
         return [ColorPalette.pigletPink.withAlpha(getColorAlpha(cardStatus)), ColorPalette.pigletPale.withAlpha(getColorAlpha(cardStatus))];
-      case CardType.totalIncome:
-        return [ColorPalette.oceanBlue.withAlpha(getColorAlpha(cardStatus)), ColorPalette.oceanOpal.withAlpha(getColorAlpha(cardStatus))];
       case CardType.privateFunds:
         return [ColorPalette.lusciousGreen.withAlpha(getColorAlpha(cardStatus)), ColorPalette.lusciousYellow.withAlpha(getColorAlpha(cardStatus))];
       case CardType.realEstate:
@@ -69,6 +67,10 @@ class CardDecoration {
         return [ColorPalette.exoticPink.withAlpha(getColorAlpha(cardStatus)), ColorPalette.exoticOrange.withAlpha(getColorAlpha(cardStatus))];
       case CardType.stockAccounts:
         return [ColorPalette.toxicYellow.withAlpha(getColorAlpha(cardStatus)), ColorPalette.toxicBlue.withAlpha(getColorAlpha(cardStatus))];
+      case CardType.totalIncome:
+        return [ColorPalette.oceanBlue.withAlpha(getColorAlpha(cardStatus)), ColorPalette.oceanOpal.withAlpha(getColorAlpha(cardStatus))];
+      case CardType.settings:
+        throw ErrorDescription('not implemented'); // TODO IMPLEMENT.
     }
   }
 
@@ -102,8 +104,6 @@ class CardDecoration {
         return ColorPalette.sunYellow.withAlpha(127);
       case CardType.indexFunds:
         return ColorPalette.pigletPale.withAlpha(127);
-      case CardType.totalIncome:
-        return ColorPalette.oceanOpal.withAlpha(127);
       case CardType.privateFunds:
         return ColorPalette.lusciousYellow.withAlpha(127);
       case CardType.realEstate:
@@ -114,6 +114,10 @@ class CardDecoration {
         return ColorPalette.exoticOrange.withAlpha(127);
       case CardType.stockAccounts:
         return ColorPalette.toxicBlue.withAlpha(127);
+      case CardType.totalIncome:
+        return ColorPalette.oceanOpal.withAlpha(127);
+      case CardType.settings:
+        throw ErrorDescription('There should be no small card Settings, therefore no need for a Settings splash color.');
     }
   }
 }

@@ -58,13 +58,15 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         return FontAwesome5.stockAccountsIcons.first;
       case CardType.totalIncome:
         throw ErrorDescription('TotalIncome does not require Icons.');
+      case CardType.settings:
+        throw ErrorDescription('Settings does not require Icons.');
     }
   }
 
   List<dynamic>? getUserInput(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from AddCard.');
       case CardType.contentCreation:
         if (nameController.text.isNotEmpty && amountController.text.isNotEmpty) {
           return <dynamic>[
@@ -89,7 +91,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           return null;
         }
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from TotalIncome.');
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from TotalIncome.');
       case CardType.realEstate:
         if (nameController.text.isNotEmpty &&
             descriptionController.text.isNotEmpty &&
@@ -135,21 +137,21 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         } else {
           return null;
         }
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from settings.');
     }
   }
 
   String getDialogTitle(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from AddCard.');
       case CardType.contentCreation:
         return 'New content:';
       case CardType.customIncome:
         return 'New income:';
       case CardType.indexFunds:
         return 'New fund:';
-      case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from TotalIncome.');
       case CardType.privateFunds:
         return 'New fund:';
       case CardType.realEstate:
@@ -160,13 +162,17 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         return 'New account:';
       case CardType.stockAccounts:
         return 'New account:';
+      case CardType.totalIncome:
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from settings.');
     }
   }
 
   List<Widget> getDialogContent(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from AddCard.');
       case CardType.contentCreation:
         return [
           const DialogEntry(entry: 'icon', hint: 'the icon that best represents your content creation'),
@@ -240,7 +246,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           DialogField(controller: interestController, inputType: TextInputType.number),
         ];
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from TotalIncome.');
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from TotalIncome.');
       case CardType.realEstate:
         return [
           const DialogEntry(entry: 'icon', hint: 'the icon that best represents your real estate property'),
@@ -345,13 +351,15 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
           const DialogEntry(entry: 'return', hint: 'the average yearly increase of your account per year (%)'),
           DialogField(controller: interestController, inputType: TextInputType.number),
         ];
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from settings.');
     }
   }
 
   void initializeControllers(CardType cardType, int index) {
     switch (cardType) {
       case CardType.addCard:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from AddCard.');
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from AddCard.');
       case CardType.contentCreation:
         icon = ledger.contentCreationData.icons[index];
         nameController.text = ledger.contentCreationData.names[index];
@@ -405,7 +413,9 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         interestController.text = ledger.stockAccountsData.ratesOfReturn[index].toStringAsFixed(2);
         break;
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to open AddNewDialog from TotalIncome.');
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to open NewIncomeDialog from settings.');
     }
   }
 

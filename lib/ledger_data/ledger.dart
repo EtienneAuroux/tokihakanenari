@@ -176,6 +176,8 @@ class Ledger extends ChangeNotifier {
         _stockAccountsData.totalRateOfReturn = 0;
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to remove TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to have a Settings card in the carousel.');
     }
 
     if (!_carouselCards.contains(CardType.addCard)) {
@@ -257,6 +259,8 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to add data to TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to add data to Settings.');
     }
 
     _aggregateData(cardType);
@@ -333,6 +337,8 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to delete data from TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to delete data from Settings.');
     }
 
     _aggregateData(cardType);
@@ -343,7 +349,7 @@ class Ledger extends ChangeNotifier {
   void updateCardData(CardType cardType, int index, List<dynamic> data) {
     switch (cardType) {
       case CardType.addCard:
-        throw ErrorDescription('It should not be possible to add data to AddCard.');
+        throw ErrorDescription('It should not be possible to update data to AddCard.');
       case CardType.contentCreation:
         _contentCreationData.icons[index] = data[0];
         _contentCreationData.names[index] = data[1];
@@ -397,7 +403,9 @@ class Ledger extends ChangeNotifier {
         _stockAccountsData.ratesOfReturn[index] = double.parse(data[3]);
         break;
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to add data to TotalIncome.');
+        throw ErrorDescription('It should not be possible to update data to TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to update data to Settings.');
     }
 
     _aggregateData(cardType);
@@ -408,7 +416,7 @@ class Ledger extends ChangeNotifier {
   void _aggregateData(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
-        throw ErrorDescription('It should not be possible to add data to AddCard.');
+        throw ErrorDescription('It should not be possible to aggregate data to AddCard.');
       case CardType.contentCreation:
         _contentCreationData.totalIncome = 0;
         _contentCreationData.totalPerDay = 0;
@@ -558,7 +566,9 @@ class Ledger extends ChangeNotifier {
         _stockAccountsData.totalPerDay = _stockAccountsData.totalInvested * _stockAccountsData.totalRateOfReturn / 100 / 365.25;
         break;
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to add data to TotalIncome manually.');
+        throw ErrorDescription('It should not be possible to aggregate data to TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to aggregate data to Settings.');
     }
   }
 
@@ -621,6 +631,8 @@ class Ledger extends ChangeNotifier {
           totalIncomeData.totalRateOfReturn += (_stockAccountsData.totalInvested * _stockAccountsData.totalRateOfReturn / 100);
           break;
         case CardType.totalIncome:
+          break;
+        case CardType.settings:
           break;
       }
     }

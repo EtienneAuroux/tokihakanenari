@@ -224,6 +224,8 @@ class _IncomeContainerState extends State<IncomeContainer> {
           ];
         case CardType.totalIncome:
           throw ErrorDescription('It should not be possible to have income.subIncomeCardType = totalIncome');
+        case CardType.settings:
+          throw ErrorDescription('It should not be possible to have income.subIncomeCardType = settings');
       }
     } else {
       return [
