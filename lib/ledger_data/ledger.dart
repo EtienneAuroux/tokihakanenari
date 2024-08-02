@@ -82,7 +82,7 @@ class Ledger extends ChangeNotifier {
       _carouselCards.insert(0, CardType.addCard);
     }
     notifyListeners();
-    if (_carouselCards.length == CardType.values.length && !addCard) {
+    if (_carouselCards.length == CardType.values.length - 1 && !addCard) {
       deleteCarouselCard(CardType.addCard);
     }
   }

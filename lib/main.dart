@@ -130,3 +130,13 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
+
+// TODO LOOK AT THIS:
+// static Event onMenuVisibilityChanged = Event();
+// static set showFilterSettings (bool newValue) {
+//     _showFilterSettings = newValue;
+//     onMenuVisibilityChanged.broadcast();
+//   }
+//   static bool get showFilterSettings => _showFilterSettings;
+// static bool get showFilterSettings => _showFilterSettings;
