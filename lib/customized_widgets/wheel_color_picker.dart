@@ -4,13 +4,17 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/visual_tools/drop_paths.dart';
 
 class WheelColorPicker extends StatefulWidget {
+  final double originalAngle;
   final Color shadedColor;
   final void Function(Color) onNewWheelColor;
+  final bool topGradient;
 
   const WheelColorPicker({
     super.key,
+    required this.originalAngle,
     required this.shadedColor,
     required this.onNewWheelColor,
+    this.topGradient = true,
   });
 
   @override
@@ -20,15 +24,15 @@ class WheelColorPicker extends StatefulWidget {
 class _WheelColorPickerState extends State<WheelColorPicker> {
   final Offset wheelCenter = const Offset(50, 50);
   late Offset cursorCenter;
-  late Color chosenColor;
 
   Offset getCursorPosition(double angle, double wheelRadius) {
     return Offset(wheelRadius * (cos(angle) + 1), wheelRadius * (sin(angle) + 1));
   }
 
   Color getWheelColor(double angle) {
+    angle %= 2 * pi;
     double hue = (angle / pi + 1) * 180 / 60;
-    int huePrime = hue.floor();
+    int huePrime = hue.floor() % 6;
     double f = hue - huePrime;
     int v = 255;
     int p = 0;
@@ -54,8 +58,7 @@ class _WheelColorPickerState extends State<WheelColorPicker> {
   void initState() {
     super.initState();
 
-    cursorCenter = getCursorPosition(0, 50);
-    chosenColor = getWheelColor(0);
+    cursorCenter = getCursorPosition(widget.originalAngle, 50);
   }
 
   @override
@@ -75,6 +78,7 @@ class _WheelColorPickerState extends State<WheelColorPicker> {
           const Offset(50, 50),
           cursorCenter,
           widget.shadedColor,
+          widget.topGradient,
         ),
       ),
     );
@@ -85,11 +89,17 @@ class WheelColorPickerPainter extends CustomPainter {
   final Offset center;
   final Offset cursorCenter;
   final Color chosenColor;
+  final bool topGradient;
 
   final double radius = 50;
   final double cursorRadius = 10;
 
-  WheelColorPickerPainter(this.center, this.cursorCenter, this.chosenColor);
+  WheelColorPickerPainter(
+    this.center,
+    this.cursorCenter,
+    this.chosenColor,
+    this.topGradient,
+  );
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -127,9 +137,12 @@ class WheelColorPickerPainter extends CustomPainter {
 
     // Choice
     Path path = Path();
-    path.addPath(DropPaths.getSplash(Size(radius, radius)), Offset(radius / 2, radius / 2));
+    if (topGradient) {
+      path.addPath(DropPaths.getPloc(Size(radius, radius)), Offset(radius / 2, radius / 2));
+    } else {
+      path.addPath(DropPaths.getBlop(Size(radius, radius)), Offset(radius / 2, radius / 2));
+    }
     canvas.drawPath(path, choicePaint);
-    // canvas.drawCircle(center, radius / 2, choicePaint);
   }
 
   @override

@@ -1,11 +1,13 @@
 import 'package:flutter/material.dart';
 
 class SliderShadePicker extends StatefulWidget {
+  final double originalShade;
   final Color wheelColor;
   final void Function(double) onNewSliderShade;
 
   const SliderShadePicker({
     super.key,
+    required this.originalShade,
     required this.wheelColor,
     required this.onNewSliderShade,
   });
@@ -16,7 +18,7 @@ class SliderShadePicker extends StatefulWidget {
 
 class _SliderShadePickerState extends State<SliderShadePicker> {
   final double sliderHeight = 100;
-  double shadeCursor = 50;
+  late double shadeCursor;
 
   double getSliderPosition(double pan) {
     if (pan < 0) {
@@ -26,6 +28,13 @@ class _SliderShadePickerState extends State<SliderShadePicker> {
     } else {
       return pan;
     }
+  }
+
+  @override
+  void initState() {
+    super.initState();
+
+    shadeCursor = (1 - widget.originalShade) * sliderHeight;
   }
 
   @override

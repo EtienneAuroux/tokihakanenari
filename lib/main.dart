@@ -140,3 +140,7 @@ class _MainPageState extends State<MainPage> {
 //   }
 //   static bool get showFilterSettings => _showFilterSettings;
 // static bool get showFilterSettings => _showFilterSettings;
+
+// Google Play Console
+// okame.developer
+// UH27ciTnhud1

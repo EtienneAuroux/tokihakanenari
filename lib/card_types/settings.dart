@@ -64,7 +64,10 @@ class _SettingsState extends State<Settings> {
             showDialog(
                 context: context,
                 builder: (BuildContext context) {
-                  return ColorPickerDialog(originalGradient: [ColorPalette.mirrorYellow, ColorPalette.mirrorGrey]);
+                  return ColorPickerDialog(
+                    originalColors: [ColorPalette.mirrorYellow, ColorPalette.mirrorGrey],
+                    onNewColors: (List<Color> newColors) {},
+                  );
                 });
           },
           child: Ink(
