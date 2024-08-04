@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:tokihakanenari/alert_dialogs/color_picker_dialog.dart';
+import 'package:tokihakanenari/customized_widgets/gradient_selector.dart';
+import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
@@ -35,6 +37,7 @@ class _SettingsState extends State<Settings> {
         underline: const SizedBox(),
         items: currencies.map<DropdownMenuItem<String>>((String currencys) {
           return DropdownMenuItem<String>(
+            alignment: Alignment.center,
             value: currencys,
             child: Center(
               child: Text(
@@ -57,32 +60,16 @@ class _SettingsState extends State<Settings> {
           style: TextStyles.cardBody,
         ),
       ),
-      Align(
-        alignment: Alignment.centerRight,
-        child: InkWell(
-          onTap: () {
-            showDialog(
-                context: context,
-                builder: (BuildContext context) {
-                  return ColorPickerDialog(
-                    originalColors: [ColorPalette.mirrorYellow, ColorPalette.mirrorGrey],
-                    onNewColors: (List<Color> newColors) {},
-                  );
-                });
-          },
-          child: Ink(
-            width: 120,
-            height: 50,
-            decoration: const BoxDecoration(
-              gradient: LinearGradient(
-                colors: [ColorPalette.mirrorYellow, ColorPalette.mirrorGrey],
-                begin: Alignment.bottomCenter,
-                end: Alignment.topRight,
-              ),
-              borderRadius: BorderRadius.all(Radius.circular(10)),
-            ),
-          ),
+      const GradientSelector(),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text(
+          'content creation:',
+          style: TextStyles.cardBody,
         ),
+      ),
+      const GradientSelector(
+        cardType: CardType.contentCreation,
       ),
     ];
   }

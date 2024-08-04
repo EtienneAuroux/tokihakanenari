@@ -1,8 +1,13 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/ledger_data/color_gradient.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'dart:developer' as developer;
 
 class CardDecoration {
+  Ledger ledger = Ledger();
+
   static BoxDecoration getBigCornerDecoration(CardType cardType) {
     return const BoxDecoration(
         gradient: LinearGradient(
@@ -13,6 +18,7 @@ class CardDecoration {
   }
 
   static BoxDecoration getBigDecoration(CardType cardType, {bool totalIncome = false}) {
+    ColorGradient bigGradient = getGradientColors(cardType, CardSize.big);
     return BoxDecoration(
       borderRadius: totalIncome ? BorderRadius.circular(10) : null,
       border: totalIncome
@@ -28,7 +34,7 @@ class CardDecoration {
             )
           : null,
       gradient: LinearGradient(
-        colors: getGradientColors(cardType, CardSize.big),
+        colors: [bigGradient.bottom, bigGradient.topRight],
         begin: Alignment.bottomCenter,
         end: Alignment.topRight,
       ),
@@ -43,41 +49,42 @@ class CardDecoration {
     }
   }
 
-  static List<Color> getGradientColors(CardType cardType, CardSize cardStatus) {
+  static ColorGradient getGradientColors(CardType cardType, CardSize cardStatus) {
     switch (cardType) {
       case CardType.addCard:
         if (cardStatus == CardSize.big) {
-          return [ColorPalette.silkBeige, ColorPalette.silkWhite];
+          return Ledger().addCardGradient;
         } else {
-          return [ColorPalette.mirrorGrey.withAlpha(getColorAlpha(cardStatus)), ColorPalette.mirrorYellow.withAlpha(getColorAlpha(cardStatus))];
+          return ColorGradient(ColorPalette.mirrorGrey.withAlpha(127), ColorPalette.mirrorYellow.withAlpha(127));
         }
       case CardType.contentCreation:
-        return [ColorPalette.sanguineRed.withAlpha(getColorAlpha(cardStatus)), ColorPalette.sanguineOrange.withAlpha(getColorAlpha(cardStatus))];
+        return Ledger().contentCreationData.gradient.alpha(getColorAlpha(cardStatus));
       case CardType.customIncome:
-        return [ColorPalette.sunOrange.withAlpha(getColorAlpha(cardStatus)), ColorPalette.sunYellow..withAlpha(getColorAlpha(cardStatus))];
+        return Ledger().customIncomeData.gradient.alpha(getColorAlpha(cardStatus));
       case CardType.indexFunds:
-        return [ColorPalette.pigletPink.withAlpha(getColorAlpha(cardStatus)), ColorPalette.pigletPale.withAlpha(getColorAlpha(cardStatus))];
+        return Ledger().indexFundsData.gradient.alpha(getColorAlpha(cardStatus));
       case CardType.privateFunds:
-        return [ColorPalette.lusciousGreen.withAlpha(getColorAlpha(cardStatus)), ColorPalette.lusciousYellow.withAlpha(getColorAlpha(cardStatus))];
+        return Ledger().privateFundsData.gradient.alpha(getColorAlpha(cardStatus));
       case CardType.realEstate:
-        return [ColorPalette.bleachedGreen.withAlpha(getColorAlpha(cardStatus)), ColorPalette.bleachedOrange.withAlpha(getColorAlpha(cardStatus))];
+        return Ledger().realEstateData.gradient.alpha(getColorAlpha(cardStatus));
       case CardType.salaries:
-        return [ColorPalette.orbitPurple.withAlpha(getColorAlpha(cardStatus)), ColorPalette.orbitGreen.withAlpha(getColorAlpha(cardStatus))];
+        return Ledger().salariesData.gradient.alpha(getColorAlpha(cardStatus));
       case CardType.savingAccounts:
-        return [ColorPalette.exoticPink.withAlpha(getColorAlpha(cardStatus)), ColorPalette.exoticOrange.withAlpha(getColorAlpha(cardStatus))];
+        return Ledger().savingAccountsData.gradient.alpha(getColorAlpha(cardStatus));
       case CardType.stockAccounts:
-        return [ColorPalette.toxicYellow.withAlpha(getColorAlpha(cardStatus)), ColorPalette.toxicBlue.withAlpha(getColorAlpha(cardStatus))];
+        return Ledger().stockAccountsData.gradient.alpha(getColorAlpha(cardStatus));
       case CardType.totalIncome:
-        return [ColorPalette.oceanBlue.withAlpha(getColorAlpha(cardStatus)), ColorPalette.oceanOpal.withAlpha(getColorAlpha(cardStatus))];
+        return Ledger().totalIncomeGradient.alpha(getColorAlpha(cardStatus));
       case CardType.settings:
-        return [ColorPalette.silkBeige, ColorPalette.silkWhite];
+        return ColorGradient(ColorPalette.silkBeige, ColorPalette.silkWhite);
     }
   }
 
   static BoxDecoration getMiniDecoration(CardType cardType) {
+    ColorGradient miniGradient = getGradientColors(cardType, CardSize.mini);
     return BoxDecoration(
         gradient: LinearGradient(
-          colors: getGradientColors(cardType, CardSize.mini),
+          colors: [miniGradient.bottom, miniGradient.topRight],
           begin: Alignment.bottomCenter,
           end: Alignment.topRight,
         ),
@@ -85,9 +92,10 @@ class CardDecoration {
   }
 
   static BoxDecoration getSmallDecoration(CardType cardType) {
+    ColorGradient smallGradient = getGradientColors(cardType, CardSize.small);
     return BoxDecoration(
         gradient: LinearGradient(
-          colors: getGradientColors(cardType, CardSize.small),
+          colors: [smallGradient.bottom, smallGradient.topRight],
           begin: Alignment.bottomCenter,
           end: Alignment.topRight,
         ),

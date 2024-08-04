@@ -1,14 +1,14 @@
-import 'dart:developer' as developer;
 import 'dart:math';
 
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/slider_shade_picker.dart';
 import 'package:tokihakanenari/customized_widgets/wheel_color_picker.dart';
+import 'package:tokihakanenari/ledger_data/color_gradient.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
 class ColorPickerDialog extends StatefulWidget {
-  final List<Color> originalColors;
+  final ColorGradient originalColors;
   final void Function(List<Color>) onNewColors;
 
   const ColorPickerDialog({
@@ -23,13 +23,13 @@ class ColorPickerDialog extends StatefulWidget {
 
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
   late Color wheelColorTopRight;
-  late Color wheelColorBottomLeft;
+  late Color wheelColorBottom;
   late double shadeTopRight;
-  late double shadeBottomLeft;
+  late double shadeBottom;
   late double angleTopRight;
-  late double angleBottomLeft;
+  late double angleBottom;
   late Color shadedColorTopRight;
-  late Color shadedColorBottomLeft;
+  late Color shadedColorBottom;
 
   Color shadeColor(Color color, double shade) {
     int red, green, blue;
@@ -60,7 +60,6 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
     double delta = maxColor - minColor;
 
     double hue, shade = maxColor;
-    developer.log('shade $shade');
     if (delta == 0) {
       hue = 0;
     } else if (maxColor == red) {
@@ -104,18 +103,18 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   }
 
   void reset() {
-    shadedColorBottomLeft = widget.originalColors.first;
-    shadedColorTopRight = widget.originalColors.last;
+    shadedColorBottom = widget.originalColors.bottom;
+    shadedColorTopRight = widget.originalColors.topRight;
 
-    List<double> angleShadeBottomLeft = getAngleAndShade(shadedColorBottomLeft);
-    angleBottomLeft = angleShadeBottomLeft.first;
-    shadeBottomLeft = angleShadeBottomLeft.last;
+    List<double> angleShadeBottom = getAngleAndShade(shadedColorBottom);
+    angleBottom = angleShadeBottom.first;
+    shadeBottom = angleShadeBottom.last;
 
     List<double> angleShadeTopRight = getAngleAndShade(shadedColorTopRight);
     angleTopRight = angleShadeTopRight.first;
     shadeTopRight = angleShadeTopRight.last;
 
-    wheelColorBottomLeft = getWheelColor(angleBottomLeft);
+    wheelColorBottom = getWheelColor(angleBottom);
     wheelColorTopRight = getWheelColor(angleTopRight);
     setState(() {});
   }
@@ -188,23 +187,23 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                 ),
               ),
               WheelColorPicker(
-                originalAngle: angleBottomLeft,
-                shadedColor: shadedColorBottomLeft,
+                originalAngle: angleBottom,
+                shadedColor: shadedColorBottom,
                 onNewWheelColor: (Color newWheelColor) {
                   setState(() {
-                    wheelColorBottomLeft = newWheelColor;
-                    shadedColorBottomLeft = shadeColor(wheelColorBottomLeft, shadeBottomLeft);
+                    wheelColorBottom = newWheelColor;
+                    shadedColorBottom = shadeColor(wheelColorBottom, shadeBottom);
                   });
                 },
                 topGradient: false,
               ),
               SliderShadePicker(
-                originalShade: shadeBottomLeft,
-                wheelColor: wheelColorBottomLeft,
+                originalShade: shadeBottom,
+                wheelColor: wheelColorBottom,
                 onNewSliderShade: (double newSliderShade) {
                   setState(() {
-                    shadeBottomLeft = newSliderShade;
-                    shadedColorBottomLeft = shadeColor(wheelColorBottomLeft, shadeBottomLeft);
+                    shadeBottom = newSliderShade;
+                    shadedColorBottom = shadeColor(wheelColorBottom, shadeBottom);
                   });
                 },
               ),
@@ -230,7 +229,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                 decoration: BoxDecoration(
                   borderRadius: const BorderRadius.all(Radius.circular(20)),
                   gradient: LinearGradient(
-                    colors: [shadedColorBottomLeft, shadedColorTopRight],
+                    colors: [shadedColorBottom, shadedColorTopRight],
                     begin: Alignment.bottomCenter,
                     end: Alignment.topRight,
                   ),
@@ -252,7 +251,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     onPressed: () {
-                      widget.onNewColors([shadedColorBottomLeft, shadedColorTopRight]);
+                      widget.onNewColors([shadedColorBottom, shadedColorTopRight]);
                       Navigator.of(context).pop();
                     },
                   ),

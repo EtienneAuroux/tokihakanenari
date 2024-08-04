@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/ledger_data/color_gradient.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/visual_tools/color_palette.dart';
 
 // import 'dart:developer' as developer;
 
@@ -11,6 +13,7 @@ class ContentCreationData {
   List<double> perDay = <double>[];
   double totalIncome = 0;
   double totalPerDay = 0;
+  ColorGradient gradient = ColorGradient(ColorPalette.sanguineRed, ColorPalette.sanguineOrange);
 
   ContentCreationData();
 
@@ -46,6 +49,7 @@ class CustomIncomeData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+  ColorGradient gradient = ColorGradient(ColorPalette.sunOrange, ColorPalette.sunYellow);
 
   CustomIncomeData();
 
@@ -85,6 +89,7 @@ class IndexFundsData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+  ColorGradient gradient = ColorGradient(ColorPalette.pigletPink, ColorPalette.pigletPale);
 
   IndexFundsData();
 
@@ -120,6 +125,7 @@ class PrivateFundsData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+  ColorGradient gradient = ColorGradient(ColorPalette.lusciousGreen, ColorPalette.lusciousYellow);
 
   PrivateFundsData();
 
@@ -160,6 +166,7 @@ class RealEstateData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+  ColorGradient gradient = ColorGradient(ColorPalette.bleachedGreen, ColorPalette.bleachedOrange);
 
   RealEstateData();
 
@@ -210,6 +217,7 @@ class SalariesData {
   List<double> perDay = <double>[];
   double totalIncome = 0;
   double totalPerDay = 0;
+  ColorGradient gradient = ColorGradient(ColorPalette.orbitPurple, ColorPalette.orbitGreen);
 
   SalariesData();
 
@@ -243,6 +251,7 @@ class SavingAccountsData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+  ColorGradient gradient = ColorGradient(ColorPalette.exoticPink, ColorPalette.exoticOrange);
 
   SavingAccountsData();
 
@@ -278,6 +287,7 @@ class StockAccountsData {
   double totalInvested = 0;
   double totalPerDay = 0;
   double totalRateOfReturn = 0;
+  ColorGradient gradient = ColorGradient(ColorPalette.toxicYellow, ColorPalette.toxicBlue);
 
   StockAccountsData();
 
@@ -310,4 +320,5 @@ class TotalIncomeData {
   double totalInvested = 0;
   double totalIncomePerDay = 0;
   double totalRateOfReturn = 0;
+  ColorGradient gradient = ColorGradient(ColorPalette.oceanBlue, ColorPalette.oceanOpal);
 }

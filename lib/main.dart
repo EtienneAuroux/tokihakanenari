@@ -40,6 +40,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  Ledger ledger = Ledger();
   MainView mainView = MainView.carousel;
   CardType bigCard = CardType.totalIncome;
   CardType newBigCard = CardType.contentCreation;
@@ -57,7 +58,7 @@ class _MainPageState extends State<MainPage> {
     Size screenSize = MediaQuery.of(context).size;
 
     return FloatingWaves(
-      colors: const [ColorPalette.mirrorYellow, ColorPalette.mirrorGrey],
+      colors: [ledger.backgroundGradient.bottom, ledger.backgroundGradient.topRight],
       child: Stack(children: [
         Carousel(
           cardStatus: cardStatus,
