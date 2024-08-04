@@ -196,6 +196,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                     shadedColorBottomLeft = shadeColor(wheelColorBottomLeft, shadeBottomLeft);
                   });
                 },
+                topGradient: false,
               ),
               SliderShadePicker(
                 originalShade: shadeBottomLeft,

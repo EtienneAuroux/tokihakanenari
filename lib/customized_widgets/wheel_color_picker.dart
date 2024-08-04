@@ -24,6 +24,7 @@ class WheelColorPicker extends StatefulWidget {
 class _WheelColorPickerState extends State<WheelColorPicker> {
   final Offset wheelCenter = const Offset(50, 50);
   late Offset cursorCenter;
+  late Color originalColor;
 
   Offset getCursorPosition(double angle, double wheelRadius) {
     return Offset(wheelRadius * (cos(angle) + 1), wheelRadius * (sin(angle) + 1));
@@ -59,6 +60,7 @@ class _WheelColorPickerState extends State<WheelColorPicker> {
     super.initState();
 
     cursorCenter = getCursorPosition(widget.originalAngle, 50);
+    originalColor = widget.shadedColor;
   }
 
   @override
@@ -77,7 +79,9 @@ class _WheelColorPickerState extends State<WheelColorPicker> {
         painter: WheelColorPickerPainter(
           const Offset(50, 50),
           cursorCenter,
+          getCursorPosition(widget.originalAngle, 50),
           widget.shadedColor,
+          originalColor,
           widget.topGradient,
         ),
       ),
@@ -88,7 +92,9 @@ class _WheelColorPickerState extends State<WheelColorPicker> {
 class WheelColorPickerPainter extends CustomPainter {
   final Offset center;
   final Offset cursorCenter;
+  final Offset originalCursorCenter;
   final Color chosenColor;
+  final Color originalColor;
   final bool topGradient;
 
   final double radius = 50;
@@ -97,7 +103,9 @@ class WheelColorPickerPainter extends CustomPainter {
   WheelColorPickerPainter(
     this.center,
     this.cursorCenter,
+    this.originalCursorCenter,
     this.chosenColor,
+    this.originalColor,
     this.topGradient,
   );
 
@@ -133,14 +141,18 @@ class WheelColorPickerPainter extends CustomPainter {
     canvas.drawCircle(center, radius, wheelPaint);
 
     // Cursor
-    canvas.drawCircle(cursorCenter, cursorRadius, cursorPaint);
+    if (chosenColor == originalColor) {
+      canvas.drawCircle(originalCursorCenter, cursorRadius, cursorPaint);
+    } else {
+      canvas.drawCircle(cursorCenter, cursorRadius, cursorPaint);
+    }
 
     // Choice
     Path path = Path();
     if (topGradient) {
       path.addPath(DropPaths.getPloc(Size(radius, radius)), Offset(radius / 2, radius / 2));
     } else {
-      path.addPath(DropPaths.getBlop(Size(radius, radius)), Offset(radius / 2, radius / 2));
+      path.addPath(DropPaths.getSplash(Size(radius, radius)), Offset(radius / 2, radius / 2));
     }
     canvas.drawPath(path, choicePaint);
   }

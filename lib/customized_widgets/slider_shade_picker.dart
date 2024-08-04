@@ -59,7 +59,10 @@ class _SliderShadePickerState extends State<SliderShadePicker> {
           ),
         ),
         child: CustomPaint(
-          painter: SliderCursorPainter(shadeCursor),
+          painter: SliderCursorPainter(
+            shadeCursor,
+            (1 - widget.originalShade) * sliderHeight,
+          ),
         ),
       ),
     );
@@ -68,17 +71,23 @@ class _SliderShadePickerState extends State<SliderShadePicker> {
 
 class SliderCursorPainter extends CustomPainter {
   final double position;
+  final double originalPosition;
 
   final double cursorRadius = 10;
 
   SliderCursorPainter(
     this.position,
+    this.originalPosition,
   );
 
   @override
   void paint(Canvas canvas, Size size) {
     Paint cursorPaint = Paint()..color = Colors.black.withAlpha(130);
-    canvas.drawCircle(Offset(-15, position), cursorRadius, cursorPaint);
+    if (position != originalPosition) {
+      canvas.drawCircle(Offset(-15, originalPosition), cursorRadius, cursorPaint);
+    } else {
+      canvas.drawCircle(Offset(-15, position), cursorRadius, cursorPaint);
+    }
   }
 
   @override
