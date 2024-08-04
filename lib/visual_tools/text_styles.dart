@@ -15,6 +15,13 @@ class TextStyles {
     decoration: TextDecoration.none,
   );
 
+  static const settingsBody = TextStyle(
+    fontSize: 18,
+    fontFamily: 'MontserratAlternate',
+    color: Colors.black,
+    decoration: TextDecoration.none,
+  );
+
   static const incomeExtraInformation = TextStyle(
     fontSize: 15,
     fontFamily: 'MontserratAlternate',

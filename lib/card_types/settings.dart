@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
-import 'package:tokihakanenari/alert_dialogs/color_picker_dialog.dart';
 import 'package:tokihakanenari/customized_widgets/gradient_selector.dart';
+import 'package:tokihakanenari/customized_widgets/rotating_button.dart';
 import 'package:tokihakanenari/my_enums.dart';
-import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
-
-import 'dart:developer' as developer;
 
 class Settings extends StatefulWidget {
   const Settings({
@@ -21,6 +17,7 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   List<String> currencies = ['none', '\$', '€', '£'];
   late String currency;
+  bool expanded = false;
 
   List<Widget> getSettingsGrid() {
     return [
@@ -28,7 +25,7 @@ class _SettingsState extends State<Settings> {
         alignment: Alignment.centerLeft,
         child: Text(
           'currency:',
-          style: TextStyles.cardBody,
+          style: TextStyles.settingsBody,
         ),
       ),
       DropdownButton<String>(
@@ -37,7 +34,6 @@ class _SettingsState extends State<Settings> {
         underline: const SizedBox(),
         items: currencies.map<DropdownMenuItem<String>>((String currencys) {
           return DropdownMenuItem<String>(
-            alignment: Alignment.center,
             value: currencys,
             child: Center(
               child: Text(
@@ -56,8 +52,8 @@ class _SettingsState extends State<Settings> {
       const Align(
         alignment: Alignment.centerLeft,
         child: Text(
-          'background:',
-          style: TextStyles.cardBody,
+          'home page:',
+          style: TextStyles.settingsBody,
         ),
       ),
       const GradientSelector(),
@@ -65,11 +61,74 @@ class _SettingsState extends State<Settings> {
         alignment: Alignment.centerLeft,
         child: Text(
           'content creation:',
-          style: TextStyles.cardBody,
+          style: TextStyles.settingsBody,
         ),
       ),
       const GradientSelector(
         cardType: CardType.contentCreation,
+      ),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text('custom incomes:', style: TextStyles.settingsBody),
+      ),
+      const GradientSelector(
+        cardType: CardType.customIncome,
+      ),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text('index funds:', style: TextStyles.settingsBody),
+      ),
+      const GradientSelector(
+        cardType: CardType.indexFunds,
+      ),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text('private funds:', style: TextStyles.settingsBody),
+      ),
+      const GradientSelector(
+        cardType: CardType.privateFunds,
+      ),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text('real estate:', style: TextStyles.settingsBody),
+      ),
+      const GradientSelector(
+        cardType: CardType.realEstate,
+      ),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text('salaries:', style: TextStyles.settingsBody),
+      ),
+      const GradientSelector(
+        cardType: CardType.salaries,
+      ),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text('saving accounts:', style: TextStyles.settingsBody),
+      ),
+      const GradientSelector(
+        cardType: CardType.savingAccounts,
+      ),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text('stock accounts:', style: TextStyles.settingsBody),
+      ),
+      const GradientSelector(
+        cardType: CardType.stockAccounts,
+      ),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text('total income:', style: TextStyles.settingsBody),
+      ),
+      const GradientSelector(
+        cardType: CardType.totalIncome,
+      ),
+      const Align(
+        alignment: Alignment.centerLeft,
+        child: Text('add income:', style: TextStyles.settingsBody),
+      ),
+      const GradientSelector(
+        cardType: CardType.addCard,
       ),
     ];
   }
@@ -105,29 +164,37 @@ class _SettingsState extends State<Settings> {
               ],
             ),
             const Text(
-              '(not yet implemented)',
+              '(work in progress)',
               style: TextStyles.incomeExtraInformation,
             ),
-            SingleChildScrollView(
-              padding: const EdgeInsets.all(20),
-              child: Column(
-                children: [
-                  GridView(
-                    shrinkWrap: true,
-                    physics: const NeverScrollableScrollPhysics(),
-                    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                      crossAxisCount: 2,
-                      crossAxisSpacing: 10,
-                      mainAxisExtent: 40,
-                    ),
-                    children: getSettingsGrid(),
-                  ),
-                  const Divider(
-                    thickness: 3,
-                    color: Colors.red,
-                  )
-                ],
+            Row(
+              children: [
+                Text(
+                  'Colors',
+                  style: TextStyles.settingsBody,
+                ),
+                RotatingButton(
+                    iconData: Icons.arrow_drop_down,
+                    onPressed: (bool newExpanded) {
+                      setState(() {
+                        expanded = newExpanded;
+                      });
+                    })
+              ],
+            ),
+            GridView(
+              shrinkWrap: true,
+              gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                crossAxisCount: 2,
+                crossAxisSpacing: 0,
+                mainAxisSpacing: 10,
+                mainAxisExtent: 50,
               ),
+              children: getSettingsGrid(),
+            ),
+            const Divider(
+              thickness: 3,
+              color: Colors.red,
             )
           ],
         ),
