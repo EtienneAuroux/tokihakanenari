@@ -1,11 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/gradient_selector.dart';
 import 'package:tokihakanenari/customized_widgets/setting_container.dart';
+import 'package:tokihakanenari/customized_widgets/setting_dropdown.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 class Settings extends StatefulWidget {
   const Settings({
@@ -19,7 +20,31 @@ class Settings extends StatefulWidget {
 class _SettingsState extends State<Settings> {
   List<String> currencies = ['none', '\$', '€', '£'];
   late String currency;
+  List<String> languages = ['English', 'French', 'Japanese'];
+  late String language;
   Setting setting = Setting.none;
+
+  List<Widget> getGeneralSettings() {
+    return [
+      SettingDropdown(
+          title: 'Currency',
+          values: currencies,
+          onNewValue: (dynamic newCurrency) {
+            developer.log(newCurrency.toString());
+            setState(() {
+              currency = newCurrency;
+            });
+          }),
+      SettingDropdown(
+          title: 'Language',
+          values: languages,
+          onNewValue: (dynamic newLanguage) {
+            setState(() {
+              language = newLanguage;
+            });
+          }),
+    ];
+  }
 
   List<Widget> getColorSettings() {
     return [
@@ -69,11 +94,16 @@ class _SettingsState extends State<Settings> {
     ];
   }
 
+  List<Widget> getDangerSettings() {
+    return [];
+  }
+
   @override
   void initState() {
     super.initState();
 
     currency = currencies.first;
+    language = languages.first;
   }
 
   @override
@@ -114,14 +144,17 @@ class _SettingsState extends State<Settings> {
                   children: [
                     SettingContainer(
                       title: 'General',
-                      milliseconds: 500,
+                      milliseconds: 300,
                       open: setting == Setting.general,
                       onOpen: (bool open) {
                         setState(() {
                           setting = open ? Setting.general : Setting.none;
                         });
                       },
-                      children: [],
+                      children: getGeneralSettings(),
+                    ),
+                    const SizedBox(
+                      height: 10,
                     ),
                     SettingContainer(
                       title: 'Color',
@@ -134,6 +167,9 @@ class _SettingsState extends State<Settings> {
                       },
                       children: getColorSettings(),
                     ),
+                    const SizedBox(
+                      height: 10,
+                    ),
                     SettingContainer(
                       title: 'Danger',
                       milliseconds: 300,
@@ -144,7 +180,7 @@ class _SettingsState extends State<Settings> {
                         });
                       },
                       borderColor: Colors.red,
-                      children: [],
+                      children: getDangerSettings(),
                     )
                   ],
                 ),

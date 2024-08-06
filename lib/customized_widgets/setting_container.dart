@@ -27,14 +27,28 @@ class SettingContainer extends StatefulWidget {
 }
 
 class _SettingContainerState extends State<SettingContainer> {
+  final double contractedHeight = 95;
+  late final double expandedHeight;
   bool expanded = false;
   late Color borderColor;
+  late Color foregroundColor;
+
+  double getExpandedHeight() {
+    if (widget.children.length > 6) {
+      return 320;
+    } else {
+      return contractedHeight + widget.children.length * 40;
+    }
+  }
 
   @override
   void initState() {
     super.initState();
 
+    expandedHeight = getExpandedHeight();
+
     borderColor = widget.borderColor ?? Colors.black.withAlpha(50);
+    foregroundColor = widget.borderColor == null ? Colors.transparent : Colors.red.withAlpha(100);
   }
 
   @override
@@ -42,6 +56,7 @@ class _SettingContainerState extends State<SettingContainer> {
     return AnimatedContainer(
       duration: Duration(milliseconds: widget.milliseconds),
       decoration: BoxDecoration(
+        color: foregroundColor,
         borderRadius: BorderRadius.circular(10),
         border: Border(
           top: BorderSide(
@@ -63,7 +78,7 @@ class _SettingContainerState extends State<SettingContainer> {
         ),
       ),
       padding: const EdgeInsets.all(5),
-      height: widget.open ? 490 : 110,
+      height: widget.open ? expandedHeight : contractedHeight,
       child: Column(
         children: [
           Row(

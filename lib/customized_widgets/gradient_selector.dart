@@ -57,7 +57,7 @@ class _GradientSelectorState extends State<GradientSelector> {
             },
             child: Container(
               width: 120,
-              height: 50,
+              height: 40,
               decoration: BoxDecoration(
                 gradient: LinearGradient(
                   colors: [colorGradient.bottom, colorGradient.topRight],
