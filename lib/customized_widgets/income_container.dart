@@ -317,6 +317,7 @@ class _IncomeContainerState extends State<IncomeContainer> {
                   ),
                   RotatingButton(
                     iconData: Icons.arrow_drop_down,
+                    milliseconds: 300,
                     onPressed: (bool newExpanded) {
                       setState(() {
                         expanded = newExpanded;

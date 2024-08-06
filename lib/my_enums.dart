@@ -36,3 +36,5 @@ extension CardTypeExtension on CardType {
 enum MainView { carousel, primaryBigCard, secondaryBigCard }
 
 enum TimePeriod { day, week, month, year }
+
+enum Setting { general, color, danger, none }

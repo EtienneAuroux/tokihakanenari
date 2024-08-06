@@ -2,12 +2,16 @@ import 'package:flutter/material.dart';
 
 class RotatingButton extends StatefulWidget {
   final IconData iconData;
+  final int milliseconds;
   final void Function(bool) onPressed;
+  final bool forcedReverse;
 
   const RotatingButton({
     super.key,
     required this.iconData,
+    required this.milliseconds,
     required this.onPressed,
+    this.forcedReverse = false,
   });
 
   @override
@@ -23,7 +27,7 @@ class _RotatingButtonState extends State<RotatingButton> with SingleTickerProvid
     super.initState();
 
     controller = AnimationController(
-      duration: const Duration(milliseconds: 300),
+      duration: Duration(milliseconds: widget.milliseconds),
       vsync: this,
       upperBound: 0.5,
     );
@@ -38,6 +42,10 @@ class _RotatingButtonState extends State<RotatingButton> with SingleTickerProvid
 
   @override
   Widget build(BuildContext context) {
+    if (widget.forcedReverse && rotated) {
+      rotated = false;
+      controller.reverse(from: 0.5);
+    }
     return RotationTransition(
       turns: Tween(begin: 0.0, end: 1.0).animate(controller),
       child: IconButton(

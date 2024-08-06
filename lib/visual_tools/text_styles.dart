@@ -15,8 +15,9 @@ class TextStyles {
     decoration: TextDecoration.none,
   );
 
-  static const settingsBody = TextStyle(
-    fontSize: 18,
+  static const settingTitle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
     fontFamily: 'MontserratAlternate',
     color: Colors.black,
     decoration: TextDecoration.none,

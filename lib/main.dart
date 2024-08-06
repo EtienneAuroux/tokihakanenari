@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/big_card.dart';
 import 'package:tokihakanenari/carousel.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
-import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
@@ -51,6 +50,17 @@ class _MainPageState extends State<MainPage> {
     super.initState();
 
     cardStatus = CardStatus.inert;
+
+    ledger.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override
@@ -58,7 +68,7 @@ class _MainPageState extends State<MainPage> {
     Size screenSize = MediaQuery.of(context).size;
 
     return FloatingWaves(
-      colors: [ledger.backgroundGradient.bottom, ledger.backgroundGradient.topRight],
+      colors: [ledger.backgroundGradient.topRight, ledger.backgroundGradient.bottom],
       child: Stack(children: [
         Carousel(
           cardStatus: cardStatus,
