@@ -4,14 +4,17 @@ import 'package:tokihakanenari/customized_widgets/small_card_container.dart';
 import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
-import 'package:tokihakanenari/visual_tools/text_styles.dart';
+
+// import 'dart:developer' as developer;
 
 class TotalIncome extends StatefulWidget {
   final CardSize cardSize;
+  final void Function()? onRequestSettings;
 
   const TotalIncome({
     super.key,
     required this.cardSize,
+    this.onRequestSettings,
   });
 
   @override
@@ -35,6 +38,9 @@ class _TotalIncomeState extends State<TotalIncome> {
             if (mounted) {
               setState(() {});
             }
+          },
+          onRequestSettings: () {
+            widget.onRequestSettings?.call();
           },
         );
       case CardSize.mini:

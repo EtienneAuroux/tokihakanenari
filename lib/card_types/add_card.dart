@@ -3,7 +3,6 @@ import 'package:tokihakanenari/card_generators/mini_card.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
-import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 
 // import 'dart:developer' as developer;
 
@@ -30,7 +29,7 @@ class _AddCardState extends State<AddCard> {
   List<MiniCard> getRemainingCards() {
     List<MiniCard> remainingCards = <MiniCard>[];
     for (CardType cardType in CardType.values) {
-      if (!ledger.carouselCards.contains(cardType)) {
+      if (!ledger.carouselCards.contains(cardType) && cardType != CardType.settings) {
         remainingCards.add(
           MiniCard(
             cardType: cardType,

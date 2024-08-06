@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/big_card.dart';
 import 'package:tokihakanenari/carousel.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
-import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
@@ -40,6 +39,7 @@ class MainPage extends StatefulWidget {
 }
 
 class _MainPageState extends State<MainPage> {
+  Ledger ledger = Ledger();
   MainView mainView = MainView.carousel;
   CardType bigCard = CardType.totalIncome;
   CardType newBigCard = CardType.contentCreation;
@@ -50,6 +50,17 @@ class _MainPageState extends State<MainPage> {
     super.initState();
 
     cardStatus = CardStatus.inert;
+
+    ledger.addListener(() {
+      setState(() {});
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override
@@ -57,7 +68,7 @@ class _MainPageState extends State<MainPage> {
     Size screenSize = MediaQuery.of(context).size;
 
     return FloatingWaves(
-      colors: const [ColorPalette.mirrorYellow, ColorPalette.mirrorGrey],
+      colors: [ledger.backgroundGradient.topRight, ledger.backgroundGradient.bottom],
       child: Stack(children: [
         Carousel(
           cardStatus: cardStatus,
@@ -88,15 +99,15 @@ class _MainPageState extends State<MainPage> {
                 cardStatus = CardStatus.inert;
               });
             },
-            onRequestToAddCard: (cardType) {
+            onRequestToDropCard: (cardType) {
               setState(() {
                 newBigCard = cardType;
                 cardStatus = CardStatus.drop;
                 mainView = MainView.secondaryBigCard;
               });
             },
-            onDoneFading: () {
-              throw ErrorDescription('It should not be possible to fade from MainView.primaryBigCard.');
+            onBigCardDropDone: () {
+              throw ErrorDescription('It should not be possible to drop in from MainView.primaryBigCard.');
             },
           ),
         ),
@@ -116,10 +127,10 @@ class _MainPageState extends State<MainPage> {
                 cardStatus = CardStatus.inert;
               });
             },
-            onRequestToAddCard: (cardType) {
+            onRequestToDropCard: (cardType) {
               throw ErrorDescription('It should not be possible to request AddCard from MainView.secondaryBigCard.');
             },
-            onDoneFading: () {
+            onBigCardDropDone: () {
               setState(() {
                 cardStatus = CardStatus.inert;
               });
@@ -130,3 +141,21 @@ class _MainPageState extends State<MainPage> {
     );
   }
 }
+
+
+// TODO LOOK AT THIS:
+// static Event onMenuVisibilityChanged = Event();
+// static set showFilterSettings (bool newValue) {
+//     _showFilterSettings = newValue;
+//     onMenuVisibilityChanged.broadcast();
+//   }
+//   static bool get showFilterSettings => _showFilterSettings;
+// static bool get showFilterSettings => _showFilterSettings;
+
+// Google Play Console
+// okame.developer
+// UH27ciTnhud1
+
+// flutter build appbundle --no-tree-shake-icons
+
+// jkr7i1%1jhsDj9

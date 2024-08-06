@@ -15,6 +15,14 @@ class TextStyles {
     decoration: TextDecoration.none,
   );
 
+  static const settingTitle = TextStyle(
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+    fontFamily: 'MontserratAlternate',
+    color: Colors.black,
+    decoration: TextDecoration.none,
+  );
+
   static const incomeExtraInformation = TextStyle(
     fontSize: 15,
     fontFamily: 'MontserratAlternate',

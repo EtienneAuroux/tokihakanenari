@@ -61,10 +61,6 @@ class _SmallCardState extends State<SmallCard> {
         return IndexFunds(
           cardSize: CardSize.small,
         );
-      case CardType.totalIncome:
-        return const TotalIncome(
-          cardSize: CardSize.small,
-        );
       case CardType.privateFunds:
         // ignore: prefer_const_constructors
         return PrivateFunds(
@@ -90,6 +86,12 @@ class _SmallCardState extends State<SmallCard> {
         return StockAccounts(
           cardSize: CardSize.small,
         );
+      case CardType.totalIncome:
+        return const TotalIncome(
+          cardSize: CardSize.small,
+        );
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to have a small Settings card.');
     }
   }
 

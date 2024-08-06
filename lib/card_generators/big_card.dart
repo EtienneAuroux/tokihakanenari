@@ -1,5 +1,5 @@
 import 'dart:math';
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -7,6 +7,7 @@ import 'package:tokihakanenari/card_types/add_card.dart';
 import 'package:tokihakanenari/card_types/content_creation.dart';
 import 'package:tokihakanenari/card_types/custom_income.dart';
 import 'package:tokihakanenari/card_types/index_funds.dart';
+import 'package:tokihakanenari/card_types/settings.dart';
 import 'package:tokihakanenari/card_types/total_income.dart';
 import 'package:tokihakanenari/card_types/private_funds.dart';
 import 'package:tokihakanenari/card_types/real_estate.dart';
@@ -23,8 +24,8 @@ class BigCard extends StatefulWidget {
   final CardStatus cardStatus;
   final void Function() onBigCardRollDone;
   final void Function() onBigCardUnrollDone;
-  final void Function(CardType cardType) onRequestToAddCard;
-  final void Function() onDoneFading;
+  final void Function(CardType cardType) onRequestToDropCard;
+  final void Function() onBigCardDropDone;
 
   const BigCard({
     super.key,
@@ -33,8 +34,8 @@ class BigCard extends StatefulWidget {
     required this.cardStatus,
     required this.onBigCardRollDone,
     required this.onBigCardUnrollDone,
-    required this.onRequestToAddCard,
-    required this.onDoneFading,
+    required this.onRequestToDropCard,
+    required this.onBigCardDropDone,
   });
 
   @override
@@ -56,7 +57,7 @@ class _BigCardState extends State<BigCard> {
           cardSize: CardSize.big,
           cardStatus: widget.cardStatus,
           onRequestToAddCard: (CardType cardType) {
-            widget.onRequestToAddCard(cardType);
+            widget.onRequestToDropCard(cardType);
           },
         );
       case CardType.contentCreation:
@@ -69,10 +70,6 @@ class _BigCardState extends State<BigCard> {
         );
       case CardType.indexFunds:
         return const IndexFunds(
-          cardSize: CardSize.big,
-        );
-      case CardType.totalIncome:
-        return const TotalIncome(
           cardSize: CardSize.big,
         );
       case CardType.privateFunds:
@@ -95,6 +92,15 @@ class _BigCardState extends State<BigCard> {
         return const StockAccounts(
           cardSize: CardSize.big,
         );
+      case CardType.totalIncome:
+        return TotalIncome(
+          cardSize: CardSize.big,
+          onRequestSettings: () {
+            widget.onRequestToDropCard(CardType.settings);
+          },
+        );
+      case CardType.settings:
+        return const Settings();
     }
   }
 
@@ -143,7 +149,7 @@ class _BigCardState extends State<BigCard> {
     setState(() {
       droppingIn = false;
     });
-    widget.onDoneFading();
+    widget.onBigCardDropDone();
   }
 
   @override

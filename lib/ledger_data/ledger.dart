@@ -2,8 +2,10 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:tokihakanenari/ledger_data/color_gradient.dart';
 import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/visual_tools/color_palette.dart';
 
 // import 'dart:developer' as developer;
 
@@ -82,7 +84,7 @@ class Ledger extends ChangeNotifier {
       _carouselCards.insert(0, CardType.addCard);
     }
     notifyListeners();
-    if (_carouselCards.length == CardType.values.length && !addCard) {
+    if (_carouselCards.length == CardType.values.length - 1 && !addCard) {
       deleteCarouselCard(CardType.addCard);
     }
   }
@@ -176,6 +178,8 @@ class Ledger extends ChangeNotifier {
         _stockAccountsData.totalRateOfReturn = 0;
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to remove TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to have a Settings card in the carousel.');
     }
 
     if (!_carouselCards.contains(CardType.addCard)) {
@@ -257,6 +261,8 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to add data to TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to add data to Settings.');
     }
 
     _aggregateData(cardType);
@@ -333,6 +339,8 @@ class Ledger extends ChangeNotifier {
         break;
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to delete data from TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to delete data from Settings.');
     }
 
     _aggregateData(cardType);
@@ -343,7 +351,7 @@ class Ledger extends ChangeNotifier {
   void updateCardData(CardType cardType, int index, List<dynamic> data) {
     switch (cardType) {
       case CardType.addCard:
-        throw ErrorDescription('It should not be possible to add data to AddCard.');
+        throw ErrorDescription('It should not be possible to update data to AddCard.');
       case CardType.contentCreation:
         _contentCreationData.icons[index] = data[0];
         _contentCreationData.names[index] = data[1];
@@ -397,7 +405,9 @@ class Ledger extends ChangeNotifier {
         _stockAccountsData.ratesOfReturn[index] = double.parse(data[3]);
         break;
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to add data to TotalIncome.');
+        throw ErrorDescription('It should not be possible to update data to TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to update data to Settings.');
     }
 
     _aggregateData(cardType);
@@ -405,10 +415,145 @@ class Ledger extends ChangeNotifier {
     _saveLedger();
   }
 
+  // Color gradients
+  final ColorGradient _backgroundGradient = ColorGradient(ColorPalette.mirrorGrey, ColorPalette.mirrorYellow);
+  final ColorGradient _addCardGradient = ColorGradient(ColorPalette.silkBeige, ColorPalette.silkWhite);
+  final ColorGradient _totalIncomeGradient = ColorGradient(ColorPalette.oceanBlue, ColorPalette.oceanOpal);
+
+  ColorGradient get backgroundGradient => _backgroundGradient;
+  ColorGradient get addCardGradient => _addCardGradient;
+  ColorGradient get totalIncomeGradient => _totalIncomeGradient;
+
+  ColorGradient getCardGradient(CardType? cardType) {
+    if (cardType == null) {
+      return _backgroundGradient;
+    } else {
+      switch (cardType) {
+        case CardType.addCard:
+          return _addCardGradient;
+        case CardType.contentCreation:
+          return _contentCreationData.gradient;
+        case CardType.customIncome:
+          return _customIncomeData.gradient;
+        case CardType.indexFunds:
+          return _indexFundsData.gradient;
+        case CardType.privateFunds:
+          return _privateFundsData.gradient;
+        case CardType.realEstate:
+          return _realEstateData.gradient;
+        case CardType.salaries:
+          return salariesData.gradient;
+        case CardType.savingAccounts:
+          return savingAccountsData.gradient;
+        case CardType.stockAccounts:
+          return stockAccountsData.gradient;
+        case CardType.totalIncome:
+          return _totalIncomeGradient;
+        case CardType.settings:
+          throw ErrorDescription('It is not be possible to change the color of the Settings card.');
+      }
+    }
+  }
+
+  void setCardGradient(CardType? cardType, Color newBottom, Color newTopRight) {
+    if (cardType == null) {
+      _backgroundGradient.bottom = newBottom;
+      _backgroundGradient.topRight = newTopRight;
+    } else {
+      switch (cardType) {
+        case CardType.addCard:
+          _addCardGradient.bottom = newBottom;
+          _addCardGradient.topRight = newTopRight;
+          break;
+        case CardType.contentCreation:
+          _contentCreationData.gradient.bottom = newBottom;
+          _contentCreationData.gradient.topRight = newTopRight;
+          break;
+        case CardType.customIncome:
+          _customIncomeData.gradient.bottom = newBottom;
+          _customIncomeData.gradient.topRight = newTopRight;
+          break;
+        case CardType.indexFunds:
+          _indexFundsData.gradient.bottom = newBottom;
+          _indexFundsData.gradient.topRight = newTopRight;
+          break;
+        case CardType.privateFunds:
+          _privateFundsData.gradient.bottom = newBottom;
+          _privateFundsData.gradient.topRight = newTopRight;
+          break;
+        case CardType.realEstate:
+          _realEstateData.gradient.bottom = newBottom;
+          _realEstateData.gradient.topRight = newTopRight;
+          break;
+        case CardType.salaries:
+          salariesData.gradient.bottom = newBottom;
+          salariesData.gradient.topRight = newTopRight;
+          break;
+        case CardType.savingAccounts:
+          savingAccountsData.gradient.bottom = newBottom;
+          savingAccountsData.gradient.topRight = newTopRight;
+          break;
+        case CardType.stockAccounts:
+          stockAccountsData.gradient.bottom = newBottom;
+          stockAccountsData.gradient.topRight = newTopRight;
+          break;
+        case CardType.totalIncome:
+          _totalIncomeGradient.bottom = newBottom;
+          _totalIncomeGradient.topRight = newTopRight;
+          break;
+        case CardType.settings:
+          throw ErrorDescription('It is not be possible to change the color of the Settings card.');
+      }
+    }
+    notifyListeners();
+  }
+
+  void resetCardGradient(CardType? cardType) {
+    if (cardType == null) {
+      _backgroundGradient.reset();
+    } else {
+      switch (cardType) {
+        case CardType.addCard:
+          _addCardGradient.reset();
+          break;
+        case CardType.contentCreation:
+          _contentCreationData.gradient.reset();
+          break;
+        case CardType.customIncome:
+          _customIncomeData.gradient.reset();
+          break;
+        case CardType.indexFunds:
+          _indexFundsData.gradient.reset();
+          break;
+        case CardType.privateFunds:
+          _privateFundsData.gradient.reset();
+          break;
+        case CardType.realEstate:
+          _realEstateData.gradient.reset();
+          break;
+        case CardType.salaries:
+          salariesData.gradient.reset();
+          break;
+        case CardType.savingAccounts:
+          savingAccountsData.gradient.reset();
+          break;
+        case CardType.stockAccounts:
+          stockAccountsData.gradient.reset();
+          break;
+        case CardType.totalIncome:
+          _totalIncomeGradient.reset();
+          break;
+        case CardType.settings:
+          throw ErrorDescription('It is not be possible to change the color of the Settings card.');
+      }
+    }
+  }
+
+  // Private methods
   void _aggregateData(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
-        throw ErrorDescription('It should not be possible to add data to AddCard.');
+        throw ErrorDescription('It should not be possible to aggregate data to AddCard.');
       case CardType.contentCreation:
         _contentCreationData.totalIncome = 0;
         _contentCreationData.totalPerDay = 0;
@@ -558,7 +703,9 @@ class Ledger extends ChangeNotifier {
         _stockAccountsData.totalPerDay = _stockAccountsData.totalInvested * _stockAccountsData.totalRateOfReturn / 100 / 365.25;
         break;
       case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to add data to TotalIncome manually.');
+        throw ErrorDescription('It should not be possible to aggregate data to TotalIncome.');
+      case CardType.settings:
+        throw ErrorDescription('It should not be possible to aggregate data to Settings.');
     }
   }
 
@@ -621,6 +768,8 @@ class Ledger extends ChangeNotifier {
           totalIncomeData.totalRateOfReturn += (_stockAccountsData.totalInvested * _stockAccountsData.totalRateOfReturn / 100);
           break;
         case CardType.totalIncome:
+          break;
+        case CardType.settings:
           break;
       }
     }
