@@ -155,3 +155,7 @@ class _MainPageState extends State<MainPage> {
 // Google Play Console
 // okame.developer
 // UH27ciTnhud1
+
+// flutter build appbundle --no-tree-shake-icons
+
+// jkr7i1%1jhsDj9

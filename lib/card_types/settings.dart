@@ -95,7 +95,34 @@ class _SettingsState extends State<Settings> {
   }
 
   List<Widget> getDangerSettings() {
-    return [];
+    return [
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Reset all colors:',
+            style: TextStyles.cardBody,
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(FontAwesome5.question),
+          )
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Erase all data:',
+            style: TextStyles.cardBody,
+          ),
+          IconButton(
+            onPressed: () {},
+            icon: Icon(FontAwesome5.skull_crossbones),
+          )
+        ],
+      )
+    ];
   }
 
   @override
