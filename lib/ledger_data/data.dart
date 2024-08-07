@@ -25,6 +25,7 @@ class ContentCreationData {
     perDay = List.from(json['perDay']);
     totalIncome = json['totalIncome'];
     totalPerDay = json['totalPerDay'];
+    gradient = ColorGradient(Color(List.from(json['gradient']).first), Color(List.from(json['gradient']).last));
   }
 
   Map<String, dynamic> toJson() => {
@@ -35,6 +36,7 @@ class ContentCreationData {
         'perDay': perDay,
         'totalIncome': totalIncome,
         'totalPerDay': totalPerDay,
+        'gradient': [gradient.bottom.value, gradient.topRight.value],
       };
 }
 
@@ -64,6 +66,7 @@ class CustomIncomeData {
     totalInvested = json['totalInvested'];
     totalPerDay = json['totalPerDay'];
     totalRateOfReturn = json['totalRateOfReturn'];
+    gradient = ColorGradient(Color(List.from(json['gradient']).first), Color(List.from(json['gradient']).last));
   }
 
   Map<String, dynamic> toJson() => {
@@ -76,7 +79,8 @@ class CustomIncomeData {
         'perDay': perDay,
         'totalInvested': totalInvested,
         'totalPerDay': totalPerDay,
-        'totalRateOfReturn': totalRateOfReturn
+        'totalRateOfReturn': totalRateOfReturn,
+        'gradient': [gradient.bottom.value, gradient.topRight.value],
       };
 }
 
@@ -102,6 +106,7 @@ class IndexFundsData {
     totalInvested = json['totalInvested'];
     totalPerDay = json['totalPerDay'];
     totalRateOfReturn = json['totalRateOfReturn'];
+    gradient = ColorGradient(Color(List.from(json['gradient']).first), Color(List.from(json['gradient']).last));
   }
 
   Map<String, dynamic> toJson() => {
@@ -112,7 +117,8 @@ class IndexFundsData {
         'perDay': perDay,
         'totalInvested': totalInvested,
         'totalPerDay': totalPerDay,
-        'totalRateOfReturn': totalRateOfReturn
+        'totalRateOfReturn': totalRateOfReturn,
+        'gradient': [gradient.bottom.value, gradient.topRight.value],
       };
 }
 
@@ -138,6 +144,7 @@ class PrivateFundsData {
     totalInvested = json['totalInvested'];
     totalPerDay = json['totalPerDay'];
     totalRateOfReturn = json['totalRateOfReturn'];
+    gradient = ColorGradient(Color(List.from(json['gradient']).first), Color(List.from(json['gradient']).last));
   }
 
   Map<String, dynamic> toJson() => {
@@ -148,7 +155,8 @@ class PrivateFundsData {
         'perDay': perDay,
         'totalInvested': totalInvested,
         'totalPerDay': totalPerDay,
-        'totalRateOfReturn': totalRateOfReturn
+        'totalRateOfReturn': totalRateOfReturn,
+        'gradient': [gradient.bottom.value, gradient.topRight.value],
       };
 }
 
@@ -187,6 +195,7 @@ class RealEstateData {
     totalInvested = json['totalInvested'];
     totalPerDay = json['totalPerDay'];
     totalRateOfReturn = json['totalRateOfReturn'];
+    gradient = ColorGradient(Color(List.from(json['gradient']).first), Color(List.from(json['gradient']).last));
   }
 
   Map<String, dynamic> toJson() => {
@@ -205,7 +214,8 @@ class RealEstateData {
         'perDay': perDay,
         'totalInvested': totalInvested,
         'totalPerDay': totalPerDay,
-        'totalRateOfReturn': totalRateOfReturn
+        'totalRateOfReturn': totalRateOfReturn,
+        'gradient': [gradient.bottom.value, gradient.topRight.value],
       };
 }
 
@@ -229,6 +239,7 @@ class SalariesData {
     perDay = List.from(json['perDay']);
     totalIncome = json['totalIncome'];
     totalPerDay = json['totalPerDay'];
+    gradient = ColorGradient(Color(List.from(json['gradient']).first), Color(List.from(json['gradient']).last));
   }
 
   Map<String, dynamic> toJson() => {
@@ -239,6 +250,7 @@ class SalariesData {
         'perDay': perDay,
         'totalIncome': totalIncome,
         'totalPerDay': totalPerDay,
+        'gradient': [gradient.bottom.value, gradient.topRight.value],
       };
 }
 
@@ -264,6 +276,7 @@ class SavingAccountsData {
     totalInvested = json['totalInvested'];
     totalPerDay = json['totalPerDay'];
     totalRateOfReturn = json['totalRateOfReturn'];
+    gradient = ColorGradient(Color(List.from(json['gradient']).first), Color(List.from(json['gradient']).last));
   }
 
   Map<String, dynamic> toJson() => {
@@ -274,7 +287,8 @@ class SavingAccountsData {
         'perDay': perDay,
         'totalInvested': totalInvested,
         'totalPerDay': totalPerDay,
-        'totalRateOfReturn': totalRateOfReturn
+        'totalRateOfReturn': totalRateOfReturn,
+        'gradient': [gradient.bottom.value, gradient.topRight.value],
       };
 }
 
@@ -300,6 +314,7 @@ class StockAccountsData {
     totalInvested = json['totalInvested'];
     totalPerDay = json['totalPerDay'];
     totalRateOfReturn = json['totalRateOfReturn'];
+    gradient = ColorGradient(Color(List.from(json['gradient']).first), Color(List.from(json['gradient']).last));
   }
 
   Map<String, dynamic> toJson() => {
@@ -310,7 +325,8 @@ class StockAccountsData {
         'perDay': perDay,
         'totalInvested': totalInvested,
         'totalPerDay': totalPerDay,
-        'totalRateOfReturn': totalRateOfReturn
+        'totalRateOfReturn': totalRateOfReturn,
+        'gradient': [gradient.bottom.value, gradient.topRight.value],
       };
 }
 

@@ -7,7 +7,7 @@ import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.
@@ -62,7 +62,6 @@ class Ledger extends ChangeNotifier {
 
   late Language _language;
   set language(Language newLanguage) {
-    developer.log('changing language');
     _language = newLanguage;
     _preferences.setInt('language', _language.index);
     notifyListeners();
@@ -441,9 +440,9 @@ class Ledger extends ChangeNotifier {
   }
 
   // Color gradients
-  final ColorGradient _backgroundGradient = ColorGradient(ColorPalette.mirrorGrey, ColorPalette.mirrorYellow);
-  final ColorGradient _addCardGradient = ColorGradient(ColorPalette.silkBeige, ColorPalette.silkWhite);
-  final ColorGradient _totalIncomeGradient = ColorGradient(ColorPalette.oceanBlue, ColorPalette.oceanOpal);
+  late ColorGradient _backgroundGradient;
+  late ColorGradient _addCardGradient;
+  late ColorGradient _totalIncomeGradient;
 
   ColorGradient get backgroundGradient => _backgroundGradient;
   ColorGradient get addCardGradient => _addCardGradient;
@@ -484,11 +483,21 @@ class Ledger extends ChangeNotifier {
     if (cardType == null) {
       _backgroundGradient.bottom = newBottom;
       _backgroundGradient.topRight = newTopRight;
+      _preferences.setString(
+          'background',
+          json.encode({
+            'gradient': [_backgroundGradient.bottom.value, _backgroundGradient.topRight.value]
+          }));
     } else {
       switch (cardType) {
         case CardType.addCard:
           _addCardGradient.bottom = newBottom;
           _addCardGradient.topRight = newTopRight;
+          _preferences.setString(
+              CardType.addCard.name,
+              json.encode({
+                'gradient': [_addCardGradient.bottom.value, _addCardGradient.topRight.value]
+              }));
           break;
         case CardType.contentCreation:
           _contentCreationData.gradient.bottom = newBottom;
@@ -525,12 +534,18 @@ class Ledger extends ChangeNotifier {
         case CardType.totalIncome:
           _totalIncomeGradient.bottom = newBottom;
           _totalIncomeGradient.topRight = newTopRight;
+          _preferences.setString(
+              CardType.totalIncome.name,
+              json.encode({
+                'gradient': [_totalIncomeGradient.bottom.value, _totalIncomeGradient.topRight.value]
+              }));
           break;
         case CardType.settings:
           throw ErrorDescription('It is not be possible to change the color of the Settings card.');
       }
     }
     notifyListeners();
+    _saveLedger();
   }
 
   void resetCardGradient(CardType? cardType) {
@@ -814,10 +829,32 @@ class Ledger extends ChangeNotifier {
     int? languageInt = _preferences.getInt('language');
     if (languageInt != null) {
       _language = Language.values[languageInt];
-      developer.log('language = ${_language.word}');
     } else {
-      developer.log('language null');
       _language = Language.english;
+    }
+
+    String? backgroundString = _preferences.getString('background');
+    if (backgroundString != null) {
+      dynamic backgroundSettings = json.decode(backgroundString);
+      _backgroundGradient = ColorGradient(Color(List.from(backgroundSettings['gradient']).first), Color(List.from(backgroundSettings['gradient']).last));
+    } else {
+      _backgroundGradient = ColorGradient(ColorPalette.mirrorGrey, ColorPalette.mirrorYellow);
+    }
+
+    String? addCardString = _preferences.getString(CardType.addCard.name);
+    if (addCardString != null) {
+      dynamic addCardSettings = json.decode(addCardString);
+      _addCardGradient = ColorGradient(Color(List.from(addCardSettings['gradient']).first), Color(List.from(addCardSettings['gradient']).last));
+    } else {
+      _addCardGradient = ColorGradient(ColorPalette.silkBeige, ColorPalette.silkWhite);
+    }
+
+    String? totalIncomeString = _preferences.getString(CardType.totalIncome.name);
+    if (totalIncomeString != null) {
+      dynamic totalIncomeSettings = json.decode(totalIncomeString);
+      _totalIncomeGradient = ColorGradient(Color(List.from(totalIncomeSettings['gradient']).first), Color(List.from(totalIncomeSettings['gradient']).last));
+    } else {
+      _totalIncomeGradient = ColorGradient(ColorPalette.oceanBlue, ColorPalette.oceanOpal);
     }
 
     String? carouselString = _preferences.getString('carousel');

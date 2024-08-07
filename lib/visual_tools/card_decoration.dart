@@ -55,7 +55,8 @@ class CardDecoration {
         if (cardStatus == CardSize.big) {
           return Ledger().addCardGradient;
         } else {
-          return ColorGradient(ColorPalette.mirrorGrey.withAlpha(127), ColorPalette.mirrorYellow.withAlpha(127));
+          return ColorGradient(Ledger().backgroundGradient.bottom.withAlpha(getColorAlpha(cardStatus)),
+              Ledger().backgroundGradient.topRight.withAlpha(getColorAlpha(cardStatus)));
         }
       case CardType.contentCreation:
         return Ledger().contentCreationData.gradient.alpha(getColorAlpha(cardStatus));
