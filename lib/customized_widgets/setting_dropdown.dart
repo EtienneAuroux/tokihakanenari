@@ -56,7 +56,7 @@ class _SettingDropdownState extends State<SettingDropdown> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      item.word,
+                      item.word.isEmpty ? 'none' : item.word,
                       style: TextStyles.cardBody,
                     ),
                   ),
@@ -68,7 +68,7 @@ class _SettingDropdownState extends State<SettingDropdown> {
                     width: 120,
                     alignment: Alignment.centerRight,
                     child: Text(
-                      item.word,
+                      item.word.isEmpty ? 'none' : item.word,
                       style: TextStyles.cardBody,
                     ),
                   );

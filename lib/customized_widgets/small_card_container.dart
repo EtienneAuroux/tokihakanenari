@@ -27,12 +27,12 @@ class _SmallCardContainerState extends State<SmallCardContainer> {
             style: TextStyles.cardTitle,
           ),
           Text(
-            '${ledger.formatMonetaryAmounts(widget.perDay)} / day',
+            '${ledger.formatMonetaryAmounts(widget.perDay, false)} / day',
             style: TextStyles.cardBody,
           ),
           widget.investedAmount != null
               ? Text(
-                  '${ledger.formatMonetaryAmounts(widget.investedAmount!)} invested',
+                  '${ledger.formatMonetaryAmounts(widget.investedAmount!, false)} invested',
                   style: TextStyles.cardBody,
                 )
               : const SizedBox(),

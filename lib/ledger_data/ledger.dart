@@ -55,6 +55,7 @@ class Ledger extends ChangeNotifier {
   set currency(Currency newCurrency) {
     _currency = newCurrency;
     _preferences.setInt('currency', _currency.index);
+    notifyListeners();
   }
 
   Currency get currency => _currency;
@@ -64,24 +65,27 @@ class Ledger extends ChangeNotifier {
     developer.log('changing language');
     _language = newLanguage;
     _preferences.setInt('language', _language.index);
+    notifyListeners();
   }
 
   Language get language => _language;
 
   // Formats
-  String formatMonetaryAmounts(double amount) {
+  String formatMonetaryAmounts(double amount, bool percent) {
+    String unit = percent ? '% / year' : currency.word;
     if (amount >= 1e3 && amount < 1e6) {
-      return '${(amount / 1000).round()} ${(amount % 1000).toStringAsFixed(2)}';
+      String subThousands = amount % 1000 < 100 ? '0${(amount % 1000).floor()}' : '${(amount % 1000).floor()}';
+      return '${(amount / 1000).floor()} $subThousands $unit';
     } else if (amount >= 1e6 && amount < 1e9) {
-      return '${(amount / 1e6).toStringAsFixed(2)} M';
+      return '${(amount / 1e6).toStringAsFixed(2)} M$unit';
     } else if (amount >= 1e9 && amount < 1e12) {
-      return '${(amount / 1e9).toStringAsFixed(2)} B';
+      return '${(amount / 1e9).toStringAsFixed(2)} B$unit';
     } else if (amount >= 1e12 && amount < 1e15) {
-      return '${(amount / 1e12).toStringAsFixed(2)} T';
+      return '${(amount / 1e12).toStringAsFixed(2)} T$unit';
     } else if (amount >= 1e15) {
-      return amount.toStringAsExponential(2);
+      return '${amount.toStringAsExponential(2)} $unit';
     } else {
-      return amount.toStringAsFixed(2);
+      return '${amount.round()} $unit';
     }
   }
 
