@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
+import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
 class SettingDropdown extends StatefulWidget {
@@ -18,13 +20,20 @@ class SettingDropdown extends StatefulWidget {
 }
 
 class _SettingDropdownState extends State<SettingDropdown> {
+  Ledger ledger = Ledger();
   dynamic value;
 
   @override
   void initState() {
     super.initState();
 
-    value = widget.values.first;
+    if (widget.values.first is Currency) {
+      value = ledger.currency;
+    } else if (widget.values.first is Language) {
+      value = ledger.language;
+    } else {
+      throw ErrorDescription('${widget.values.first.runtimeType} was provided to a SettingDropdown');
+    }
   }
 
   @override
@@ -47,7 +56,7 @@ class _SettingDropdownState extends State<SettingDropdown> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      '$item',
+                      item.word,
                       style: TextStyles.cardBody,
                     ),
                   ),
@@ -59,7 +68,7 @@ class _SettingDropdownState extends State<SettingDropdown> {
                     width: 120,
                     alignment: Alignment.centerRight,
                     child: Text(
-                      item,
+                      item.word,
                       style: TextStyles.cardBody,
                     ),
                   );

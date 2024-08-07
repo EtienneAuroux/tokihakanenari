@@ -7,7 +7,7 @@ import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
 
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.
@@ -50,8 +50,29 @@ class Ledger extends ChangeNotifier {
     return _getTotalIncomeData(_carouselCards);
   }
 
+  // Settings
+  late Currency _currency;
+  set currency(Currency newCurrency) {
+    _currency = newCurrency;
+    _preferences.setInt('currency', _currency.index);
+  }
+
+  Currency get currency => _currency;
+
+  late Language _language;
+  set language(Language newLanguage) {
+    developer.log('changing language');
+    _language = newLanguage;
+    _preferences.setInt('language', _language.index);
+  }
+
+  Language get language => _language;
+
+  // Formats
   String formatMonetaryAmounts(double amount) {
-    if (amount >= 1e6 && amount < 1e9) {
+    if (amount >= 1e3 && amount < 1e6) {
+      return '${(amount / 1000).round()} ${(amount % 1000).toStringAsFixed(2)}';
+    } else if (amount >= 1e6 && amount < 1e9) {
       return '${(amount / 1e6).toStringAsFixed(2)} M';
     } else if (amount >= 1e9 && amount < 1e12) {
       return '${(amount / 1e9).toStringAsFixed(2)} B';
@@ -779,6 +800,22 @@ class Ledger extends ChangeNotifier {
 
   // Read and Save data.
   Future<void> _readLedger() async {
+    int? currencyInt = _preferences.getInt('currency');
+    if (currencyInt != null) {
+      _currency = Currency.values[currencyInt];
+    } else {
+      _currency = Currency.none;
+    }
+
+    int? languageInt = _preferences.getInt('language');
+    if (languageInt != null) {
+      _language = Language.values[languageInt];
+      developer.log('language = ${_language.word}');
+    } else {
+      developer.log('language null');
+      _language = Language.english;
+    }
+
     String? carouselString = _preferences.getString('carousel');
     if (carouselString != null) {
       List<dynamic> carouselIndexes = json.decode(carouselString);
