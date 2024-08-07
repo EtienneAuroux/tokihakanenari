@@ -28,6 +28,19 @@ class _GradientSelectorState extends State<GradientSelector> {
     super.initState();
 
     colorGradient = ledger.getCardGradient(widget.cardType);
+
+    ledger.addListener(() {
+      setState(() {
+        colorGradient = ledger.getCardGradient(widget.cardType);
+      });
+    });
+  }
+
+  @override
+  void dispose() {
+    ledger.removeListener(() {});
+
+    super.dispose();
   }
 
   @override
@@ -47,6 +60,7 @@ class _GradientSelectorState extends State<GradientSelector> {
                   context: context,
                   builder: (BuildContext context) {
                     return ColorPickerDialog(
+                      cardType: widget.cardType,
                       originalColors: ledger.getCardGradient(widget.cardType),
                       onNewColors: (List<Color> newColors) {
                         ledger.setCardGradient(widget.cardType, newColors.first, newColors.last);

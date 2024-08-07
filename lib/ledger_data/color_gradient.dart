@@ -7,10 +7,10 @@ class ColorGradient {
   late Color topRight;
 
   ColorGradient(this.originalBottom, this.originalTopRight) {
-    reset();
+    _reset();
   }
 
-  void reset() {
+  void _reset() {
     bottom = originalBottom;
     topRight = originalTopRight;
   }

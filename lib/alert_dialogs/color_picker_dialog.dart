@@ -4,15 +4,19 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/slider_shade_picker.dart';
 import 'package:tokihakanenari/customized_widgets/wheel_color_picker.dart';
 import 'package:tokihakanenari/ledger_data/color_gradient.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
+import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
 class ColorPickerDialog extends StatefulWidget {
+  final CardType? cardType;
   final ColorGradient originalColors;
   final void Function(List<Color>) onNewColors;
 
   const ColorPickerDialog({
     super.key,
+    required this.cardType,
     required this.originalColors,
     required this.onNewColors,
   });
@@ -22,6 +26,7 @@ class ColorPickerDialog extends StatefulWidget {
 }
 
 class _ColorPickerDialogState extends State<ColorPickerDialog> {
+  Ledger ledger = Ledger();
   late Color wheelColorTopRight;
   late Color wheelColorBottom;
   late double shadeTopRight;
@@ -103,8 +108,11 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   }
 
   void reset() {
-    shadedColorBottom = widget.originalColors.bottom;
-    shadedColorTopRight = widget.originalColors.topRight;
+    ledger.resetCardGradient(widget.cardType);
+    ColorGradient resettedGradient = ledger.getCardGradient(widget.cardType);
+
+    shadedColorBottom = resettedGradient.bottom;
+    shadedColorTopRight = resettedGradient.topRight;
 
     List<double> angleShadeBottom = getAngleAndShade(shadedColorBottom);
     angleBottom = angleShadeBottom.first;
@@ -123,7 +131,20 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
   void initState() {
     super.initState();
 
-    reset();
+    shadedColorBottom = widget.originalColors.bottom;
+    shadedColorTopRight = widget.originalColors.topRight;
+
+    List<double> angleShadeBottom = getAngleAndShade(shadedColorBottom);
+    angleBottom = angleShadeBottom.first;
+    shadeBottom = angleShadeBottom.last;
+
+    List<double> angleShadeTopRight = getAngleAndShade(shadedColorTopRight);
+    angleTopRight = angleShadeTopRight.first;
+    shadeTopRight = angleShadeTopRight.last;
+
+    wheelColorBottom = getWheelColor(angleBottom);
+    wheelColorTopRight = getWheelColor(angleTopRight);
+    setState(() {});
   }
 
   @override
@@ -265,6 +286,7 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                     ),
                     onPressed: () {
                       reset();
+                      widget.onNewColors([shadedColorBottom, shadedColorTopRight]);
                     },
                   ),
                 ],

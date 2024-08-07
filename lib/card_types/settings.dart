@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/alert_dialogs/danger_dialog.dart';
 import 'package:tokihakanenari/customized_widgets/gradient_selector.dart';
 import 'package:tokihakanenari/customized_widgets/setting_container.dart';
 import 'package:tokihakanenari/customized_widgets/setting_dropdown.dart';
@@ -96,26 +97,73 @@ class _SettingsState extends State<Settings> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             'Reset all colors:',
             style: TextStyles.cardBody,
           ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(FontAwesome5.question),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DangerDialog(
+                      title: 'Reset colors',
+                      onActionValidated: () {
+                        ledger.resetAllGradients();
+                      },
+                    );
+                  });
+            },
+            icon: const Icon(FontAwesome5.question),
           )
         ],
       ),
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
+          const Text(
             'Erase all data:',
             style: TextStyles.cardBody,
           ),
           IconButton(
-            onPressed: () {},
-            icon: Icon(FontAwesome5.skull_crossbones),
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DangerDialog(
+                      title: 'Erase data',
+                      onActionValidated: () {
+                        ledger.deleteAllData();
+                      },
+                    );
+                  });
+            },
+            icon: const Icon(FontAwesome5.skull_crossbones),
+          )
+        ],
+      ),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Text(
+            'Erase everything:',
+            style: TextStyles.cardBody,
+          ),
+          IconButton(
+            onPressed: () {
+              showDialog(
+                  context: context,
+                  builder: (BuildContext context) {
+                    return DangerDialog(
+                      title: 'Erase everything',
+                      onActionValidated: () {
+                        ledger.resetAllGradients();
+                        ledger.deleteAllData();
+                      },
+                    );
+                  });
+            },
+            icon: const Icon(FontAwesome5.skull_crossbones),
           )
         ],
       )

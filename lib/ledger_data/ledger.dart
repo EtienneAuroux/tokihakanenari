@@ -113,7 +113,7 @@ class Ledger extends ChangeNotifier {
     }
   }
 
-  void deleteCarouselCard(CardType cardType) {
+  void deleteCarouselCard(CardType cardType, {bool fullReset = false}) {
     switch (cardType) {
       case CardType.addCard:
         break;
@@ -213,6 +213,18 @@ class Ledger extends ChangeNotifier {
     int deletedCardIndex = _carouselCards.indexOf(cardType);
     _carouselCards.remove(cardType);
     _pageInFocus = 50 * _carouselCards.length + deletedCardIndex;
+    if (!fullReset) {
+      notifyListeners();
+      _saveLedger();
+    }
+  }
+
+  void deleteAllData() {
+    for (CardType cardType in CardType.values) {
+      if (cardType != CardType.addCard && cardType != CardType.totalIncome && cardType != CardType.settings) {
+        deleteCarouselCard(cardType, fullReset: true);
+      }
+    }
     notifyListeners();
     _saveLedger();
   }
@@ -483,21 +495,11 @@ class Ledger extends ChangeNotifier {
     if (cardType == null) {
       _backgroundGradient.bottom = newBottom;
       _backgroundGradient.topRight = newTopRight;
-      _preferences.setString(
-          'background',
-          json.encode({
-            'gradient': [_backgroundGradient.bottom.value, _backgroundGradient.topRight.value]
-          }));
     } else {
       switch (cardType) {
         case CardType.addCard:
           _addCardGradient.bottom = newBottom;
           _addCardGradient.topRight = newTopRight;
-          _preferences.setString(
-              CardType.addCard.name,
-              json.encode({
-                'gradient': [_addCardGradient.bottom.value, _addCardGradient.topRight.value]
-              }));
           break;
         case CardType.contentCreation:
           _contentCreationData.gradient.bottom = newBottom;
@@ -534,11 +536,6 @@ class Ledger extends ChangeNotifier {
         case CardType.totalIncome:
           _totalIncomeGradient.bottom = newBottom;
           _totalIncomeGradient.topRight = newTopRight;
-          _preferences.setString(
-              CardType.totalIncome.name,
-              json.encode({
-                'gradient': [_totalIncomeGradient.bottom.value, _totalIncomeGradient.topRight.value]
-              }));
           break;
         case CardType.settings:
           throw ErrorDescription('It is not be possible to change the color of the Settings card.');
@@ -548,45 +545,61 @@ class Ledger extends ChangeNotifier {
     _saveLedger();
   }
 
-  void resetCardGradient(CardType? cardType) {
+  void resetCardGradient(CardType? cardType, {bool fullReset = false}) {
     if (cardType == null) {
-      _backgroundGradient.reset();
+      _backgroundGradient = ColorGradient(ColorPalette.mirrorGrey, ColorPalette.mirrorYellow);
     } else {
       switch (cardType) {
         case CardType.addCard:
-          _addCardGradient.reset();
+          _addCardGradient = ColorGradient(ColorPalette.silkBeige, ColorPalette.silkWhite);
           break;
         case CardType.contentCreation:
-          _contentCreationData.gradient.reset();
+          _contentCreationData.gradient = ColorGradient(ColorPalette.sanguineRed, ColorPalette.sanguineOrange);
           break;
         case CardType.customIncome:
-          _customIncomeData.gradient.reset();
+          _customIncomeData.gradient = ColorGradient(ColorPalette.sunOrange, ColorPalette.sunYellow);
           break;
         case CardType.indexFunds:
-          _indexFundsData.gradient.reset();
+          _indexFundsData.gradient = ColorGradient(ColorPalette.pigletPink, ColorPalette.pigletPale);
           break;
         case CardType.privateFunds:
-          _privateFundsData.gradient.reset();
+          _privateFundsData.gradient = ColorGradient(ColorPalette.lusciousGreen, ColorPalette.lusciousYellow);
           break;
         case CardType.realEstate:
-          _realEstateData.gradient.reset();
+          _realEstateData.gradient = ColorGradient(ColorPalette.bleachedGreen, ColorPalette.bleachedOrange);
           break;
         case CardType.salaries:
-          salariesData.gradient.reset();
+          salariesData.gradient = ColorGradient(ColorPalette.orbitPurple, ColorPalette.orbitGreen);
           break;
         case CardType.savingAccounts:
-          savingAccountsData.gradient.reset();
+          savingAccountsData.gradient = ColorGradient(ColorPalette.exoticPink, ColorPalette.exoticOrange);
           break;
         case CardType.stockAccounts:
-          stockAccountsData.gradient.reset();
+          stockAccountsData.gradient = ColorGradient(ColorPalette.toxicYellow, ColorPalette.toxicBlue);
           break;
         case CardType.totalIncome:
-          _totalIncomeGradient.reset();
+          _totalIncomeGradient = ColorGradient(ColorPalette.oceanBlue, ColorPalette.oceanOpal);
           break;
         case CardType.settings:
           throw ErrorDescription('It is not be possible to change the color of the Settings card.');
       }
     }
+    if (!fullReset) {
+      notifyListeners();
+      _saveLedger();
+    }
+  }
+
+  void resetAllGradients() {
+    for (CardType cardType in CardType.values) {
+      if (cardType == CardType.settings) {
+        resetCardGradient(null, fullReset: true);
+      } else {
+        resetCardGradient(cardType, fullReset: true);
+      }
+    }
+    notifyListeners();
+    _saveLedger();
   }
 
   // Private methods
@@ -928,6 +941,27 @@ class Ledger extends ChangeNotifier {
         _carouselCards.length,
         (index) => _carouselCards[index].index,
       )),
+    );
+
+    await _preferences.setString(
+      'background',
+      json.encode({
+        'gradient': [_backgroundGradient.bottom.value, _backgroundGradient.topRight.value]
+      }),
+    );
+
+    _preferences.setString(
+      CardType.addCard.name,
+      json.encode({
+        'gradient': [_addCardGradient.bottom.value, _addCardGradient.topRight.value]
+      }),
+    );
+
+    _preferences.setString(
+      CardType.totalIncome.name,
+      json.encode({
+        'gradient': [_totalIncomeGradient.bottom.value, _totalIncomeGradient.topRight.value]
+      }),
     );
 
     await _preferences.setString(CardType.contentCreation.name, json.encode(_contentCreationData.toJson()));
