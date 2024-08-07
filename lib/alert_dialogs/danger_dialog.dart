@@ -52,7 +52,7 @@ class _DangerDialogState extends State<DangerDialog> {
             ),
             onChanged: (String value) {
               if (value == 'Okame') {
-                widget.onActionValidated;
+                widget.onActionValidated();
                 Navigator.of(context).pop();
               }
             },

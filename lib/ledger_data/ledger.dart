@@ -7,7 +7,7 @@ import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
 
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.
@@ -220,6 +220,7 @@ class Ledger extends ChangeNotifier {
   }
 
   void deleteAllData() {
+    developer.log('deleteAllData called');
     for (CardType cardType in CardType.values) {
       if (cardType != CardType.addCard && cardType != CardType.totalIncome && cardType != CardType.settings) {
         deleteCarouselCard(cardType, fullReset: true);

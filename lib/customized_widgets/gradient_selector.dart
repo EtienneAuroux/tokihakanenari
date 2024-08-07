@@ -30,9 +30,11 @@ class _GradientSelectorState extends State<GradientSelector> {
     colorGradient = ledger.getCardGradient(widget.cardType);
 
     ledger.addListener(() {
-      setState(() {
-        colorGradient = ledger.getCardGradient(widget.cardType);
-      });
+      if (mounted) {
+        setState(() {
+          colorGradient = ledger.getCardGradient(widget.cardType);
+        });
+      }
     });
   }
 
