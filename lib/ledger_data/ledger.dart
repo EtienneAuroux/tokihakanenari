@@ -28,6 +28,14 @@ class Ledger extends ChangeNotifier {
     await _readLedger();
   }
 
+  bool _startTapIndicator = false;
+  set startTapIndicator(bool status) {
+    notifyListeners();
+    _startTapIndicator = status;
+  }
+
+  bool get startTapIndicator => _startTapIndicator;
+
   // Cards
   late ContentCreationData _contentCreationData;
   late CustomIncomeData _customIncomeData;

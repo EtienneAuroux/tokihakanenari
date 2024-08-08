@@ -200,9 +200,8 @@ class _SettingsState extends State<Settings> {
                   ),
                 ],
               ),
-              const Text(
-                '(work in progress)',
-                style: TextStyles.incomeExtraInformation,
+              const SizedBox(
+                height: 20,
               ),
               SizedBox(
                 height: size.height * 0.85,

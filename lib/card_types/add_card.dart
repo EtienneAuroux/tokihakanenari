@@ -35,6 +35,7 @@ class _AddCardState extends State<AddCard> {
             cardType: cardType,
             onTapMiniCard: () {
               if (widget.cardStatus == CardStatus.inert) {
+                ledger.startTapIndicator = false;
                 widget.onRequestToAddCard(cardType);
               }
             },

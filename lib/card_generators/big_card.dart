@@ -14,6 +14,7 @@ import 'package:tokihakanenari/card_types/real_estate.dart';
 import 'package:tokihakanenari/card_types/salaries.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
 import 'package:tokihakanenari/card_types/stock_accounts.dart';
+import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/big_card_clipper.dart';
@@ -43,6 +44,7 @@ class BigCard extends StatefulWidget {
 }
 
 class _BigCardState extends State<BigCard> {
+  Ledger ledger = Ledger();
   double flippedDistance = 0;
   Duration? panStartTime;
   bool droppingIn = false;
@@ -149,6 +151,7 @@ class _BigCardState extends State<BigCard> {
     setState(() {
       droppingIn = false;
     });
+    ledger.startTapIndicator = true;
     widget.onBigCardDropDone();
   }
 

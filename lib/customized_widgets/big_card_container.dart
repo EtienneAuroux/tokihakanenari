@@ -72,6 +72,9 @@ class _BigCardContainerState extends State<BigCardContainer> {
 
     ledger.addListener(() {
       widget.onUpdateItems();
+      if (ledger.startTapIndicator && mounted) {
+        setState(() {});
+      }
     });
   }
 
@@ -154,7 +157,7 @@ class _BigCardContainerState extends State<BigCardContainer> {
                     child: Container(
                       alignment: Alignment.center,
                       color: Colors.transparent,
-                      child: widget.incomes.isEmpty
+                      child: widget.incomes.isEmpty && ledger.startTapIndicator
                           ? TapIndicator(
                               size: size,
                             )

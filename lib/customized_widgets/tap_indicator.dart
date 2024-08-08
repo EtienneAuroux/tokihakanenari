@@ -52,17 +52,17 @@ class _TapIndicatorState extends State<TapIndicator> with TickerProviderStateMix
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 4),
+      duration: const Duration(seconds: 2), //was 4
     )..repeat(reverse: true);
 
     left = Tween<double>(begin: -100, end: (widget.size.width - beginIconSize) / 2)
-        .animate(CurvedAnimation(parent: controller, curve: const Interval(0.5, 0.9, curve: Curves.linear)));
+        .animate(CurvedAnimation(parent: controller, curve: const Interval(0, 0.8, curve: Curves.linear))); // was 0.5, 0.9
     top = Tween<double>(begin: widget.size.height, end: (widget.size.height - beginIconSize) / 2 - 50)
-        .animate(CurvedAnimation(parent: controller, curve: const Interval(0.5, 0.9, curve: Curves.linear)));
+        .animate(CurvedAnimation(parent: controller, curve: const Interval(0, 0.8, curve: Curves.linear)));
 
-    iconSize = doubleClick.animate(CurvedAnimation(parent: controller, curve: const Interval(0.9, 1, curve: Curves.linear)));
+    iconSize = doubleClick.animate(CurvedAnimation(parent: controller, curve: const Interval(0.8, 1, curve: Curves.linear))); //was 0.9, 1
 
-    circleRadius = circleExpansion.animate(CurvedAnimation(parent: controller, curve: const Interval(0.9, 1, curve: Curves.linear)));
+    circleRadius = circleExpansion.animate(CurvedAnimation(parent: controller, curve: const Interval(0.8, 1, curve: Curves.linear)));
 
     if (!widget.animationOn) {
       controller.dispose();
