@@ -114,7 +114,7 @@ class _SettingsState extends State<Settings> {
                     );
                   });
             },
-            icon: const Icon(FontAwesome5.question),
+            icon: const Icon(FontAwesome5.paint_roller),
           )
         ],
       ),
@@ -138,7 +138,7 @@ class _SettingsState extends State<Settings> {
                     );
                   });
             },
-            icon: const Icon(FontAwesome5.skull_crossbones),
+            icon: const Icon(FontAwesome5.trash_alt),
           )
         ],
       ),
@@ -157,6 +157,8 @@ class _SettingsState extends State<Settings> {
                     return DangerDialog(
                       title: 'Erase everything',
                       onActionValidated: () {
+                        ledger.currency = Currency.none;
+                        ledger.language = Language.english;
                         ledger.resetAllGradients();
                         ledger.deleteAllData();
                       },
@@ -178,8 +180,8 @@ class _SettingsState extends State<Settings> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.symmetric(horizontal: 10),
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
+          child: ListView(
+            physics: const NeverScrollableScrollPhysics(),
             children: [
               const Row(
                 mainAxisAlignment: MainAxisAlignment.center,
