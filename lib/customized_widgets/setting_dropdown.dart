@@ -21,16 +21,12 @@ class SettingDropdown extends StatefulWidget {
 
 class _SettingDropdownState extends State<SettingDropdown> {
   Ledger ledger = Ledger();
-  dynamic value;
 
-  @override
-  void initState() {
-    super.initState();
-
+  dynamic getValue() {
     if (widget.values.first is Currency) {
-      value = ledger.currency;
+      return ledger.currency;
     } else if (widget.values.first is Language) {
-      value = ledger.language;
+      return ledger.language;
     } else {
       throw ErrorDescription('${widget.values.first.runtimeType} was provided to a SettingDropdown');
     }
@@ -49,7 +45,7 @@ class _SettingDropdownState extends State<SettingDropdown> {
           ),
           DropdownButton<dynamic>(
               underline: const SizedBox(),
-              value: value,
+              value: getValue(),
               items: widget.values.map<DropdownMenuItem<dynamic>>((dynamic item) {
                 return DropdownMenuItem<dynamic>(
                   value: item,
@@ -76,7 +72,6 @@ class _SettingDropdownState extends State<SettingDropdown> {
               },
               onChanged: (dynamic newValue) {
                 widget.onNewValue(newValue);
-                value = newValue;
               })
         ],
       ),
