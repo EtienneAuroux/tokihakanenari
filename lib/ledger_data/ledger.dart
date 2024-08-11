@@ -229,7 +229,6 @@ class Ledger extends ChangeNotifier {
   }
 
   void deleteAllData() {
-    developer.log('deleteAllData called');
     for (CardType cardType in CardType.values) {
       if (cardType != CardType.addCard && cardType != CardType.totalIncome && cardType != CardType.settings) {
         deleteCarouselCard(cardType, fullReset: true);

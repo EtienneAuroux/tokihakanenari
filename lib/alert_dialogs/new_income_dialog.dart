@@ -142,33 +142,6 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
     }
   }
 
-  String getDialogTitle(CardType cardType) {
-    switch (cardType) {
-      case CardType.addCard:
-        throw ErrorDescription('It should not be possible to open NewIncomeDialog from AddCard.');
-      case CardType.contentCreation:
-        return 'New content:';
-      case CardType.customIncome:
-        return 'New income:';
-      case CardType.indexFunds:
-        return 'New fund:';
-      case CardType.privateFunds:
-        return 'New fund:';
-      case CardType.realEstate:
-        return 'New property:';
-      case CardType.salaries:
-        return 'New salary:';
-      case CardType.savingAccounts:
-        return 'New account:';
-      case CardType.stockAccounts:
-        return 'New account:';
-      case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to open NewIncomeDialog from TotalIncome.');
-      case CardType.settings:
-        throw ErrorDescription('It should not be possible to open NewIncomeDialog from settings.');
-    }
-  }
-
   List<Widget> getDialogContent(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
@@ -461,7 +434,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                   child: Text(
-                    getDialogTitle(widget.cardType),
+                    widget.cardType.item(context),
                     style: TextStyles.dialogTitle,
                   ),
                 ),

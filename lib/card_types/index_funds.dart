@@ -26,8 +26,6 @@ class _IndexFundsState extends State<IndexFunds> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Index funds',
-          itemName: 'index fund',
           cardType: CardType.indexFunds,
           incomes: indexFunds,
           onUpdateItems: () {

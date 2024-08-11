@@ -6,6 +6,8 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 // import 'dart:developer' as developer;
 
 class Salaries extends StatefulWidget {
@@ -28,8 +30,6 @@ class _SalariesState extends State<Salaries> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Salaries',
-          itemName: 'salary',
           cardType: CardType.salaries,
           incomes: salaries,
           onUpdateItems: () {
@@ -40,9 +40,9 @@ class _SalariesState extends State<Salaries> {
           },
         );
       case CardSize.mini:
-        return const Center(
+        return Center(
           child: Text(
-            'Salaries',
+            CardType.salaries.title(context),
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),

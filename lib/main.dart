@@ -5,6 +5,9 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
+import 'package:flutter_localizations/flutter_localizations.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 // import 'dart:developer' as developer;
 
 void main() async {
@@ -20,6 +23,13 @@ class Okame extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      localizationsDelegates: const [
+        AppLocalizations.delegate,
+        GlobalMaterialLocalizations.delegate,
+        GlobalWidgetsLocalizations.delegate,
+        GlobalCupertinoLocalizations.delegate,
+      ],
+      supportedLocales: AppLocalizations.supportedLocales,
       debugShowCheckedModeBanner: false,
       title: appTitle,
       theme: ThemeData(

@@ -11,8 +11,6 @@ import 'package:tokihakanenari/visual_tools/text_styles.dart';
 // import 'dart:developer' as developer;
 
 class BigCardContainer extends StatefulWidget {
-  final String cardTitle;
-  final String itemName;
   final CardType cardType;
   final List<Income> incomes;
   final void Function() onUpdateItems;
@@ -20,8 +18,6 @@ class BigCardContainer extends StatefulWidget {
 
   const BigCardContainer({
     super.key,
-    required this.cardTitle,
-    required this.itemName,
     required this.cardType,
     required this.incomes,
     required this.onUpdateItems,
@@ -93,7 +89,7 @@ class _BigCardContainerState extends State<BigCardContainer> {
       child: Column(
         children: [
           Text(
-            widget.cardTitle,
+            widget.cardType.title(context),
             style: TextStyles.cardTitle,
           ),
           const SizedBox(

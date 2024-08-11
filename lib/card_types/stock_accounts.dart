@@ -26,8 +26,6 @@ class _StockAccountsState extends State<StockAccounts> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Stock accounts',
-          itemName: 'stock account',
           cardType: CardType.stockAccounts,
           incomes: stockAccounts,
           onUpdateItems: () {

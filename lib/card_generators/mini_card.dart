@@ -10,7 +10,7 @@ import 'package:tokihakanenari/card_types/stock_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 class MiniCard extends StatefulWidget {
   final CardType cardType;

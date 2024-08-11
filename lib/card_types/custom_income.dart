@@ -26,8 +26,6 @@ class _CustomIncomeState extends State<CustomIncome> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Custom incomes',
-          itemName: 'custom income',
           cardType: CardType.customIncome,
           incomes: customIncomes,
           onUpdateItems: () {

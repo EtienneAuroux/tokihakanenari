@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 enum CardSize { big, mini, small }
 
 enum CardStatus { inert, unroll, roll, drop }
@@ -15,7 +18,7 @@ enum CardType {
   totalIncome,
   settings;
 
-  String get title {
+  String title(BuildContext context) {
     switch (this) {
       case CardType.addCard:
         return 'New source of income';
@@ -30,7 +33,7 @@ enum CardType {
       case CardType.realEstate:
         return 'Real estate';
       case CardType.salaries:
-        return 'Salaries';
+        return AppLocalizations.of(context)!.salaries;
       case CardType.savingAccounts:
         return 'Saving accounts';
       case CardType.stockAccounts:
@@ -39,6 +42,31 @@ enum CardType {
         return 'Total income';
       case CardType.settings:
         return 'Settings';
+    }
+  }
+
+  String item(BuildContext context) {
+    switch (this) {
+      case CardType.addCard:
+        throw ErrorDescription('AddCard does not have a CardType.item.');
+      case CardType.contentCreation:
+        return 'Content:';
+      case CardType.customIncome:
+        return 'Income:';
+      case CardType.indexFunds:
+      case CardType.privateFunds:
+        return 'Fund:';
+      case CardType.realEstate:
+        return 'Property:';
+      case CardType.salaries:
+        return 'Salary:';
+      case CardType.savingAccounts:
+      case CardType.stockAccounts:
+        return 'Account:';
+      case CardType.totalIncome:
+        throw ErrorDescription('TotalIncome does not have a CardType.item.');
+      case CardType.settings:
+        throw ErrorDescription('Settings do not have a CardType.item.');
     }
   }
 }

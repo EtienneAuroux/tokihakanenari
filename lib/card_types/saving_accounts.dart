@@ -28,8 +28,6 @@ class _SavingAccountsState extends State<SavingAccounts> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Saving accounts',
-          itemName: 'saving account',
           cardType: CardType.savingAccounts,
           incomes: savingAccounts,
           onUpdateItems: () {

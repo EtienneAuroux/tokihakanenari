@@ -29,8 +29,6 @@ class _TotalIncomeState extends State<TotalIncome> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Total income',
-          itemName: '',
           cardType: CardType.totalIncome,
           incomes: totalIncomes,
           onUpdateItems: () {
@@ -59,7 +57,7 @@ class _TotalIncomeState extends State<TotalIncome> {
     for (int i = 0; i < ledger.totalIncomeData.incomesPerDay.length; i++) {
       totalIncomes.add(
         Income(
-          ledger.totalIncomeData.incomesType[i].title,
+          ledger.totalIncomeData.incomesType[i].title(context),
           ledger.totalIncomeData.incomesPerDay[i],
           subIncomeCardType: ledger.totalIncomeData.incomesType[i],
         ),

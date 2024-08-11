@@ -26,8 +26,6 @@ class _ContentCreationState extends State<ContentCreation> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Content creation',
-          itemName: 'content creation platform',
           cardType: CardType.contentCreation,
           incomes: contents,
           onUpdateItems: () {

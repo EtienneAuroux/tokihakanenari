@@ -26,8 +26,6 @@ class _PrivateFundsState extends State<PrivateFunds> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Private funds',
-          itemName: 'private fund',
           cardType: CardType.privateFunds,
           incomes: privateFunds,
           onUpdateItems: () {

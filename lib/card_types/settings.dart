@@ -33,14 +33,14 @@ class _SettingsState extends State<Settings> {
               ledger.currency = newCurrency;
             });
           }),
-      SettingDropdown(
-          title: 'Language',
-          values: Language.values,
-          onNewValue: (dynamic newLanguage) {
-            setState(() {
-              ledger.language = newLanguage;
-            });
-          }),
+      // SettingDropdown(
+      //     title: 'Language',
+      //     values: Language.values,
+      //     onNewValue: (dynamic newLanguage) {
+      //       setState(() {
+      //         ledger.language = newLanguage;
+      //       });
+      //     }),
     ];
   }
 

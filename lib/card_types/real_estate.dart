@@ -26,8 +26,6 @@ class _RealEstateState extends State<RealEstate> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Real estate',
-          itemName: 'property',
           cardType: CardType.realEstate,
           incomes: properties,
           onUpdateItems: () {
