@@ -17,8 +17,8 @@
     "content": "Contenu:",
     "income": "Revenue:",
     "fund": "Fond:",
-    "property": "Bien immobilier",
-    "salary": "Salaire",
+    "property": "Bien immobilier:",
+    "salary": "Salaire:",
 
     "day": "jour",
     "week": "semaine",
@@ -67,6 +67,6 @@
     "iconHint": "l'icône qui représente le mieux votre revenue",
     "amount": "somme investie",
     "amountHint": "la somme d'argent investie pour générer le revenue",
-    "return": "taux de revient",
+    "rateOfReturn": "taux de revient",
     "returnHint": "le taux de revient moyen par an en %"
 }

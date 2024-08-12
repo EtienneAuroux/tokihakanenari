@@ -21,27 +21,27 @@ enum CardType {
   String title(BuildContext context) {
     switch (this) {
       case CardType.addCard:
-        return 'New source of income';
+        return AppLocalizations.of(context)!.addCard;
       case CardType.contentCreation:
-        return 'Content creation';
+        return AppLocalizations.of(context)!.contentCreation;
       case CardType.customIncome:
-        return 'Custom incomes';
+        return AppLocalizations.of(context)!.customIncomes;
       case CardType.indexFunds:
-        return 'Index funds';
+        return AppLocalizations.of(context)!.indexFunds;
       case CardType.privateFunds:
-        return 'Private funds';
+        return AppLocalizations.of(context)!.privateFunds;
       case CardType.realEstate:
-        return 'Real estate';
+        return AppLocalizations.of(context)!.realEstate;
       case CardType.salaries:
         return AppLocalizations.of(context)!.salaries;
       case CardType.savingAccounts:
-        return 'Saving accounts';
+        return AppLocalizations.of(context)!.savingAccounts;
       case CardType.stockAccounts:
-        return 'Stock accounts';
+        return AppLocalizations.of(context)!.stockAccounts;
       case CardType.totalIncome:
-        return 'Total income';
+        return AppLocalizations.of(context)!.totalIncome;
       case CardType.settings:
-        return 'Settings';
+        return AppLocalizations.of(context)!.settings;
     }
   }
 
@@ -50,19 +50,19 @@ enum CardType {
       case CardType.addCard:
         throw ErrorDescription('AddCard does not have a CardType.item.');
       case CardType.contentCreation:
-        return 'Content:';
+        return AppLocalizations.of(context)!.content;
       case CardType.customIncome:
-        return 'Income:';
+        return AppLocalizations.of(context)!.income;
       case CardType.indexFunds:
       case CardType.privateFunds:
-        return 'Fund:';
+        return AppLocalizations.of(context)!.fund;
       case CardType.realEstate:
-        return 'Property:';
+        return AppLocalizations.of(context)!.property;
       case CardType.salaries:
-        return 'Salary:';
+        return AppLocalizations.of(context)!.salary;
       case CardType.savingAccounts:
       case CardType.stockAccounts:
-        return 'Account:';
+        return AppLocalizations.of(context)!.account;
       case CardType.totalIncome:
         throw ErrorDescription('TotalIncome does not have a CardType.item.');
       case CardType.settings:

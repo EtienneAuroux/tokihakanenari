@@ -5,6 +5,7 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 // import 'dart:developer' as developer;
 
@@ -58,63 +59,63 @@ class _IncomeContainerState extends State<IncomeContainer> {
     if (cardType == CardType.contentCreation || cardType == CardType.salaries) {
       return [
         Text(
-          'revenue: ${ledger.formatMonetaryAmounts(widget.income.revenue!, false)} / ${widget.income.timePeriod!.name}',
+          '${AppLocalizations.of(context)!.revenue}: ${ledger.formatMonetaryAmounts(widget.income.revenue!, false, context)} / ${widget.income.timePeriod!.name}',
           style: TextStyles.incomeExtraInformation,
         ),
       ];
     } else if (cardType == CardType.customIncome) {
       return [
         Text(
-          'investment: ${ledger.formatMonetaryAmounts(widget.income.amount!, false)}',
+          '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(widget.income.amount!, false, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'average return: ${ledger.formatMonetaryAmounts(widget.income.interest!, true)}',
+          '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(widget.income.interest!, true, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'generated revenue: ${ledger.formatMonetaryAmounts(widget.income.revenue!, false)} / year',
+          '${AppLocalizations.of(context)!.generatedRevenue}: ${ledger.formatMonetaryAmounts(widget.income.revenue!, false, context)} / ${AppLocalizations.of(context)!.year}',
           style: TextStyles.incomeExtraInformation,
         )
       ];
     } else if (cardType == CardType.realEstate) {
       return [
         Text(
-          'description: ${widget.income.description}',
+          '${AppLocalizations.of(context)!.description}: ${widget.income.description}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'capital: ${ledger.formatMonetaryAmounts(widget.income.amount!, false)}',
+          '${AppLocalizations.of(context)!.capital}: ${ledger.formatMonetaryAmounts(widget.income.amount!, false, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'appreciation: ${ledger.formatMonetaryAmounts(widget.income.interest!, true)}',
+          '${AppLocalizations.of(context)!.appreciation}: ${ledger.formatMonetaryAmounts(widget.income.interest!, true, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'monthly payment: ${ledger.formatMonetaryAmounts(widget.income.payment!, false)}',
+          '${AppLocalizations.of(context)!.monthlyPayment}: ${ledger.formatMonetaryAmounts(widget.income.payment!, false, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'generated revenue: ${ledger.formatMonetaryAmounts(widget.income.revenue!, false)} / year',
+          '${AppLocalizations.of(context)!.generatedRevenue}: ${ledger.formatMonetaryAmounts(widget.income.revenue!, false, context)} / ${AppLocalizations.of(context)!.year}',
           style: TextStyles.incomeExtraInformation,
         )
       ];
@@ -127,98 +128,98 @@ class _IncomeContainerState extends State<IncomeContainer> {
         case CardType.contentCreation:
           return [
             Text(
-              'revenue: ${ledger.formatMonetaryAmounts(ledger.contentCreationData.totalIncome, false)} / year',
+              '${AppLocalizations.of(context)!.revenue}: ${ledger.formatMonetaryAmounts(ledger.contentCreationData.totalIncome, false, context)} / ${AppLocalizations.of(context)!.year}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.customIncome:
           return [
             Text(
-              'investment: ${ledger.formatMonetaryAmounts(ledger.customIncomeData.totalInvested, false)}',
+              '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.customIncomeData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.formatMonetaryAmounts(ledger.customIncomeData.totalRateOfReturn, true)}',
+              '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.customIncomeData.totalRateOfReturn, true, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.indexFunds:
           return [
             Text(
-              'investment: ${ledger.formatMonetaryAmounts(ledger.indexFundsData.totalInvested, false)}',
+              '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.indexFundsData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.formatMonetaryAmounts(ledger.indexFundsData.totalRateOfReturn, true)}',
+              '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.indexFundsData.totalRateOfReturn, true, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.privateFunds:
           return [
             Text(
-              'investment: ${ledger.formatMonetaryAmounts(ledger.privateFundsData.totalInvested, false)}',
+              '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.privateFundsData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.formatMonetaryAmounts(ledger.privateFundsData.totalRateOfReturn, true)}',
+              '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.privateFundsData.totalRateOfReturn, true, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.realEstate:
           return [
             Text(
-              'investment: ${ledger.formatMonetaryAmounts(ledger.realEstateData.totalInvested, false)}',
+              '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.realEstateData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.formatMonetaryAmounts(ledger.realEstateData.totalRateOfReturn, true)}',
+              '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.realEstateData.totalRateOfReturn, true, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.salaries:
           return [
             Text(
-              'revenue: ${ledger.formatMonetaryAmounts(ledger.salariesData.totalIncome, false)} / year',
+              '${AppLocalizations.of(context)!.revenue}: ${ledger.formatMonetaryAmounts(ledger.salariesData.totalIncome, false, context)} / ${AppLocalizations.of(context)!.year}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.savingAccounts:
           return [
             Text(
-              'investment: ${ledger.formatMonetaryAmounts(ledger.savingAccountsData.totalInvested, false)}',
+              '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.savingAccountsData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.formatMonetaryAmounts(ledger.savingAccountsData.totalRateOfReturn, true)}',
+              '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.savingAccountsData.totalRateOfReturn, true, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
         case CardType.stockAccounts:
           return [
             Text(
-              'investment: ${ledger.formatMonetaryAmounts(ledger.stockAccountsData.totalInvested, false)}',
+              '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.stockAccountsData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
             const SizedBox(
               height: 5,
             ),
             Text(
-              'average return: ${ledger.formatMonetaryAmounts(ledger.stockAccountsData.totalRateOfReturn, true)}',
+              '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.stockAccountsData.totalRateOfReturn, true, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
           ];
@@ -230,14 +231,14 @@ class _IncomeContainerState extends State<IncomeContainer> {
     } else {
       return [
         Text(
-          'investment: ${ledger.formatMonetaryAmounts(widget.income.amount!, false)}',
+          '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(widget.income.amount!, false, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
         const SizedBox(
           height: 5,
         ),
         Text(
-          'average return: ${ledger.formatMonetaryAmounts(widget.income.interest!, true)}',
+          '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(widget.income.interest!, true, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
       ];
@@ -312,7 +313,7 @@ class _IncomeContainerState extends State<IncomeContainer> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    'income: ${ledger.formatMonetaryAmounts(widget.income.perDayIncome, false)} / day',
+                    '${AppLocalizations.of(context)!.income}: ${ledger.formatMonetaryAmounts(widget.income.perDayIncome, false, context)} / ${AppLocalizations.of(context)!.day}',
                     style: TextStyles.cardBody,
                   ),
                   RotatingButton(

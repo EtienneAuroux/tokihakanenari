@@ -17,8 +17,8 @@
     "content": "Content:",
     "income": "Income:",
     "fund": "Fund:",
-    "property": "Property",
-    "salary": "Salary",
+    "property": "Property:",
+    "salary": "Salary:",
 
     "day": "day",
     "week": "week",
@@ -39,7 +39,7 @@
     "appreciation": "appreciation",
     "appreciationHint": "the average yearly increase in property value per year (%)",
     "monthlyPayment": "monthly payment",
-    "payment:": "payment",
+    "payment": "payment",
     "paymentHint": "the monthly contribution that you are making to the capital",
     "incomeNoCap": "income",
 
@@ -67,6 +67,6 @@
     "iconHint": "the icon that best represents your income",
     "amount": "amount",
     "amountHint": "the amount of money invested to generate the income",
-    "return": "return",
+    "rateOfReturn": "return",
     "returnHint": "the average rate of return per year in %"
 }

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SettingDropdown extends StatefulWidget {
   final String title;
@@ -52,7 +53,7 @@ class _SettingDropdownState extends State<SettingDropdown> {
                   child: Align(
                     alignment: Alignment.center,
                     child: Text(
-                      item.word.isEmpty ? 'none' : item.word,
+                      item.word.isEmpty ? AppLocalizations.of(context)!.none : item.word,
                       style: TextStyles.cardBody,
                     ),
                   ),
@@ -64,7 +65,7 @@ class _SettingDropdownState extends State<SettingDropdown> {
                     width: 120,
                     alignment: Alignment.centerRight,
                     child: Text(
-                      item.word.isEmpty ? 'none' : item.word,
+                      item.word.isEmpty ? AppLocalizations.of(context)!.none : item.word,
                       style: TextStyles.cardBody,
                     ),
                   );
