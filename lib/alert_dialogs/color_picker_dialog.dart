@@ -9,6 +9,8 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class ColorPickerDialog extends StatefulWidget {
   final CardType? cardType;
   final ColorGradient originalColors;
@@ -153,8 +155,8 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
       content: Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          const Text(
-            'Gradient creator',
+          Text(
+            AppLocalizations.of(context)!.gradientCreator,
             style: TextStyles.dialogTitle,
           ),
           const SizedBox(
@@ -163,10 +165,10 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+              SizedBox(
                 width: 60,
                 child: Text(
-                  'top\nright:',
+                  AppLocalizations.of(context)!.topRight,
                   textAlign: TextAlign.center,
                   style: TextStyles.dialogText,
                 ),
@@ -199,10 +201,10 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+              SizedBox(
                 width: 60,
                 child: Text(
-                  'bottom\nleft:',
+                  AppLocalizations.of(context)!.bottomLeft,
                   textAlign: TextAlign.center,
                   style: TextStyles.dialogText,
                 ),
@@ -236,10 +238,10 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
-              const SizedBox(
+              SizedBox(
                 width: 75,
                 child: Text(
-                  'gradient:',
+                  AppLocalizations.of(context)!.gradient,
                   textAlign: TextAlign.center,
                   style: TextStyles.dialogText,
                 ),

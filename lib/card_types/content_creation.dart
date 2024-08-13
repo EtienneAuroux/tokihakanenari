@@ -6,6 +6,8 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class ContentCreation extends StatefulWidget {
   final CardSize cardSize;
 
@@ -36,16 +38,16 @@ class _ContentCreationState extends State<ContentCreation> {
           },
         );
       case CardSize.mini:
-        return const Center(
+        return Center(
           child: Text(
-            'Content creation',
+            AppLocalizations.of(context)!.contentCreation,
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),
         );
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: 'Content creation',
+          cardTitle: AppLocalizations.of(context)!.contentCreation,
           perDay: ledger.contentCreationData.totalPerDay,
         );
     }

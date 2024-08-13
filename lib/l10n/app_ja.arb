@@ -45,6 +45,7 @@
 
     "currency": "Currency",
     "background": "Background",
+    "addIncome": "Add income",
     "resetColors": "Reset colors",
     "eraseData": "Erase data",
     "eraseEverything": "Erase everything",
@@ -61,7 +62,6 @@
 
     "name": "name",
     "nameHint": "the name of your income",
-    
     "period": "period",
     "periodHint": "whether you receive your revenue per day, week, month or year",
     "icon": "icon",
@@ -69,5 +69,6 @@
     "amount": "amount",
     "amountHint": "the amount of money invested to generate the income",
     "rateOfReturn": "return",
-    "returnHint": "the average rate of return per year in %"
+    "returnHint": "the average rate of return per year in %",
+    "salaryHint": "the amount of money that you receive as salary"
 }

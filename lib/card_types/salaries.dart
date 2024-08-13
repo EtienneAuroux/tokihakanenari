@@ -49,7 +49,7 @@ class _SalariesState extends State<Salaries> {
         );
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: 'Salaries',
+          cardTitle: AppLocalizations.of(context)!.salaries,
           perDay: ledger.salariesData.totalPerDay,
         );
     }

@@ -4,6 +4,8 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 // import 'dart:developer' as developer;
 
 class AddCard extends StatefulWidget {
@@ -54,8 +56,8 @@ class _AddCardState extends State<AddCard> {
           alignment: Alignment.topCenter,
           child: Column(
             children: [
-              const Text(
-                'New source of income',
+              Text(
+                AppLocalizations.of(context)!.addCard,
                 textAlign: TextAlign.center,
                 style: TextStyles.cardTitle,
               ),

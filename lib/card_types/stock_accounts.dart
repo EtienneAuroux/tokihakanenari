@@ -36,16 +36,16 @@ class _StockAccountsState extends State<StockAccounts> {
           },
         );
       case CardSize.mini:
-        return const Center(
+        return Center(
           child: Text(
-            'Stock accounts',
+            CardType.totalIncome.title(context),
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),
         );
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: 'Stock accounts',
+          cardTitle: CardType.totalIncome.title(context),
           perDay: ledger.stockAccountsData.totalPerDay,
           investedAmount: ledger.stockAccountsData.totalInvested,
         );

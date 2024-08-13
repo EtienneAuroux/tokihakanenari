@@ -45,6 +45,7 @@
 
     "currency": "Monnaie",
     "background": "Arrière-plan",
+    "addIncome": "Ajout de revenues",
     "resetColors": "Réinitialiser les couleurs",
     "eraseData": "Effacer les données",
     "eraseEverything": "Tout effacer",
@@ -68,5 +69,6 @@
     "amount": "somme investie",
     "amountHint": "la somme d'argent investie pour générer le revenue",
     "rateOfReturn": "taux de revient",
-    "returnHint": "le taux de revient moyen par an en %"
+    "returnHint": "le taux de revient moyen par an en %",
+    "salaryHint": "la somme d'argent que vous recevez en tant que salaire"
 }

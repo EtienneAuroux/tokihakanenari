@@ -6,6 +6,8 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class IndexFunds extends StatefulWidget {
   final CardSize cardSize;
 
@@ -36,16 +38,16 @@ class _IndexFundsState extends State<IndexFunds> {
           },
         );
       case CardSize.mini:
-        return const Center(
+        return Center(
           child: Text(
-            'Index funds',
+            AppLocalizations.of(context)!.indexFunds,
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),
         );
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: 'Index funds',
+          cardTitle: AppLocalizations.of(context)!.indexFunds,
           perDay: ledger.indexFundsData.totalPerDay,
           investedAmount: ledger.indexFundsData.totalInvested,
         );

@@ -313,7 +313,7 @@ class _IncomeContainerState extends State<IncomeContainer> {
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
                   Text(
-                    '${AppLocalizations.of(context)!.income}: ${ledger.formatMonetaryAmounts(widget.income.perDayIncome, false, context)} / ${AppLocalizations.of(context)!.day}',
+                    '${AppLocalizations.of(context)!.income} ${ledger.formatMonetaryAmounts(widget.income.perDayIncome, false, context)} / ${AppLocalizations.of(context)!.day}',
                     style: TextStyles.cardBody,
                   ),
                   RotatingButton(
