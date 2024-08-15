@@ -26,7 +26,7 @@
     "year": "年",
 
     "none": "なし",
-    "invested": "投資した",
+    "invested": "投資済",
     "revenue": "収益",
     "revenueHint": "期間あたりの平均収益",
     "investment": "投資",
@@ -39,7 +39,6 @@
     "appreciation": "資本増強",
     "appreciationHint": "不動産価値の年間平均増加率（％）",
     "monthlyPayment": "月額支払い",
-    "payment:": "支払い",
     "paymentHint": "資本に毎月支払う金額",
     "incomeNoCap": "収入",
 
@@ -70,5 +69,6 @@
     "amountHint": "収入の為に投資された額",
     "rateOfReturn": "利益",
     "returnHint": "年間平均収益率（％）",
-    "salaryHint": "給料として受け取る金額"
+    "salaryHint": "給料として受け取る金額",
+    "payment": "支払い"
 }

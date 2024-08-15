@@ -39,7 +39,6 @@
     "appreciation": "appréciation",
     "appreciationHint": "l'accroissement moyen de la valeur du bien par an en %",
     "monthlyPayment": "mensualités",
-    "payment:": "paiement",
     "paymentHint": "la contribution mensuelle à votre capital",
     "incomeNoCap": "revenue",
 
@@ -70,5 +69,6 @@
     "amountHint": "la somme d'argent investie pour générer le revenue",
     "rateOfReturn": "taux de revient",
     "returnHint": "le taux de revient moyen par an en %",
-    "salaryHint": "la somme d'argent que vous recevez en tant que salaire"
+    "salaryHint": "la somme d'argent que vous recevez en tant que salaire",
+    "payment": "paiement"
 }

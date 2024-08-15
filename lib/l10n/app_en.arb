@@ -39,7 +39,6 @@
     "appreciation": "appreciation",
     "appreciationHint": "the average yearly increase in property value per year (%)",
     "monthlyPayment": "monthly payment",
-    "payment": "payment",
     "paymentHint": "the monthly contribution that you are making to the capital",
     "incomeNoCap": "income",
 
@@ -70,5 +69,6 @@
     "amountHint": "the amount of money invested to generate the income",
     "rateOfReturn": "return",
     "returnHint": "the average rate of return per year in %",
-    "salaryHint": "the amount of money that you receive as salary"
+    "salaryHint": "the amount of money that you receive as salary",
+    "payment": "payment"
 }
