@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
 class SmallCardContainer extends StatefulWidget {
   final String cardTitle;
@@ -27,12 +28,12 @@ class _SmallCardContainerState extends State<SmallCardContainer> {
             style: TextStyles.cardTitle,
           ),
           Text(
-            '${ledger.formatMonetaryAmounts(widget.perDay, false)} / day',
+            '${ledger.formatMonetaryAmounts(widget.perDay, false, context)} / ${AppLocalizations.of(context)!.day}',
             style: TextStyles.cardBody,
           ),
           widget.investedAmount != null
               ? Text(
-                  '${ledger.formatMonetaryAmounts(widget.investedAmount!, false)} invested',
+                  '${ledger.formatMonetaryAmounts(widget.investedAmount!, false, context)} ${AppLocalizations.of(context)!.invested}',
                   style: TextStyles.cardBody,
                 )
               : const SizedBox(),

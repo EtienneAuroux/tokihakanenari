@@ -29,12 +29,9 @@ class _TotalIncomeState extends State<TotalIncome> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Total income',
-          itemName: '',
           cardType: CardType.totalIncome,
-          incomes: totalIncomes,
+          incomes: getTotalIncomes(),
           onUpdateItems: () {
-            totalIncomes = getTotalIncomes();
             if (mounted) {
               setState(() {});
             }
@@ -47,7 +44,7 @@ class _TotalIncomeState extends State<TotalIncome> {
         throw ErrorDescription('TotalIncome should not be used as a mini card.');
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: 'Total income',
+          cardTitle: CardType.totalIncome.title(context),
           perDay: ledger.totalIncomeData.totalIncomePerDay,
           investedAmount: ledger.totalIncomeData.totalInvested,
         );
@@ -59,7 +56,7 @@ class _TotalIncomeState extends State<TotalIncome> {
     for (int i = 0; i < ledger.totalIncomeData.incomesPerDay.length; i++) {
       totalIncomes.add(
         Income(
-          ledger.totalIncomeData.incomesType[i].title,
+          ledger.totalIncomeData.incomesType[i].title(context), // No context in initstate so cannot access localization.
           ledger.totalIncomeData.incomesPerDay[i],
           subIncomeCardType: ledger.totalIncomeData.incomesType[i],
         ),
@@ -72,10 +69,7 @@ class _TotalIncomeState extends State<TotalIncome> {
   void initState() {
     super.initState();
 
-    totalIncomes = getTotalIncomes();
-
     ledger.addListener(() {
-      totalIncomes = getTotalIncomes();
       if (mounted) {
         setState(() {});
       }

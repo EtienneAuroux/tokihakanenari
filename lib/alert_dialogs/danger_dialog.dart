@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 // import 'dart:developer' as developer;
 
 class DangerDialog extends StatefulWidget {
@@ -29,13 +31,13 @@ class _DangerDialogState extends State<DangerDialog> {
             widget.title,
             style: TextStyles.dialogTitle,
           ),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(FontAwesome5.exclamation_triangle),
+              const Icon(FontAwesome5.exclamation_triangle),
               Flexible(
                 child: Text(
-                  'This action cannot be undone!',
+                  AppLocalizations.of(context)!.warningMessage,
                   style: TextStyles.dialogText,
                   textAlign: TextAlign.center,
                 ),
@@ -45,10 +47,10 @@ class _DangerDialogState extends State<DangerDialog> {
           TextField(
             textAlign: TextAlign.center,
             style: TextStyles.dialogText,
-            decoration: const InputDecoration(
-              contentPadding: EdgeInsets.symmetric(vertical: 7),
+            decoration: InputDecoration(
+              contentPadding: const EdgeInsets.symmetric(vertical: 7),
               isCollapsed: true,
-              hintText: 'Type "Okame" to delete',
+              hintText: AppLocalizations.of(context)!.typeOkameDelete,
             ),
             onChanged: (String value) {
               if (value == 'Okame') {

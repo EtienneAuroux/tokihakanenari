@@ -6,6 +6,7 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 // import 'dart:developer' as developer;
 
 class SavingAccounts extends StatefulWidget {
@@ -28,8 +29,6 @@ class _SavingAccountsState extends State<SavingAccounts> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Saving accounts',
-          itemName: 'saving account',
           cardType: CardType.savingAccounts,
           incomes: savingAccounts,
           onUpdateItems: () {
@@ -40,16 +39,16 @@ class _SavingAccountsState extends State<SavingAccounts> {
           },
         );
       case CardSize.mini:
-        return const Center(
+        return Center(
           child: Text(
-            'Saving accounts',
+            AppLocalizations.of(context)!.savingAccounts,
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),
         );
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: 'Saving accounts',
+          cardTitle: AppLocalizations.of(context)!.savingAccounts,
           perDay: ledger.savingAccountsData.totalPerDay,
           investedAmount: ledger.savingAccountsData.totalInvested,
         );

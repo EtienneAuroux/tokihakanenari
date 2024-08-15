@@ -6,6 +6,8 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class PrivateFunds extends StatefulWidget {
   final CardSize cardSize;
 
@@ -26,8 +28,6 @@ class _PrivateFundsState extends State<PrivateFunds> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Private funds',
-          itemName: 'private fund',
           cardType: CardType.privateFunds,
           incomes: privateFunds,
           onUpdateItems: () {
@@ -38,16 +38,16 @@ class _PrivateFundsState extends State<PrivateFunds> {
           },
         );
       case CardSize.mini:
-        return const Center(
+        return Center(
           child: Text(
-            'Private funds',
+            AppLocalizations.of(context)!.privateFunds,
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),
         );
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: 'Private funds',
+          cardTitle: AppLocalizations.of(context)!.privateFunds,
           perDay: ledger.privateFundsData.totalPerDay,
           investedAmount: ledger.privateFundsData.totalInvested,
         );

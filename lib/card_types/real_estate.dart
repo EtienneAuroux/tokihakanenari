@@ -6,6 +6,8 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class RealEstate extends StatefulWidget {
   final CardSize cardSize;
 
@@ -26,8 +28,6 @@ class _RealEstateState extends State<RealEstate> {
     switch (cardStatus) {
       case CardSize.big:
         return BigCardContainer(
-          cardTitle: 'Real estate',
-          itemName: 'property',
           cardType: CardType.realEstate,
           incomes: properties,
           onUpdateItems: () {
@@ -38,16 +38,16 @@ class _RealEstateState extends State<RealEstate> {
           },
         );
       case CardSize.mini:
-        return const Center(
+        return Center(
           child: Text(
-            'Real estate',
+            AppLocalizations.of(context)!.realEstate,
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),
         );
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: 'Real estate',
+          cardTitle: AppLocalizations.of(context)!.realEstate,
           perDay: ledger.realEstateData.totalPerDay,
           investedAmount: ledger.realEstateData.totalInvested,
         );

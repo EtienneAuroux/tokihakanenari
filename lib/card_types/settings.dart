@@ -8,6 +8,8 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 // import 'dart:developer' as developer;
 
 class Settings extends StatefulWidget {
@@ -26,67 +28,67 @@ class _SettingsState extends State<Settings> {
   List<Widget> getGeneralSettings() {
     return [
       SettingDropdown(
-          title: 'Currency',
+          title: AppLocalizations.of(context)!.currency,
           values: Currency.values,
           onNewValue: (dynamic newCurrency) {
             setState(() {
               ledger.currency = newCurrency;
             });
           }),
-      SettingDropdown(
-          title: 'Language',
-          values: Language.values,
-          onNewValue: (dynamic newLanguage) {
-            setState(() {
-              ledger.language = newLanguage;
-            });
-          }),
+      // SettingDropdown(
+      //     title: 'Language',
+      //     values: Language.values,
+      //     onNewValue: (dynamic newLanguage) {
+      //       setState(() {
+      //         ledger.language = newLanguage;
+      //       });
+      //     }),
     ];
   }
 
   List<Widget> getColorSettings() {
     return [
-      const GradientSelector(
-        title: 'background',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.background,
       ),
-      const GradientSelector(
-        title: 'total income',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.totalIncome,
         cardType: CardType.totalIncome,
       ),
-      const GradientSelector(
-        title: 'add income',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.addIncome,
         cardType: CardType.addCard,
       ),
-      const GradientSelector(
-        title: 'content creation',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.contentCreation,
         cardType: CardType.contentCreation,
       ),
-      const GradientSelector(
-        title: 'custom incomes',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.customIncomes,
         cardType: CardType.customIncome,
       ),
-      const GradientSelector(
-        title: 'index funds',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.indexFunds,
         cardType: CardType.indexFunds,
       ),
-      const GradientSelector(
-        title: 'private funds',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.privateFunds,
         cardType: CardType.privateFunds,
       ),
-      const GradientSelector(
-        title: 'real estate',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.realEstate,
         cardType: CardType.realEstate,
       ),
-      const GradientSelector(
-        title: 'salaries',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.salaries,
         cardType: CardType.salaries,
       ),
-      const GradientSelector(
-        title: 'saving accounts',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.savingAccounts,
         cardType: CardType.savingAccounts,
       ),
-      const GradientSelector(
-        title: 'stock accounts:',
+      GradientSelector(
+        title: AppLocalizations.of(context)!.stockAccounts,
         cardType: CardType.stockAccounts,
       ),
     ];
@@ -97,8 +99,8 @@ class _SettingsState extends State<Settings> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Reset all colors:',
+          Text(
+            AppLocalizations.of(context)!.resetColors,
             style: TextStyles.cardBody,
           ),
           IconButton(
@@ -107,7 +109,7 @@ class _SettingsState extends State<Settings> {
                   context: context,
                   builder: (BuildContext context) {
                     return DangerDialog(
-                      title: 'Reset colors',
+                      title: AppLocalizations.of(context)!.resetColors,
                       onActionValidated: () {
                         ledger.resetAllGradients();
                       },
@@ -121,8 +123,8 @@ class _SettingsState extends State<Settings> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Erase all data:',
+          Text(
+            AppLocalizations.of(context)!.eraseData,
             style: TextStyles.cardBody,
           ),
           IconButton(
@@ -131,7 +133,7 @@ class _SettingsState extends State<Settings> {
                   context: context,
                   builder: (BuildContext context) {
                     return DangerDialog(
-                      title: 'Erase data',
+                      title: AppLocalizations.of(context)!.eraseData,
                       onActionValidated: () {
                         ledger.deleteAllData();
                       },
@@ -145,8 +147,8 @@ class _SettingsState extends State<Settings> {
       Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          const Text(
-            'Erase everything:',
+          Text(
+            AppLocalizations.of(context)!.eraseEverything,
             style: TextStyles.cardBody,
           ),
           IconButton(
@@ -155,7 +157,7 @@ class _SettingsState extends State<Settings> {
                   context: context,
                   builder: (BuildContext context) {
                     return DangerDialog(
-                      title: 'Erase everything',
+                      title: AppLocalizations.of(context)!.eraseEverything,
                       onActionValidated: () {
                         ledger.currency = Currency.none;
                         ledger.language = Language.english;
@@ -183,19 +185,19 @@ class _SettingsState extends State<Settings> {
           child: ListView(
             physics: const NeverScrollableScrollPhysics(),
             children: [
-              const Row(
+              Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Icon(
+                  const Icon(
                     FontAwesome5.tools_1,
                     color: Colors.black,
                     size: 40,
                   ),
-                  SizedBox(
+                  const SizedBox(
                     width: 20,
                   ),
                   Text(
-                    'Settings',
+                    AppLocalizations.of(context)!.settings,
                     style: TextStyles.cardTitle,
                   ),
                 ],
@@ -208,7 +210,7 @@ class _SettingsState extends State<Settings> {
                 child: ListView(
                   children: [
                     SettingContainer(
-                      title: 'General',
+                      title: AppLocalizations.of(context)!.general,
                       milliseconds: 300,
                       open: setting == Setting.general,
                       onOpen: (bool open) {
@@ -222,7 +224,7 @@ class _SettingsState extends State<Settings> {
                       height: 10,
                     ),
                     SettingContainer(
-                      title: 'Color',
+                      title: AppLocalizations.of(context)!.color,
                       milliseconds: 500,
                       open: setting == Setting.color,
                       onOpen: (bool open) {
@@ -236,7 +238,7 @@ class _SettingsState extends State<Settings> {
                       height: 10,
                     ),
                     SettingContainer(
-                      title: 'Danger',
+                      title: AppLocalizations.of(context)!.danger,
                       milliseconds: 300,
                       open: setting == Setting.danger,
                       onOpen: (bool open) {

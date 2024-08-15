@@ -6,8 +6,9 @@ import 'package:tokihakanenari/ledger_data/color_gradient.dart';
 import 'package:tokihakanenari/ledger_data/data.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.
@@ -78,11 +79,10 @@ class Ledger extends ChangeNotifier {
   Language get language => _language;
 
   // Formats
-  String formatMonetaryAmounts(double amount, bool percent) {
-    String unit = percent ? '% / year' : currency.word;
+  String formatMonetaryAmounts(double amount, bool percent, BuildContext context) {
+    String unit = percent ? '% / ${AppLocalizations.of(context)!.year}' : currency.word;
     if (amount >= 1e3 && amount < 1e6) {
       String roundedAmount = amount.round().toString();
-      developer.log(roundedAmount);
       return '${roundedAmount.substring(0, roundedAmount.length - 3)} ${roundedAmount.substring(roundedAmount.length - 3)} $unit';
     } else if (amount >= 1e6 && amount < 1e9) {
       return '${(amount / 1e6).toStringAsFixed(2)} M$unit';
@@ -229,7 +229,6 @@ class Ledger extends ChangeNotifier {
   }
 
   void deleteAllData() {
-    developer.log('deleteAllData called');
     for (CardType cardType in CardType.values) {
       if (cardType != CardType.addCard && cardType != CardType.totalIncome && cardType != CardType.settings) {
         deleteCarouselCard(cardType, fullReset: true);

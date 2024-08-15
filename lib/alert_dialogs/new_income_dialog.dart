@@ -8,6 +8,8 @@ import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class NewIncomeDialog extends StatefulWidget {
   final CardType cardType;
   final void Function(List<dynamic>) onNewIncomeCallback;
@@ -142,40 +144,13 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
     }
   }
 
-  String getDialogTitle(CardType cardType) {
-    switch (cardType) {
-      case CardType.addCard:
-        throw ErrorDescription('It should not be possible to open NewIncomeDialog from AddCard.');
-      case CardType.contentCreation:
-        return 'New content:';
-      case CardType.customIncome:
-        return 'New income:';
-      case CardType.indexFunds:
-        return 'New fund:';
-      case CardType.privateFunds:
-        return 'New fund:';
-      case CardType.realEstate:
-        return 'New property:';
-      case CardType.salaries:
-        return 'New salary:';
-      case CardType.savingAccounts:
-        return 'New account:';
-      case CardType.stockAccounts:
-        return 'New account:';
-      case CardType.totalIncome:
-        throw ErrorDescription('It should not be possible to open NewIncomeDialog from TotalIncome.');
-      case CardType.settings:
-        throw ErrorDescription('It should not be possible to open NewIncomeDialog from settings.');
-    }
-  }
-
   List<Widget> getDialogContent(CardType cardType) {
     switch (cardType) {
       case CardType.addCard:
         throw ErrorDescription('It should not be possible to open NewIncomeDialog from AddCard.');
       case CardType.contentCreation:
         return [
-          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your content creation'),
+          DialogEntry(entry: AppLocalizations.of(context)!.icon, hint: AppLocalizations.of(context)!.iconHint),
           IconButton(
               onPressed: () {
                 showDialog(
@@ -192,11 +167,11 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     });
               },
               icon: Icon(icon)),
-          const DialogEntry(entry: 'name', hint: 'the name of your content creation'),
+          DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
-          const DialogEntry(entry: 'revenue', hint: 'the average revenue that your content creation generate per period'),
+          DialogEntry(entry: AppLocalizations.of(context)!.revenue, hint: AppLocalizations.of(context)!.revenueHint),
           DialogField(controller: amountController, inputType: TextInputType.number),
-          const DialogEntry(entry: 'period', hint: 'the frequency at which you receive the above revenue'),
+          DialogEntry(entry: AppLocalizations.of(context)!.period, hint: AppLocalizations.of(context)!.periodHint),
           DropdownButton<TimePeriod>(
             value: timePeriod,
             isExpanded: true,
@@ -219,7 +194,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         ];
       case CardType.customIncome:
         return [
-          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your income'),
+          DialogEntry(entry: AppLocalizations.of(context)!.icon, hint: AppLocalizations.of(context)!.iconHint),
           IconButton(
               onPressed: () {
                 showDialog(
@@ -236,20 +211,20 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     });
               },
               icon: Icon(icon)),
-          const DialogEntry(entry: 'name', hint: 'the name of your income'),
+          DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
-          const DialogEntry(entry: 'amount', hint: 'the amount of money invested'),
+          DialogEntry(entry: AppLocalizations.of(context)!.amount, hint: AppLocalizations.of(context)!.amountHint),
           DialogField(controller: amountController, inputType: TextInputType.number),
-          const DialogEntry(entry: 'revenue', hint: 'the revenue you receive from the income per month'), // TODO SHOULD BE PER PERIOD?
+          DialogEntry(entry: AppLocalizations.of(context)!.revenue, hint: AppLocalizations.of(context)!.revenueHint), // TODO SHOULD BE PER PERIOD?
           DialogField(controller: revenueController, inputType: TextInputType.number),
-          const DialogEntry(entry: 'return', hint: 'the average rate of return per year in %'),
+          DialogEntry(entry: AppLocalizations.of(context)!.rateOfReturn, hint: AppLocalizations.of(context)!.returnHint),
           DialogField(controller: interestController, inputType: TextInputType.number),
         ];
       case CardType.totalIncome:
         throw ErrorDescription('It should not be possible to open NewIncomeDialog from TotalIncome.');
       case CardType.realEstate:
         return [
-          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your real estate property'),
+          DialogEntry(entry: AppLocalizations.of(context)!.icon, hint: AppLocalizations.of(context)!.iconHint),
           IconButton(
               onPressed: () {
                 showDialog(
@@ -266,22 +241,22 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     });
               },
               icon: Icon(icon)),
-          const DialogEntry(entry: 'name', hint: 'the name of your real estate property'),
+          DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
-          const DialogEntry(entry: 'description', hint: 'surface, number of units, ...'),
+          DialogEntry(entry: AppLocalizations.of(context)!.description, hint: AppLocalizations.of(context)!.descriptionHint),
           DialogField(controller: descriptionController),
-          const DialogEntry(entry: 'capital', hint: 'the amount of money that you own in the property'),
+          DialogEntry(entry: AppLocalizations.of(context)!.capital, hint: AppLocalizations.of(context)!.capitalHint),
           DialogField(controller: amountController, inputType: TextInputType.number),
-          const DialogEntry(entry: 'payment', hint: 'the monthly contribution that you are making to the capital'), //TODO SHOULD BE PER PERIOD?
+          DialogEntry(entry: AppLocalizations.of(context)!.payment, hint: AppLocalizations.of(context)!.paymentHint), //TODO SHOULD BE PER PERIOD?
           DialogField(controller: capitalPaymentController, inputType: TextInputType.number),
-          const DialogEntry(entry: 'revenue', hint: 'the revenue you receive from the property per month'), //TODO SHOULD BE PER PERIOD?
+          DialogEntry(entry: AppLocalizations.of(context)!.revenue, hint: AppLocalizations.of(context)!.revenueHint), //TODO SHOULD BE PER PERIOD?
           DialogField(controller: revenueController, inputType: TextInputType.number),
-          const DialogEntry(entry: 'appreciation', hint: 'the average yearly increase in property value per year (%)'),
+          DialogEntry(entry: AppLocalizations.of(context)!.appreciation, hint: AppLocalizations.of(context)!.appreciationHint),
           DialogField(controller: interestController, inputType: TextInputType.number),
         ];
       case CardType.salaries:
         return [
-          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your salary or its origin'),
+          DialogEntry(entry: AppLocalizations.of(context)!.icon, hint: AppLocalizations.of(context)!.iconHint),
           IconButton(
               onPressed: () {
                 showDialog(
@@ -298,11 +273,11 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     });
               },
               icon: Icon(icon)),
-          const DialogEntry(entry: 'name', hint: 'the name of your salary or its origin'),
+          DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
-          const DialogEntry(entry: 'salary', hint: 'the amount of money that you receive as salary'),
+          DialogEntry(entry: AppLocalizations.of(context)!.salary, hint: AppLocalizations.of(context)!.salaryHint),
           DialogField(controller: amountController, inputType: TextInputType.number),
-          const DialogEntry(entry: 'period', hint: 'the frequency at which you receive your salary'),
+          DialogEntry(entry: AppLocalizations.of(context)!.period, hint: AppLocalizations.of(context)!.periodHint),
           DropdownButton<TimePeriod>(
             value: timePeriod,
             isExpanded: true,
@@ -327,7 +302,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
       case CardType.savingAccounts:
       case CardType.stockAccounts:
         return [
-          const DialogEntry(entry: 'icon', hint: 'the icon that best represents your account'),
+          DialogEntry(entry: AppLocalizations.of(context)!.icon, hint: AppLocalizations.of(context)!.iconHint),
           IconButton(
               onPressed: () {
                 showDialog(
@@ -344,11 +319,11 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     });
               },
               icon: Icon(icon)),
-          const DialogEntry(entry: 'name', hint: 'the name of your account'),
+          DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
-          const DialogEntry(entry: 'amount', hint: 'the amount of money that you have invested'),
+          DialogEntry(entry: AppLocalizations.of(context)!.amount, hint: AppLocalizations.of(context)!.amountHint),
           DialogField(controller: amountController, inputType: TextInputType.number),
-          const DialogEntry(entry: 'return', hint: 'the average yearly increase of your account per year (%)'),
+          DialogEntry(entry: AppLocalizations.of(context)!.rateOfReturn, hint: AppLocalizations.of(context)!.returnHint),
           DialogField(controller: interestController, inputType: TextInputType.number),
         ];
       case CardType.settings:
@@ -461,7 +436,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                 Padding(
                   padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
                   child: Text(
-                    getDialogTitle(widget.cardType),
+                    widget.cardType.item(context),
                     style: TextStyles.dialogTitle,
                   ),
                 ),
