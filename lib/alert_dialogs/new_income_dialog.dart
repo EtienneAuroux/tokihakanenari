@@ -179,9 +179,12 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             items: TimePeriod.values.map((TimePeriod timePeriod) {
               return DropdownMenuItem<TimePeriod>(
                 value: timePeriod,
-                child: Text(
-                  timePeriod.name,
-                  style: TextStyles.dialogText,
+                child: Center(
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    timePeriod.title(context),
+                    style: TextStyles.dialogText,
+                  ),
                 ),
               );
             }).toList(),
@@ -285,8 +288,11 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
             items: TimePeriod.values.map((TimePeriod timePeriod) {
               return DropdownMenuItem<TimePeriod>(
                 value: timePeriod,
-                child: Text(
-                  timePeriod.name,
+                child: Center(
+                  child: Text(
+                    textAlign: TextAlign.center,
+                    timePeriod.title(context),
+                  ),
                 ),
               );
             }).toList(),

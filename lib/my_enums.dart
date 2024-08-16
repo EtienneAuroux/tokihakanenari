@@ -73,7 +73,25 @@ enum CardType {
 
 enum MainView { carousel, primaryBigCard, secondaryBigCard }
 
-enum TimePeriod { day, week, month, year }
+enum TimePeriod {
+  day,
+  week,
+  month,
+  year;
+
+  String title(BuildContext context) {
+    switch (this) {
+      case TimePeriod.day:
+        return AppLocalizations.of(context)!.day;
+      case TimePeriod.week:
+        return AppLocalizations.of(context)!.week;
+      case TimePeriod.month:
+        return AppLocalizations.of(context)!.month;
+      case TimePeriod.year:
+        return AppLocalizations.of(context)!.year;
+    }
+  }
+}
 
 enum Setting { none, general, color, danger }
 
