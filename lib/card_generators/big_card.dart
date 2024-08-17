@@ -1,5 +1,5 @@
 import 'dart:math';
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -18,6 +18,7 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/big_card_clipper.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 
 class BigCard extends StatefulWidget {
   final CardType cardType;
@@ -109,28 +110,32 @@ class _BigCardState extends State<BigCard> {
   void pageFlipping(Size size, CardStatus cardStatus, double speed) async {
     if (cardStatus == CardStatus.roll) {
       int time = 0;
-      while (flippedDistance < size.width * 3) {
+      while (flippedDistance < Dimensions.maxFlippingDistance) {
         setState(() {
-          flippedDistance += speed * (1 + time * 0.01);
+          flippedDistance += speed * time * 0.001;
         });
         time += 1;
         await Future.delayed(const Duration(milliseconds: 1));
       }
       widget.onBigCardRollDone();
     } else if (cardStatus == CardStatus.unroll) {
-      const int animationTime = 200;
-      for (int time = 1; time <= animationTime; time++) {
-        setState(() {
-          flippedDistance = size.width * 3 - sqrt(speed * time);
-          if (flippedDistance < 0) {
-            flippedDistance = 0;
-          }
-        });
-        if (flippedDistance == 0) {
-          widget.onBigCardUnrollDone();
-          return;
+      int time = 1;
+      while (flippedDistance >= 0) {
+        flippedDistance = Dimensions.maxFlippingDistance - speed * time * 0.001;
+        if (flippedDistance > 0) {
+          setState(() {});
         }
         await Future.delayed(const Duration(milliseconds: 1));
+        time += 1;
+      }
+      if (flippedDistance < 0) {
+        setState(() {
+          flippedDistance = 0;
+        });
+      }
+      if (flippedDistance == 0) {
+        widget.onBigCardUnrollDone();
+        return;
       }
     }
   }
@@ -146,7 +151,7 @@ class _BigCardState extends State<BigCard> {
       setState(() {
         dropNumber += 1;
       });
-      await Future.delayed(const Duration(microseconds: 1000));
+      await Future.delayed(const Duration(milliseconds: 1));
     }
     setState(() {
       droppingIn = false;
@@ -160,12 +165,13 @@ class _BigCardState extends State<BigCard> {
     super.initState();
 
     if (widget.cardStatus == CardStatus.unroll) {
-      pageFlipping(widget.screenSize, CardStatus.unroll, 6400);
+      pageFlipping(widget.screenSize, CardStatus.unroll, Dimensions.pageUnrollingSpeed);
     } else if (widget.cardStatus == CardStatus.drop) {
       cardDropping();
     }
   }
 
+  var test = 0.0;
   @override
   Widget build(BuildContext context) {
     double panLimit = sqrt(pow(widget.screenSize.width / 6, 2) + pow(widget.screenSize.height / 6, 2));
@@ -211,6 +217,7 @@ class _BigCardState extends State<BigCard> {
           ClipPath(
             clipper: FlippedCornerContour(
               flippedDistance: flippedDistance,
+              xDistance: test,
             ),
             child: Container(
               decoration: CardDecoration.getBigCornerDecoration(widget.cardType),

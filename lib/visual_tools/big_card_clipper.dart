@@ -1,8 +1,9 @@
 import 'dart:math';
 import 'dart:ui';
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/drop_paths.dart';
 
 class BigCardContour extends CustomClipper<Path> {
@@ -21,19 +22,7 @@ class BigCardContour extends CustomClipper<Path> {
   });
 
   Point calculateCornerPoint(Size size, double cord, double cornerOffset) {
-    // The radius of the circle on which the corner travels.
-    final double radius = (size.height / 3) / 2 + pow(2 * size.width, 2) / (8 * size.height / 3);
-
-    // The angle of the bottom left corner of the screen if it was on a circle of [radius].
-    final double initialAngle = cos((radius - (size.width - cornerOffset)) / radius);
-
-    // The angle of the new point, assuming small increments.
-    double angle = initialAngle + cord / radius;
-
-    return Point(
-      size.width - cornerOffset - (radius * cos(angle) - (radius - (size.width))),
-      size.height + cornerOffset - (radius * sin(angle) - (radius - size.height / 3)),
-    );
+    return Point(cornerOffset + flippedDistance, size.height - (cornerOffset + flippedDistance * 0.7));
   }
 
   Path generateDropPath(int dropNumber, Size size) {
@@ -69,7 +58,7 @@ class BigCardContour extends CustomClipper<Path> {
   @override
   Path getClip(Size size) {
     Path path = Path();
-    final double flippedCornerLength = size.shortestSide / 5;
+    final double flippedCornerLength = size.shortestSide * Dimensions.cornerLength;
 
     if (droppingIn) {
       Size newSize = Size(size.width / 5, size.height / 7.5);
@@ -80,12 +69,15 @@ class BigCardContour extends CustomClipper<Path> {
     } else {
       Point cornerControl = calculateCornerPoint(size, flippedDistance, flippedCornerLength);
 
-      Point topLeft = Point(0, cornerControl.y - flippedDistance * 1.65);
+      Point topLeft = Point(0, cornerControl.y - flippedDistance * Dimensions.cornerTopLeftDeviation);
       if (topLeft.y < 0) {
-        topLeft = Point(flippedDistance - cornerControl.y / 1.65, 0);
+        topLeft = Point(flippedDistance - cornerControl.y / Dimensions.cornerTopLeftDeviation, 0);
       }
 
-      Point bottomRight = Point(cornerControl.x - flippedDistance * 0.25, size.height);
+      Point bottomRight = Point(
+        cornerControl.x - flippedDistance * Dimensions.cornerBottomRightDeviation,
+        size.height,
+      );
       if (bottomRight.x > size.width) {
         bottomRight = Point(size.width, size.height);
       }
@@ -105,41 +97,39 @@ class BigCardContour extends CustomClipper<Path> {
 }
 
 class FlippedCornerContour extends CustomClipper<Path> {
+  final double xDistance;
   final double flippedDistance;
 
-  FlippedCornerContour({required this.flippedDistance});
+  FlippedCornerContour({
+    required this.flippedDistance,
+    required this.xDistance,
+  });
 
   Point calculateCornerPoint(Size size, double cord, double cornerOffset) {
-    // The radius of the circle on which the corner travels.
-    final double radius = (size.height / 3) / 2 + pow(2 * size.width, 2) / (8 * size.height / 3);
-
-    // The angle of the bottom left corner of the screen if it was on a circle of [radius].
-    final double initialAngle = cos((radius - (size.width - cornerOffset)) / radius);
-
-    // The angle of the new point, assuming small increments.
-    double angle = initialAngle + cord / radius;
-
     return Point(
-      size.width - cornerOffset - (radius * cos(angle) - (radius - (size.width))),
-      size.height + cornerOffset - (radius * sin(angle) - (radius - size.height / 3)),
+      cornerOffset + flippedDistance,
+      size.height - (cornerOffset + flippedDistance * Dimensions.cornerMaxHeight),
     );
   }
 
   @override
   Path getClip(Size size) {
-    final double flippedCornerLength = size.shortestSide / 5;
-    final double cornerRadius = size.shortestSide / 10;
+    final double flippedCornerLength = size.shortestSide * Dimensions.cornerLength;
+    final double cornerRadius = size.shortestSide * Dimensions.cornerRadius;
 
     Point cornerControl = calculateCornerPoint(size, flippedDistance, flippedCornerLength);
 
-    Point topLeft = Point(0, cornerControl.y - flippedDistance * 1.65);
+    Point topLeft = Point(0, cornerControl.y - flippedDistance * Dimensions.cornerTopLeftDeviation);
     Point top = topLeft;
     if (topLeft.y < 0) {
-      topLeft = Point(flippedDistance - cornerControl.y / 1.65, 0);
+      topLeft = Point(flippedDistance - cornerControl.y / Dimensions.cornerTopLeftDeviation, 0);
       top = Point(topLeft.x * 1.3, topLeft.y);
     }
 
-    Point bottomRight = Point(cornerControl.x - flippedDistance * 0.25, size.height);
+    Point bottomRight = Point(
+      cornerControl.x - flippedDistance * Dimensions.cornerBottomRightDeviation,
+      size.height,
+    );
     if (bottomRight.x > size.width) {
       bottomRight = Point(size.width, size.height);
     }
