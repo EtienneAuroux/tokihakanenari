@@ -6,6 +6,8 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 class StockAccounts extends StatefulWidget {
   final CardSize cardSize;
 
@@ -38,14 +40,14 @@ class _StockAccountsState extends State<StockAccounts> {
       case CardSize.mini:
         return Center(
           child: Text(
-            CardType.totalIncome.title(context),
+            AppLocalizations.of(context)!.stockAccounts,
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),
         );
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: CardType.totalIncome.title(context),
+          cardTitle: AppLocalizations.of(context)!.stockAccounts,
           perDay: ledger.stockAccountsData.totalPerDay,
           investedAmount: ledger.stockAccountsData.totalInvested,
         );

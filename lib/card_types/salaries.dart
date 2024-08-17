@@ -42,7 +42,7 @@ class _SalariesState extends State<Salaries> {
       case CardSize.mini:
         return Center(
           child: Text(
-            CardType.salaries.title(context),
+            AppLocalizations.of(context)!.salaries,
             style: TextStyles.miniCardTitle,
             textAlign: TextAlign.center,
           ),

@@ -5,6 +5,8 @@ import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
+import 'package:flutter_gen/gen_l10n/app_localizations.dart';
+
 // import 'dart:developer' as developer;
 
 class TotalIncome extends StatefulWidget {
@@ -44,7 +46,7 @@ class _TotalIncomeState extends State<TotalIncome> {
         throw ErrorDescription('TotalIncome should not be used as a mini card.');
       case CardSize.small:
         return SmallCardContainer(
-          cardTitle: CardType.totalIncome.title(context),
+          cardTitle: AppLocalizations.of(context)!.totalIncome,
           perDay: ledger.totalIncomeData.totalIncomePerDay,
           investedAmount: ledger.totalIncomeData.totalInvested,
         );
