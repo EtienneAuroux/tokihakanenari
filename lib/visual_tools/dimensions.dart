@@ -13,13 +13,13 @@ class Dimensions {
     if (_deviceSize == null) {
       _deviceSize = onSizeAcquired;
       _maxFlippingDistance = (_deviceSize!.height - _deviceSize!.shortestSide * cornerLength) / cornerMaxHeight / cornerTopLeftDeviation;
-      _maxFlippingSpeed = _maxFlippingDistance! / 0.3;
+      _pageUnrollingSpeed = _maxFlippingDistance! / 0.25;
     }
   }
 
   static double? _maxFlippingDistance;
   static double get maxFlippingDistance => _maxFlippingDistance!;
 
-  static double? _maxFlippingSpeed;
-  static double get pageUnrollingSpeed => _maxFlippingSpeed!;
+  static double? _pageUnrollingSpeed;
+  static double get pageUnrollingSpeed => _pageUnrollingSpeed!;
 }

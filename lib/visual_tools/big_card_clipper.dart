@@ -97,12 +97,10 @@ class BigCardContour extends CustomClipper<Path> {
 }
 
 class FlippedCornerContour extends CustomClipper<Path> {
-  final double xDistance;
   final double flippedDistance;
 
   FlippedCornerContour({
     required this.flippedDistance,
-    required this.xDistance,
   });
 
   Point calculateCornerPoint(Size size, double cord, double cornerOffset) {

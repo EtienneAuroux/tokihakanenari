@@ -112,7 +112,7 @@ class _BigCardState extends State<BigCard> {
       int time = 0;
       while (flippedDistance < Dimensions.maxFlippingDistance) {
         setState(() {
-          flippedDistance += speed * time * 0.001;
+          flippedDistance += speed * time;
         });
         time += 1;
         await Future.delayed(const Duration(milliseconds: 1));
@@ -171,7 +171,8 @@ class _BigCardState extends State<BigCard> {
     }
   }
 
-  var test = 0.0;
+  int previousTime = DateTime.now().millisecondsSinceEpoch;
+  double userSpeed = 0;
   @override
   Widget build(BuildContext context) {
     double panLimit = sqrt(pow(widget.screenSize.width / 6, 2) + pow(widget.screenSize.height / 6, 2));
@@ -182,9 +183,11 @@ class _BigCardState extends State<BigCard> {
             details.localPosition.dy > widget.screenSize.height / 2) {
           panStartTime ??= details.sourceTimeStamp;
           if (flippedDistance >= panLimit) {
-            double userSpeed = sqrt(1000 * details.delta.distance / (details.sourceTimeStamp!.inMilliseconds - panStartTime!.inMilliseconds));
             pageFlipping(widget.screenSize, CardStatus.roll, userSpeed);
           } else {
+            int newTime = DateTime.now().millisecondsSinceEpoch;
+            userSpeed = details.delta.distance / (newTime - previousTime) / 10;
+            previousTime = newTime;
             setState(() {
               flippedDistance += details.delta.distance;
             });
@@ -217,7 +220,6 @@ class _BigCardState extends State<BigCard> {
           ClipPath(
             clipper: FlippedCornerContour(
               flippedDistance: flippedDistance,
-              xDistance: test,
             ),
             child: Container(
               decoration: CardDecoration.getBigCornerDecoration(widget.cardType),
