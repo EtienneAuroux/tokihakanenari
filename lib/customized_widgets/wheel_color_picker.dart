@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/drop_paths.dart';
 
 class WheelColorPicker extends StatefulWidget {
@@ -22,7 +23,8 @@ class WheelColorPicker extends StatefulWidget {
 }
 
 class _WheelColorPickerState extends State<WheelColorPicker> {
-  final Offset wheelCenter = const Offset(50, 50);
+  final Offset wheelCenter = Offset(50 * Dimensions.widthUnit, 50 * Dimensions.heightUnit);
+  final double wheelRadius = 50 * Dimensions.heightUnit;
   late Offset cursorCenter;
   late Color originalColor;
 
@@ -59,7 +61,7 @@ class _WheelColorPickerState extends State<WheelColorPicker> {
   void initState() {
     super.initState();
 
-    cursorCenter = getCursorPosition(widget.originalAngle, 50);
+    cursorCenter = getCursorPosition(widget.originalAngle, wheelRadius);
     originalColor = widget.shadedColor;
   }
 
@@ -71,15 +73,15 @@ class _WheelColorPickerState extends State<WheelColorPicker> {
         final double angle = atan2(pan.dy, pan.dx);
         widget.onNewWheelColor(getWheelColor(angle));
         setState(() {
-          cursorCenter = getCursorPosition(angle, 50);
+          cursorCenter = getCursorPosition(angle, wheelRadius);
         });
       },
       child: CustomPaint(
-        size: const Size(100, 100),
+        size: Size(100 * Dimensions.widthUnit, 100 * Dimensions.heightUnit),
         painter: WheelColorPickerPainter(
-          const Offset(50, 50),
+          Offset(50 * Dimensions.widthUnit, 50 * Dimensions.heightUnit),
           cursorCenter,
-          getCursorPosition(widget.originalAngle, 50),
+          getCursorPosition(widget.originalAngle, wheelRadius),
           widget.shadedColor,
           originalColor,
           widget.topGradient,
@@ -97,8 +99,8 @@ class WheelColorPickerPainter extends CustomPainter {
   final Color originalColor;
   final bool topGradient;
 
-  final double radius = 50;
-  final double cursorRadius = 10;
+  final double radius = 50 * Dimensions.heightUnit;
+  final double cursorRadius = 10 * Dimensions.heightUnit;
 
   WheelColorPickerPainter(
     this.center,
@@ -112,7 +114,7 @@ class WheelColorPickerPainter extends CustomPainter {
   @override
   void paint(Canvas canvas, Size size) {
     final Paint wheelPaint = Paint()
-      ..strokeWidth = 10
+      ..strokeWidth = 10 * Dimensions.widthUnit
       ..style = PaintingStyle.stroke
       ..shader = const SweepGradient(
         colors: [

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
@@ -48,7 +49,7 @@ class _DangerDialogState extends State<DangerDialog> {
             textAlign: TextAlign.center,
             style: TextStyles.dialogText,
             decoration: InputDecoration(
-              contentPadding: const EdgeInsets.symmetric(vertical: 7),
+              contentPadding: EdgeInsets.symmetric(vertical: 7 * Dimensions.heightUnit),
               isCollapsed: true,
               hintText: AppLocalizations.of(context)!.typeOkameDelete,
             ),

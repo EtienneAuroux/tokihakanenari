@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/customized_widgets/rotating_button.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
 // import 'dart:developer' as developer;
@@ -27,7 +28,7 @@ class SettingContainer extends StatefulWidget {
 }
 
 class _SettingContainerState extends State<SettingContainer> {
-  final double contractedHeight = 95;
+  final double contractedHeight = 95 * Dimensions.heightUnit;
   late final double expandedHeight;
   bool expanded = false;
   late Color borderColor;
@@ -35,9 +36,9 @@ class _SettingContainerState extends State<SettingContainer> {
 
   double getExpandedHeight() {
     if (widget.children.length > 6) {
-      return 320;
+      return 320 * Dimensions.heightUnit;
     } else {
-      return contractedHeight + widget.children.length * 40;
+      return contractedHeight + (widget.children.length - 1) * 30 * Dimensions.heightUnit;
     }
   }
 
@@ -57,27 +58,27 @@ class _SettingContainerState extends State<SettingContainer> {
       duration: Duration(milliseconds: widget.milliseconds),
       decoration: BoxDecoration(
         color: foregroundColor,
-        borderRadius: BorderRadius.circular(10),
+        borderRadius: BorderRadius.circular(10 * Dimensions.heightUnit),
         border: Border(
           top: BorderSide(
             color: borderColor,
-            width: 1,
+            width: 1 * Dimensions.widthUnit,
           ),
           left: BorderSide(
             color: borderColor,
-            width: 1,
+            width: 1 * Dimensions.widthUnit,
           ),
           bottom: BorderSide(
             color: borderColor,
-            width: 4,
+            width: 4 * Dimensions.widthUnit,
           ),
           right: BorderSide(
             color: borderColor,
-            width: 4,
+            width: 4 * Dimensions.widthUnit,
           ),
         ),
       ),
-      padding: const EdgeInsets.all(5),
+      padding: EdgeInsets.all(5 * Dimensions.heightUnit),
       height: widget.open ? expandedHeight : contractedHeight,
       child: Column(
         children: [

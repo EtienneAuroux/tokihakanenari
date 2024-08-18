@@ -6,6 +6,7 @@ import 'package:tokihakanenari/customized_widgets/wheel_color_picker.dart';
 import 'package:tokihakanenari/ledger_data/color_gradient.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
@@ -159,14 +160,14 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
             AppLocalizations.of(context)!.gradientCreator,
             style: TextStyles.dialogTitle,
           ),
-          const SizedBox(
-            height: 15,
+          SizedBox(
+            height: 15 * Dimensions.heightUnit,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 60,
+                width: 60 * Dimensions.widthUnit,
                 child: Text(
                   AppLocalizations.of(context)!.topRight,
                   textAlign: TextAlign.center,
@@ -195,14 +196,14 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: 20 * Dimensions.heightUnit,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 60,
+                width: 60 * Dimensions.widthUnit,
                 child: Text(
                   AppLocalizations.of(context)!.bottomLeft,
                   textAlign: TextAlign.center,
@@ -232,14 +233,14 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
               ),
             ],
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: 20 * Dimensions.heightUnit,
           ),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
               SizedBox(
-                width: 75,
+                width: 75 * Dimensions.widthUnit,
                 child: Text(
                   AppLocalizations.of(context)!.gradient,
                   textAlign: TextAlign.center,
@@ -247,10 +248,10 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                 ),
               ),
               Container(
-                height: 100,
-                width: 140,
+                height: 100 * Dimensions.heightUnit,
+                width: 140 * Dimensions.widthUnit,
                 decoration: BoxDecoration(
-                  borderRadius: const BorderRadius.all(Radius.circular(20)),
+                  borderRadius: BorderRadius.all(Radius.circular(20 * Dimensions.heightUnit)),
                   gradient: LinearGradient(
                     colors: [shadedColorBottom, shadedColorTopRight],
                     begin: Alignment.bottomCenter,
@@ -261,13 +262,16 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
             ],
           ),
           Padding(
-              padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+              padding: EdgeInsets.fromLTRB(0, 10 * Dimensions.heightUnit, 0, 0),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
                   IconButton(
-                    icon: const Icon(FontAwesome5.check_1),
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    icon: Icon(
+                      FontAwesome5.check_1,
+                      size: Dimensions.iconSize,
+                    ),
+                    padding: EdgeInsets.fromLTRB(0, 5 * Dimensions.heightUnit, 0, 0),
                     constraints: const BoxConstraints(),
                     style: ButtonStyle(
                       overlayColor: MaterialStateProperty.all(Colors.transparent),
@@ -279,8 +283,11 @@ class _ColorPickerDialogState extends State<ColorPickerDialog> {
                     },
                   ),
                   IconButton(
-                    icon: const Icon(FontAwesome5.redo),
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    icon: Icon(
+                      FontAwesome5.redo,
+                      size: Dimensions.iconSize,
+                    ),
+                    padding: EdgeInsets.fromLTRB(0, 5 * Dimensions.heightUnit, 0, 0),
                     constraints: const BoxConstraints(),
                     style: ButtonStyle(
                       overlayColor: MaterialStateProperty.all(Colors.transparent),

@@ -1,6 +1,6 @@
 import 'dart:math';
 import 'dart:ui';
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/visual_tools/dimensions.dart';

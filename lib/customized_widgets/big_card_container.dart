@@ -5,6 +5,7 @@ import 'package:tokihakanenari/customized_widgets/tap_indicator.dart';
 import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
@@ -92,15 +93,15 @@ class _BigCardContainerState extends State<BigCardContainer> {
             widget.cardType.title(context),
             style: TextStyles.cardTitle,
           ),
-          const SizedBox(
-            height: 20,
+          SizedBox(
+            height: 20 * Dimensions.heightUnit,
           ),
           Container(
             constraints: BoxConstraints(maxHeight: size.height * 0.75),
             child: ListView.separated(
               separatorBuilder: (context, index) {
-                return const SizedBox(
-                  height: 10,
+                return SizedBox(
+                  height: 10 * Dimensions.heightUnit,
                 );
               },
               shrinkWrap: true,
@@ -108,7 +109,7 @@ class _BigCardContainerState extends State<BigCardContainer> {
               itemBuilder: (BuildContext context, int index) {
                 return Container(
                   alignment: Alignment.center,
-                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 0),
+                  padding: EdgeInsets.symmetric(horizontal: 20 * Dimensions.widthUnit, vertical: 0),
                   child: GestureDetector(
                     onTapDown: (details) {
                       pressingItem[index] = true;
@@ -177,12 +178,12 @@ class _BigCardContainerState extends State<BigCardContainer> {
                 : Align(
                     alignment: Alignment.bottomRight,
                     child: IconButton(
-                      icon: const Icon(
+                      icon: Icon(
                         FontAwesome5.tools_1,
                         color: Colors.black,
-                        size: 40,
+                        size: Dimensions.iconSize * 40 / 25,
                       ),
-                      padding: const EdgeInsets.all(15),
+                      padding: EdgeInsets.all(15 * Dimensions.heightUnit),
                       style: const ButtonStyle(
                         splashFactory: NoSplash.splashFactory,
                       ),

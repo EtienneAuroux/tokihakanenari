@@ -1,52 +1,53 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 
 class TextStyles {
-  static const cardTitle = TextStyle(
-    fontSize: 30,
+  static TextStyle cardTitle = TextStyle(
+    fontSize: 30 * Dimensions.heightUnit,
     fontFamily: 'MontserratAlternate',
     color: Colors.black,
     decoration: TextDecoration.none,
   );
 
-  static const cardBody = TextStyle(
-    fontSize: 20,
+  static TextStyle cardBody = TextStyle(
+    fontSize: 20 * Dimensions.heightUnit,
     fontFamily: 'MontserratAlternate',
     color: Colors.black,
     decoration: TextDecoration.none,
   );
 
-  static const settingTitle = TextStyle(
-    fontSize: 20,
+  static TextStyle settingTitle = TextStyle(
+    fontSize: 20 * Dimensions.heightUnit,
     fontWeight: FontWeight.bold,
     fontFamily: 'MontserratAlternate',
     color: Colors.black,
     decoration: TextDecoration.none,
   );
 
-  static const incomeExtraInformation = TextStyle(
-    fontSize: 15,
+  static TextStyle incomeExtraInformation = TextStyle(
+    fontSize: 15 * Dimensions.heightUnit,
     fontFamily: 'MontserratAlternate',
     fontStyle: FontStyle.italic,
     color: Colors.black,
     decoration: TextDecoration.none,
   );
 
-  static const dialogTitle = TextStyle(
-    fontSize: 20,
+  static TextStyle dialogTitle = TextStyle(
+    fontSize: 20 * Dimensions.heightUnit,
     fontFamily: 'MontserratAlternate',
     color: Colors.black,
     decoration: TextDecoration.none,
   );
 
-  static const dialogText = TextStyle(
-    fontSize: 15,
+  static TextStyle dialogText = TextStyle(
+    fontSize: 15 * Dimensions.heightUnit,
     fontFamily: 'MontserratAlternate',
     color: Colors.black,
     decoration: TextDecoration.none,
   );
 
-  static const miniCardTitle = TextStyle(
-    fontSize: 20,
+  static TextStyle miniCardTitle = TextStyle(
+    fontSize: 20 * Dimensions.heightUnit,
     fontFamily: 'MontserratAlternate',
     color: Colors.black,
     decoration: TextDecoration.none,

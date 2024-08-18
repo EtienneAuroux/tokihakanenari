@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 
 class SliderShadePicker extends StatefulWidget {
   final double originalShade;
@@ -17,14 +18,15 @@ class SliderShadePicker extends StatefulWidget {
 }
 
 class _SliderShadePickerState extends State<SliderShadePicker> {
-  final double sliderHeight = 100;
+  final double sliderHeight = 100 * Dimensions.heightUnit;
   late double shadeCursor;
 
   double getSliderPosition(double pan) {
     if (pan < 0) {
       return 0;
-    } else if (pan > 100) {
-      return 100;
+    } else if (pan > sliderHeight) {
+      // maybe heightUnit? or SliderHeight?
+      return sliderHeight;
     } else {
       return pan;
     }
@@ -47,10 +49,10 @@ class _SliderShadePickerState extends State<SliderShadePicker> {
       },
       child: Container(
         height: sliderHeight,
-        width: 10,
-        padding: const EdgeInsets.symmetric(horizontal: 20),
+        width: 10 * Dimensions.widthUnit,
+        padding: EdgeInsets.symmetric(horizontal: 20 * Dimensions.widthUnit),
         decoration: BoxDecoration(
-          borderRadius: BorderRadius.circular(15),
+          borderRadius: BorderRadius.circular(15 * Dimensions.heightUnit),
           gradient: LinearGradient(
             colors: [Colors.black, widget.wheelColor, Colors.white],
             stops: const [0, 0.5, 1],
@@ -73,7 +75,7 @@ class SliderCursorPainter extends CustomPainter {
   final double position;
   final double originalPosition;
 
-  final double cursorRadius = 10;
+  final double cursorRadius = 10 * Dimensions.heightUnit;
 
   SliderCursorPainter(
     this.position,
@@ -84,9 +86,9 @@ class SliderCursorPainter extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     Paint cursorPaint = Paint()..color = Colors.black.withAlpha(130);
     if (position != originalPosition) {
-      canvas.drawCircle(Offset(-15, originalPosition), cursorRadius, cursorPaint);
+      canvas.drawCircle(Offset(-15 * Dimensions.widthUnit, originalPosition), cursorRadius, cursorPaint);
     } else {
-      canvas.drawCircle(Offset(-15, position), cursorRadius, cursorPaint);
+      canvas.drawCircle(Offset(-15 * Dimensions.widthUnit, position), cursorRadius, cursorPaint);
     }
   }
 

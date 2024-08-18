@@ -5,6 +5,7 @@ import 'package:tokihakanenari/customized_widgets/dialog_field.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 
@@ -166,7 +167,10 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                       );
                     });
               },
-              icon: Icon(icon)),
+              icon: Icon(
+                icon,
+                size: Dimensions.iconSize,
+              )),
           DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
           DialogEntry(entry: AppLocalizations.of(context)!.revenue, hint: AppLocalizations.of(context)!.revenueHint),
@@ -213,7 +217,10 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                       );
                     });
               },
-              icon: Icon(icon)),
+              icon: Icon(
+                icon,
+                size: Dimensions.iconSize,
+              )),
           DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
           DialogEntry(entry: AppLocalizations.of(context)!.amount, hint: AppLocalizations.of(context)!.amountHint),
@@ -243,7 +250,10 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                       );
                     });
               },
-              icon: Icon(icon)),
+              icon: Icon(
+                icon,
+                size: Dimensions.iconSize,
+              )),
           DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
           DialogEntry(entry: AppLocalizations.of(context)!.description, hint: AppLocalizations.of(context)!.descriptionHint),
@@ -275,7 +285,10 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                       );
                     });
               },
-              icon: Icon(icon)),
+              icon: Icon(
+                icon,
+                size: Dimensions.iconSize,
+              )),
           DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
           DialogEntry(entry: AppLocalizations.of(context)!.salary, hint: AppLocalizations.of(context)!.salaryHint),
@@ -324,7 +337,10 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                       );
                     });
               },
-              icon: Icon(icon)),
+              icon: Icon(
+                icon,
+                size: Dimensions.iconSize,
+              )),
           DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
           DialogEntry(entry: AppLocalizations.of(context)!.amount, hint: AppLocalizations.of(context)!.amountHint),
@@ -440,27 +456,31 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
               mainAxisSize: MainAxisSize.min,
               children: [
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 0, 0, 10),
+                  padding: EdgeInsets.fromLTRB(0, 0, 0, 10 * Dimensions.heightUnit),
                   child: Text(
                     widget.cardType.item(context),
                     style: TextStyles.dialogTitle,
                   ),
                 ),
-                GridView(
-                  shrinkWrap: true,
-                  physics: const NeverScrollableScrollPhysics(),
-                  gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    crossAxisSpacing: 10,
-                    mainAxisExtent: 40,
+                SizedBox(
+                  height: getDialogContent(widget.cardType).length * 45 * Dimensions.heightUnit / 2,
+                  width: dialogSize.width * 0.5,
+                  child: GridView(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      crossAxisCount: 2,
+                      crossAxisSpacing: 10 * Dimensions.widthUnit,
+                      mainAxisExtent: 40 * Dimensions.heightUnit,
+                    ),
+                    children: getDialogContent(widget.cardType),
                   ),
-                  children: getDialogContent(widget.cardType),
                 ),
                 Padding(
-                  padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                  padding: EdgeInsets.fromLTRB(0, 10 * Dimensions.heightUnit, 0, 0),
                   child: IconButton(
                     icon: const Icon(FontAwesome5.check_1),
-                    padding: const EdgeInsets.fromLTRB(0, 5, 0, 0),
+                    padding: EdgeInsets.fromLTRB(0, 5 * Dimensions.heightUnit, 0, 0),
                     constraints: const BoxConstraints(),
                     style: ButtonStyle(
                       overlayColor: MaterialStateProperty.all(Colors.transparent),

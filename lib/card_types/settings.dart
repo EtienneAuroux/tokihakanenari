@@ -5,6 +5,7 @@ import 'package:tokihakanenari/customized_widgets/setting_container.dart';
 import 'package:tokihakanenari/customized_widgets/setting_dropdown.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
@@ -116,7 +117,10 @@ class _SettingsState extends State<Settings> {
                     );
                   });
             },
-            icon: const Icon(FontAwesome5.paint_roller),
+            icon: Icon(
+              FontAwesome5.paint_roller,
+              size: Dimensions.iconSize,
+            ),
           )
         ],
       ),
@@ -140,7 +144,10 @@ class _SettingsState extends State<Settings> {
                     );
                   });
             },
-            icon: const Icon(FontAwesome5.trash_alt),
+            icon: Icon(
+              FontAwesome5.trash_alt,
+              size: Dimensions.iconSize,
+            ),
           )
         ],
       ),
@@ -167,7 +174,10 @@ class _SettingsState extends State<Settings> {
                     );
                   });
             },
-            icon: const Icon(FontAwesome5.skull_crossbones),
+            icon: Icon(
+              FontAwesome5.skull_crossbones,
+              size: Dimensions.iconSize,
+            ),
           )
         ],
       )
@@ -181,20 +191,20 @@ class _SettingsState extends State<Settings> {
     return Scaffold(
       body: SafeArea(
         child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 10),
+          padding: EdgeInsets.symmetric(horizontal: 10 * Dimensions.widthUnit),
           child: ListView(
             physics: const NeverScrollableScrollPhysics(),
             children: [
               Row(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  const Icon(
+                  Icon(
                     FontAwesome5.tools_1,
                     color: Colors.black,
-                    size: 40,
+                    size: Dimensions.iconSize * 40 / 25,
                   ),
-                  const SizedBox(
-                    width: 20,
+                  SizedBox(
+                    width: 20 * Dimensions.widthUnit,
                   ),
                   Text(
                     AppLocalizations.of(context)!.settings,
@@ -202,11 +212,11 @@ class _SettingsState extends State<Settings> {
                   ),
                 ],
               ),
-              const SizedBox(
-                height: 20,
+              SizedBox(
+                height: 20 * Dimensions.heightUnit,
               ),
               SizedBox(
-                height: size.height * 0.85,
+                height: size.height * 0.85 * Dimensions.heightUnit,
                 child: ListView(
                   children: [
                     SettingContainer(
@@ -220,8 +230,8 @@ class _SettingsState extends State<Settings> {
                       },
                       children: getGeneralSettings(),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 10 * Dimensions.heightUnit,
                     ),
                     SettingContainer(
                       title: AppLocalizations.of(context)!.color,
@@ -234,8 +244,8 @@ class _SettingsState extends State<Settings> {
                       },
                       children: getColorSettings(),
                     ),
-                    const SizedBox(
-                      height: 10,
+                    SizedBox(
+                      height: 10 * Dimensions.heightUnit,
                     ),
                     SettingContainer(
                       title: AppLocalizations.of(context)!.danger,
