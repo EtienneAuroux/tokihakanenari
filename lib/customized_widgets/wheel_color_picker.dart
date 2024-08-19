@@ -24,12 +24,15 @@ class WheelColorPicker extends StatefulWidget {
 
 class _WheelColorPickerState extends State<WheelColorPicker> {
   final Offset wheelCenter = Offset(50 * Dimensions.widthUnit, 50 * Dimensions.heightUnit);
-  final double wheelRadius = 50 * Dimensions.heightUnit;
+  final double wheelRadius = 50;
   late Offset cursorCenter;
   late Color originalColor;
 
   Offset getCursorPosition(double angle, double wheelRadius) {
-    return Offset(wheelRadius * (cos(angle) + 1), wheelRadius * (sin(angle) + 1));
+    return Offset(
+      wheelRadius * (cos(angle) + 1) * Dimensions.heightUnit,
+      wheelRadius * (sin(angle) + 1) * Dimensions.heightUnit,
+    );
   }
 
   Color getWheelColor(double angle) {
@@ -69,7 +72,7 @@ class _WheelColorPickerState extends State<WheelColorPicker> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onPanUpdate: (details) {
-        final pan = details.localPosition - wheelCenter;
+        final Offset pan = details.localPosition - wheelCenter;
         final double angle = atan2(pan.dy, pan.dx);
         widget.onNewWheelColor(getWheelColor(angle));
         setState(() {
@@ -79,7 +82,7 @@ class _WheelColorPickerState extends State<WheelColorPicker> {
       child: CustomPaint(
         size: Size(100 * Dimensions.widthUnit, 100 * Dimensions.heightUnit),
         painter: WheelColorPickerPainter(
-          Offset(50 * Dimensions.widthUnit, 50 * Dimensions.heightUnit),
+          Offset(50 * Dimensions.heightUnit, 50 * Dimensions.heightUnit),
           cursorCenter,
           getCursorPosition(widget.originalAngle, wheelRadius),
           widget.shadedColor,
