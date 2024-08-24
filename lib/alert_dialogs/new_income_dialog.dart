@@ -368,7 +368,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
         nameController.text = ledger.customIncomeData.names[index];
         amountController.text = ledger.customIncomeData.amounts[index].toString();
         revenueController.text = ledger.customIncomeData.revenues[index].toString();
-        interestController.text = ledger.customIncomeData.ratesOfReturn[index].toStringAsFixed(2);
+        interestController.text = ledger.customIncomeData.interests[index].toStringAsFixed(2);
         break;
       case CardType.realEstate:
         icon = ledger.realEstateData.icons[index];
@@ -464,13 +464,13 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                 ),
                 SizedBox(
                   height: getDialogContent(widget.cardType).length * 45 * Dimensions.heightUnit / 2,
-                  width: dialogSize.width * 0.5,
+                  width: dialogSize.width * 0.6,
                   child: GridView(
                     shrinkWrap: true,
                     physics: const NeverScrollableScrollPhysics(),
                     gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                       crossAxisCount: 2,
-                      crossAxisSpacing: 10 * Dimensions.widthUnit,
+                      crossAxisSpacing: 15 * Dimensions.widthUnit,
                       mainAxisExtent: 40 * Dimensions.heightUnit,
                     ),
                     children: getDialogContent(widget.cardType),
@@ -479,7 +479,10 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                 Padding(
                   padding: EdgeInsets.fromLTRB(0, 10 * Dimensions.heightUnit, 0, 0),
                   child: IconButton(
-                    icon: const Icon(FontAwesome5.check_1),
+                    icon: Icon(
+                      FontAwesome5.check_1,
+                      size: Dimensions.iconSize,
+                    ),
                     padding: EdgeInsets.fromLTRB(0, 5 * Dimensions.heightUnit, 0, 0),
                     constraints: const BoxConstraints(),
                     style: ButtonStyle(

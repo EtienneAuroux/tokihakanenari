@@ -253,8 +253,8 @@ class Ledger extends ChangeNotifier {
         _customIncomeData.icons.add(data[0]);
         _customIncomeData.names.add(data[1]);
         _customIncomeData.amounts.add(double.parse(data[2]));
-        _customIncomeData.interests.add(double.parse(data[3]));
-        _customIncomeData.revenues.add(double.parse(data[4]));
+        _customIncomeData.revenues.add(double.parse(data[3]));
+        _customIncomeData.interests.add(double.parse(data[4]));
         _customIncomeData.ratesOfReturn.add(0);
         _customIncomeData.perDay.add(0);
       case CardType.indexFunds:
@@ -407,8 +407,8 @@ class Ledger extends ChangeNotifier {
         _customIncomeData.icons[index] = data[0];
         _customIncomeData.names[index] = data[1];
         _customIncomeData.amounts[index] = double.parse(data[2]);
-        _customIncomeData.interests[index] = double.parse(data[3]);
-        _customIncomeData.revenues[index] = double.parse(data[4]);
+        _customIncomeData.revenues[index] = double.parse(data[3]);
+        _customIncomeData.interests[index] = double.parse(data[4]);
       case CardType.indexFunds:
         _indexFundsData.icons[index] = data[0];
         _indexFundsData.names[index] = data[1];

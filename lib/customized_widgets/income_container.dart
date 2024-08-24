@@ -255,7 +255,7 @@ class _IncomeContainerState extends State<IncomeContainer> {
     } else if (cardType == CardType.customIncome) {
       return 90 * Dimensions.heightUnit;
     } else if (cardType == CardType.realEstate) {
-      return 120 * Dimensions.heightUnit;
+      return 140 * Dimensions.heightUnit;
     } else if (cardType == CardType.totalIncome) {
       if (widget.income.subIncomeCardType == CardType.contentCreation || widget.income.subIncomeCardType == CardType.salaries) {
         return 30 * Dimensions.heightUnit;
