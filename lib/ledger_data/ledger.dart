@@ -648,7 +648,7 @@ class Ledger extends ChangeNotifier {
             fullReturn = 0;
             _customIncomeData.ratesOfReturn[i] += 0;
           } else {
-            fullReturn = _customIncomeData.interests[i] + 100 * _customIncomeData.revenues[i] / _customIncomeData.amounts[i];
+            fullReturn = _customIncomeData.interests[i] + _customIncomeData.revenues[i] / _customIncomeData.amounts[i];
             _customIncomeData.ratesOfReturn[i] += fullReturn;
           }
           _customIncomeData.perDay[i] = fullReturn / 365.25;
@@ -703,7 +703,7 @@ class Ledger extends ChangeNotifier {
           if (_realEstateData.capitals[i] == 0) {
             _realEstateData.ratesOfReturn[i] = 0;
           } else {
-            _realEstateData.ratesOfReturn[i] = _realEstateData.appreciations[i] + 100 * _realEstateData.revenues[i] / _realEstateData.capitals[i];
+            _realEstateData.ratesOfReturn[i] = _realEstateData.appreciations[i] + _realEstateData.revenues[i] / _realEstateData.capitals[i];
           }
           _realEstateData.perDay[i] = _realEstateData.capitals[i] * _realEstateData.ratesOfReturn[i] / 100 / 365.25;
           _realEstateData.totalPerDay += _realEstateData.perDay[i];

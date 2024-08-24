@@ -38,7 +38,7 @@ class _SettingContainerState extends State<SettingContainer> {
     if (widget.children.length > 6) {
       return 320 * Dimensions.heightUnit;
     } else {
-      return contractedHeight + (widget.children.length - 1) * 30 * Dimensions.heightUnit;
+      return contractedHeight + (widget.children.length - 1) * 50 * Dimensions.heightUnit;
     }
   }
 
