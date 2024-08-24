@@ -70,5 +70,6 @@
     "rateOfReturn": "利益",
     "returnHint": "年間平均収益率（％）",
     "salaryHint": "給料として受け取る金額",
-    "payment": "支払い"
+    "payment": "支払い",
+    "salaryNoCap": "給料"
 }

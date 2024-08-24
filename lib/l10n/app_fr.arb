@@ -70,5 +70,6 @@
     "rateOfReturn": "taux de revient",
     "returnHint": "le taux de revient moyen par an en %",
     "salaryHint": "la somme d'argent que vous recevez en tant que salaire",
-    "payment": "paiement"
+    "payment": "paiement",
+    "salaryNoCap": "salaire"
 }

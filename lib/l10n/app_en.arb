@@ -70,5 +70,6 @@
     "rateOfReturn": "return",
     "returnHint": "the average rate of return per year in %",
     "salaryHint": "the amount of money that you receive as salary",
-    "payment": "payment"
+    "payment": "payment",
+    "salaryNoCap": "salary"
 }

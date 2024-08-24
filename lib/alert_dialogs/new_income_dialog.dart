@@ -291,7 +291,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
               )),
           DialogEntry(entry: AppLocalizations.of(context)!.name, hint: AppLocalizations.of(context)!.nameHint),
           DialogField(controller: nameController),
-          DialogEntry(entry: AppLocalizations.of(context)!.salary, hint: AppLocalizations.of(context)!.salaryHint),
+          DialogEntry(entry: AppLocalizations.of(context)!.salaryNoCap, hint: AppLocalizations.of(context)!.salaryHint),
           DialogField(controller: amountController, inputType: TextInputType.number),
           DialogEntry(entry: AppLocalizations.of(context)!.period, hint: AppLocalizations.of(context)!.periodHint),
           DropdownButton<TimePeriod>(
