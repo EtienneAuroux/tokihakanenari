@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/mini_card.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
@@ -52,7 +53,10 @@ class _AddCardState extends State<AddCard> {
     switch (cardStatus) {
       case CardSize.big:
         return Container(
-          padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 30),
+          padding: EdgeInsets.symmetric(
+            horizontal: 20 * Dimensions.widthUnit,
+            vertical: 30 * Dimensions.heightUnit,
+          ),
           alignment: Alignment.topCenter,
           child: Column(
             children: [
@@ -63,11 +67,11 @@ class _AddCardState extends State<AddCard> {
               ),
               GridView(
                 shrinkWrap: true,
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
                   crossAxisCount: 2,
-                  mainAxisSpacing: 10,
-                  crossAxisSpacing: 10,
-                  mainAxisExtent: 100,
+                  mainAxisSpacing: 10 * Dimensions.heightUnit,
+                  crossAxisSpacing: 10 * Dimensions.widthUnit,
+                  mainAxisExtent: 100 * Dimensions.heightUnit,
                 ),
                 children: remainingCards,
               )
@@ -80,7 +84,7 @@ class _AddCardState extends State<AddCard> {
         return Center(
           child: Icon(
             Icons.add_chart_rounded,
-            size: 200,
+            size: 200 * Dimensions.heightUnit,
             color: Colors.black.withAlpha(150),
           ),
         );

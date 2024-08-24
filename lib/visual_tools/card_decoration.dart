@@ -3,7 +3,9 @@ import 'package:tokihakanenari/ledger_data/color_gradient.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:tokihakanenari/my_enums.dart';
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
+
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 
 class CardDecoration {
   Ledger ledger = Ledger();
@@ -20,16 +22,16 @@ class CardDecoration {
   static BoxDecoration getBigDecoration(CardType cardType, {bool totalIncome = false}) {
     ColorGradient bigGradient = getGradientColors(cardType, CardSize.big);
     return BoxDecoration(
-      borderRadius: totalIncome ? BorderRadius.circular(10) : null,
+      borderRadius: totalIncome ? BorderRadius.circular(10 * Dimensions.heightUnit) : null,
       border: totalIncome
           ? Border(
               bottom: BorderSide(
                 color: Colors.black.withAlpha(50),
-                width: 4,
+                width: 4 * Dimensions.widthUnit,
               ),
               right: BorderSide(
                 color: Colors.black.withAlpha(50),
-                width: 4,
+                width: 4 * Dimensions.widthUnit,
               ),
             )
           : null,
@@ -89,7 +91,7 @@ class CardDecoration {
           begin: Alignment.bottomCenter,
           end: Alignment.topRight,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(10)));
+        borderRadius: BorderRadius.all(Radius.circular(10 * Dimensions.heightUnit)));
   }
 
   static BoxDecoration getSmallDecoration(CardType cardType) {
@@ -100,7 +102,7 @@ class CardDecoration {
           begin: Alignment.bottomCenter,
           end: Alignment.topRight,
         ),
-        borderRadius: const BorderRadius.all(Radius.circular(20)));
+        borderRadius: BorderRadius.all(Radius.circular(20 * Dimensions.heightUnit)));
   }
 
   static Color getSplashColor(CardType cardType) {

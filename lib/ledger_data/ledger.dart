@@ -253,8 +253,8 @@ class Ledger extends ChangeNotifier {
         _customIncomeData.icons.add(data[0]);
         _customIncomeData.names.add(data[1]);
         _customIncomeData.amounts.add(double.parse(data[2]));
-        _customIncomeData.interests.add(double.parse(data[3]));
-        _customIncomeData.revenues.add(double.parse(data[4]));
+        _customIncomeData.revenues.add(double.parse(data[3]));
+        _customIncomeData.interests.add(double.parse(data[4]));
         _customIncomeData.ratesOfReturn.add(0);
         _customIncomeData.perDay.add(0);
       case CardType.indexFunds:
@@ -407,8 +407,8 @@ class Ledger extends ChangeNotifier {
         _customIncomeData.icons[index] = data[0];
         _customIncomeData.names[index] = data[1];
         _customIncomeData.amounts[index] = double.parse(data[2]);
-        _customIncomeData.interests[index] = double.parse(data[3]);
-        _customIncomeData.revenues[index] = double.parse(data[4]);
+        _customIncomeData.revenues[index] = double.parse(data[3]);
+        _customIncomeData.interests[index] = double.parse(data[4]);
       case CardType.indexFunds:
         _indexFundsData.icons[index] = data[0];
         _indexFundsData.names[index] = data[1];
@@ -648,7 +648,7 @@ class Ledger extends ChangeNotifier {
             fullReturn = 0;
             _customIncomeData.ratesOfReturn[i] += 0;
           } else {
-            fullReturn = _customIncomeData.interests[i] + 100 * _customIncomeData.revenues[i] / _customIncomeData.amounts[i];
+            fullReturn = _customIncomeData.interests[i] + _customIncomeData.revenues[i] / _customIncomeData.amounts[i];
             _customIncomeData.ratesOfReturn[i] += fullReturn;
           }
           _customIncomeData.perDay[i] = fullReturn / 365.25;
@@ -703,7 +703,7 @@ class Ledger extends ChangeNotifier {
           if (_realEstateData.capitals[i] == 0) {
             _realEstateData.ratesOfReturn[i] = 0;
           } else {
-            _realEstateData.ratesOfReturn[i] = _realEstateData.appreciations[i] + 100 * _realEstateData.revenues[i] / _realEstateData.capitals[i];
+            _realEstateData.ratesOfReturn[i] = _realEstateData.appreciations[i] + _realEstateData.revenues[i] / _realEstateData.capitals[i];
           }
           _realEstateData.perDay[i] = _realEstateData.capitals[i] * _realEstateData.ratesOfReturn[i] / 100 / 365.25;
           _realEstateData.totalPerDay += _realEstateData.perDay[i];

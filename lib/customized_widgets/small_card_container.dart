@@ -8,7 +8,12 @@ class SmallCardContainer extends StatefulWidget {
   final double perDay;
   final double? investedAmount;
 
-  const SmallCardContainer({super.key, required this.cardTitle, required this.perDay, this.investedAmount});
+  const SmallCardContainer({
+    super.key,
+    required this.cardTitle,
+    required this.perDay,
+    this.investedAmount,
+  });
 
   @override
   State<SmallCardContainer> createState() => _SmallCardContainerState();

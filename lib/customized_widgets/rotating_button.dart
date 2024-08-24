@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 
 class RotatingButton extends StatefulWidget {
   final IconData iconData;
@@ -66,7 +67,7 @@ class _RotatingButtonState extends State<RotatingButton> with SingleTickerProvid
         },
         icon: Icon(
           widget.iconData,
-          size: 40,
+          size: Dimensions.iconSize * 40 / 25,
         ),
       ),
     );

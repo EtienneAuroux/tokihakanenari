@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 
 class TapIndicator extends StatefulWidget {
@@ -16,8 +17,8 @@ class TapIndicator extends StatefulWidget {
 }
 
 class _TapIndicatorState extends State<TapIndicator> with TickerProviderStateMixin {
-  final double beginIconSize = 50;
-  final double endIconSize = 45;
+  final double beginIconSize = 50 * Dimensions.heightUnit;
+  final double endIconSize = 40 * Dimensions.heightUnit;
 
   late AnimationController controller;
   late final Animation<double> left;
@@ -27,22 +28,22 @@ class _TapIndicatorState extends State<TapIndicator> with TickerProviderStateMix
 
   final Animatable<double> doubleClick = TweenSequence<double>([
     TweenSequenceItem<double>(
-      tween: Tween<double>(begin: 50, end: 40).chain(CurveTween(curve: Curves.linear)),
+      tween: Tween<double>(begin: 50 * Dimensions.heightUnit, end: 40 * Dimensions.heightUnit).chain(CurveTween(curve: Curves.linear)),
       weight: 1,
     ),
     TweenSequenceItem<double>(
-      tween: Tween<double>(begin: 40, end: 50).chain(CurveTween(curve: Curves.linear)),
+      tween: Tween<double>(begin: 40 * Dimensions.heightUnit, end: 50 * Dimensions.heightUnit).chain(CurveTween(curve: Curves.linear)),
       weight: 1,
     ),
   ]);
 
   final Animatable<double> circleExpansion = TweenSequence<double>([
     TweenSequenceItem<double>(
-      tween: Tween<double>(begin: 0, end: 50).chain(CurveTween(curve: Curves.linear)),
+      tween: Tween<double>(begin: 0, end: 50 * Dimensions.heightUnit).chain(CurveTween(curve: Curves.linear)),
       weight: 1,
     ),
     TweenSequenceItem<double>(
-      tween: Tween<double>(begin: 50, end: 0).chain(CurveTween(curve: Curves.linear)),
+      tween: Tween<double>(begin: 50 * Dimensions.heightUnit, end: 0).chain(CurveTween(curve: Curves.linear)),
       weight: 1,
     ),
   ]);
@@ -56,11 +57,11 @@ class _TapIndicatorState extends State<TapIndicator> with TickerProviderStateMix
     )..repeat(reverse: true);
 
     left = Tween<double>(begin: -100, end: (widget.size.width - beginIconSize) / 2)
-        .animate(CurvedAnimation(parent: controller, curve: const Interval(0, 0.8, curve: Curves.linear))); // was 0.5, 0.9
+        .animate(CurvedAnimation(parent: controller, curve: const Interval(0, 0.8, curve: Curves.linear)));
     top = Tween<double>(begin: widget.size.height, end: (widget.size.height - beginIconSize) / 2 - 50)
         .animate(CurvedAnimation(parent: controller, curve: const Interval(0, 0.8, curve: Curves.linear)));
 
-    iconSize = doubleClick.animate(CurvedAnimation(parent: controller, curve: const Interval(0.8, 1, curve: Curves.linear))); //was 0.9, 1
+    iconSize = doubleClick.animate(CurvedAnimation(parent: controller, curve: const Interval(0.8, 1, curve: Curves.linear)));
 
     circleRadius = circleExpansion.animate(CurvedAnimation(parent: controller, curve: const Interval(0.8, 1, curve: Curves.linear)));
 
@@ -94,7 +95,7 @@ class _TapIndicatorState extends State<TapIndicator> with TickerProviderStateMix
                       ),
                       CustomPaint(
                         size: widget.size,
-                        painter: ClickCircle(const Offset(20, 0), circleRadius.value),
+                        painter: ClickCircle(Offset(20 * Dimensions.heightUnit, 0), circleRadius.value),
                       )
                     ],
                   )),
@@ -114,7 +115,7 @@ class ClickCircle extends CustomPainter {
   void paint(Canvas canvas, Size size) {
     final Paint paint = Paint()
       ..color = Colors.black
-      ..strokeWidth = 4
+      ..strokeWidth = 4 * Dimensions.heightUnit
       ..style = PaintingStyle.stroke;
 
     canvas.drawCircle(center, radius, paint);

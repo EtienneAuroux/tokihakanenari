@@ -4,6 +4,7 @@ import 'package:tokihakanenari/ledger_data/income.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
@@ -30,7 +31,7 @@ class _IncomeContainerState extends State<IncomeContainer> {
   bool expanded = false;
   final BorderSide borderSide = BorderSide(
     color: Colors.black.withAlpha(50),
-    width: 4,
+    width: 4 * Dimensions.widthUnit,
   );
 
   List<Widget> getHeader(CardType cardType) {
@@ -43,9 +44,12 @@ class _IncomeContainerState extends State<IncomeContainer> {
       ];
     } else {
       return [
-        Icon(widget.income.icon),
-        const SizedBox(
-          width: 20,
+        Icon(
+          widget.income.icon,
+          size: Dimensions.iconSize,
+        ),
+        SizedBox(
+          width: 20 * Dimensions.widthUnit,
         ),
         Text(
           widget.income.id,
@@ -69,15 +73,15 @@ class _IncomeContainerState extends State<IncomeContainer> {
           '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(widget.income.amount!, false, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
-        const SizedBox(
-          height: 5,
+        SizedBox(
+          height: 5 * Dimensions.heightUnit,
         ),
         Text(
           '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(widget.income.interest!, true, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
-        const SizedBox(
-          height: 5,
+        SizedBox(
+          height: 5 * Dimensions.heightUnit,
         ),
         Text(
           '${AppLocalizations.of(context)!.generatedRevenue}: ${ledger.formatMonetaryAmounts(widget.income.revenue!, false, context)} / ${AppLocalizations.of(context)!.year}',
@@ -90,29 +94,29 @@ class _IncomeContainerState extends State<IncomeContainer> {
           '${AppLocalizations.of(context)!.description}: ${widget.income.description}',
           style: TextStyles.incomeExtraInformation,
         ),
-        const SizedBox(
-          height: 5,
+        SizedBox(
+          height: 5 * Dimensions.heightUnit,
         ),
         Text(
           '${AppLocalizations.of(context)!.capital}: ${ledger.formatMonetaryAmounts(widget.income.amount!, false, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
-        const SizedBox(
-          height: 5,
+        SizedBox(
+          height: 5 * Dimensions.heightUnit,
         ),
         Text(
           '${AppLocalizations.of(context)!.appreciation}: ${ledger.formatMonetaryAmounts(widget.income.interest!, true, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
-        const SizedBox(
-          height: 5,
+        SizedBox(
+          height: 5 * Dimensions.heightUnit,
         ),
         Text(
           '${AppLocalizations.of(context)!.monthlyPayment}: ${ledger.formatMonetaryAmounts(widget.income.payment!, false, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
-        const SizedBox(
-          height: 5,
+        SizedBox(
+          height: 5 * Dimensions.heightUnit,
         ),
         Text(
           '${AppLocalizations.of(context)!.generatedRevenue}: ${ledger.formatMonetaryAmounts(widget.income.revenue!, false, context)} / ${AppLocalizations.of(context)!.year}',
@@ -138,8 +142,8 @@ class _IncomeContainerState extends State<IncomeContainer> {
               '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.customIncomeData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: 5 * Dimensions.heightUnit,
             ),
             Text(
               '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.customIncomeData.totalRateOfReturn, true, context)}',
@@ -152,8 +156,8 @@ class _IncomeContainerState extends State<IncomeContainer> {
               '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.indexFundsData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: 5 * Dimensions.heightUnit,
             ),
             Text(
               '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.indexFundsData.totalRateOfReturn, true, context)}',
@@ -166,8 +170,8 @@ class _IncomeContainerState extends State<IncomeContainer> {
               '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.privateFundsData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: 5 * Dimensions.heightUnit,
             ),
             Text(
               '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.privateFundsData.totalRateOfReturn, true, context)}',
@@ -180,8 +184,8 @@ class _IncomeContainerState extends State<IncomeContainer> {
               '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.realEstateData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: 5 * Dimensions.heightUnit,
             ),
             Text(
               '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.realEstateData.totalRateOfReturn, true, context)}',
@@ -201,8 +205,8 @@ class _IncomeContainerState extends State<IncomeContainer> {
               '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.savingAccountsData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: 5 * Dimensions.heightUnit,
             ),
             Text(
               '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.savingAccountsData.totalRateOfReturn, true, context)}',
@@ -215,8 +219,8 @@ class _IncomeContainerState extends State<IncomeContainer> {
               '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(ledger.stockAccountsData.totalInvested, false, context)}',
               style: TextStyles.incomeExtraInformation,
             ),
-            const SizedBox(
-              height: 5,
+            SizedBox(
+              height: 5 * Dimensions.heightUnit,
             ),
             Text(
               '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(ledger.stockAccountsData.totalRateOfReturn, true, context)}',
@@ -234,8 +238,8 @@ class _IncomeContainerState extends State<IncomeContainer> {
           '${AppLocalizations.of(context)!.investment}: ${ledger.formatMonetaryAmounts(widget.income.amount!, false, context)}',
           style: TextStyles.incomeExtraInformation,
         ),
-        const SizedBox(
-          height: 5,
+        SizedBox(
+          height: 5 * Dimensions.heightUnit,
         ),
         Text(
           '${AppLocalizations.of(context)!.averageReturn}: ${ledger.formatMonetaryAmounts(widget.income.interest!, true, context)}',
@@ -247,19 +251,19 @@ class _IncomeContainerState extends State<IncomeContainer> {
 
   double getExpandedHeight(CardType cardType) {
     if (cardType == CardType.contentCreation || cardType == CardType.salaries) {
-      return 30;
+      return 30 * Dimensions.heightUnit;
     } else if (cardType == CardType.customIncome) {
-      return 90;
+      return 90 * Dimensions.heightUnit;
     } else if (cardType == CardType.realEstate) {
-      return 120;
+      return 140 * Dimensions.heightUnit;
     } else if (cardType == CardType.totalIncome) {
       if (widget.income.subIncomeCardType == CardType.contentCreation || widget.income.subIncomeCardType == CardType.salaries) {
-        return 30;
+        return 30 * Dimensions.heightUnit;
       } else {
-        return 60;
+        return 60 * Dimensions.heightUnit;
       }
     } else {
-      return 60;
+      return 60 * Dimensions.heightUnit;
     }
   }
 
@@ -279,16 +283,16 @@ class _IncomeContainerState extends State<IncomeContainer> {
               bottom: borderSide,
               right: borderSide,
             ),
-            borderRadius: BorderRadius.circular(10),
+            borderRadius: BorderRadius.circular(10 * Dimensions.heightUnit),
             gradient: LinearGradient(
               colors: [Colors.red, Colors.red.withAlpha(0)],
               begin: Alignment.centerLeft,
               end: Alignment(widget.gradientEnd, 0),
             ),
           ),
-          padding: const EdgeInsets.symmetric(
-            horizontal: 15,
-            vertical: 8,
+          padding: EdgeInsets.symmetric(
+            horizontal: 15 * Dimensions.widthUnit,
+            vertical: 8 * Dimensions.heightUnit,
           ),
           child: Column(
             mainAxisSize: MainAxisSize.min,
@@ -299,7 +303,7 @@ class _IncomeContainerState extends State<IncomeContainer> {
               AnimatedContainer(
                 alignment: Alignment.centerLeft,
                 duration: const Duration(milliseconds: 300),
-                padding: const EdgeInsets.fromLTRB(0, 10, 0, 0),
+                padding: EdgeInsets.fromLTRB(0, 10 * Dimensions.heightUnit, 0, 0),
                 height: expanded ? getExpandedHeight(widget.cardType) : 0,
                 child: AnimatedOpacity(
                     opacity: expanded ? 1 : 0,

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
 
 class IconsDialog extends StatefulWidget {
@@ -47,6 +48,14 @@ class _IconsDialogState extends State<IconsDialog> {
     }
   }
 
+  double getDialogHeight() {
+    if (icons.length * Dimensions.iconSize / 2 > Dimensions.deviceSize.height * 0.8) {
+      return Dimensions.deviceSize.height * 0.8;
+    } else {
+      return icons.length * Dimensions.iconSize / 2;
+    }
+  }
+
   @override
   void initState() {
     super.initState();
@@ -59,21 +68,28 @@ class _IconsDialogState extends State<IconsDialog> {
     return AlertDialog(
       content: DecoratedBox(
         decoration: CardDecoration.getMiniDecoration(widget.cardType),
-        child: GridView(
-          shrinkWrap: true,
-          gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-            crossAxisCount: 4,
-            mainAxisSpacing: 10,
-            crossAxisSpacing: 10,
-          ),
-          children: List.generate(
-            icons.length,
-            (index) => IconButton(
-              onPressed: () {
-                widget.onIconChosenCallback(icons[index]);
-                Navigator.of(context).pop();
-              },
-              icon: Icon(icons[index]),
+        child: SizedBox(
+          height: getDialogHeight(),
+          width: 160 * Dimensions.widthUnit,
+          child: GridView(
+            shrinkWrap: true,
+            gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+              crossAxisCount: 4,
+              mainAxisSpacing: 10 * Dimensions.heightUnit,
+              crossAxisSpacing: 10 * Dimensions.widthUnit,
+            ),
+            children: List.generate(
+              icons.length,
+              (index) => IconButton(
+                onPressed: () {
+                  widget.onIconChosenCallback(icons[index]);
+                  Navigator.of(context).pop();
+                },
+                icon: Icon(
+                  icons[index],
+                  size: Dimensions.iconSize,
+                ),
+              ),
             ),
           ),
         ),

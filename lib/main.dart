@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/big_card.dart';
 import 'package:tokihakanenari/carousel.dart';
@@ -8,7 +10,9 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
+
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -58,6 +62,9 @@ class _MainPageState extends State<MainPage> {
   @override
   void initState() {
     super.initState();
+
+    final view = PlatformDispatcher.instance.views.first;
+    Dimensions.deviceSize = view.physicalSize / view.devicePixelRatio;
 
     cardStatus = CardStatus.inert;
 
