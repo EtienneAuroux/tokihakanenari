@@ -40,14 +40,6 @@ class _CarouselState extends State<Carousel> {
     return completer.future;
   }
 
-  Alignment setAlignment(PageController controller, int index) {
-    if (controller.position.haveDimensions && controller.page! <= index) {
-      return Alignment.topRight;
-    } else {
-      return Alignment.bottomRight;
-    }
-  }
-
   List<SmallCard> getSmallCards() {
     List<SmallCard> carouselCards = <SmallCard>[];
     for (CardType cardType in ledger.carouselCards) {
@@ -116,9 +108,8 @@ class _CarouselState extends State<Carousel> {
                   builder: ((context, widget) {
                     final double ratioY = pageController.offset / maxHeight / viewportFraction - index;
                     return Transform.rotate(
-                      angle: pi * 0.08 * ratioY,
-                      alignment: setAlignment(pageController, index),
-                      origin: Offset(-maxHeight / 3, 0),
+                      angle: pi * ratioY * 0.08,
+                      alignment: Alignment(0, ratioY),
                       child: Transform.scale(
                         scale: 0.8,
                         child: card,
