@@ -12,6 +12,7 @@ import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/card_types/total_income.dart';
 import 'package:tokihakanenari/card_types/saving_accounts.dart';
 import 'package:tokihakanenari/my_enums.dart';
+import 'package:tokihakanenari/visual_tools/dimensions.dart';
 
 // import 'dart:developer' as developer;
 
@@ -121,22 +122,20 @@ class _SmallCardState extends State<SmallCard> {
 
   @override
   Widget build(BuildContext context) {
-    Size deviceSize = MediaQuery.of(context).size;
-
     return Stack(
       alignment: Alignment.center,
       children: [
         Container(
-          width: deviceSize.width * 0.8,
-          height: deviceSize.height * 0.6,
+          width: 360 * 0.8 * Dimensions.widthUnit,
+          height: 732 * 0.6 * Dimensions.heightUnit,
           decoration: CardDecoration.getSmallDecoration(widget.cardType),
           child: generateSmallCard(widget.cardType),
         ),
         Material(
           color: Colors.transparent,
           child: SizedBox(
-            width: deviceSize.width * 0.8,
-            height: deviceSize.height * 0.6,
+            width: 360 * 0.8 * Dimensions.widthUnit,
+            height: 732 * 0.6 * Dimensions.heightUnit,
             child: GestureDetector(
               onTap: () {
                 widget.onTapSmallCard();
@@ -150,7 +149,7 @@ class _SmallCardState extends State<SmallCard> {
               },
               child: InkWell(
                 customBorder: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(20),
+                  borderRadius: BorderRadius.circular(20 * Dimensions.heightUnit),
                 ),
                 splashColor: CardDecoration.getSplashColor(widget.cardType),
                 child: Ink(
@@ -160,7 +159,7 @@ class _SmallCardState extends State<SmallCard> {
                       begin: Alignment(-1, 5 - gradientOffset),
                       end: Alignment(-1, 1 - gradientOffset),
                     ),
-                    borderRadius: const BorderRadius.all(Radius.circular(20)),
+                    borderRadius: BorderRadius.all(Radius.circular(20 * Dimensions.heightUnit)),
                   ),
                 ),
               ),
