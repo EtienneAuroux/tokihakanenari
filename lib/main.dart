@@ -176,3 +176,6 @@ class _MainPageState extends State<MainPage> {
 // flutter build appbundle --no-tree-shake-icons
 
 // jkr7i1%1jhsDj9
+
+// Tester community: hH37shYw1g
+// https://blog.testerscommunity.com/google-play-production-access-after-closedtesting/

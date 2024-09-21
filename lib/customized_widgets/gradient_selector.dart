@@ -53,9 +53,14 @@ class _GradientSelectorState extends State<GradientSelector> {
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
-          Text(
-            '${widget.title}:',
-            style: TextStyles.cardBody,
+          SizedBox(
+            width: 200 * Dimensions.widthUnit,
+            child: Text(
+              '${widget.title}:',
+              style: TextStyles.cardBody,
+              softWrap: false,
+              overflow: TextOverflow.fade,
+            ),
           ),
           GestureDetector(
             onTap: () {
