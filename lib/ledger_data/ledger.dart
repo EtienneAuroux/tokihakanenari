@@ -61,22 +61,20 @@ class Ledger extends ChangeNotifier {
 
   // Settings
   late Currency _currency;
+  Currency get currency => _currency;
   set currency(Currency newCurrency) {
     _currency = newCurrency;
     _preferences.setInt('currency', _currency.index);
     notifyListeners();
   }
 
-  Currency get currency => _currency;
-
-  late Language _language;
-  set language(Language newLanguage) {
-    _language = newLanguage;
-    _preferences.setInt('language', _language.index);
+  late Background _background;
+  Background get background => _background;
+  set background(Background newBackground) {
+    _background = newBackground;
+    _preferences.setInt('backgroundType', background.index);
     notifyListeners();
   }
-
-  Language get language => _language;
 
   // Formats
   String formatMonetaryAmounts(double amount, bool percent, BuildContext context) {
@@ -848,11 +846,11 @@ class Ledger extends ChangeNotifier {
       _currency = Currency.none;
     }
 
-    int? languageInt = _preferences.getInt('language');
-    if (languageInt != null) {
-      _language = Language.values[languageInt];
+    int? backgroundInt = _preferences.getInt('backgroundType');
+    if (backgroundInt != null) {
+      _background = Background.values[backgroundInt];
     } else {
-      _language = Language.english;
+      _background = Background.waves;
     }
 
     String? backgroundString = _preferences.getString('background');

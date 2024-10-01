@@ -118,19 +118,16 @@ enum Currency {
   }
 }
 
-enum Language {
-  english,
-  french,
-  japanese;
+enum Background {
+  waves,
+  slices;
 
   String get word {
     switch (this) {
-      case Language.english:
-        return 'English';
-      case Language.french:
-        return 'Français';
-      case Language.japanese:
-        return '日本語';
+      case Background.waves:
+        return 'Waves';
+      case Background.slices:
+        return 'Slices';
     }
   }
 }

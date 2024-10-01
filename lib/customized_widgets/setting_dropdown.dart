@@ -27,8 +27,8 @@ class _SettingDropdownState extends State<SettingDropdown> {
   dynamic getValue() {
     if (widget.values.first is Currency) {
       return ledger.currency;
-    } else if (widget.values.first is Language) {
-      return ledger.language;
+    } else if (widget.values.first is Background) {
+      return ledger.background;
     } else {
       throw ErrorDescription('${widget.values.first.runtimeType} was provided to a SettingDropdown');
     }

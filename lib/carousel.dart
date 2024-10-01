@@ -73,7 +73,9 @@ class _CarouselState extends State<Carousel> {
 
     ledger.addListener(() {
       smallCards = getSmallCards();
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
       if (!longPress) {
         pageController.jumpToPage(ledger.pageInFocus);
       } else {

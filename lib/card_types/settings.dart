@@ -36,14 +36,14 @@ class _SettingsState extends State<Settings> {
               ledger.currency = newCurrency;
             });
           }),
-      // SettingDropdown(
-      //     title: 'Language',
-      //     values: Language.values,
-      //     onNewValue: (dynamic newLanguage) {
-      //       setState(() {
-      //         ledger.language = newLanguage;
-      //       });
-      //     }),
+      SettingDropdown(
+          title: 'Background',
+          values: Background.values,
+          onNewValue: (dynamic newBackground) {
+            setState(() {
+              ledger.background = newBackground;
+            });
+          }),
     ];
   }
 
@@ -167,7 +167,6 @@ class _SettingsState extends State<Settings> {
                       title: AppLocalizations.of(context)!.eraseEverything,
                       onActionValidated: () {
                         ledger.currency = Currency.none;
-                        ledger.language = Language.english;
                         ledger.resetAllGradients();
                         ledger.deleteAllData();
                       },

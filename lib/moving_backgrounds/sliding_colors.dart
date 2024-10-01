@@ -3,7 +3,6 @@ import 'package:tokihakanenari/carousel.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 class SlidingColors extends StatefulWidget {
-  /// At least four colors are recommended.
   final List<Color> colors;
   final Widget child;
 
@@ -18,11 +17,21 @@ class SlidingColors extends StatefulWidget {
 }
 
 class _SlidingColors extends State<SlidingColors> with SingleTickerProviderStateMixin {
+  late List<Color> colors;
   late AnimationController controller;
 
   @override
   void initState() {
     super.initState();
+
+    colors = List.generate(widget.colors.length + 1, (index) {
+      if (index == widget.colors.length) {
+        return widget.colors.first;
+      } else {
+        return widget.colors[index];
+      }
+    });
+
     controller = AnimationController(
       duration: const Duration(seconds: 4),
       vsync: this,
@@ -58,13 +67,10 @@ class _SlidingColors extends State<SlidingColors> with SingleTickerProviderState
                 controller.value,
                 mediaQueryData.size.height * aspectRatio,
               ),
-              colors: widget.colors,
+              colors: colors,
             ),
           ),
-          child: Carousel(
-            cardStatus: CardStatus.inert,
-            onRequestBigCard: (cardType) {},
-          ),
+          child: widget.child,
         );
       },
     );
