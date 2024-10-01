@@ -1,5 +1,3 @@
-import 'dart:ui';
-
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/big_card.dart';
 import 'package:tokihakanenari/carousel.dart';
@@ -10,7 +8,7 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 import 'package:tokihakanenari/visual_tools/dimensions.dart';
 
@@ -63,8 +61,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
 
-    final view = PlatformDispatcher.instance.views.first;
-    Dimensions.deviceSize = view.physicalSize / view.devicePixelRatio;
+    Dimensions.deviceSize = const Size(360, 732);
 
     cardStatus = CardStatus.inert;
 
@@ -85,6 +82,10 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
+
+    if (!Dimensions.sizeUpdated) {
+      Dimensions.deviceSize = screenSize;
+    }
 
     return MovingBackground(
       background: ledger.background,

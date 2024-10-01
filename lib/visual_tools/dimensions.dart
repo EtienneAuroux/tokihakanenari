@@ -12,7 +12,7 @@ class Dimensions {
   static const double _referenceWidth = 360;
 
   static Size? _deviceSize;
-  static Size get deviceSize => _deviceSize!;
+  static Size get deviceSize => _deviceSize ?? Size.zero;
   static set deviceSize(Size onSizeAcquired) {
     if (_deviceSize == null) {
       _deviceSize = onSizeAcquired;
@@ -23,6 +23,8 @@ class Dimensions {
       _iconSize = 25 * heightUnit;
     }
   }
+
+  static bool sizeUpdated = false;
 
   static double? _maxFlippingDistance;
   static double get maxFlippingDistance => _maxFlippingDistance!;
