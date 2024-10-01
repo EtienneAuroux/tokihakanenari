@@ -4,7 +4,6 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/big_card.dart';
 import 'package:tokihakanenari/carousel.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
-import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 import 'package:tokihakanenari/moving_backgrounds/moving_background.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
@@ -70,7 +69,9 @@ class _MainPageState extends State<MainPage> {
     cardStatus = CardStatus.inert;
 
     ledger.addListener(() {
-      setState(() {});
+      if (mounted) {
+        setState(() {});
+      }
     });
   }
 
