@@ -1,3 +1,5 @@
+import 'dart:ui';
+
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/big_card.dart';
 import 'package:tokihakanenari/carousel.dart';
@@ -15,7 +17,18 @@ import 'package:tokihakanenari/visual_tools/dimensions.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Ledger().init();
-  runApp(const Okame());
+  FlutterView? flutterView = PlatformDispatcher.instance.views.firstOrNull;
+  if (flutterView == null || flutterView.physicalSize.isEmpty) {
+    PlatformDispatcher.instance.onMetricsChanged = () {
+      flutterView = PlatformDispatcher.instance.views.firstOrNull;
+      if (flutterView != null && !flutterView!.physicalSize.isEmpty) {
+        PlatformDispatcher.instance.onMetricsChanged = null;
+        runApp(const Okame());
+      }
+    };
+  } else {
+    runApp(const Okame());
+  }
 }
 
 class Okame extends StatelessWidget {
@@ -61,7 +74,7 @@ class _MainPageState extends State<MainPage> {
   void initState() {
     super.initState();
 
-    Dimensions.deviceSize = const Size(360, 732);
+    Dimensions.deviceSize = (context.getElementForInheritedWidgetOfExactType<MediaQuery>()!.widget as MediaQuery).data.size;
 
     cardStatus = CardStatus.inert;
 
@@ -82,10 +95,6 @@ class _MainPageState extends State<MainPage> {
   @override
   Widget build(BuildContext context) {
     Size screenSize = MediaQuery.of(context).size;
-
-    if (!Dimensions.sizeUpdated) {
-      Dimensions.deviceSize = screenSize;
-    }
 
     return MovingBackground(
       background: ledger.background,

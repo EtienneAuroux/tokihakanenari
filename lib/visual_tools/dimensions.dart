@@ -24,8 +24,6 @@ class Dimensions {
     }
   }
 
-  static bool sizeUpdated = false;
-
   static double? _maxFlippingDistance;
   static double get maxFlippingDistance => _maxFlippingDistance!;
 
