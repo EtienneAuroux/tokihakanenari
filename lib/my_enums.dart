@@ -120,7 +120,8 @@ enum Currency {
 
 enum Background {
   waves,
-  slices;
+  slices,
+  rain;
 
   String get word {
     switch (this) {
@@ -128,6 +129,8 @@ enum Background {
         return 'Waves';
       case Background.slices:
         return 'Slices';
+      case Background.rain:
+        return 'Rain';
     }
   }
 }

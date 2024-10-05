@@ -11,10 +11,10 @@ class SlidingColors extends StatefulWidget {
   });
 
   @override
-  State<SlidingColors> createState() => _SlidingColors();
+  State<SlidingColors> createState() => _SlidingColorsState();
 }
 
-class _SlidingColors extends State<SlidingColors> with SingleTickerProviderStateMixin {
+class _SlidingColorsState extends State<SlidingColors> with SingleTickerProviderStateMixin {
   late List<Color> colors;
   late AnimationController controller;
 

@@ -1,17 +1,16 @@
 import 'package:flutter/material.dart';
 
 class FloatingWaves extends StatefulWidget {
-  /// Two colors are recommended.
   final List<Color> colors;
   final Widget child;
 
   const FloatingWaves({super.key, required this.colors, required this.child});
 
   @override
-  State<FloatingWaves> createState() => _FloatingWaves();
+  State<FloatingWaves> createState() => _FloatingWavesState();
 }
 
-class _FloatingWaves extends State<FloatingWaves> with SingleTickerProviderStateMixin {
+class _FloatingWavesState extends State<FloatingWaves> with SingleTickerProviderStateMixin {
   late AnimationController animationController;
   late Animation<Alignment> topAnimation;
   late Animation<Alignment> bottomAnimation;
