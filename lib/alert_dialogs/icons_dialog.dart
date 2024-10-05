@@ -3,6 +3,7 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
+import 'dart:developer' as developer;
 
 class IconsDialog extends StatefulWidget {
   final CardType cardType;
@@ -49,11 +50,13 @@ class _IconsDialogState extends State<IconsDialog> {
   }
 
   double getDialogHeight() {
-    if (icons.length * Dimensions.iconSize / 2 > Dimensions.deviceSize.height * 0.8) {
-      return Dimensions.deviceSize.height * 0.8;
+    double dialogHeight;
+    if (icons.length * Dimensions.iconSize / 4 > Dimensions.deviceSize.height * 0.8) {
+      dialogHeight = Dimensions.deviceSize.height * 0.8;
     } else {
-      return icons.length * Dimensions.iconSize / 2;
+      dialogHeight = icons.length * (Dimensions.iconSize / 4 + 10 * Dimensions.heightUnit);
     }
+    return dialogHeight;
   }
 
   @override
