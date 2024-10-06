@@ -6,12 +6,13 @@ import 'package:tokihakanenari/carousel.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/moving_backgrounds/falling_droplets.dart';
 import 'package:tokihakanenari/moving_backgrounds/moving_background.dart';
+import 'package:tokihakanenari/moving_backgrounds/rain.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 import 'package:tokihakanenari/visual_tools/dimensions.dart';
 
@@ -82,7 +83,6 @@ class _MainPageState extends State<MainPage> {
     ledger.addListener(() {
       if (mounted) {
         setState(() {});
-        developer.log('main, listened, ${ledger.backgroundGradient.bottom}');
       }
     });
   }
@@ -172,7 +172,7 @@ class _MainPageState extends State<MainPage> {
         IgnorePointer(
           child: Visibility(
             visible: ledger.rainIsOn,
-            child: FallingDroplets(),
+            child: Rain(),
           ),
         )
       ]),

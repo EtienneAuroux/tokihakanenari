@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:tokihakanenari/visual_tools/dimensions.dart';
-import 'dart:developer' as developer;
 
 class WaterDrop extends StatefulWidget {
   final double top;
   final double left;
   final double width;
   final double height;
+  final double opacity;
 
   const WaterDrop({
     super.key,
@@ -14,6 +14,7 @@ class WaterDrop extends StatefulWidget {
     required this.left,
     required this.width,
     required this.height,
+    required this.opacity,
   });
 
   @override
@@ -22,8 +23,8 @@ class WaterDrop extends StatefulWidget {
 
 class _WaterDropState extends State<WaterDrop> {
   Alignment get beginAlignment => Alignment(
-        widget.left / Dimensions.deviceSize.width,
-        widget.top / Dimensions.deviceSize.height,
+        widget.left / Dimensions.deviceSize.width - 0.5,
+        widget.top / Dimensions.deviceSize.height - 0.5,
       );
 
   Alignment get endAlignment => Alignment(
@@ -37,11 +38,10 @@ class _WaterDropState extends State<WaterDrop> {
       );
   @override
   Widget build(BuildContext context) {
-    developer.log('begin: $beginAlignment, end: $endAlignment');
     Widget dome = Container(
-      foregroundDecoration: BoxDecoration(
+      decoration: BoxDecoration(
         gradient: LinearGradient(
-          colors: [Colors.black, Colors.white],
+          colors: const [Colors.grey, Colors.white],
           begin: beginAlignment,
           end: endAlignment,
         ),
@@ -49,13 +49,32 @@ class _WaterDropState extends State<WaterDrop> {
       ),
     );
 
-    return ClipPath(
-      clipper: DropClipper(
-        center,
-        widget.width,
-        widget.height,
+    return Opacity(
+      opacity: widget.opacity,
+      child: Stack(
+        children: [
+          _DropShadow(
+            top: widget.top,
+            left: widget.left,
+            width: widget.width,
+            height: widget.height,
+          ),
+          ClipPath(
+            clipper: DropClipper(
+              center,
+              widget.width,
+              widget.height,
+            ),
+            child: dome,
+          ),
+          _LightSpot(
+            top: widget.top,
+            left: widget.left,
+            width: widget.width,
+            height: widget.height,
+          ),
+        ],
       ),
-      child: dome,
     );
   }
 }
@@ -82,5 +101,80 @@ class DropClipper extends CustomClipper<Path> {
   @override
   bool shouldReclip(covariant CustomClipper<Path> oldClipper) {
     return true;
+  }
+}
+
+class _DropShadow extends StatelessWidget {
+  final double top;
+  final double left;
+  final double width;
+  final double height;
+
+  const _DropShadow({
+    required this.top,
+    required this.left,
+    required this.width,
+    required this.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: left,
+      top: top,
+      width: width,
+      height: height,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.elliptical(width / 2, height / 2),
+          ),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 4,
+              offset: const Offset(4, 4),
+              color: Colors.black.withOpacity(0.2),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+}
+
+class _LightSpot extends StatelessWidget {
+  final double top;
+  final double left;
+  final double width;
+  final double height;
+
+  const _LightSpot({
+    required this.top,
+    required this.left,
+    required this.width,
+    required this.height,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned(
+      left: left + width / 4,
+      top: top + height / 4,
+      width: width / 4,
+      height: height / 4,
+      child: DecoratedBox(
+        decoration: BoxDecoration(
+          borderRadius: BorderRadius.all(
+            Radius.elliptical(width / 2, height / 2),
+          ),
+          boxShadow: [
+            BoxShadow(
+              blurRadius: 10,
+              color: Colors.white.withOpacity(0.9),
+            ),
+          ],
+        ),
+      ),
+    );
   }
 }

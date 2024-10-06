@@ -53,7 +53,7 @@ class _TapIndicatorState extends State<TapIndicator> with TickerProviderStateMix
     super.initState();
     controller = AnimationController(
       vsync: this,
-      duration: const Duration(seconds: 2), //was 4
+      duration: const Duration(seconds: 2),
     )..repeat(reverse: true);
 
     left = Tween<double>(begin: -100, end: (widget.size.width - beginIconSize) / 2)
