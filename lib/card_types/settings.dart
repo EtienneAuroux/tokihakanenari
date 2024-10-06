@@ -44,6 +44,24 @@ class _SettingsState extends State<Settings> {
               ledger.background = newBackground;
             });
           }),
+      Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          Text(
+            'Rain',
+            style: TextStyles.cardBody,
+          ),
+          Checkbox(
+              value: ledger.rainIsOn,
+              onChanged: (bool? newRainStatus) {
+                if (newRainStatus != null) {
+                  setState(() {
+                    ledger.rainIsOn = newRainStatus;
+                  });
+                }
+              })
+        ],
+      )
     ];
   }
 

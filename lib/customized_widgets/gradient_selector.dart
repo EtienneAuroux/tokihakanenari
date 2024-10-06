@@ -5,6 +5,7 @@ import 'package:tokihakanenari/ledger_data/ledger.dart';
 import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/text_styles.dart';
+// import 'dart:developer' as developer;
 
 class GradientSelector extends StatefulWidget {
   final String title;

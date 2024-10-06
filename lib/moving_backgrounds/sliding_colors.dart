@@ -15,20 +15,11 @@ class SlidingColors extends StatefulWidget {
 }
 
 class _SlidingColorsState extends State<SlidingColors> with SingleTickerProviderStateMixin {
-  late List<Color> colors;
   late AnimationController controller;
 
   @override
   void initState() {
     super.initState();
-
-    colors = List.generate(widget.colors.length + 1, (index) {
-      if (index == widget.colors.length) {
-        return widget.colors.first;
-      } else {
-        return widget.colors[index];
-      }
-    });
 
     controller = AnimationController(
       duration: const Duration(seconds: 4),
@@ -45,6 +36,7 @@ class _SlidingColorsState extends State<SlidingColors> with SingleTickerProvider
   @override
   void dispose() {
     controller.dispose();
+
     super.dispose();
   }
 
@@ -65,7 +57,13 @@ class _SlidingColorsState extends State<SlidingColors> with SingleTickerProvider
                 controller.value,
                 mediaQueryData.size.height * aspectRatio,
               ),
-              colors: colors,
+              colors: List.generate(widget.colors.length + 1, (index) {
+                if (index < widget.colors.length) {
+                  return widget.colors[index];
+                } else {
+                  return widget.colors.first;
+                }
+              }),
             ),
           ),
           child: widget.child,

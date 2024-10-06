@@ -4,7 +4,11 @@ class FloatingWaves extends StatefulWidget {
   final List<Color> colors;
   final Widget child;
 
-  const FloatingWaves({super.key, required this.colors, required this.child});
+  const FloatingWaves({
+    super.key,
+    required this.colors,
+    required this.child,
+  });
 
   @override
   State<FloatingWaves> createState() => _FloatingWavesState();

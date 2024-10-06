@@ -76,7 +76,7 @@ class _CarouselState extends State<Carousel> {
       if (mounted) {
         setState(() {});
       }
-      if (!longPress) {
+      if (!longPress && pageController.hasClients) {
         pageController.jumpToPage(ledger.pageInFocus);
       } else {
         longPress = false;

@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:tokihakanenari/moving_backgrounds/falling_droplets.dart';
 import 'package:tokihakanenari/moving_backgrounds/floating_waves.dart';
 import 'package:tokihakanenari/moving_backgrounds/sliding_colors.dart';
 import 'package:tokihakanenari/my_enums.dart';
+// import 'dart:developer' as developer;
 
 class MovingBackground extends StatefulWidget {
   final Background background;
@@ -27,8 +27,6 @@ class _MovingBackgroundState extends State<MovingBackground> {
         return FloatingWaves(colors: widget.colors, child: widget.child);
       case Background.slices:
         return SlidingColors(colors: widget.colors, child: widget.child);
-      case Background.rain:
-        return FallingDroplets(colors: widget.colors, child: widget.child);
     }
   }
 

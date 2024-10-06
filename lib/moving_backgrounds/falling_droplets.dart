@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:tokihakanenari/customized_widgets/water_drop.dart';
 
 class FallingDroplets extends StatefulWidget {
-  final List<Color> colors;
-  final Widget child;
-
   const FallingDroplets({
     super.key,
-    required this.colors,
-    required this.child,
   });
 
   @override
@@ -17,7 +13,13 @@ class FallingDroplets extends StatefulWidget {
 class _FallingDropletsState extends State<FallingDroplets> {
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
-    throw UnimplementedError();
+    return Container(
+      child: WaterDrop(
+        top: 100,
+        left: 100,
+        width: 150,
+        height: 150,
+      ),
+    );
   }
 }

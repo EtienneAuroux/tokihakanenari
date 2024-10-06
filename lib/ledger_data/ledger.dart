@@ -8,7 +8,7 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-// import 'dart:developer' as developer;
+import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.
@@ -72,7 +72,15 @@ class Ledger extends ChangeNotifier {
   Background get background => _background;
   set background(Background newBackground) {
     _background = newBackground;
-    _preferences.setInt('backgroundType', background.index);
+    _preferences.setInt('backgroundType', _background.index);
+    notifyListeners();
+  }
+
+  late bool _rainIsOn;
+  bool get rainIsOn => _rainIsOn;
+  set rainIsOn(bool isOn) {
+    _rainIsOn = isOn;
+    _preferences.setBool('rainIsOn', _rainIsOn);
     notifyListeners();
   }
 
@@ -847,10 +855,17 @@ class Ledger extends ChangeNotifier {
     }
 
     int? backgroundInt = _preferences.getInt('backgroundType');
-    if (backgroundInt != null) {
+    if (backgroundInt != null && backgroundInt < 2) {
       _background = Background.values[backgroundInt];
     } else {
       _background = Background.waves;
+    }
+
+    bool? rainStatus = _preferences.getBool('rainIsOn');
+    if (rainStatus != null) {
+      _rainIsOn = rainStatus;
+    } else {
+      _rainIsOn = false;
     }
 
     String? backgroundString = _preferences.getString('background');
