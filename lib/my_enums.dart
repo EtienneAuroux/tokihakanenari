@@ -131,3 +131,20 @@ enum Background {
     }
   }
 }
+
+enum Weather {
+  none,
+  rain,
+  snow;
+
+  String get word {
+    switch (this) {
+      case Weather.none:
+        return 'None';
+      case Weather.rain:
+        return 'Rain';
+      case Weather.snow:
+        return 'Snow';
+    }
+  }
+}

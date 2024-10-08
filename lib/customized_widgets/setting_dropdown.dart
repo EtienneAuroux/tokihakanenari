@@ -29,6 +29,8 @@ class _SettingDropdownState extends State<SettingDropdown> {
       return ledger.currency;
     } else if (widget.values.first is Background) {
       return ledger.background;
+    } else if (widget.values.first is Weather) {
+      return ledger.weather;
     } else {
       throw ErrorDescription('${widget.values.first.runtimeType} was provided to a SettingDropdown');
     }

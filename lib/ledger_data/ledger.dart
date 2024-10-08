@@ -76,11 +76,11 @@ class Ledger extends ChangeNotifier {
     notifyListeners();
   }
 
-  late bool _rainIsOn;
-  bool get rainIsOn => _rainIsOn;
-  set rainIsOn(bool isOn) {
-    _rainIsOn = isOn;
-    _preferences.setBool('rainIsOn', _rainIsOn);
+  late Weather _weather;
+  Weather get weather => _weather;
+  set weather(Weather newWeather) {
+    _weather = newWeather;
+    _preferences.setInt('weather', _weather.index);
     notifyListeners();
   }
 
@@ -855,17 +855,17 @@ class Ledger extends ChangeNotifier {
     }
 
     int? backgroundInt = _preferences.getInt('backgroundType');
-    if (backgroundInt != null && backgroundInt < 2) {
+    if (backgroundInt != null) {
       _background = Background.values[backgroundInt];
     } else {
       _background = Background.waves;
     }
 
-    bool? rainStatus = _preferences.getBool('rainIsOn');
-    if (rainStatus != null) {
-      _rainIsOn = rainStatus;
+    int? weatherInt = _preferences.getInt('weather');
+    if (weatherInt != null) {
+      _weather = Weather.values[weatherInt];
     } else {
-      _rainIsOn = false;
+      _weather = Weather.none;
     }
 
     String? backgroundString = _preferences.getString('background');

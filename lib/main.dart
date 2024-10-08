@@ -4,9 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:tokihakanenari/card_generators/big_card.dart';
 import 'package:tokihakanenari/carousel.dart';
 import 'package:tokihakanenari/ledger_data/ledger.dart';
-import 'package:tokihakanenari/moving_backgrounds/falling_droplets.dart';
 import 'package:tokihakanenari/moving_backgrounds/moving_background.dart';
-import 'package:tokihakanenari/moving_backgrounds/rain.dart';
+import 'package:tokihakanenari/moving_backgrounds/falling_objects.dart';
 import 'package:tokihakanenari/my_enums.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
@@ -171,8 +170,8 @@ class _MainPageState extends State<MainPage> {
         ),
         IgnorePointer(
           child: Visibility(
-            visible: ledger.rainIsOn,
-            child: Rain(),
+            visible: ledger.weather != Weather.none,
+            child: FallingObjects(weather: ledger.weather),
           ),
         )
       ]),
