@@ -54,7 +54,7 @@ class _IconsDialogState extends State<IconsDialog> {
     if (icons.length * Dimensions.iconSize / 4 > Dimensions.deviceSize.height * 0.8) {
       dialogHeight = Dimensions.deviceSize.height * 0.8;
     } else {
-      dialogHeight = icons.length * (Dimensions.iconSize / 4 + 10 * Dimensions.heightUnit);
+      dialogHeight = (icons.length + 1) * (Dimensions.iconSize / 4 + 10 * Dimensions.heightUnit);
     }
     return dialogHeight;
   }
