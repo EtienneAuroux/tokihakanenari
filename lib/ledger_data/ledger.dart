@@ -8,7 +8,7 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/color_palette.dart';
 import 'package:flutter_gen/gen_l10n/app_localizations.dart';
 
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 class Ledger extends ChangeNotifier {
   // Private constructor to prevent external instantiation.

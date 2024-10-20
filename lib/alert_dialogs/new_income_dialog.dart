@@ -486,7 +486,7 @@ class _NewIncomeDialogState extends State<NewIncomeDialog> {
                     padding: EdgeInsets.fromLTRB(0, 5 * Dimensions.heightUnit, 0, 0),
                     constraints: const BoxConstraints(),
                     style: ButtonStyle(
-                      overlayColor: MaterialStateProperty.all(Colors.transparent),
+                      overlayColor: WidgetStateProperty.all(Colors.transparent),
                       tapTargetSize: MaterialTapTargetSize.shrinkWrap,
                     ),
                     onPressed: () {

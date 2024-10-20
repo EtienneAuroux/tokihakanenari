@@ -53,7 +53,7 @@ class _RotatingButtonState extends State<RotatingButton> with SingleTickerProvid
         padding: EdgeInsets.zero,
         constraints: const BoxConstraints(),
         style: ButtonStyle(
-          overlayColor: MaterialStateProperty.all(Colors.transparent),
+          overlayColor: WidgetStateProperty.all(Colors.transparent),
           tapTargetSize: MaterialTapTargetSize.shrinkWrap,
         ),
         onPressed: () {

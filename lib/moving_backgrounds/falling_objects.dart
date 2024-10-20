@@ -52,12 +52,18 @@ class _FallingObjectState extends State<_FallingObject> with SingleTickerProvide
       case Weather.rain:
         return Container(
           height: length,
-          width: 2,
+          width: 2 * Dimensions.widthUnit,
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.5),
-            borderRadius: BorderRadius.circular(5),
+            borderRadius: BorderRadius.circular(5 * Dimensions.widthUnit),
             border: Border.all(
-              width: mapNumericalRanges(dz, 0, 20, 1, 3),
+              width: mapNumericalRanges(
+                dz,
+                0,
+                20 * Dimensions.widthUnit,
+                1 * Dimensions.widthUnit,
+                3 * Dimensions.widthUnit,
+              ),
               color: Colors.white.withOpacity(0.5),
             ),
           ),
@@ -78,9 +84,15 @@ class _FallingObjectState extends State<_FallingObject> with SingleTickerProvide
     super.initState();
 
     dx = random.nextDouble() * Dimensions.deviceSize.width;
-    dy = random.nextDouble() * -500;
+    dy = random.nextDouble() * (-Dimensions.deviceSize.height);
     dz = random.nextDouble() * 20;
-    length = mapNumericalRanges(dz, 0, 20, 10, 20);
+    length = mapNumericalRanges(
+      dz,
+      0,
+      20 * Dimensions.heightUnit,
+      10 * Dimensions.heightUnit,
+      20 * Dimensions.heightUnit,
+    );
 
     animationController = AnimationController(
       vsync: this,
@@ -101,9 +113,15 @@ class _FallingObjectState extends State<_FallingObject> with SingleTickerProvide
     if (animation.isCompleted) {
       animationController.reset();
       dx = random.nextDouble() * Dimensions.deviceSize.width;
-      dy = random.nextDouble() * -500;
+      dy = random.nextDouble() * (-Dimensions.deviceSize.height);
       dz = random.nextDouble() * 20;
-      length = mapNumericalRanges(dz, 0, 20, 10, 20);
+      length = mapNumericalRanges(
+        dz,
+        0,
+        20 * Dimensions.heightUnit,
+        10 * Dimensions.heightUnit,
+        20 * Dimensions.heightUnit,
+      );
       animationController.duration = Duration(milliseconds: mapNumericalRanges(dz, 0, 20, 3500, 500).toInt());
       animationController.forward();
     }

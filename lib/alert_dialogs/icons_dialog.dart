@@ -3,7 +3,7 @@ import 'package:tokihakanenari/my_enums.dart';
 import 'package:tokihakanenari/visual_tools/card_decoration.dart';
 import 'package:tokihakanenari/visual_tools/dimensions.dart';
 import 'package:tokihakanenari/visual_tools/font_awesome5_icons.dart';
-import 'dart:developer' as developer;
+// import 'dart:developer' as developer;
 
 class IconsDialog extends StatefulWidget {
   final CardType cardType;
