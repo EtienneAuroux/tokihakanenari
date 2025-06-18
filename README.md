@@ -1,16 +1,13 @@
-# tokihakanenari
+# Okame
+Okame is a simple and fun mobile application built entirely in Dart and Flutter, without any third-party packages. The app was created as a personal project to explore the capabilities of the Flutter framework and the power of building apps with pure Dart. Okame is an application that helps you calculate your daily returns for your income streams. The aesthetically pleasing and intuitive user interface is made to gamify and encourage the act of saving money via various means of investment (content creation, saving accounts, real estate, stocks, ...). Okame does not share your data with anyone, your data is stored only locally on your device.
 
-A new Flutter project.
+## Access
+[Okame is released on the Google Play Store for Android 11+.](https://play.google.com/store/apps/details?id=com.etienneauroux.okame&hl=en&pli=1) 
 
-## Getting Started
+## Features
+- Lightweight and Minimalistic: The app focuses on delivering a smooth experience with minimal dependencies.
+- Custom Flutter Widgets: Everything is built from scratch using Flutter's native widgets and state management.
+- Pure Dart: This project uses only Flutter's core libraries—no third-party packages were used, showcasing the versatility and flexibility of pure Dart for mobile development.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Development
+Okame is no longer under active development and there are no planned updates. Feel free to fork the repo.
